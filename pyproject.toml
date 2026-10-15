@@ -1,0 +1,105 @@
+[build-system]
+requires = ["hatchling>=1.21"]
+build-backend = "hatchling.build"
+
+[project]
+name = "xfer-bench"
+description = "Local, extensible benchmark for zero-history item-location (cold-pair) weekly demand forecasting."
+readme = "README.md"
+license = "Apache-2.0"
+license-files = ["LICENSE", "THIRD_PARTY_NOTICES.md"]
+requires-python = ">=3.11"
+authors = [{ name = "Xfer Benchmark contributors" }]
+keywords = ["forecasting", "benchmark", "retail", "cold-start", "demand"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Science/Research",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Scientific/Engineering :: Information Analysis",
+]
+dynamic = ["version"]
+# Core stays small: no GPU, model-weight, service or distributed dependencies.
+dependencies = [
+  "numpy>=1.26",
+  "pandas>=2.2",
+  "pyarrow>=15",
+  "pydantic>=2.6",
+  "typer>=0.16",
+  "jinja2>=3.1",
+]
+
+[project.optional-dependencies]
+# Optional extras are declared for later milestones. They are NOT yet tested;
+# see METHOD_SUPPORT.md and PROGRESS.md for their real status.
+boosting = ["lightgbm>=4.3", "xgboost>=2.0", "catboost>=1.2"]
+neural = ["torch>=2.2", "gluonts>=0.15", "neuralforecast>=1.7", "pytorch-forecasting>=1.0"]
+foundation = ["chronos-forecasting>=2.0"]
+intermittent = ["statsforecast>=1.7"]
+services = ["nixtla>=0.6"]
+distributed = ["pyspark>=3.5"]
+dev = ["pytest>=8", "ruff>=0.5", "mypy>=1.10", "build>=1.2"]
+
+[project.scripts]
+xferbench = "xferbench.cli.main:main"
+
+[project.entry-points."xferbench.domains"]
+retail = "xferbench.domains.retail.plugin:RetailDomain"
+
+[tool.hatch.version]
+path = "src/xferbench/_version.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/xferbench"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+  "src/xferbench",
+  "schemas",
+  "examples",
+  "tests",
+  "docs",
+  "README.md",
+  "LICENSE",
+  "THIRD_PARTY_NOTICES.md",
+  "METHOD_SUPPORT.md",
+  "CONTRIBUTING.md",
+  "PROGRESS.md",
+  "bootstrap.sh",
+  "bootstrap.ps1",
+  "constraints",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+  "slow: longer synthetic end-to-end tests",
+  "heavy: requires optional heavy model dependencies (skipped when absent)",
+  "network: requires network access (never run by default)",
+]
+addopts = "-ra -m 'not network'"
+filterwarnings = ["error::FutureWarning:xferbench", "error::RuntimeWarning:xferbench"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM", "RUF"]
+ignore = ["B008", "E501", "RUF012", "SIM108"]
+
+[tool.ruff.lint.per-file-ignores]
+"src/xferbench/contracts/tables.py" = ["E741"]
+
+[tool.mypy]
+python_version = "3.11"
+packages = ["xferbench"]
+mypy_path = "src"
+ignore_missing_imports = true
+plugins = ["pydantic.mypy"]
+warn_unused_ignores = false
+check_untyped_defs = true
+no_implicit_optional = true

@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "xferbench canonical table: future_covariates",
+  "description": "Inputs about future weeks that were genuinely known/planned/issued at origin.",
+  "x-primary-key": [
+    "feature_name",
+    "item_id",
+    "fpg_id",
+    "scope_id",
+    "origin",
+    "forecast_week"
+  ],
+  "x-required-table": false,
+  "x-dynamic-prefixes": [],
+  "type": "object",
+  "properties": {
+    "feature_name": {
+      "x-arrow-type": "string",
+      "description": "",
+      "x-nullable": false
+    },
+    "item_id": {
+      "x-arrow-type": "string",
+      "description": "",
+      "x-nullable": true
+    },
+    "fpg_id": {
+      "x-arrow-type": "string",
+      "description": "",
+      "x-nullable": true
+    },
+    "scope_id": {
+      "x-arrow-type": "string",
+      "description": "",
+      "x-nullable": true
+    },
+    "origin": {
+      "x-arrow-type": "date32[day]",
+      "description": "",
+      "x-nullable": false
+    },
+    "forecast_week": {
+      "x-arrow-type": "date32[day]",
+      "description": "",
+      "x-nullable": false
+    },
+    "value": {
+      "x-arrow-type": "double",
+      "description": "",
+      "x-nullable": true
+    },
+    "availability_class": {
+      "x-arrow-type": "string",
+      "description": "",
+      "enum": [
+        "calendar",
+        "planned",
+        "forecast",
+        "scenario"
+      ],
+      "x-nullable": false
+    },
+    "known_at": {
+      "x-arrow-type": "date32[day]",
+      "description": "",
+      "x-nullable": false
+    },
+    "source_version": {
+      "x-arrow-type": "string",
+      "description": "",
+      "x-nullable": false
+    }
+  },
+  "required": [
+    "feature_name",
+    "item_id",
+    "fpg_id",
+    "scope_id",
+    "origin",
+    "forecast_week",
+    "value",
+    "availability_class",
+    "known_at",
+    "source_version"
+  ]
+}

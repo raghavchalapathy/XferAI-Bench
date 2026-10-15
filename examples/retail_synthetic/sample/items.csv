@@ -1,0 +1,14 @@
+item_id,category,product_type,seasonality_class,effective_from,known_at
+000100,garden,garden_b,seasonal,2018-01-01,2018-01-01
+000101,household,household_b,replenishable,2018-01-01,2018-01-01
+000102,pantry,pantry_b,replenishable,2018-01-01,2018-01-01
+000103,winter_care,winter_care_a,seasonal,2018-01-01,2018-01-01
+000104,household,household_b,replenishable,2018-01-01,2018-01-01
+000105,household,household_a,replenishable,2018-01-01,2018-01-01
+000106,winter_care,winter_care_b,seasonal,2018-01-01,2018-01-01
+000107,pantry,pantry_a,replenishable,2018-01-01,2018-01-01
+000108,garden,garden_a,seasonal,2018-01-01,2018-01-01
+000109,pantry,pantry_b,replenishable,2018-01-01,2018-01-01
+000110,winter_care,winter_care_b,seasonal,2018-01-01,2018-01-01
+000111,garden,garden_b,seasonal,2018-01-01,2018-01-01
+000112,gift_sets,gift_sets_a,seasonal,2018-01-01,2018-01-01

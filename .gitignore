@@ -1,0 +1,30 @@
+# environments
+.venv/
+venv/
+.env
+
+# build and caches
+dist/
+build/
+*.egg-info/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# benchmark outputs (generate locally; never commit real data or runs)
+xb-demo*/
+runs/
+*.run/
+demo-output/
+
+# user-provided research kit (kept unchanged, not versioned here)
+reference/
+
+# OS / editors
+.DS_Store
+.idea/
+.vscode/

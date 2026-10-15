@@ -1,0 +1,357 @@
+{
+  "$defs": {
+    "LaunchRecord": {
+      "additionalProperties": false,
+      "properties": {
+        "launch_id": {
+          "title": "Launch Id",
+          "type": "string"
+        },
+        "item_id": {
+          "title": "Item Id",
+          "type": "string"
+        },
+        "fpg_id": {
+          "title": "Fpg Id",
+          "type": "string"
+        },
+        "scenario": {
+          "title": "Scenario",
+          "type": "string"
+        },
+        "origin": {
+          "title": "Origin",
+          "type": "string"
+        },
+        "board": {
+          "title": "Board",
+          "type": "string"
+        },
+        "ranked": {
+          "title": "Ranked",
+          "type": "boolean"
+        },
+        "qualification": {
+          "title": "Qualification",
+          "type": "string"
+        },
+        "launch_type": {
+          "title": "Launch Type",
+          "type": "string"
+        },
+        "cohort_id": {
+          "title": "Cohort Id",
+          "type": "string"
+        },
+        "fixture_kind": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Fixture Kind"
+        },
+        "target_end": {
+          "title": "Target End",
+          "type": "string"
+        },
+        "declared_label_available_at": {
+          "title": "Declared Label Available At",
+          "type": "string"
+        },
+        "label_available_at": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Label Available At"
+        },
+        "label_status": {
+          "enum": [
+            "complete",
+            "incomplete"
+          ],
+          "title": "Label Status",
+          "type": "string"
+        },
+        "measured_target_weeks": {
+          "title": "Measured Target Weeks",
+          "type": "integer"
+        },
+        "missing_target_weeks": {
+          "title": "Missing Target Weeks",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "launch_id",
+        "item_id",
+        "fpg_id",
+        "scenario",
+        "origin",
+        "board",
+        "ranked",
+        "qualification",
+        "launch_type",
+        "cohort_id",
+        "target_end",
+        "declared_label_available_at",
+        "label_available_at",
+        "label_status",
+        "measured_target_weeks",
+        "missing_target_weeks"
+      ],
+      "title": "LaunchRecord",
+      "type": "object"
+    },
+    "SplitCheck": {
+      "additionalProperties": false,
+      "properties": {
+        "check": {
+          "title": "Check",
+          "type": "string"
+        },
+        "passed": {
+          "title": "Passed",
+          "type": "boolean"
+        },
+        "detail": {
+          "title": "Detail",
+          "type": "string"
+        },
+        "stage": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Stage"
+        },
+        "launch_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Launch Id"
+        }
+      },
+      "required": [
+        "check",
+        "passed",
+        "detail"
+      ],
+      "title": "SplitCheck",
+      "type": "object"
+    },
+    "StageSplit": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "origin_start": {
+          "title": "Origin Start",
+          "type": "string"
+        },
+        "origin_end": {
+          "title": "Origin End",
+          "type": "string"
+        },
+        "origins": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Origins",
+          "type": "array"
+        },
+        "launches": {
+          "items": {
+            "$ref": "#/$defs/LaunchRecord"
+          },
+          "title": "Launches",
+          "type": "array"
+        },
+        "excluded_pairs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Excluded Pairs",
+          "type": "array"
+        },
+        "excluded_fpgs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Excluded Fpgs",
+          "type": "array"
+        },
+        "fit_cutoff": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Fit Cutoff"
+        },
+        "fit_launch_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Fit Launch Ids",
+          "type": "array"
+        },
+        "fit_exclusions": {
+          "items": {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          "title": "Fit Exclusions",
+          "type": "array"
+        },
+        "scoring_cutoff": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Scoring Cutoff"
+        },
+        "counts": {
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "title": "Counts",
+          "type": "object"
+        }
+      },
+      "required": [
+        "name",
+        "origin_start",
+        "origin_end",
+        "origins",
+        "launches",
+        "excluded_pairs",
+        "excluded_fpgs"
+      ],
+      "title": "StageSplit",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "split_schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Split Schema Version",
+      "type": "string"
+    },
+    "dataset_id": {
+      "title": "Dataset Id",
+      "type": "string"
+    },
+    "dataset_version": {
+      "title": "Dataset Version",
+      "type": "string"
+    },
+    "dataset_hash": {
+      "title": "Dataset Hash",
+      "type": "string"
+    },
+    "metadata_hash": {
+      "title": "Metadata Hash",
+      "type": "string"
+    },
+    "domain": {
+      "title": "Domain",
+      "type": "string"
+    },
+    "task_profile": {
+      "title": "Task Profile",
+      "type": "string"
+    },
+    "horizon_weeks": {
+      "title": "Horizon Weeks",
+      "type": "integer"
+    },
+    "reporting_delay_days": {
+      "title": "Reporting Delay Days",
+      "type": "integer"
+    },
+    "week_start": {
+      "title": "Week Start",
+      "type": "string"
+    },
+    "stages": {
+      "additionalProperties": {
+        "$ref": "#/$defs/StageSplit"
+      },
+      "title": "Stages",
+      "type": "object"
+    },
+    "selection_cutoff": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Selection Cutoff"
+    },
+    "checks": {
+      "items": {
+        "$ref": "#/$defs/SplitCheck"
+      },
+      "title": "Checks",
+      "type": "array"
+    },
+    "split_hash": {
+      "default": "",
+      "title": "Split Hash",
+      "type": "string"
+    }
+  },
+  "required": [
+    "dataset_id",
+    "dataset_version",
+    "dataset_hash",
+    "metadata_hash",
+    "domain",
+    "task_profile",
+    "horizon_weeks",
+    "reporting_delay_days",
+    "week_start",
+    "stages",
+    "selection_cutoff",
+    "checks"
+  ],
+  "title": "SplitManifest",
+  "type": "object"
+}

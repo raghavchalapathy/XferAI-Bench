@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "xferbench canonical table: locations",
+  "description": "FPG attributes including household exposure and demographic shares, versioned.",
+  "x-primary-key": [
+    "fpg_id",
+    "effective_from"
+  ],
+  "x-required-table": true,
+  "x-dynamic-prefixes": [
+    "share_"
+  ],
+  "type": "object",
+  "properties": {
+    "fpg_id": {
+      "x-arrow-type": "string",
+      "description": "",
+      "x-nullable": false
+    },
+    "region": {
+      "x-arrow-type": "string",
+      "description": "",
+      "x-nullable": true
+    },
+    "fpg_open_at": {
+      "x-arrow-type": "date32[day]",
+      "description": "Date the FPG began trading; null if before history.",
+      "x-nullable": true
+    },
+    "households": {
+      "x-arrow-type": "double",
+      "description": "Non-overlapping serviceable households (H).",
+      "x-unit": "households",
+      "x-nullable": false
+    },
+    "effective_from": {
+      "x-arrow-type": "date32[day]",
+      "description": "",
+      "x-nullable": false
+    },
+    "known_at": {
+      "x-arrow-type": "date32[day]",
+      "description": "",
+      "x-nullable": false
+    }
+  },
+  "required": [
+    "fpg_id",
+    "region",
+    "fpg_open_at",
+    "households",
+    "effective_from",
+    "known_at"
+  ]
+}

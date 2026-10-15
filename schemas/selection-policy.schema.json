@@ -1,0 +1,65 @@
+{
+  "additionalProperties": false,
+  "description": "Preregistered rule applied to VALIDATION results only.",
+  "properties": {
+    "policy_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Policy Version",
+      "type": "string"
+    },
+    "objective": {
+      "const": "equal_scenario_wmape",
+      "default": "equal_scenario_wmape",
+      "title": "Objective",
+      "type": "string"
+    },
+    "scenario_weights": {
+      "additionalProperties": {
+        "type": "number"
+      },
+      "title": "Scenario Weights",
+      "type": "object"
+    },
+    "max_abs_bias": {
+      "default": 0.5,
+      "description": "Symmetric |Bias| limit applied to EACH scenario.",
+      "exclusiveMinimum": 0,
+      "title": "Max Abs Bias",
+      "type": "number"
+    },
+    "min_coverage": {
+      "default": 1.0,
+      "exclusiveMinimum": 0,
+      "maximum": 1,
+      "title": "Min Coverage",
+      "type": "number"
+    },
+    "max_total_seconds": {
+      "anyOf": [
+        {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Max Total Seconds"
+    },
+    "undefined_metric_rule": {
+      "const": "ineligible",
+      "default": "ineligible",
+      "title": "Undefined Metric Rule",
+      "type": "string"
+    },
+    "board": {
+      "default": "cold_c0",
+      "title": "Board",
+      "type": "string"
+    }
+  },
+  "title": "SelectionPolicy",
+  "type": "object"
+}

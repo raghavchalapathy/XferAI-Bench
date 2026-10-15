@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "xferbench canonical table: offers",
+  "description": "Offer and availability calendar per pair-week. Absence of a row means never offered.",
+  "x-primary-key": [
+    "item_id",
+    "fpg_id",
+    "week_start"
+  ],
+  "x-required-table": true,
+  "x-dynamic-prefixes": [],
+  "type": "object",
+  "properties": {
+    "item_id": {
+      "x-arrow-type": "string",
+      "description": "",
+      "x-nullable": false
+    },
+    "fpg_id": {
+      "x-arrow-type": "string",
+      "description": "",
+      "x-nullable": false
+    },
+    "week_start": {
+      "x-arrow-type": "date32[day]",
+      "description": "",
+      "x-nullable": false
+    },
+    "week_end": {
+      "x-arrow-type": "date32[day]",
+      "description": "",
+      "x-nullable": false
+    },
+    "offer_state": {
+      "x-arrow-type": "string",
+      "description": "",
+      "enum": [
+        "offered",
+        "not_offered"
+      ],
+      "x-nullable": false
+    },
+    "offered_days": {
+      "x-arrow-type": "int64",
+      "description": "Days in the interval the item was offered (0-7).",
+      "x-unit": "days",
+      "x-nullable": false
+    },
+    "available_days": {
+      "x-arrow-type": "int64",
+      "description": "Days with sellable stock; null when unknown.",
+      "x-unit": "days",
+      "x-nullable": true
+    },
+    "exposure_fraction": {
+      "x-arrow-type": "double",
+      "description": "offered_days / 7.",
+      "x-unit": "fraction",
+      "x-nullable": false
+    },
+    "stockout_state": {
+      "x-arrow-type": "string",
+      "description": "",
+      "enum": [
+        "in_stock",
+        "stockout",
+        "unknown"
+      ],
+      "x-nullable": false
+    },
+    "known_at": {
+      "x-arrow-type": "date32[day]",
+      "description": "Date the realized availability became known.",
+      "x-nullable": false
+    }
+  },
+  "required": [
+    "item_id",
+    "fpg_id",
+    "week_start",
+    "week_end",
+    "offer_state",
+    "offered_days",
+    "available_days",
+    "exposure_fraction",
+    "stockout_state",
+    "known_at"
+  ]
+}

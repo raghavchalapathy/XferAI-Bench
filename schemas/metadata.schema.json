@@ -1,0 +1,672 @@
+{
+  "$defs": {
+    "CohortSpec": {
+      "additionalProperties": false,
+      "properties": {
+        "stages": {
+          "additionalProperties": {
+            "$ref": "#/$defs/StageWindow"
+          },
+          "title": "Stages",
+          "type": "object"
+        },
+        "selection_weights": {
+          "additionalProperties": {
+            "type": "number"
+          },
+          "title": "Selection Weights",
+          "type": "object"
+        },
+        "ranked_qualifications": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Ranked Qualifications",
+          "type": "array"
+        },
+        "ranked_launch_types": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Ranked Launch Types",
+          "type": "array"
+        },
+        "test_fit_stages": {
+          "description": "Cohorts whose (already available) labels may train test-stage fits after selection is frozen.",
+          "items": {
+            "type": "string"
+          },
+          "title": "Test Fit Stages",
+          "type": "array"
+        }
+      },
+      "required": [
+        "stages"
+      ],
+      "title": "CohortSpec",
+      "type": "object"
+    },
+    "DatasetInfo": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "version": {
+          "title": "Version",
+          "type": "string"
+        },
+        "description": {
+          "default": "",
+          "title": "Description",
+          "type": "string"
+        },
+        "synthetic": {
+          "default": false,
+          "title": "Synthetic",
+          "type": "boolean"
+        },
+        "expected_hash": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "If set, loading fails unless the canonical content hash matches.",
+          "title": "Expected Hash"
+        },
+        "generator": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Generator"
+        }
+      },
+      "required": [
+        "id",
+        "version"
+      ],
+      "title": "DatasetInfo",
+      "type": "object"
+    },
+    "DonorPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "scope": {
+          "default": "all origin-valid observations at non-held-out pairs and locations",
+          "title": "Scope",
+          "type": "string"
+        },
+        "exclusions": {
+          "const": "stage_holdout_pairs_and_new_fpgs",
+          "default": "stage_holdout_pairs_and_new_fpgs",
+          "title": "Exclusions",
+          "type": "string"
+        },
+        "consistent_exposure_window_weeks": {
+          "default": 52,
+          "maximum": 156,
+          "minimum": 4,
+          "title": "Consistent Exposure Window Weeks",
+          "type": "integer"
+        },
+        "consistent_exposure_min_fraction": {
+          "default": 0.9,
+          "exclusiveMinimum": 0,
+          "maximum": 1,
+          "title": "Consistent Exposure Min Fraction",
+          "type": "number"
+        },
+        "national_aggregate_note": {
+          "default": "National aggregates are computed by the engine from observations so exclusions are enforceable.",
+          "title": "National Aggregate Note",
+          "type": "string"
+        }
+      },
+      "title": "DonorPolicy",
+      "type": "object"
+    },
+    "FeatureSpec": {
+      "additionalProperties": false,
+      "properties": {
+        "households": {
+          "$ref": "#/$defs/HouseholdSpec"
+        },
+        "propensity": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PropensitySpec"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "seasonality": {
+          "$ref": "#/$defs/SeasonalitySpec"
+        },
+        "demographic_share_columns": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Demographic Share Columns",
+          "type": "array"
+        },
+        "item_rank_feature": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "item_prelaunch_rank",
+          "title": "Item Rank Feature"
+        },
+        "item_affinity_prefix": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "item_affinity_",
+          "title": "Item Affinity Prefix"
+        }
+      },
+      "title": "FeatureSpec",
+      "type": "object"
+    },
+    "HouseholdSpec": {
+      "additionalProperties": false,
+      "properties": {
+        "column": {
+          "default": "households",
+          "title": "Column",
+          "type": "string"
+        },
+        "unit": {
+          "default": "households",
+          "title": "Unit",
+          "type": "string"
+        },
+        "population_definition": {
+          "default": "non-overlapping serviceable households",
+          "title": "Population Definition",
+          "type": "string"
+        },
+        "overlap_policy": {
+          "const": "non_overlapping",
+          "default": "non_overlapping",
+          "title": "Overlap Policy",
+          "type": "string"
+        }
+      },
+      "title": "HouseholdSpec",
+      "type": "object"
+    },
+    "MetricSpec": {
+      "additionalProperties": false,
+      "properties": {
+        "primary": {
+          "const": "WMAPE",
+          "default": "WMAPE",
+          "title": "Primary",
+          "type": "string"
+        },
+        "definitions": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Definitions",
+          "type": "object"
+        },
+        "zero_denominator": {
+          "default": "undefined: JSON null with reason; N/A in reports; no epsilon",
+          "title": "Zero Denominator",
+          "type": "string"
+        },
+        "eligible_weeks": {
+          "const": "measured_offered_weeks",
+          "default": "measured_offered_weeks",
+          "title": "Eligible Weeks",
+          "type": "string"
+        },
+        "failure_policy": {
+          "const": "unrankable",
+          "default": "unrankable",
+          "title": "Failure Policy",
+          "type": "string"
+        }
+      },
+      "title": "MetricSpec",
+      "type": "object"
+    },
+    "Privacy": {
+      "additionalProperties": false,
+      "properties": {
+        "runtime_network": {
+          "const": "off",
+          "default": "off",
+          "title": "Runtime Network",
+          "type": "string"
+        },
+        "service_calls": {
+          "default": "off",
+          "enum": [
+            "off",
+            "opt_in"
+          ],
+          "title": "Service Calls",
+          "type": "string"
+        },
+        "show_raw_rows_in_report": {
+          "default": false,
+          "title": "Show Raw Rows In Report",
+          "type": "boolean"
+        }
+      },
+      "title": "Privacy",
+      "type": "object"
+    },
+    "PropensitySpec": {
+      "additionalProperties": false,
+      "properties": {
+        "feature_name": {
+          "default": "propensity_rate",
+          "title": "Feature Name",
+          "type": "string"
+        },
+        "unit": {
+          "const": "units_per_household_per_week",
+          "default": "units_per_household_per_week",
+          "title": "Unit",
+          "type": "string"
+        },
+        "season_neutral": {
+          "default": true,
+          "title": "Season Neutral",
+          "type": "boolean"
+        },
+        "includes_demographic_affinity": {
+          "default": true,
+          "title": "Includes Demographic Affinity",
+          "type": "boolean"
+        },
+        "provenance": {
+          "default": "origin-valid estimate from permitted pre-origin data",
+          "title": "Provenance",
+          "type": "string"
+        }
+      },
+      "title": "PropensitySpec",
+      "type": "object"
+    },
+    "ResourceLimits": {
+      "additionalProperties": false,
+      "properties": {
+        "max_run_seconds": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Max Run Seconds"
+        },
+        "max_fit_seconds_per_method": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Max Fit Seconds Per Method"
+        }
+      },
+      "title": "ResourceLimits",
+      "type": "object"
+    },
+    "Rights": {
+      "additionalProperties": false,
+      "properties": {
+        "data_owner": {
+          "title": "Data Owner",
+          "type": "string"
+        },
+        "permitted_use": {
+          "title": "Permitted Use",
+          "type": "string"
+        },
+        "input_license": {
+          "default": "not declared",
+          "title": "Input License",
+          "type": "string"
+        }
+      },
+      "required": [
+        "data_owner",
+        "permitted_use"
+      ],
+      "title": "Rights",
+      "type": "object"
+    },
+    "SeasonalitySpec": {
+      "additionalProperties": false,
+      "properties": {
+        "estimator": {
+          "const": "donor_category_ratio_v1",
+          "default": "donor_category_ratio_v1",
+          "title": "Estimator",
+          "type": "string"
+        },
+        "unit": {
+          "default": "dimensionless",
+          "title": "Unit",
+          "type": "string"
+        },
+        "normalization": {
+          "default": "mean one over the 52-position annual cycle",
+          "title": "Normalization",
+          "type": "string"
+        },
+        "max_cycles": {
+          "default": 3,
+          "maximum": 10,
+          "minimum": 1,
+          "title": "Max Cycles",
+          "type": "integer"
+        },
+        "smoothing_window": {
+          "default": 3,
+          "maximum": 9,
+          "minimum": 1,
+          "title": "Smoothing Window",
+          "type": "integer"
+        }
+      },
+      "title": "SeasonalitySpec",
+      "type": "object"
+    },
+    "StageWindow": {
+      "additionalProperties": false,
+      "properties": {
+        "origin_start": {
+          "title": "Origin Start",
+          "type": "string"
+        },
+        "origin_end": {
+          "title": "Origin End",
+          "type": "string"
+        }
+      },
+      "required": [
+        "origin_start",
+        "origin_end"
+      ],
+      "title": "StageWindow",
+      "type": "object"
+    },
+    "TableSource": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "format": {
+          "enum": [
+            "csv",
+            "parquet"
+          ],
+          "title": "Format",
+          "type": "string"
+        },
+        "columns": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "canonical column -> source column; omitted means same name.",
+          "title": "Columns",
+          "type": "object"
+        },
+        "extra_columns": {
+          "description": "Additional declared source columns kept.",
+          "items": {
+            "type": "string"
+          },
+          "title": "Extra Columns",
+          "type": "array"
+        }
+      },
+      "required": [
+        "path",
+        "format"
+      ],
+      "title": "TableSource",
+      "type": "object"
+    },
+    "TargetSpec": {
+      "additionalProperties": false,
+      "properties": {
+        "column": {
+          "default": "units",
+          "title": "Column",
+          "type": "string"
+        },
+        "name": {
+          "default": "observed_unit_sales",
+          "title": "Name",
+          "type": "string"
+        },
+        "unit": {
+          "default": "item_units",
+          "title": "Unit",
+          "type": "string"
+        },
+        "nonnegative": {
+          "default": true,
+          "title": "Nonnegative",
+          "type": "boolean"
+        },
+        "returns_policy": {
+          "default": "gross units; no returns in this dataset",
+          "title": "Returns Policy",
+          "type": "string"
+        },
+        "aggregation": {
+          "const": "sum_weekly",
+          "default": "sum_weekly",
+          "title": "Aggregation",
+          "type": "string"
+        }
+      },
+      "title": "TargetSpec",
+      "type": "object"
+    },
+    "TimeSpec": {
+      "additionalProperties": false,
+      "properties": {
+        "timezone": {
+          "default": "America/Los_Angeles",
+          "title": "Timezone",
+          "type": "string"
+        },
+        "frequency": {
+          "const": "weekly",
+          "default": "weekly",
+          "title": "Frequency",
+          "type": "string"
+        },
+        "week_start": {
+          "default": "Monday",
+          "enum": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday"
+          ],
+          "title": "Week Start",
+          "type": "string"
+        },
+        "interval": {
+          "const": "[start,end)",
+          "default": "[start,end)",
+          "title": "Interval",
+          "type": "string"
+        },
+        "reporting_delay_days": {
+          "default": 7,
+          "maximum": 365,
+          "minimum": 0,
+          "title": "Reporting Delay Days",
+          "type": "integer"
+        },
+        "horizon_weeks": {
+          "default": 52,
+          "maximum": 156,
+          "minimum": 1,
+          "title": "Horizon Weeks",
+          "type": "integer"
+        },
+        "origin_rule": {
+          "const": "first_offer_week",
+          "default": "first_offer_week",
+          "title": "Origin Rule",
+          "type": "string"
+        },
+        "partial_week_policy": {
+          "const": "score_as_observed_no_origin_advance",
+          "default": "score_as_observed_no_origin_advance",
+          "title": "Partial Week Policy",
+          "type": "string"
+        },
+        "dates_interpretation": {
+          "default": "Local calendar dates; known_at means available from 00:00 local on that date.",
+          "title": "Dates Interpretation",
+          "type": "string"
+        }
+      },
+      "title": "TimeSpec",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "dataset": {
+      "$ref": "#/$defs/DatasetInfo"
+    },
+    "domain_plugin": {
+      "default": "retail",
+      "title": "Domain Plugin",
+      "type": "string"
+    },
+    "task_profile": {
+      "const": "retail_pair_zero_v1",
+      "default": "retail_pair_zero_v1",
+      "title": "Task Profile",
+      "type": "string"
+    },
+    "entity_roles": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Entity Roles",
+      "type": "object"
+    },
+    "request_key": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Request Key",
+      "type": "array"
+    },
+    "layout": {
+      "const": "multi_table",
+      "default": "multi_table",
+      "title": "Layout",
+      "type": "string"
+    },
+    "time": {
+      "$ref": "#/$defs/TimeSpec"
+    },
+    "target": {
+      "$ref": "#/$defs/TargetSpec"
+    },
+    "tables": {
+      "additionalProperties": {
+        "$ref": "#/$defs/TableSource"
+      },
+      "title": "Tables",
+      "type": "object"
+    },
+    "semantics": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Semantics",
+      "type": "object"
+    },
+    "features": {
+      "$ref": "#/$defs/FeatureSpec"
+    },
+    "donor_policy": {
+      "$ref": "#/$defs/DonorPolicy"
+    },
+    "cohorts": {
+      "$ref": "#/$defs/CohortSpec"
+    },
+    "metrics": {
+      "$ref": "#/$defs/MetricSpec"
+    },
+    "resource_limits": {
+      "$ref": "#/$defs/ResourceLimits"
+    },
+    "rights": {
+      "$ref": "#/$defs/Rights"
+    },
+    "privacy": {
+      "$ref": "#/$defs/Privacy"
+    }
+  },
+  "required": [
+    "dataset",
+    "tables",
+    "cohorts",
+    "rights"
+  ],
+  "title": "Metadata",
+  "type": "object"
+}

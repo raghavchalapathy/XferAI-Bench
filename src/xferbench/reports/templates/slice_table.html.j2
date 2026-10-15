@@ -1,0 +1,5 @@
+{% if rows %}
+<div class="tw"><table><thead><tr><th>Variant</th><th>Scenario</th><th>Group</th><th class="n">Launches</th><th class="n">Weeks</th><th class="n">Actual</th><th class="n">Forecast</th><th class="n">WMAPE</th><th class="n">Bias</th><th class="n">MAE</th></tr></thead><tbody>
+{% for r in rows %}<tr><td><code>{{ r.variant_id }}</code></td><td>{{ r.scenario }}</td><td>{{ r.value }}</td><td class="n">{{ r.n_launches }}</td><td class="n">{{ r.n_eligible }}</td><td class="n">{{ r.actual_total|num(0) }}</td><td class="n">{{ r.forecast_total|num(1) }}</td><td class="n">{{ r.WMAPE|pct }}</td><td class="n">{{ r.Bias|pct }}</td><td class="n">{{ r.MAE|num(3) }}</td></tr>{% endfor %}
+</tbody></table></div>
+{% else %}<p class="muted">No rows.</p>{% endif %}

@@ -1,0 +1,21 @@
+# Tested core pins (macOS arm64, Python 3.11.5 and 3.13.0, 2026-10-15). Use with: pip install -c constraints/core.txt .
+# numpy 2.4.6 was tested on 3.11; pip selected numpy 2.5.4 on 3.13, which also passed.
+annotated-doc==0.0.5
+annotated-types==0.8.0
+Jinja2==3.1.6
+markdown-it-py==4.2.0
+MarkupSafe==3.0.4
+mdurl==0.1.2
+numpy==2.4.6
+pandas==3.0.6
+pyarrow==26.0.0
+pydantic==2.14.1
+pydantic_core==2.50.1
+Pygments==2.21.0
+python-dateutil==2.9.0.post0
+rich==15.0.0
+shellingham==1.5.4
+six==1.17.0
+typer==0.27.3
+typing-inspection==0.4.4
+typing_extensions==4.16.0

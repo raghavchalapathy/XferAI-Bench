@@ -1,0 +1,13 @@
+{
+  "policy_version": "1.0",
+  "objective": "equal_scenario_wmape",
+  "scenario_weights": {
+    "PAIR0-E": 0.5,
+    "PAIR0-N": 0.5
+  },
+  "max_abs_bias": 0.5,
+  "min_coverage": 1.0,
+  "max_total_seconds": null,
+  "undefined_metric_rule": "ineligible",
+  "board": "cold_c0"
+}

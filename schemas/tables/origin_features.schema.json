@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "xferbench canonical table: origin_features",
+  "description": "Origin snapshots of company features (e.g. propensity P, item rank, item-cluster affinity).",
+  "x-primary-key": [
+    "feature_name",
+    "scope",
+    "item_id",
+    "fpg_id",
+    "scope_id",
+    "origin"
+  ],
+  "x-required-table": false,
+  "x-dynamic-prefixes": [],
+  "type": "object",
+  "properties": {
+    "feature_name": {
+      "x-arrow-type": "string",
+      "description": "",
+      "x-nullable": false
+    },
+    "scope": {
+      "x-arrow-type": "string",
+      "description": "",
+      "enum": [
+        "pair",
+        "item",
+        "location",
+        "category",
+        "global"
+      ],
+      "x-nullable": false
+    },
+    "item_id": {
+      "x-arrow-type": "string",
+      "description": "",
+      "x-nullable": true
+    },
+    "fpg_id": {
+      "x-arrow-type": "string",
+      "description": "",
+      "x-nullable": true
+    },
+    "scope_id": {
+      "x-arrow-type": "string",
+      "description": "",
+      "x-nullable": true
+    },
+    "origin": {
+      "x-arrow-type": "date32[day]",
+      "description": "",
+      "x-nullable": false
+    },
+    "value": {
+      "x-arrow-type": "double",
+      "description": "",
+      "x-nullable": true
+    },
+    "unit": {
+      "x-arrow-type": "string",
+      "description": "",
+      "x-nullable": false
+    },
+    "known_at": {
+      "x-arrow-type": "date32[day]",
+      "description": "",
+      "x-nullable": false
+    },
+    "source_version": {
+      "x-arrow-type": "string",
+      "description": "",
+      "x-nullable": false
+    }
+  },
+  "required": [
+    "feature_name",
+    "scope",
+    "item_id",
+    "fpg_id",
+    "scope_id",
+    "origin",
+    "value",
+    "unit",
+    "known_at",
+    "source_version"
+  ]
+}

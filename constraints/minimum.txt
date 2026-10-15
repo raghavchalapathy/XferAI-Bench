@@ -1,0 +1,8 @@
+# Lowest declared core versions; full test suite passed with these on macOS arm64, Python 3.11.5 (2026-10-15).
+# CI-only check of the lower bounds in pyproject.toml; prefer constraints/core.txt for normal use.
+Jinja2==3.1.2
+numpy==1.26.4
+pandas==2.2.0
+pyarrow==15.0.0
+pydantic==2.6.4
+typer==0.16.0

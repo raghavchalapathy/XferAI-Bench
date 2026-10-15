@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "xferbench canonical table: donors",
+  "description": "Optional pre-aggregated national/donor item series with household coverage.",
+  "x-primary-key": [
+    "item_id",
+    "donor_scope_id",
+    "week_start"
+  ],
+  "x-required-table": false,
+  "x-dynamic-prefixes": [],
+  "type": "object",
+  "properties": {
+    "item_id": {
+      "x-arrow-type": "string",
+      "description": "",
+      "x-nullable": false
+    },
+    "donor_scope_id": {
+      "x-arrow-type": "string",
+      "description": "",
+      "x-nullable": false
+    },
+    "week_start": {
+      "x-arrow-type": "date32[day]",
+      "description": "",
+      "x-nullable": false
+    },
+    "week_end": {
+      "x-arrow-type": "date32[day]",
+      "description": "",
+      "x-nullable": false
+    },
+    "units": {
+      "x-arrow-type": "double",
+      "description": "",
+      "x-unit": "item_units",
+      "x-nullable": true
+    },
+    "household_coverage": {
+      "x-arrow-type": "double",
+      "description": "",
+      "x-unit": "household_weeks",
+      "x-nullable": false
+    },
+    "known_at": {
+      "x-arrow-type": "date32[day]",
+      "description": "",
+      "x-nullable": false
+    },
+    "source_version": {
+      "x-arrow-type": "string",
+      "description": "",
+      "x-nullable": false
+    }
+  },
+  "required": [
+    "item_id",
+    "donor_scope_id",
+    "week_start",
+    "week_end",
+    "units",
+    "household_coverage",
+    "known_at",
+    "source_version"
+  ]
+}

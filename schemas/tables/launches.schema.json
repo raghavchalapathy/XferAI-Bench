@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "xferbench canonical table: launches",
+  "description": "Natural (or explicitly simulated) first-offer events of an existing item at a location.",
+  "x-primary-key": [
+    "launch_id"
+  ],
+  "x-required-table": true,
+  "x-dynamic-prefixes": [],
+  "type": "object",
+  "properties": {
+    "launch_id": {
+      "x-arrow-type": "string",
+      "description": "",
+      "x-nullable": false
+    },
+    "pair_id": {
+      "x-arrow-type": "string",
+      "description": "",
+      "x-nullable": false
+    },
+    "item_id": {
+      "x-arrow-type": "string",
+      "description": "",
+      "x-nullable": false
+    },
+    "fpg_id": {
+      "x-arrow-type": "string",
+      "description": "",
+      "x-nullable": false
+    },
+    "first_offer_at": {
+      "x-arrow-type": "date32[day]",
+      "description": "Exact first offer date.",
+      "x-nullable": false
+    },
+    "first_offer_week": {
+      "x-arrow-type": "date32[day]",
+      "description": "Week start containing first_offer_at.",
+      "x-nullable": false
+    },
+    "fpg_open_at": {
+      "x-arrow-type": "date32[day]",
+      "description": "",
+      "x-nullable": true
+    },
+    "origin": {
+      "x-arrow-type": "date32[day]",
+      "description": "Cold forecast origin; equals first_offer_week (no interim pair sales).",
+      "x-nullable": false
+    },
+    "scenario": {
+      "x-arrow-type": "string",
+      "description": "",
+      "enum": [
+        "PAIR0-E",
+        "PAIR0-N"
+      ],
+      "x-nullable": false
+    },
+    "qualification": {
+      "x-arrow-type": "string",
+      "description": "",
+      "enum": [
+        "qualified",
+        "edge_fixture",
+        "disqualified"
+      ],
+      "x-nullable": false
+    },
+    "launch_type": {
+      "x-arrow-type": "string",
+      "description": "",
+      "enum": [
+        "natural",
+        "simulated"
+      ],
+      "x-nullable": false
+    },
+    "cohort_id": {
+      "x-arrow-type": "string",
+      "description": "",
+      "x-nullable": false
+    },
+    "fixture_kind": {
+      "x-arrow-type": "string",
+      "description": "Edge-fixture label (partial_week, stockouts, missing_targets, ...).",
+      "x-nullable": true
+    }
+  },
+  "required": [
+    "launch_id",
+    "pair_id",
+    "item_id",
+    "fpg_id",
+    "first_offer_at",
+    "first_offer_week",
+    "fpg_open_at",
+    "origin",
+    "scenario",
+    "qualification",
+    "launch_type",
+    "cohort_id"
+  ]
+}

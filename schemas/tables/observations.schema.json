@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "xferbench canonical table: observations",
+  "description": "One row per offered item-location week with measured sales or an explicit missing record.",
+  "x-primary-key": [
+    "item_id",
+    "fpg_id",
+    "week_start"
+  ],
+  "x-required-table": true,
+  "x-dynamic-prefixes": [],
+  "type": "object",
+  "properties": {
+    "item_id": {
+      "x-arrow-type": "string",
+      "description": "Stable item identifier, preserved as a string.",
+      "x-nullable": false
+    },
+    "fpg_id": {
+      "x-arrow-type": "string",
+      "description": "Forecast Pixel Group (company demand area) identifier.",
+      "x-nullable": false
+    },
+    "week_start": {
+      "x-arrow-type": "date32[day]",
+      "description": "Inclusive interval start (declared week boundary).",
+      "x-nullable": false
+    },
+    "week_end": {
+      "x-arrow-type": "date32[day]",
+      "description": "Exclusive interval end; week_start + 7 days.",
+      "x-nullable": false
+    },
+    "units": {
+      "x-arrow-type": "double",
+      "description": "Observed unit sales; null only when observation_state='missing'. Zero is a real observation.",
+      "x-unit": "item_units",
+      "x-nullable": true
+    },
+    "observation_state": {
+      "x-arrow-type": "string",
+      "description": "observed | observed_censored (stock-limited sales) | missing (no measurement).",
+      "enum": [
+        "observed",
+        "observed_censored",
+        "missing"
+      ],
+      "x-nullable": false
+    },
+    "known_at": {
+      "x-arrow-type": "date32[day]",
+      "description": "Date the measurement became available (reporting delay).",
+      "x-nullable": false
+    }
+  },
+  "required": [
+    "item_id",
+    "fpg_id",
+    "week_start",
+    "week_end",
+    "units",
+    "observation_state",
+    "known_at"
+  ]
+}

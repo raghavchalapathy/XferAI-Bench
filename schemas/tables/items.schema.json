@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "xferbench canonical table: items",
+  "description": "Item attributes, versioned by effective_from/known_at.",
+  "x-primary-key": [
+    "item_id",
+    "effective_from"
+  ],
+  "x-required-table": true,
+  "x-dynamic-prefixes": [],
+  "type": "object",
+  "properties": {
+    "item_id": {
+      "x-arrow-type": "string",
+      "description": "",
+      "x-nullable": false
+    },
+    "category": {
+      "x-arrow-type": "string",
+      "description": "Category; null means unknown.",
+      "x-nullable": true
+    },
+    "product_type": {
+      "x-arrow-type": "string",
+      "description": "",
+      "x-nullable": true
+    },
+    "seasonality_class": {
+      "x-arrow-type": "string",
+      "description": "Declared business class, e.g. seasonal or replenishable.",
+      "x-nullable": true
+    },
+    "effective_from": {
+      "x-arrow-type": "date32[day]",
+      "description": "",
+      "x-nullable": false
+    },
+    "known_at": {
+      "x-arrow-type": "date32[day]",
+      "description": "",
+      "x-nullable": false
+    }
+  },
+  "required": [
+    "item_id",
+    "category",
+    "product_type",
+    "effective_from",
+    "known_at"
+  ]
+}
