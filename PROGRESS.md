@@ -82,7 +82,9 @@ stop (partial, unranked), not for checkpoint retries. 10-12 concern adapters fro
 - `reference/` is git-ignored so the research kit is never versioned or pushed from this repo by accident.
 - The full tiny dataset (5.4 MB) is not committed; `examples/` holds metadata, docs and 40-row previews,
   and the data is regenerated deterministically by `xferbench synth generate`.
-- No remote created, nothing pushed or published; no paid calls, downloads or telemetry.
+- Git remote `origin` = https://github.com/raghavchalapathy/XferAI-Bench (public). Milestone A was pushed to
+  `main` on 2026-10-15 at the owner's request; later changes are committed locally and pushed only after the
+  owner confirms. Nothing is published to PyPI; no paid calls, downloads or telemetry.
 
 ## Remaining work
 
