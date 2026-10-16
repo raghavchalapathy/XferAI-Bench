@@ -51,6 +51,13 @@ def _summary(run: Path) -> dict:
 def compare_runs(runs: list[Path], out: Path, allow_incompatible: bool = False) -> dict:
     if len(runs) < 2:
         raise CompareError("compare needs at least two run directories")
+    from xferbench.util import read_json
+
+    classes = {(read_json(r / "run_manifest.json").get("data") or {}).get("data_class", "unlabeled") for r in runs}
+    if len(classes) > 1:
+        raise CompareError(
+            f"refusing to compare runs from different data classes {sorted(classes)} (benchmark vs local)"
+        )
     summaries = [_summary(r) for r in runs]
     mismatches = [k for k in KEYS if len({repr(s[k]) for s in summaries}) > 1]
     if mismatches and not allow_incompatible:

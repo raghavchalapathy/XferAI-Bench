@@ -59,6 +59,7 @@ class RunConfig:
     overwrite: bool = False
     write_report: bool = True
     measure_memory: bool = True
+    data_label: dict[str, Any] | None = None  # see xferbench.data.classes
 
 
 @dataclass
@@ -363,6 +364,13 @@ class BenchmarkRunner:
             from xferbench.reports.html import write_run_report
 
             write_run_report(out, out / "report.html")
+        if (cfg.data_label or {}).get("data_class") == "local":
+            from xferbench.data.classes import redact_local_outputs
+
+            ids = set(requests["request_id"].astype(str)) | set(requests["item_id"].astype(str))
+            ids |= set(requests["fpg_id"].astype(str))
+            ids |= set(dataset["items"]["item_id"].astype(str)) | set(dataset["locations"]["fpg_id"].astype(str))
+            redact_local_outputs(out, ids, run_id)
         exit_code = {"complete": EXIT_OK, "partial": EXIT_PARTIAL, "cancelled": EXIT_CANCELLED}[status]
         return RunResult(out, status, exit_code, manifest, lb, support_json)
 
@@ -541,6 +549,8 @@ class BenchmarkRunner:
         st = split.stages[self.cfg.stage]
         return {
             "run_schema_version": RUN_SCHEMA_VERSION,
+            "data": self.cfg.data_label
+            or {"data_class": "unlabeled", "benchmark_id": None, "benchmark_version": None, "benchmark_kind": None},
             "run_id": run_id,
             "status": status,
             "stage": self.cfg.stage,

@@ -28,3 +28,8 @@ reference/
 .DS_Store
 .idea/
 .vscode/
+
+# local (user) data and outputs: never commit (docs/DATA_CLASSES.md)
+local/
+*.local.*
+runs/local/

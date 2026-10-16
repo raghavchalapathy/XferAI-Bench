@@ -47,6 +47,7 @@ footer{margin:32px 0 12px;color:var(--muted);font-size:.8rem;border-top:1px soli
   <div class="muted">Dataset <code>{{ m.dataset_id }}</code> {{ m.dataset_version }} &middot; run <code>{{ m.run_id }}</code> &middot; status
     {% if m.status == 'complete' %}<span class="pill ok">complete</span>{% else %}<span class="pill bad">{{ m.status }}</span>{% endif %}
     &middot; created {{ m.created_at }}</div>
+  {% if m.data and m.data.data_class == 'local' %}<div class="banner">LOCAL DATA: results on your own data. Not a benchmark result and not shareable as a leaderboard entry. Entity IDs are replaced by salted hashes; no raw rows are shown.</div>{% elif m.data and m.data.data_class == 'benchmark' %}<div class="muted">Benchmark data: <code>{{ m.data.benchmark_id }}@{{ m.data.benchmark_version }}</code> ({{ m.data.benchmark_kind }}), dataset hash <code>{{ m.dataset_hash[:16] }}</code></div>{% endif %}
   {% if m.synthetic %}<div class="banner">Synthetic data: these results demonstrate software behavior, not real-world model superiority or production readiness.</div>{% endif %}
   <p class="muted">This report helps select methods for further validation. It does not certify production readiness or guarantee business gains.</p>
 </header>

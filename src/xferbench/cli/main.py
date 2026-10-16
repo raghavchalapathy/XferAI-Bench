@@ -6,7 +6,7 @@ import json
 import shutil
 import sys
 from pathlib import Path
-from typing import NoReturn
+from typing import Any, NoReturn
 
 import typer
 
@@ -248,12 +248,43 @@ def doctor(profile: str = typer.Option("core", help=f"One of {sorted(DOCTOR_PROF
     typer.echo(f"profile '{profile}' satisfied")
 
 
+def _resolve_data(
+    benchmark: str | None, local_data: Path | None, metadata: Path | None, out: Path, data_dir: Path | None
+) -> Any:
+    import warnings
+
+    from xferbench.data.classes import DataClassError, check_local_output, resolve_source
+
+    try:
+        with warnings.catch_warnings(record=True) as caught:
+            warnings.simplefilter("always")
+            src = resolve_source(benchmark=benchmark, local_data=local_data, metadata=metadata, data_dir=data_dir)
+        for w in caught:
+            typer.secho(f"warning: {w.message}", fg=typer.colors.YELLOW, err=True)
+        if src.data_class == "local":
+            check_local_output(out)
+    except DataClassError as exc:
+        _fail(str(exc), 2)
+    return src
+
+
 @app.command("run")
 def run_cmd(
-    metadata: Path = typer.Option(...),
     splits: Path = typer.Option(...),
     stage: str = typer.Option(..., help="validation | test"),
     out: Path = typer.Option(...),
+    metadata: Path | None = typer.Option(
+        None, help="Legacy: path to metadata.json. Outside benchmarks/ it is treated as LOCAL data (warning)."
+    ),
+    local_data: Path | None = typer.Option(
+        None, "--local-data", help="Your own data: path to metadata.json. Results are labeled local."
+    ),
+    benchmark: str | None = typer.Option(
+        None, "--benchmark", help="Benchmark data: id@version (see `xferbench benchmarks`) or BENCHMARK.json path."
+    ),
+    benchmark_data: Path | None = typer.Option(
+        None, "--benchmark-data", help="Directory holding (or receiving) the materialized benchmark data."
+    ),
     profile: str = typer.Option("core", help="core | all"),
     methods: str | None = typer.Option(None, help="Comma-separated method IDs (explicit; no substitution)."),
     selection: Path | None = typer.Option(None, help="Frozen selection.json (required for --stage test)."),
@@ -265,8 +296,11 @@ def run_cmd(
 
     if stage not in ("validation", "test"):
         _fail("--stage must be validation or test", 2)
+    if benchmark is not None and benchmark_data is None:
+        _fail("--benchmark needs --benchmark-data DIR", 2)
+    src = _resolve_data(benchmark, local_data, metadata, out, benchmark_data)
     cfg = RunConfig(
-        metadata_path=metadata,
+        metadata_path=src.metadata_path,
         splits_path=splits,
         stage=stage,  # type: ignore[arg-type]
         out=out,
@@ -275,15 +309,25 @@ def run_cmd(
         selection_path=selection,
         max_seconds=max_seconds,
         write_report=not no_report,
+        data_label=src.label(),
     )
     try:
         res = BenchmarkRunner(cfg, progress=lambda m: typer.echo(f"  {m}")).run()
     except RunError as exc:
         _fail(str(exc), exc.exit_code)
     _print_board(res.out)
-    typer.echo(f"run {res.manifest['run_id']} status {res.status}; outputs in {res.out}")
+    typer.echo(f"run {res.manifest['run_id']} status {res.status}; data class {src.data_class}; outputs in {res.out}")
     if res.exit_code:
         raise typer.Exit(res.exit_code)
+
+
+@app.command("benchmarks")
+def benchmarks_cmd() -> None:
+    """List built-in benchmark datasets (versioned, hashed)."""
+    from xferbench.data.classes import list_benchmarks
+
+    for b in list_benchmarks():
+        typer.echo(b)
 
 
 def _print_board(run_dir: Path) -> None:
@@ -410,6 +454,31 @@ def schemas_cmd(out: Path = typer.Option(Path("schemas"), help="Directory for ex
         typer.echo(f"wrote {p}")
 
 
+def _demo_label(preset: str, seed: int, content_hash: str) -> dict[str, Any]:
+    """Demo data is benchmark data: built-in manifest when one matches preset+seed, else an unversioned label."""
+    from xferbench.data.classes import DataClassError, load_benchmark_manifest
+
+    try:
+        man, _ = load_benchmark_manifest(f"synthetic-{preset}@1.0.0")
+    except DataClassError:
+        man = None
+    if man and man["source"].get("seed") == seed:
+        if man["dataset_hash"] and man["dataset_hash"] != content_hash:
+            _fail(f"generated data hash {content_hash} != benchmark manifest {man['dataset_hash']}", 2)
+        return {
+            "data_class": "benchmark",
+            "benchmark_id": man["benchmark_id"],
+            "benchmark_version": man["version"],
+            "benchmark_kind": "synthetic",
+        }
+    return {
+        "data_class": "benchmark",
+        "benchmark_id": f"synthetic-{preset}-seed{seed}",
+        "benchmark_version": "unversioned",
+        "benchmark_kind": "synthetic",
+    }
+
+
 @app.command("demo")
 def demo_cmd(preset: str = typer.Option("tiny"), seed: int = typer.Option(42), out: Path = typer.Option(...)) -> None:
     """Complete offline demo: generate -> validate -> split -> validation run -> select -> test run -> report."""
@@ -438,6 +507,8 @@ def demo_cmd(preset: str = typer.Option("tiny"), seed: int = typer.Option(42), o
     if errors:
         _fail("\n".join(str(e) for e in errors))
     typer.echo(f"      {len(issues)} notes, 0 errors; dataset hash {ds.content_hash[:16]}")
+    label = _demo_label(preset, seed, ds.content_hash)
+    typer.echo(f"      data class: benchmark {label['benchmark_id']}@{label['benchmark_version']}")
     typer.echo("[3/7] building frozen splits")
     split = domain.build_splits(ds)
     write_json(out / "splits.json", split.model_dump(mode="json"))
@@ -449,7 +520,9 @@ def demo_cmd(preset: str = typer.Option("tiny"), seed: int = typer.Option(42), o
     try:
         typer.echo("[4/7] validation run (profile core)")
         val = BenchmarkRunner(
-            RunConfig(md_path, out / "splits.json", "validation", out / "validation-run", profile="core")
+            RunConfig(
+                md_path, out / "splits.json", "validation", out / "validation-run", profile="core", data_label=label
+            )
         ).run()
         _print_board(val.out)
         typer.echo("[5/7] freezing selection on validation only")
@@ -458,7 +531,14 @@ def demo_cmd(preset: str = typer.Option("tiny"), seed: int = typer.Option(42), o
         typer.echo(f"      recommended: {sel.recommended}")
         typer.echo("[6/7] test run with frozen selection")
         test = BenchmarkRunner(
-            RunConfig(md_path, out / "splits.json", "test", out / "test-run", selection_path=out / "selection.json")
+            RunConfig(
+                md_path,
+                out / "splits.json",
+                "test",
+                out / "test-run",
+                selection_path=out / "selection.json",
+                data_label=label,
+            )
         ).run()
         _print_board(test.out)
     except RunError as exc:
