@@ -23,7 +23,7 @@ from xferbench.contracts.methods import (
 from xferbench.data.io import Dataset
 from xferbench.methods.base import Method
 
-REGISTRY_VERSION = "2026.10.15-a"
+REGISTRY_VERSION = "2026.10.16-a"
 
 
 @dataclass(frozen=True)
@@ -114,12 +114,24 @@ def _builtin() -> list[RegistryEntry]:
         M1FlatRule,
         M2SeasonalRule,
     )
+    from xferbench.methods.boosting import M4LightGBM
 
     core = ("core", "all")
     entries = [
         RegistryEntry(cls.spec, "implemented", cls, profiles=core)
         for cls in (B0NationalRate, B1NationalSeasonal, B2AnalogRate, B2RawUnits, M1FlatRule, M2SeasonalRule)
     ]
+    entries.append(
+        RegistryEntry(
+            M4LightGBM.spec,
+            "implemented",
+            M4LightGBM,
+            milestone="B",
+            profiles=core,
+            reason="",
+            remedy="",
+        )
+    )
     own = _rights("Apache-2.0", "xferbench (this package)")
     lgbm = _rights(
         "MIT",
@@ -163,18 +175,6 @@ def _builtin() -> list[RegistryEntry]:
             reason="M3 formula unspecified: no substitute is invented",
             remedy="supply a recipe file matching xferbench.methods.custom.M3RecipeSpec with its documented "
             "source; the executing adapter is Milestone C",
-        ),
-        _planned(
-            "M4.lightgbm",
-            "boosting",
-            "Global LightGBM (Poisson/Tweedie)",
-            "cold_c0",
-            "native",
-            "boosting",
-            ["lightgbm"],
-            lgbm,
-            "B",
-            "Pooled feature model; no own-pair lags; horizon/calendar features.",
         ),
         _planned(
             "M4.xgboost",
