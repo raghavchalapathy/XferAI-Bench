@@ -98,3 +98,14 @@ def test_explicit_research_only_needs_flag(tiny_split_path: Path) -> None:
 def test_standard_run_labeled_standard(tiny_runs: dict[str, Path]) -> None:
     man = json.loads((tiny_runs["validation"] / "run_manifest.json").read_text())
     assert man["usage_label"] == "standard"
+
+
+def test_tabpfn_points_at_pinned_2_5_and_stays_research_only() -> None:
+    from xferbench.methods.registry import get_entry
+
+    e = get_entry("FM.tabpfn_ts")
+    r = e.spec.rights
+    assert r.weights_revision == "6c45f3a6d0d07c6c5f62572e04a0c2929de91b8b"
+    assert "tabpfn_2_5" in r.weights and "ac1d23429431a622" in r.weights
+    assert "tabpfn_3_5" not in r.weights and "3.5 licence unread" in r.notes
+    assert e.research_only and e.static_eligibility == "license_blocked"

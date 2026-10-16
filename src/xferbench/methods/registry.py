@@ -23,7 +23,7 @@ from xferbench.contracts.methods import (
 from xferbench.data.io import Dataset
 from xferbench.methods.base import Method
 
-REGISTRY_VERSION = "2026.10.16-b"
+REGISTRY_VERSION = "2026.10.16-c"
 
 
 @dataclass(frozen=True)
@@ -478,15 +478,17 @@ def _builtin() -> list[RegistryEntry]:
             _rights(
                 "Apache-2.0 (wrapper)",
                 "https://github.com/PriorLabs/tabpfn-time-series",
-                weights="Prior-Labs/tabpfn_3_5 (custom non-commercial license); TabPFN-v2-reg separate terms",
-                weights_revision="06bf2ba35c80a92a3b9abb436b99cf49e7a0365e",
+                weights="Prior-Labs/tabpfn_2_5 (TABPFN-2.5 License v1.1, non-commercial/non-production; licence sha256 "
+                "ac1d23429431a622b91c73db741868e69a0140d401ebb20b9e869a835e036e28)",
+                weights_revision="6c45f3a6d0d07c6c5f62572e04a0c2929de91b8b",
+                notes="TabPFN 3.5 licence unread: no 3.5 weights are pulled until a licence read is reviewed",
                 commercial="restricted",
             ),
             "C",
             "Wrapper drops static/past-only covariates.",
             eligibility="license_blocked",
             statistic="quantile",
-            reason="default TabPFN 3.5 weights are non-commercial; v2-reg terms not reviewed for this use",
+            reason="TabPFN-2.5 weights are non-commercial/non-production (licence v1.1 s1c, s2b, s2d); TabPFN 3.5 licence unread",
             remedy="pin a checkpoint with a verified grant and review its obligations",
             research_only=True,
         ),

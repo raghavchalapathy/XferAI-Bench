@@ -148,3 +148,12 @@ ablation not added (kept out to avoid any anchor division in the default path).
   `EXT.pop` adapter are excluded from every default profile; explicit use needs `--allow-research-only` (exit 2
   otherwise) and the run manifest records `usage_label: internal_research_only`. Registry 2026.10.16-b (30 entries).
 - Tests: `tests/integration/test_licence_gates.py` (7 tests). Suite: 101 passed; ruff, format and mypy clean.
+
+## Session 2026-10-16 (reviewer follow-ups)
+
+- Ranking heading in report.html, summary.md and the CLI board now reads "Interface check: method ordering on this
+  run (real benchmark rankings pending)" with a note that synthetic runs only test the interface
+  (`tests/integration/test_ranking_heading.py`). Evaluator and harness validator unchanged (deferred to cycle 3).
+- FM.tabpfn_ts now points at Prior-Labs/tabpfn_2_5 revision 6c45f3a6d0d07c6c5f62572e04a0c2929de91b8b (TABPFN-2.5
+  License v1.1, sha256 ac1d2342..., non-commercial/non-production), research-only behind --allow-research-only.
+  TabPFN 3.5 licence is unread: no 3.5 weights are pulled until a licence read is reviewed. Registry 2026.10.16-c.
