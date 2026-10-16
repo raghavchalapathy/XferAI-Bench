@@ -37,7 +37,8 @@ dependencies = [
 boosting = ["lightgbm>=4.3", "xgboost>=2.0", "catboost>=1.2"]
 lightgbm = ["lightgbm>=4.3"]  # M4.lightgbm only (implemented and tested)
 neural = ["torch>=2.2", "gluonts>=0.15", "neuralforecast>=1.7", "pytorch-forecasting>=1.0"]
-foundation = ["chronos-forecasting>=2.0"]
+foundation = ["chronos-forecasting>=2.0", "torch>=2.2"]  # FM.chronos2 / FM.chronos_bolt (untested)
+timesfm = ["timesfm>=2.0", "torch>=2.2"]  # FM.timesfm25 (untested)
 intermittent = ["statsforecast>=1.7"]
 services = ["nixtla>=0.6"]
 distributed = ["pyspark>=3.5"]

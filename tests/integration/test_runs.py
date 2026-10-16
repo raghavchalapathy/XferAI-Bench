@@ -62,12 +62,14 @@ def test_core_baselines_are_rankable_and_scenarios_reported(tiny_runs: dict[str,
     metrics = read_json(tiny_runs["validation"] / "metrics.json")
     rows = metrics["boards"]["cold_c0"]
     methods = {r["method_id"] for r in rows}
-    assert {"B0", "B1", "B2", "B2.raw_units", "M1", "M2"} <= methods
+    assert {"B0", "B1", "B2", "B3", "M1", "M2"} <= methods
+    assert "B2.raw_units" not in methods
     for r in rows:
         assert set(r["scenarios"]) == {"PAIR0-E", "PAIR0-N"}
         assert r["rankable"], r["variant_id"]
         assert r["scenarios"]["PAIR0-E"]["n_launches"] > 0 and r["scenarios"]["PAIR0-N"]["n_launches"] > 0
-    assert len({r["variant_id"] for r in rows if r["method_id"] == "B2"}) == 4
+    assert len({r["variant_id"] for r in rows if r["method_id"] == "B3"}) == 4
+    assert len({r["variant_id"] for r in rows if r["method_id"] == "B2"}) == 2
 
 
 def test_same_population_for_every_method(tiny_runs: dict[str, Path]) -> None:
@@ -99,8 +101,8 @@ def test_selection_uses_symmetric_bias_limit(tiny_runs: dict[str, Path]) -> None
         too_biased = any(abs(r["scenarios"][s]["Bias"]) > 0.5 for s in ("PAIR0-E", "PAIR0-N"))
         if too_biased:
             assert r["variant_id"] in {x["variant_id"] for x in sel["rejected_variants"]}
-    if not fam["B2.raw_units"]["eligible"]:
-        assert "Bias" in fam["B2.raw_units"]["reason"]
+    if not fam["B2"]["eligible"]:
+        assert "Bias" in fam["B2"]["reason"]
     assert sel["recommended"] in {f["variant_id"] for f in sel["families"] if f["eligible"]}
 
 
@@ -169,7 +171,7 @@ def test_every_registry_entry_accounted_for(tiny_runs: dict[str, Path]) -> None:
     assert by_id["M3"]["implementation_state"] == "config_required"
     assert by_id["M3"]["execution_state"] == "not_run"
     assert by_id["FM.timesfm3"]["eligibility_state"] == "license_blocked"
-    assert by_id["SVC.timegpt"]["eligibility_state"] == "service_required"
+    assert "SVC.timegpt" not in by_id  # TimeGPT deferred by the user; not listed
     assert by_id["REF.croston_sba"]["eligibility_state"] == "unsupported_history"
     for s in support:
         if s["implementation_state"] != "implemented":
@@ -257,3 +259,18 @@ def test_report_has_both_scenarios_and_no_raw_rows(tiny_runs: dict[str, Path], t
     truth = list((tiny_dir / "_synthetic_truth").glob("*"))
     assert truth, "synthetic truth should be written separately"
     assert "_synthetic_truth" not in html
+
+
+def test_run_manifest_records_git_commit(tiny_runs: dict[str, Path]) -> None:
+    import subprocess
+
+    sw = read_json(tiny_runs["validation"] / "run_manifest.json")["software"]
+    assert "git_commit" in sw and "git_dirty" in sw
+    head = subprocess.run(
+        ["git", "-C", str(Path(__file__).parent), "rev-parse", "HEAD"], capture_output=True, text=True, check=False
+    )
+    if head.returncode == 0:
+        assert sw["git_commit"] == head.stdout.strip()
+        assert isinstance(sw["git_dirty"], bool)
+    else:
+        assert sw["git_commit"] is None

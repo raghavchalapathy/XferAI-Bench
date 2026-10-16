@@ -516,7 +516,9 @@ def steps_cmd(
     label = src.label()
     ds = load_from_metadata_path(src.metadata_path)
     domain = get_domain(ds.metadata.domain_plugin)
-    order = [m for m, _ in getattr(domain, "method_order", ())]
+    order = [m for m, _ in getattr(domain, "method_order", ())] + [
+        m for m, _ in getattr(domain, "method_extra_rows", ())
+    ]
     if not order:
         _fail(f"domain plugin '{domain.id}' declares no method_order", 2)
     runnable, skipped = [], []

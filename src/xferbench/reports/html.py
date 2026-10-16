@@ -182,6 +182,7 @@ def _progression(manifest: dict, entries: list[dict], support: list[dict]) -> di
         tuple(getattr(dom, "scenarios", SCENARIOS)),
         tuple(getattr(dom, "method_order", ())),
         tuple(getattr(dom, "method_comparisons", ())),
+        tuple(getattr(dom, "method_extra_rows", ())),
     )
 
 

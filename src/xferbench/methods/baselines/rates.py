@@ -1,4 +1,5 @@
-"""Transparent cold-pair baselines and business rules: B0, B1, B2, B2.raw_units, M1, M2.
+"""Transparent cold-pair baselines and business rules: B0, B1, B2 (similar-FPG per-household rate x target households), B3 (B2 shrunk toward the national rate),
+M1, M2. The raw similar-FPG unit mean (B2RawUnits) is kept as an unregistered ablation class only.
 
 All produce season-neutral rates per household (or per FPG for the raw ablation) from origin-scoped
 donor data and multiply by a mean-one seasonal profile at most once.
@@ -178,6 +179,9 @@ def analog_donors(ctx: OriginContext, req: Any, cfg: dict[str, Any]) -> tuple[pd
     return cand, ""
 
 
+B2_NOSHRINK_GRID = [
+    {"k": k, "w_households": 0.25, "w_region": 0.25, "distance_offset": 0.05, "min_donors": 1} for k in (3, 8)
+]
 B2_GRID = [
     {"k": k, "kappa": kappa, "w_households": 0.25, "w_region": 0.25, "distance_offset": 0.05, "min_donors": 1}
     for k in (3, 8)
@@ -188,7 +192,24 @@ B2_GRID = [
 class B2AnalogRate(_Base):
     spec = _spec(
         "B2",
-        "Same-item analog FPG rate (household-adjusted, shrunk)",
+        "B2: target households x similar-FPG per-household rate (no shrinkage)",
+        "H_target x r_analog x S, r_analog = inverse-distance-weighted per-household rate of the item in the k most "
+        "similar same-item donor FPGs (demographic shares, log households, region). No shrinkage. Falls back to B1 "
+        "when no comparable donors exist.",
+        features=["households", "demographic shares", "region", "donor observations", "item category"],
+    )
+
+    def variants(self) -> list[dict[str, Any]]:
+        return [dict(c) for c in B2_NOSHRINK_GRID]
+
+    def _one(self, req: Any, ctx: OriginContext, cfg: dict[str, Any], h: int) -> RowResult:
+        return B3AnalogRate()._one(req, ctx, {**cfg, "kappa": 0.0}, h)
+
+
+class B3AnalogRate(_Base):
+    spec = _spec(
+        "B3",
+        "B3: B2 shrunk toward the national rate",
         "H_target x r_B2 x S, r_B2 = (n*weighted donor rate + kappa*r_national)/(n+kappa) over the k most "
         "similar same-item donor FPGs (inverse-distance weights on demographic shares, log households, "
         "region). Falls back to B1 when no comparable donors exist.",
@@ -225,12 +246,11 @@ B2_RAW_GRID = [
 
 class B2RawUnits(_Base):
     spec = _spec(
-        "B2.raw_units",
-        "Ablation: raw k-FPG unit mean (no household adjustment)",
-        "Weighted mean weekly units of the k most similar same-item donor FPGs x S. Exposure-unadjusted "
-        "ablation of B2; not a recommended recipe.",
+        "ABL.b2_raw_units",
+        "Unregistered ablation: raw k-FPG unit mean (no household adjustment)",
+        "Weighted mean weekly units of the k most similar same-item donor FPGs x S. Not registered or displayed.",
         features=["demographic shares", "region", "households (similarity only)", "donor observations"],
-        family="ablation",
+        family="baseline",
     )
 
     def variants(self) -> list[dict[str, Any]]:

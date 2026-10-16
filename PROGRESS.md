@@ -157,3 +157,18 @@ ablation not added (kept out to avoid any anchor division in the default path).
 - FM.tabpfn_ts now points at Prior-Labs/tabpfn_2_5 revision 6c45f3a6d0d07c6c5f62572e04a0c2929de91b8b (TABPFN-2.5
   License v1.1, sha256 ac1d2342..., non-commercial/non-production), research-only behind --allow-research-only.
   TabPFN 3.5 licence is unread: no 3.5 weights are pulled until a licence read is reviewed. Registry 2026.10.16-c.
+
+## Session 2026-10-16 (adapters, B2/B3, TimeGPT, provenance)
+
+- Licence-pinned donor-prior composites (`src/xferbench/methods/foundation.py`): FM.chronos2, FM.chronos_bolt
+  (tiny/mini/small/base variants), FM.timesfm25, M6.deepar_count. experimental, donor_only composite: backend
+  forecasts the item's origin-scoped donor rate per household, allocated by target households. Code pins from R3,
+  HF weight revisions from pins.v2. Lazy imports; weights from local cache only unless
+  XFERBENCH_ALLOW_WEIGHT_DOWNLOAD=1; tested with fake backends only. Not Reviewer-recommended for PAIR0.
+  pytorch-forecasting / neuralforecast: no registry entry fits the C0 board (all warm_reference), so none added.
+  M4.xgboost / M4.catboost: not covered by the R3 pins, left unimplemented.
+- B2 = H_target x similar-FPG per-household rate (no shrinkage); B3 = B2 shrunk toward the national rate (old
+  B2[k,kappa]), extra row with a B3 vs B2 shrinkage comparison. Old B2.raw_units retired (unregistered class only).
+- SVC.timegpt removed (deferred by the user).
+- run_manifest.json `software.git_commit` / `git_dirty`.
+- Registry 2026.10.16-d. Suite: 128 passed; ruff, format, mypy clean.

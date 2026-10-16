@@ -78,7 +78,7 @@ xferbench steps --benchmark synthetic-tiny@1.0.0 --out ./xb-steps          # sha
 xferbench steps --local-data /path/to/my/metadata.json --out ~/xb-local-1  # your own data, labeled local
 ```
 
-`steps` runs B0, B1, B2.raw_units, M1, M2, M3 (listed as needing a recipe) and M4.lightgbm (if the `boosting`
+`steps` runs B0, B1, B2, B3 (extra row), M1, M2, M3 (listed as needing a recipe) and M4.lightgbm (if the `boosting`
 extra is installed), each adding one idea, and reports WMAPE and Bias for PAIR0-E and PAIR0-N separately.
 Benchmark data and local data are kept apart; see [docs/DATA_CLASSES.md](docs/DATA_CLASSES.md).
 

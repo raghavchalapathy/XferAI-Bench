@@ -28,15 +28,20 @@ class RetailDomain:
     method_order: tuple[tuple[str, str], ...] = (
         ("B0", "H x r, flat: households x national season-neutral item rate"),
         ("B1", "B0 x S(national product type, week): adds mean-one seasonality"),
-        ("B2.raw_units", "item's mean weekly sales in the k FPGs with the most similar customer mix"),
+        ("B2", "H x the item's per-household rate in the k FPGs with the most similar customer mix (no shrinkage)"),
         ("M1", "H x P, flat: uses the location propensity P instead of the national rate"),
         ("M2", "H x P x S(i,f,w), mean-one S, no anchor-week division: adds seasonality to M1"),
         ("M3", "user ramp/blend/calibration rule (recipe required)"),
         ("M4.lightgbm", "gradient-boosted trees on origin-built features (optional extra)"),
     )
+    # Extra rows shown next to the sequence (not steps in the method order).
+    method_extra_rows: tuple[tuple[str, str], ...] = (
+        ("B3", "extra row (not a step): B2 shrunk toward the national rate"),
+    )
     # (candidate, reference, note): delta = candidate - reference
     method_comparisons: tuple[tuple[str, str, str], ...] = (
         ("M1", "B0", "P vs national rate (both flat)"),
+        ("B3", "B2", "shrinkage effect: B2's similar-FPG rate shrunk toward the national rate"),
         ("B1", "B0", "adds seasonality to the national rate"),
         ("M2", "M1", "adds seasonality to H x P"),
         ("M3", "M2", "adds the user rule"),

@@ -23,16 +23,18 @@ def build(
     scenarios: tuple[str, ...],
     order: tuple[tuple[str, str], ...],
     comparisons: tuple[tuple[str, str, str], ...],
+    extra_rows: tuple[tuple[str, str], ...] = (),
 ) -> dict[str, Any] | None:
     if not order:
         return None
     sup = {s["method_id"]: s for s in support}
     steps = []
     by_id: dict[str, dict] = {}
-    for mid, idea in order:
+    rows_in = [(m, i, False) for m, i in order] + [(m, i, True) for m, i in extra_rows]
+    for mid, idea, extra in rows_in:
         e = _best(entries, mid)
         s = sup.get(mid, {})
-        row: dict[str, Any] = {"method_id": mid, "idea": idea}
+        row: dict[str, Any] = {"method_id": mid, "idea": idea, "extra": extra}
         if e is not None:
             row |= {
                 "ran": True,

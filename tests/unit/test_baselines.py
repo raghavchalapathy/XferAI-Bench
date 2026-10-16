@@ -1,4 +1,4 @@
-"""Hand-calculated checks for B0, B1, B2, B2.raw_units, M1 and M2 (see tests/handmade.py)."""
+"""Hand-calculated checks for B0, B1, B2, B3, the raw-units ablation, M1 and M2 (see tests/handmade.py)."""
 
 from __future__ import annotations
 
@@ -17,6 +17,7 @@ from xferbench.methods.baselines.rates import (
     B1NationalSeasonal,
     B2AnalogRate,
     B2RawUnits,
+    B3AnalogRate,
     M1FlatRule,
     M2SeasonalRule,
 )
@@ -40,6 +41,11 @@ def _predict(method, config: dict | None = None, item: str = "I1", **build_kw) -
     cfg = config if config is not None else method.variants()[0]
     art = method.fit(_training(), None, cfg)
     return method.predict_batch(hm.request(item), ctx, art)
+
+
+def _predict_ds(method, config: dict, ds) -> pd.DataFrame:  # type: ignore[no-untyped-def]
+    ctx = ContextBuilder(ds, EXCL).at(hm.ORIGIN)
+    return method.predict_batch(hm.request(), ctx, method.fit(_training(), None, config))
 
 
 def _weights() -> tuple[float, float]:
@@ -110,9 +116,9 @@ def test_b0_b1_fallback_is_visible() -> None:
 
 
 @pytest.mark.parametrize("kappa", [1.0, 4.0])
-def test_b2_shrunk_analog_rate(kappa: float) -> None:
-    cfg = next(c for c in B2AnalogRate().variants() if c["k"] == 3 and c["kappa"] == kappa)
-    out = _predict(B2AnalogRate(), cfg)
+def test_b3_shrunk_analog_rate(kappa: float) -> None:
+    cfg = next(c for c in B3AnalogRate().variants() if c["k"] == 3 and c["kappa"] == kappa)
+    out = _predict(B3AnalogRate(), cfg)
     w1, w2 = _weights()
     r_analog = (w1 * 0.02 + w2 * 0.01) / (w1 + w2)
     r = (2 * r_analog + kappa * 0.0125) / (2 + kappa)
@@ -120,8 +126,36 @@ def test_b2_shrunk_analog_rate(kappa: float) -> None:
     assert set(out["status"]) == {"success"}
 
 
-def test_b2_falls_back_to_b1_without_donors() -> None:
-    out = _predict(B2AnalogRate(), item="I2")
+def test_b2_household_adjusted_no_shrinkage() -> None:
+    cfg = next(c for c in B2AnalogRate().variants() if c["k"] == 3)
+    assert "kappa" not in cfg
+    out = _predict(B2AnalogRate(), cfg)
+    w1, w2 = _weights()
+    np.testing.assert_allclose(out["point_units"], 80 * (w1 * 0.02 + w2 * 0.01) / (w1 + w2) * S)
+    assert set(out["status"]) == {"success"}
+
+
+def test_b2_scales_with_target_households() -> None:
+    from xferbench.data.io import Dataset
+
+    cfg = next(c for c in B2AnalogRate().variants() if c["k"] == 3)
+    ds = hm.build()
+    base = _predict_ds(B2AnalogRate(), cfg, ds)
+    t = {k: v.copy() for k, v in ds.tables.items()}
+    loc = t["locations"]
+    loc.loc[loc["fpg_id"] == "T", "households"] = loc.loc[loc["fpg_id"] == "T", "households"] * 2
+    doubled = _predict_ds(B2AnalogRate(), cfg, Dataset(ds.metadata, ds.base_dir, t))
+    # households also enter the similarity distance, so recompute the weights for H_target = 160
+    d1 = 0.25 * abs(math.log(100 / 160))
+    d2 = math.sqrt(0.2**2 + 0.2**2) / math.sqrt(2) + 0.25 * abs(math.log(300 / 160)) + 0.25
+    w1, w2 = 1 / (d1 + 0.05), 1 / (d2 + 0.05)
+    np.testing.assert_allclose(doubled["point_units"], 160 * (w1 * 0.02 + w2 * 0.01) / (w1 + w2) * S)
+    assert (doubled["point_units"].to_numpy() > 1.5 * base["point_units"].to_numpy()).all()
+
+
+@pytest.mark.parametrize("cls", [B2AnalogRate, B3AnalogRate])
+def test_b2_b3_fall_back_to_b1_without_donors(cls) -> None:  # type: ignore[no-untyped-def]
+    out = _predict(cls(), item="I2")
     assert set(out["status"]) == {"fallback"}
     assert out["reason"].iloc[0].startswith("B1 fallback")
 

@@ -23,7 +23,7 @@ from xferbench.contracts.methods import (
 from xferbench.data.io import Dataset
 from xferbench.methods.base import Method
 
-REGISTRY_VERSION = "2026.10.16-c"
+REGISTRY_VERSION = "2026.10.16-d"
 
 
 @dataclass(frozen=True)
@@ -113,16 +113,17 @@ def _builtin() -> list[RegistryEntry]:
         B0NationalRate,
         B1NationalSeasonal,
         B2AnalogRate,
-        B2RawUnits,
+        B3AnalogRate,
         M1FlatRule,
         M2SeasonalRule,
     )
     from xferbench.methods.boosting import M4LightGBM
+    from xferbench.methods.foundation import FMChronos2, FMChronosBolt, FMTimesFM25, M6DeepARCount
 
     core = ("core", "all")
     entries = [
         RegistryEntry(cls.spec, "implemented", cls, profiles=core)
-        for cls in (B0NationalRate, B1NationalSeasonal, B2AnalogRate, B2RawUnits, M1FlatRule, M2SeasonalRule)
+        for cls in (B0NationalRate, B1NationalSeasonal, B2AnalogRate, B3AnalogRate, M1FlatRule, M2SeasonalRule)
     ]
     entries.append(
         RegistryEntry(
@@ -135,16 +136,28 @@ def _builtin() -> list[RegistryEntry]:
             remedy="",
         )
     )
+    for cls, prof in (
+        (FMChronos2, ("foundation", "all")),
+        (FMChronosBolt, ("foundation", "all")),
+        (FMTimesFM25, ("foundation", "all")),
+        (M6DeepARCount, ("neural", "all")),
+    ):
+        entries.append(
+            RegistryEntry(
+                cls.spec,
+                "experimental",
+                cls,
+                milestone="B" if cls is M6DeepARCount else "C",
+                profiles=prof,
+                reason="licence-pinned, not Reviewer-recommended for PAIR0; real backend documented-only",
+                remedy=f"install the '{cls.spec.optional_extra}' extra and cache the pinned weights to run it",
+            )
+        )
     own = _rights("Apache-2.0", "xferbench (this package)")
     lgbm = _rights(
         "MIT",
         "https://github.com/lightgbm-org/LightGBM",
         revision="5831ee577776949d26d21efa581ec904bda80483 (observed pin, untested)",
-    )
-    gluonts = _rights(
-        "Apache-2.0",
-        "https://github.com/awslabs/gluonts",
-        revision="d60556ca71167a3ec1ea807b491dd982d1de2112 (observed pin, untested)",
     )
     nf = _rights(
         "Apache-2.0",
@@ -157,7 +170,6 @@ def _builtin() -> list[RegistryEntry]:
         "https://github.com/sktime/pytorch-forecasting",
         revision="24a4d5cfe91f2badeada4eb70be758ffc63d29bb (observed pin, untested)",
     )
-    chronos = "https://github.com/amazon-science/chronos-forecasting"
     warm = (
         "Native recipe requires own-series history; cannot enter the strict C0 board. A separately named "
         "donor-forecast + allocation cold composite may be registered in Milestone C."
@@ -214,18 +226,6 @@ def _builtin() -> list[RegistryEntry]:
             lgbm,
             "B",
             "Explicit two-model construction with calibration and fallbacks.",
-        ),
-        _planned(
-            "M6.deepar_count",
-            "neural",
-            "GluonTS DeepAR, negative-binomial, masked C0",
-            "cold_c0",
-            "native",
-            "neural",
-            ["gluonts", "torch"],
-            gluonts,
-            "B",
-            "Count likelihood, observed-value masks, origin-valid scale; native C0 only if genuinely supported.",
         ),
         _planned(
             "M7.two_tower_count",
@@ -366,62 +366,6 @@ def _builtin() -> list[RegistryEntry]:
             history="requires own-series history",
         ),
         _planned(
-            "FM.chronos2",
-            "foundation",
-            "Chronos-2 donor prior (+ allocation composite)",
-            "donor_only",
-            "composite",
-            "foundation",
-            ["chronos"],
-            _rights(
-                "Apache-2.0",
-                chronos,
-                revision="1224fafa91e1ecd6674f5204066b159e40b5e4a1 (observed pin)",
-                weights="amazon/chronos-2 (Apache-2.0)",
-                weights_revision="29ec3766d36d6f73f0696f85560a422f50e8498c",
-            ),
-            "C",
-            "Forecasts real donor/national history; no native empty-target claim.",
-            statistic="quantile",
-            history="donor/national history only; target pair never given fabricated history",
-        ),
-        _planned(
-            "FM.chronos_bolt",
-            "foundation",
-            "Chronos-Bolt base donor prior",
-            "donor_only",
-            "composite",
-            "foundation",
-            ["chronos"],
-            _rights(
-                "Apache-2.0",
-                chronos,
-                weights="amazon/chronos-bolt-base (Apache-2.0)",
-                weights_revision="5d9f166d69f47aef3401367a7b842e78fe97b121",
-            ),
-            "C",
-            "Univariate donor-history prior.",
-            statistic="quantile",
-        ),
-        _planned(
-            "FM.timesfm25",
-            "foundation",
-            "TimesFM 2.5 (200m, pinned) donor prior",
-            "donor_only",
-            "composite",
-            "foundation",
-            ["timesfm"],
-            _rights(
-                "Apache-2.0",
-                "https://github.com/google-research/timesfm",
-                weights="google/timesfm-2.5-200m-pytorch (Apache-2.0)",
-                weights_revision="1d952420fba87f3c6dee4f240de0f1a0fbc790e3",
-            ),
-            "C",
-            "Pinned checkpoint; never silently replaced by a newer TimesFM.",
-            statistic="quantile",
-        ),
-        _planned(
             "FM.timesfm3",
             "foundation",
             "TimesFM 3",
@@ -514,27 +458,6 @@ def _builtin() -> list[RegistryEntry]:
             remedy="opt in with --allow-research-only; outputs are labeled internal research only",
             research_only=True,
         ),
-        _planned(
-            "SVC.timegpt",
-            "service",
-            "TimeGPT (Nixtla API)",
-            "donor_only",
-            "composite",
-            "services",
-            ["nixtla"],
-            _rights(
-                "Apache-2.0 (SDK)",
-                "https://github.com/Nixtla/nixtla",
-                weights="proprietary service",
-                commercial="unknown",
-                service="Nixtla terms; credentials, egress permission and budget",
-            ),
-            "C",
-            "Explicit opt-in service adapter; never called in install/demo/CI.",
-            eligibility="service_required",
-            reason="paid external service: requires credentials, data-egress permission, terms and budget",
-            remedy="configure the service explicitly (Milestone C); no call is made by default",
-        ),
     ]
     return entries
 
@@ -571,7 +494,12 @@ def all_entries() -> list[RegistryEntry]:
     return entries
 
 
+# Backward-compatible method-id aliases (old id -> current id).
+METHOD_ALIASES: dict[str, str] = {}  # B2.raw_units was retired (not aliased: B2 now means a different recipe)
+
+
 def get_entry(method_id: str) -> RegistryEntry:
+    method_id = METHOD_ALIASES.get(method_id, method_id)
     for e in all_entries():
         if e.spec.method_id == method_id:
             return e

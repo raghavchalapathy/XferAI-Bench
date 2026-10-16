@@ -1,4 +1,4 @@
-"""Methods in order, each adding one idea (B0, B1, B2.raw_units, M1, M2, M3, M4.lightgbm)."""
+"""Methods in order, each adding one idea (B0, B1, B2, M1, M2, M3, M4.lightgbm; B3 extra row)."""
 
 from __future__ import annotations
 
@@ -68,15 +68,19 @@ def test_steps_command_on_tiny_benchmark(tmp_path: Path) -> None:
     assert res.exit_code == 0, res.output
     p = json.loads((out / "test-run" / "methods_in_order.json").read_text())
     ran = {s["method_id"] for s in p["steps"] if s["ran"]}
-    assert {"B0", "B1", "B2.raw_units", "M1", "M2"} <= ran
+    assert {"B0", "B1", "B2", "B3", "M1", "M2"} <= ran
+    b3 = next(s for s in p["steps"] if s["method_id"] == "B3")
+    assert b3["extra"] and not next(s for s in p["steps"] if s["method_id"] == "B2")["extra"]
     m3 = next(s for s in p["steps"] if s["method_id"] == "M3")
     assert not m3["ran"] and m3["state"] == "config_required"
     variants = {
         e["variant_id"] for e in json.loads((out / "test-run" / "metrics.json").read_text())["boards"]["cold_c0"]
     }
-    assert not any(v == "B2" or v.startswith("B2[") for v in variants), "B2[k,kappa] must not be run or shown"
+    assert any(v.startswith("B3[") for v in variants) and any(v.startswith("B2[") for v in variants)
+    assert not any("raw_units" in v for v in variants), "the raw-unit ablation is not displayed"
     comp = {(c["candidate"], c["reference"]): c for c in p["comparisons"]}
     assert comp[("M3", "M2")]["status"] == "N/A"
+    assert comp[("B3", "B2")]["status"] == "ok" and "shrinkage" in comp[("B3", "B2")]["note"]
     assert "M3 pending recipe" in comp[("M4.lightgbm", "M2")]["note"]
     assert "Methods in order, each adding one idea" in (out / "test-run" / "report.html").read_text()
     man = json.loads((out / "test-run" / "run_manifest.json").read_text())

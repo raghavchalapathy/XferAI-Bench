@@ -40,7 +40,8 @@ def test_validate_and_list_methods(tiny_dir: Path) -> None:
     payload = json.loads(res.output)
     rows = payload["entries"] if isinstance(payload, dict) else payload
     ids = {r["method_id"] for r in rows}
-    assert {"B0", "B1", "B2", "M1", "M2", "M3", "FM.chronos2", "SVC.timegpt"} <= ids
+    assert {"B0", "B1", "B2", "M1", "M2", "M3", "B3", "FM.chronos2"} <= ids
+    assert "SVC.timegpt" not in ids and "B2.raw_units" not in ids
 
 
 def test_doctor(tiny_dir: Path) -> None:

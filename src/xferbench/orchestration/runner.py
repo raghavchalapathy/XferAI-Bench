@@ -41,6 +41,29 @@ EXIT_OK, EXIT_ERROR, EXIT_REJECTED, EXIT_PARTIAL, EXIT_CANCELLED = 0, 1, 3, 4, 1
 EXIT_LICENCE = 2  # refused on licence / rights grounds
 
 
+def code_provenance() -> dict[str, Any]:
+    """Git commit of the xferbench source tree and whether it had uncommitted changes (None if not a git checkout)."""
+    import subprocess
+
+    here = Path(__file__).resolve().parent
+    try:
+        top = subprocess.run(
+            ["git", "-C", str(here), "rev-parse", "HEAD"], capture_output=True, text=True, timeout=10, check=False
+        )
+        if top.returncode != 0:
+            return {"git_commit": None, "git_dirty": None}
+        st = subprocess.run(
+            ["git", "-C", str(here), "status", "--porcelain", "--untracked-files=no"],
+            capture_output=True,
+            text=True,
+            timeout=30,
+            check=False,
+        )
+        return {"git_commit": top.stdout.strip(), "git_dirty": bool(st.stdout.strip()) if st.returncode == 0 else None}
+    except (OSError, subprocess.SubprocessError):
+        return {"git_commit": None, "git_dirty": None}
+
+
 class RunError(Exception):
     def __init__(self, message: str, exit_code: int = EXIT_ERROR):
         super().__init__(message)
@@ -387,6 +410,9 @@ class BenchmarkRunner:
             self._gate_research_only(chosen)
             return chosen, True
         if cfg.methods:
+            from xferbench.methods.registry import METHOD_ALIASES
+
+            cfg.methods = [METHOD_ALIASES.get(m, m) for m in cfg.methods]
             known = {e.spec.method_id: e for e in all_entries()}
             unknown = [m for m in cfg.methods if m not in known]
             if unknown:
@@ -578,6 +604,7 @@ class BenchmarkRunner:
                 "xferbench": __version__,
                 "packages": package_versions(),
                 "registry_version": REGISTRY_VERSION,
+                **code_provenance(),
             },
             "hardware": hardware(),
             "config": {
