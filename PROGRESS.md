@@ -86,10 +86,32 @@ stop (partial, unranked), not for checkpoint retries. 10-12 concern adapters fro
   `main` on 2026-10-15 at the owner's request; later changes are committed locally and pushed only after the
   owner confirms. Nothing is published to PyPI; no paid calls, downloads or telemetry.
 
+## Milestone B (partial) and data classes: 2026-10-16 (local commits, not pushed)
+
+Done on a Linux box (Python 3.11.17 via uv, LightGBM 4.7.0 in `.venv`):
+
+- Benchmark data vs local data (`docs/DATA_CLASSES.md`): versioned, hashed built-in benchmarks
+  (`synthetic-tiny@1.0.0`, `synthetic-small@1.0.0`, `xferbench benchmarks`); `--benchmark`, `--local-data`;
+  legacy `--metadata` outside `benchmarks/` is treated as local with a warning; local outputs refused at
+  non-ignored paths inside a git work tree; entity IDs in local reports replaced by salted hashes; compare refuses
+  mixed classes; `.gitignore` covers `local/`, `runs/local/`, `*.local.*`. The separation layer is
+  domain-generic (uses the plugin's `entity_columns`).
+- `M4.lightgbm` implemented as a lazy optional extra (`.[lightgbm]`), with leakage, not-installed and contract tests.
+- `xferbench steps`: methods in order, each adding one idea, declared by the domain plugin (retail: B0, B1,
+  B2.raw_units, M1, M2, M3, M4.lightgbm). The registry `B2[k,kappa]` stays registered but is not run or shown there.
+  Report section and `methods_in_order.json` with WMAPE and Bias per scenario and the deltas
+  M1-B0, B1-B0, M2-M1, M3-M2 (N/A while M3 is config_required), M4-M2 (labelled "M3 pending recipe").
+- Checks: pytest 94 passed, ruff check and format clean, mypy clean (57 files).
+- First `steps` run on `synthetic-tiny@1.0.0` (SYNTHETIC; software behaviour only): B0, B1, B2.raw_units[k=3], M1, M2
+  and M4.lightgbm ran; M3 shown as config_required with its reason. See the final report of 2026-10-16.
+
+Still open in Milestone B: `M4.xgboost`, `M4.catboost`, `M5.hurdle`, `M6`, `M7`, `M9`; optional anchor-week M2
+ablation not added (kept out to avoid any anchor division in the default path).
+
 ## Remaining work
 
 ### Milestone B: boosting, hurdle, neural and feature/graph adapters
-- `M4.lightgbm`, `M4.xgboost`, `M4.catboost` (count objectives) and `M5.hurdle` on origin-built pair features,
+- `M4.xgboost`, `M4.catboost` (count objectives; `M4.lightgbm` done 2026-10-16) and `M5.hurdle` on origin-built pair features,
   executed on the same synthetic protocol; handle single-class hurdle cases.
 - `M6.deepar_count` (GluonTS, negative binomial, missing masks, new-FPG behaviour) and `M7.two_tower_count`.
 - `M9.graph_transfer` with origin-valid edges and leakage tests for edges.
