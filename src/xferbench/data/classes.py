@@ -162,6 +162,7 @@ LOCAL_REDACTED_FILES = (
     "data_quality.json",
     "method_support.json",
     "run_manifest.json",
+    "methods_in_order.json",
 )
 
 

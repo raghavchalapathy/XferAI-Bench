@@ -31,15 +31,38 @@ Notation: `H` = target FPG households at origin, `r` = season-neutral weekly uni
 | `B2.raw_units` | weighted mean donor units `x S(w)` | Ablation: the same analogs without household adjustment. Not a recommended recipe. |
 | `M1` | `H x P` | Business rule; requires a declared `P` with unit `units_per_household_per_week`. |
 | `M2` | `H x P x S(w)` | `S` applied once; no anchor-week division; demographic affinity not re-applied. |
+| `M4.lightgbm` | pooled LightGBM (Poisson) | Optional extra: `pip install -e ".[lightgbm]"` (or the wider `boosting` extra), imported lazily; if absent the method is listed as `not_installed` and every other method runs. One row per (launch, horizon week); features only from the origin context: log households, log B0 level, log M1 level (if P exists), mean-one seasonal index, horizon week, ISO week, demographic shares. No own-pair lags. Trained on fit launches; labels on or after the fit cutoff are dropped. Fixed seed, single thread, 200 rounds. |
 | `M3` | - | `config_required`: the business ramp/blend/calibration rule was not specified, so **nothing is substituted**. Supply a recipe matching `xferbench.methods.custom.M3RecipeSpec`; the executing adapter is Milestone C. Requesting `--methods M3` exits with code 3. |
 
 Each recipe uses `S` at most once, so seasonality is never double counted.
+
+## Methods in order, each adding one idea
+
+`xferbench steps --benchmark synthetic-tiny@1.0.0 --out ./steps` (or `--local-data PATH/metadata.json`) runs the
+domain plugin's method sequence and adds a report section with WMAPE and Bias for each scenario separately.
+For retail the sequence is:
+
+| Step | Method | Idea added |
+|---|---|---|
+| 1 | `B0` | `H x r`, flat |
+| 2 | `B1` | `x S(product type, w)`: seasonality (the item's category is its national product type) |
+| 3 | `B2.raw_units` | the item's mean weekly sales in the `k` FPGs with the most similar customer mix (this is "B2" in the sequence) |
+| 4 | `M1` | `H x P`, flat: location propensity instead of the national rate |
+| 5 | `M2` | `H x P x S`, mean-one `S`, no anchor-week division |
+| 6 | `M3` | user rule; `config_required` until a recipe is supplied (shown with its reason, never invented) |
+| 7 | `M4.lightgbm` | gradient-boosted trees on origin-built features |
+
+Comparisons (delta = candidate - reference, per scenario): M1 vs B0, B1 vs B0, M2 vs M1, M3 vs M2 (N/A while
+M3 needs a recipe), M4 vs M2 (labelled "M3 pending recipe"). Each method's variant is chosen on validation
+(no Bias gate in this diagnostic) and frozen before the test stage. The registry's `B2` (household-adjusted,
+shrunk rate) is not part of this sequence and is not run by `steps`. Domain plugins declare the sequence via the
+optional `method_order` / `method_comparisons` attributes.
 
 ## Planned adapters
 
 | Milestone | Methods |
 |---|---|
-| B | `M4.lightgbm`, `M4.xgboost`, `M4.catboost`, `M5.hurdle`, `M6.deepar_count`, `M7.two_tower_count`, `M9.graph_transfer` |
+| B | `M4.xgboost`, `M4.catboost`, `M5.hurdle`, `M6.deepar_count`, `M7.two_tower_count`, `M9.graph_transfer` |
 | C | `M3` executor, `M8.prior_allocation`, `E1.convex_blend`, foundation donor priors (`FM.*`), `SVC.timegpt` (opt-in only), warm-reference cold composites |
 
 Native warm-history methods (`REF.tft`, `REF.nbeats`, `REF.nbeatsx`, `REF.nhits`, `REF.croston_sba`, `REF.tsb`)

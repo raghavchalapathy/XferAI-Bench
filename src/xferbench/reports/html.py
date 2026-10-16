@@ -159,14 +159,42 @@ def build_context(run_dir: Path) -> dict[str, Any]:
         "slices_uri": _csv_data_uri(slices) if len(slices) else None,
         "support_uri": _csv_data_uri(pd.DataFrame([{k: v for k, v in s.items() if k != "rights"} for s in support])),
         "scenarios": SCENARIOS,
+        "progression": _progression(manifest, main, support),
     }
+
+
+def _progression(manifest: dict, entries: list[dict], support: list[dict]) -> dict[str, Any] | None:
+    from xferbench.domains.registry import get_domain
+    from xferbench.reports.progression import build
+
+    name = manifest.get("domain_plugin")
+    if not name:
+        return None
+    try:
+        dom = get_domain(name)
+    except KeyError:
+        return None
+    return build(
+        entries,
+        support,
+        tuple(getattr(dom, "scenarios", SCENARIOS)),
+        tuple(getattr(dom, "method_order", ())),
+        tuple(getattr(dom, "method_comparisons", ())),
+    )
 
 
 def write_run_report(run_dir: Path, out: Path) -> Path:
     ctx = build_context(run_dir)
     html = _env().get_template("report.html.j2").render(**ctx)
     atomic_write_text(out, html)
-    atomic_write_text(run_dir / "summary.md", executive_summary(ctx))
+    summary = executive_summary(ctx)
+    if ctx.get("progression"):
+        from xferbench.reports.progression import to_markdown
+        from xferbench.util import write_json
+
+        write_json(run_dir / "methods_in_order.json", ctx["progression"])
+        summary += "\n" + to_markdown(ctx["progression"])
+    atomic_write_text(run_dir / "summary.md", summary)
     return out
 
 

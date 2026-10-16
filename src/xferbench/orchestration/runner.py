@@ -367,9 +367,12 @@ class BenchmarkRunner:
         if (cfg.data_label or {}).get("data_class") == "local":
             from xferbench.data.classes import redact_local_outputs
 
-            ids = set(requests["request_id"].astype(str)) | set(requests["item_id"].astype(str))
-            ids |= set(requests["fpg_id"].astype(str))
-            ids |= set(dataset["items"]["item_id"].astype(str)) | set(dataset["locations"]["fpg_id"].astype(str))
+            ent = tuple(getattr(domain, "entity_columns", ()))
+            ids = set(requests["request_id"].astype(str))
+            for df in [requests, *dataset.tables.values()]:
+                for c in ent:
+                    if c in df.columns:
+                        ids |= set(df[c].dropna().astype(str))
             redact_local_outputs(out, ids, run_id)
         exit_code = {"complete": EXIT_OK, "partial": EXIT_PARTIAL, "cancelled": EXIT_CANCELLED}[status]
         return RunResult(out, status, exit_code, manifest, lb, support_json)
@@ -568,6 +571,7 @@ class BenchmarkRunner:
                 "metadata_path": self.cfg.metadata_path.name,
                 "splits_path": self.cfg.splits_path.name,
             },
+            "domain_plugin": md.domain_plugin,
             "dataset_id": md.dataset.id,
             "dataset_version": md.dataset.version,
             "dataset_hash": dataset.content_hash,

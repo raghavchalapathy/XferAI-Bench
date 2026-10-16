@@ -76,6 +76,21 @@ Hashes: data <code>{{ m.dataset_hash|short }}</code> split <code>{{ m.split_hash
 <p class="muted">Frozen variants: {% for v in selection.frozen_variants %}<code>{{ v }}</code> {% endfor %}</p>
 {% endif %}
 
+{% if progression %}
+<h2 id="progression">{{ progression.title }}</h2>
+<p class="muted">Each method adds one idea to an earlier one. {{ progression.delta_rule }}.</p>
+<div class="tw"><table><thead><tr><th>Method</th><th>Idea</th>{% for s in progression.scenarios %}<th class="n">WMAPE {{ s }}</th><th class="n">Bias {{ s }}</th>{% endfor %}</tr></thead><tbody>
+{% for r in progression.steps %}<tr><td><code>{{ r.variant_id if r.ran else r.method_id }}</code></td><td>{{ r.idea }}</td>
+{% if r.ran %}{% for s in progression.scenarios %}<td class="n">{{ r.metrics[s].WMAPE|pct }}</td><td class="n">{{ r.metrics[s].Bias|pct }}</td>{% endfor %}
+{% else %}<td colspan="{{ 2 * progression.scenarios|length }}"><span class="pill bad">{{ r.state }}</span> {{ r.reason }}{% if r.remedy %} &mdash; {{ r.remedy }}{% endif %}</td>{% endif %}</tr>{% endfor %}
+</tbody></table></div>
+<div class="tw"><table><thead><tr><th>Comparison</th><th>Note</th>{% for s in progression.scenarios %}<th class="n">&Delta;WMAPE {{ s }}</th><th class="n">&Delta;Bias {{ s }}</th>{% endfor %}</tr></thead><tbody>
+{% for c in progression.comparisons %}<tr><td><code>{{ c.candidate }}</code> vs <code>{{ c.reference }}</code></td><td>{{ c.note }}</td>
+{% if c.status == 'ok' %}{% for s in progression.scenarios %}<td class="n">{{ c.delta[s].WMAPE|pct }}</td><td class="n">{{ c.delta[s].Bias|pct }}</td>{% endfor %}
+{% else %}<td colspan="{{ 2 * progression.scenarios|length }}">N/A &mdash; {{ c.reason }}</td>{% endif %}</tr>{% endfor %}
+</tbody></table></div>
+{% endif %}
+
 <h2 id="leaderboard">Top eligible methods (cold_c0 board)</h2>
 <p class="muted">Ranked by the <abbr title="{{ glossary['Equal-scenario objective'] }}" tabindex="0">equal-scenario objective</abbr>; each scenario is shown separately. <abbr title="{{ glossary['WMAPE'] }}" tabindex="0">WMAPE</abbr>, <abbr title="{{ glossary['Bias'] }}" tabindex="0">Bias</abbr>, <abbr title="{{ glossary['Coverage'] }}" tabindex="0">coverage</abbr>. Units: item units per week.</p>
 <div class="tw"><table>

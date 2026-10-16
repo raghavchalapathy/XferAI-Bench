@@ -24,6 +24,24 @@ class RetailDomain:
     scenarios: tuple[str, ...] = ("PAIR0-E", "PAIR0-N")
     slice_columns: tuple[str, ...] = ("category", "region")
     slice_week_columns: tuple[str, ...] = ("availability",)
+    # Methods in order, each adding one idea (optional plugin attribute, read by reports/progression.py).
+    method_order: tuple[tuple[str, str], ...] = (
+        ("B0", "H x r, flat: households x national season-neutral item rate"),
+        ("B1", "B0 x S(national product type, week): adds mean-one seasonality"),
+        ("B2.raw_units", "item's mean weekly sales in the k FPGs with the most similar customer mix"),
+        ("M1", "H x P, flat: uses the location propensity P instead of the national rate"),
+        ("M2", "H x P x S(i,f,w), mean-one S, no anchor-week division: adds seasonality to M1"),
+        ("M3", "user ramp/blend/calibration rule (recipe required)"),
+        ("M4.lightgbm", "gradient-boosted trees on origin-built features (optional extra)"),
+    )
+    # (candidate, reference, note): delta = candidate - reference
+    method_comparisons: tuple[tuple[str, str, str], ...] = (
+        ("M1", "B0", "P vs national rate (both flat)"),
+        ("B1", "B0", "adds seasonality to the national rate"),
+        ("M2", "M1", "adds seasonality to H x P"),
+        ("M3", "M2", "adds the user rule"),
+        ("M4.lightgbm", "M2", "M3 pending recipe: compared with M2 instead"),
+    )
 
     def validate(self, dataset: Dataset) -> list[Issue]:
         return validate_retail(dataset)

@@ -71,6 +71,17 @@ xferbench report   --run ./work/test-run --out ./work/report.html
 xferbench list-methods --all
 ```
 
+### Methods in order, and your own data
+
+```bash
+xferbench steps --benchmark synthetic-tiny@1.0.0 --out ./xb-steps          # shared benchmark data (hashed)
+xferbench steps --local-data /path/to/my/metadata.json --out ~/xb-local-1  # your own data, labeled local
+```
+
+`steps` runs B0, B1, B2.raw_units, M1, M2, M3 (listed as needing a recipe) and M4.lightgbm (if the `boosting`
+extra is installed), each adding one idea, and reports WMAPE and Bias for PAIR0-E and PAIR0-N separately.
+Benchmark data and local data are kept apart; see [docs/DATA_CLASSES.md](docs/DATA_CLASSES.md).
+
 ## Installing from a built wheel
 
 ```bash
@@ -89,6 +100,7 @@ python3 -m venv /tmp/xb-env
 | Beginner quickstart and expected outputs | [docs/QUICKSTART.md](docs/QUICKSTART.md) |
 | Metadata and column mapping | [docs/METADATA.md](docs/METADATA.md) |
 | Replacing synthetic data with your own | [docs/REAL_DATA.md](docs/REAL_DATA.md) |
+| Benchmark data vs local data | [docs/DATA_CLASSES.md](docs/DATA_CLASSES.md) |
 | Methods, compatibility and licensing | [docs/METHODS.md](docs/METHODS.md), [METHOD_SUPPORT.md](METHOD_SUPPORT.md) |
 | Metrics, splits, leakage rules, selection | [docs/EVALUATION.md](docs/EVALUATION.md) |
 | Adding a model or an industry plugin | [docs/EXTENDING.md](docs/EXTENDING.md) |

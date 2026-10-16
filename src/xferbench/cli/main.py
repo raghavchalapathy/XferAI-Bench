@@ -479,6 +479,87 @@ def _demo_label(preset: str, seed: int, content_hash: str) -> dict[str, Any]:
     }
 
 
+@app.command("steps")
+def steps_cmd(
+    out: Path = typer.Option(..., help="Output directory (must be empty or absent)."),
+    benchmark: str | None = typer.Option(None, "--benchmark", help="Benchmark data id@version or BENCHMARK.json."),
+    local_data: Path | None = typer.Option(None, "--local-data", help="Your own data: path to metadata.json."),
+    metadata: Path | None = typer.Option(None, help="Legacy metadata path (outside benchmarks/ = local, warning)."),
+) -> None:
+    """Methods in order, each adding one idea: run the domain's method sequence on validation, freeze each
+    method's variant on validation, score the frozen variants on test, and report per-scenario WMAPE/Bias
+    and the pairwise comparisons. Methods that need a recipe or a missing extra are listed with their reason."""
+    from xferbench.contracts.selection import SelectionPolicy
+    from xferbench.data.io import load_from_metadata_path
+    from xferbench.domains.registry import get_domain
+    from xferbench.evaluation.selection import select
+    from xferbench.methods.registry import assess, get_entry
+    from xferbench.orchestration.runner import BenchmarkRunner, RunConfig, RunError
+    from xferbench.util import write_json
+
+    if out.exists() and any(out.iterdir()):
+        _fail(f"{out} is not empty; choose a new --out", 2)
+    src = _resolve_data(benchmark, local_data, metadata, out, out / "data")
+    label = src.label()
+    ds = load_from_metadata_path(src.metadata_path)
+    domain = get_domain(ds.metadata.domain_plugin)
+    order = [m for m, _ in getattr(domain, "method_order", ())]
+    if not order:
+        _fail(f"domain plugin '{domain.id}' declares no method_order", 2)
+    runnable, skipped = [], []
+    for mid in order:
+        try:
+            rep = assess(get_entry(mid), ds)
+        except KeyError:
+            skipped.append((mid, "not registered"))
+            continue
+        ok = (
+            rep.implementation_state in ("implemented", "experimental")
+            and rep.execution_state != "not_installed"
+            and rep.eligibility_state == "compatible"
+        )
+        (runnable.append(mid) if ok else skipped.append((mid, f"{rep.implementation_state}: {rep.reason}")))
+    typer.echo(f"data class {src.data_class}; methods to run: {', '.join(runnable)}")
+    for mid, why in skipped:
+        typer.echo(f"  not run: {mid} ({why})")
+    split = domain.build_splits(ds)
+    write_json(out / "splits.json", split.model_dump(mode="json"))
+    if split.failed_checks:
+        _fail("split checks failed")
+    policy = SelectionPolicy(max_abs_bias=1e9, min_coverage=1e-9)
+    write_json(out / "selection-policy.json", policy.model_dump(mode="json"))
+    try:
+        val = BenchmarkRunner(
+            RunConfig(
+                src.metadata_path,
+                out / "splits.json",
+                "validation",
+                out / "validation-run",
+                methods=runnable,
+                data_label=label,
+            )
+        ).run()
+        sel = select(val.out, policy)
+        write_json(out / "selection.json", sel.model_dump(mode="json"))
+        test = BenchmarkRunner(
+            RunConfig(
+                src.metadata_path,
+                out / "splits.json",
+                "test",
+                out / "test-run",
+                selection_path=out / "selection.json",
+                data_label=label,
+            )
+        ).run()
+    except RunError as exc:
+        _fail(str(exc), exc.exit_code)
+    _print_board(test.out)
+    summary = (test.out / "summary.md").read_text()
+    i = summary.find("## Methods in order")
+    typer.echo(summary[i:] if i >= 0 else "")
+    typer.echo(f"report: {test.out / 'report.html'}")
+
+
 @app.command("demo")
 def demo_cmd(preset: str = typer.Option("tiny"), seed: int = typer.Option(42), out: Path = typer.Option(...)) -> None:
     """Complete offline demo: generate -> validate -> split -> validation run -> select -> test run -> report."""

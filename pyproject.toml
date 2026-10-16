@@ -35,6 +35,7 @@ dependencies = [
 # Optional extras are declared for later milestones. They are NOT yet tested;
 # see METHOD_SUPPORT.md and PROGRESS.md for their real status.
 boosting = ["lightgbm>=4.3", "xgboost>=2.0", "catboost>=1.2"]
+lightgbm = ["lightgbm>=4.3"]  # M4.lightgbm only (implemented and tested)
 neural = ["torch>=2.2", "gluonts>=0.15", "neuralforecast>=1.7", "pytorch-forecasting>=1.0"]
 foundation = ["chronos-forecasting>=2.0"]
 intermittent = ["statsforecast>=1.7"]

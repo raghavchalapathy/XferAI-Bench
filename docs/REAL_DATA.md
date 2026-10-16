@@ -76,3 +76,9 @@ Reports show aggregates and no raw data rows; `data_quality.json` lists at most 
 validation issue.
 `privacy.show_raw_rows_in_report` defaults to `false`. Nothing is uploaded. Keep real data out of the
 repository (`.gitignore` excludes run outputs).
+
+## Keep your data local
+
+Load your data with `--local-data PATH/metadata.json` and write outputs outside the repository (or under the
+gitignored `runs/local/`). Results are labeled local and reports replace entity IDs with salted hashes. See
+[DATA_CLASSES.md](DATA_CLASSES.md).
