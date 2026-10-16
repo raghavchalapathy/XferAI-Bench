@@ -20,3 +20,8 @@ manifests ship inside the package (`src/xferbench/benchmarks/`) so an installed 
 user synthetic sample.
 
 Synthetic benchmark results demonstrate software behavior only; they are not evidence about real data.
+
+## Licence gate
+
+Benchmark data must carry a usable data licence. `usage_tag: "blocked"` in `BENCHMARK.json`, or a dataset on the
+built-in blocklist (`visuelle`), is refused with exit 2. VISUELLE has no data licence and can never be benchmark data.

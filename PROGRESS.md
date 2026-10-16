@@ -27,7 +27,7 @@ core baselines, fair evaluation, frozen validation selection, HTML report, tests
 | Origin-scoped contexts with holdout exclusions | `src/xferbench/features/context.py` |
 | Donor aggregates: pair/national rates, mean-one seasonal profiles | `src/xferbench/features/aggregates.py` |
 | Baselines B0, B1, B2 (grid k x kappa), B2.raw_units, M1, M2; typed M3 hook | `src/xferbench/methods/` |
-| Versioned registry of 29 entries (6 implemented, 1 config_required, 22 unimplemented) with separate implementation/execution/eligibility states | `src/xferbench/methods/registry.py`, `METHOD_SUPPORT.md` |
+| Versioned registry (see METHOD_SUPPORT.md for current counts) with separate implementation/execution/eligibility states | `src/xferbench/methods/registry.py`, `METHOD_SUPPORT.md` |
 | Evaluator (fixed population, undefined zero-denominator metrics, coverage rule, slices) | `src/xferbench/evaluation/` |
 | Runner (preflight, 52-row contract, append-only outputs, budget/partial, exit codes) | `src/xferbench/orchestration/` |
 | Synthetic generator (presets tiny/small/stress, edge fixtures, hidden truth, data story) | `src/xferbench/synth/` |
@@ -138,3 +138,13 @@ ablation not added (kept out to avoid any anchor division in the default path).
   (including Python 3.12 if installed).
 - Documentation and report review against the full specification; final wheel/sdist and clean-environment
   demos; release notes. Publishing stays a separate, explicit decision.
+
+## Session 2026-10-16 (licence gates)
+
+- Benchmark licence gate (`xferbench.data.classes.check_benchmark_licence`): `BENCHMARK.json` with
+  `usage_tag: blocked`, or any dataset matching `BLOCKED_DATASETS` (currently `visuelle`, no data licence found),
+  is refused as benchmark data with exit 2.
+- Research-only methods (`RegistryEntry.research_only`): Moirai 2.0, TabPFN-TS, TimesFM 3 and the new planned
+  `EXT.pop` adapter are excluded from every default profile; explicit use needs `--allow-research-only` (exit 2
+  otherwise) and the run manifest records `usage_label: internal_research_only`. Registry 2026.10.16-b (30 entries).
+- Tests: `tests/integration/test_licence_gates.py` (7 tests). Suite: 101 passed; ruff, format and mypy clean.

@@ -38,6 +38,7 @@ from xferbench.util import (
 
 RUN_SCHEMA_VERSION = "1.0"
 EXIT_OK, EXIT_ERROR, EXIT_REJECTED, EXIT_PARTIAL, EXIT_CANCELLED = 0, 1, 3, 4, 130
+EXIT_LICENCE = 2  # refused on licence / rights grounds
 
 
 class RunError(Exception):
@@ -60,6 +61,7 @@ class RunConfig:
     write_report: bool = True
     measure_memory: bool = True
     data_label: dict[str, Any] | None = None  # see xferbench.data.classes
+    allow_research_only: bool = False  # opt-in for non-commercial / research-only methods
 
 
 @dataclass
@@ -381,17 +383,30 @@ class BenchmarkRunner:
         cfg = self.cfg
         if selection is not None:
             ids = [f.method_id for f in selection.families if f.eligible]
-            return [e for e in all_entries() if e.spec.method_id in ids], True
+            chosen = [e for e in all_entries() if e.spec.method_id in ids]
+            self._gate_research_only(chosen)
+            return chosen, True
         if cfg.methods:
             known = {e.spec.method_id: e for e in all_entries()}
             unknown = [m for m in cfg.methods if m not in known]
             if unknown:
                 raise RunError(f"unknown method ids {unknown}; see `xferbench list-methods --all`", EXIT_REJECTED)
-            return [known[m] for m in cfg.methods], True
+            chosen = [known[m] for m in cfg.methods]
+            self._gate_research_only(chosen)
+            return chosen, True
         try:
-            return entries_for_profile(cfg.profile), False
+            return entries_for_profile(cfg.profile, cfg.allow_research_only), False
         except KeyError as exc:
             raise RunError(str(exc), EXIT_REJECTED) from exc
+
+    def _gate_research_only(self, chosen: list[RegistryEntry]) -> None:
+        blocked = [e.spec.method_id for e in chosen if e.research_only]
+        if blocked and not self.cfg.allow_research_only:
+            raise RunError(
+                f"methods {blocked} are research-only / non-commercial; pass --allow-research-only to opt in "
+                "(outputs are labeled internal research only)",
+                EXIT_LICENCE,
+            )
 
     def _preflight(
         self,
@@ -554,6 +569,7 @@ class BenchmarkRunner:
             "run_schema_version": RUN_SCHEMA_VERSION,
             "data": self.cfg.data_label
             or {"data_class": "unlabeled", "benchmark_id": None, "benchmark_version": None, "benchmark_kind": None},
+            "usage_label": "internal_research_only" if self.cfg.allow_research_only else "standard",
             "run_id": run_id,
             "status": status,
             "stage": self.cfg.stage,

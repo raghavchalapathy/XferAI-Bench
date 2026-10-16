@@ -40,6 +40,20 @@ class DataSource:
         }
 
 
+# Datasets that may never be used as benchmark data (no data licence found; T3 v4 rights record, 2026-10-16).
+BLOCKED_DATASETS: tuple[str, ...] = ("visuelle",)
+
+
+def check_benchmark_licence(man: dict[str, Any], path: Path) -> None:
+    """Refuse (exit 2) blocked benchmark data: usage_tag=blocked or a blocklisted dataset name."""
+    if str(man.get("usage_tag", "")).lower() == "blocked":
+        raise DataClassError(f"{path}: benchmark usage_tag=blocked; this data may not be used as benchmark data")
+    text = json.dumps([man.get("benchmark_id"), man.get("source"), man.get("licence"), man.get("name")]).lower()
+    hit = [b for b in BLOCKED_DATASETS if b in text]
+    if hit:
+        raise DataClassError(f"{path}: dataset {hit} is licence-blocked (no data licence); refused as benchmark data")
+
+
 def _builtin_root() -> Path:
     return Path(str(resources.files("xferbench").joinpath("benchmarks")))
 
@@ -65,6 +79,7 @@ def load_benchmark_manifest(ref: str) -> tuple[dict[str, Any], Path]:
     for k in ("benchmark_id", "version", "kind", "licence", "source", "dataset_hash"):
         if k not in man:
             raise DataClassError(f"{path}: BENCHMARK.json missing '{k}'")
+    check_benchmark_licence(man, path)
     if man["kind"] not in ("synthetic", "public"):
         raise DataClassError(f"{path}: kind must be synthetic or public")
     return man, path

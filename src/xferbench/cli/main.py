@@ -290,6 +290,12 @@ def run_cmd(
     selection: Path | None = typer.Option(None, help="Frozen selection.json (required for --stage test)."),
     max_seconds: float | None = typer.Option(None, help="Run budget; unfinished requests are marked skipped."),
     no_report: bool = typer.Option(False, "--no-report", help="Skip report.html."),
+    allow_research_only: bool = typer.Option(
+        False,
+        "--allow-research-only",
+        help="Opt in to research-only / non-commercial methods (Moirai, TabPFN, POP, TimesFM 3). "
+        "Outputs are labeled internal research only.",
+    ),
 ) -> None:
     """Fit and forecast every compatible method on the frozen stage population, then evaluate."""
     from xferbench.orchestration.runner import BenchmarkRunner, RunConfig, RunError
@@ -310,7 +316,10 @@ def run_cmd(
         max_seconds=max_seconds,
         write_report=not no_report,
         data_label=src.label(),
+        allow_research_only=allow_research_only,
     )
+    if allow_research_only:
+        typer.secho("warning: research-only methods enabled; outputs are INTERNAL RESEARCH ONLY", fg="yellow", err=True)
     try:
         res = BenchmarkRunner(cfg, progress=lambda m: typer.echo(f"  {m}")).run()
     except RunError as exc:

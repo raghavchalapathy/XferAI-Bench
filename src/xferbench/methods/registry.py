@@ -23,7 +23,7 @@ from xferbench.contracts.methods import (
 from xferbench.data.io import Dataset
 from xferbench.methods.base import Method
 
-REGISTRY_VERSION = "2026.10.16-a"
+REGISTRY_VERSION = "2026.10.16-b"
 
 
 @dataclass(frozen=True)
@@ -36,6 +36,7 @@ class RegistryEntry:
     remedy: str = ""
     milestone: str = "A"
     profiles: tuple[str, ...] = field(default=("all",))
+    research_only: bool = False  # non-commercial / research-only rights: opt-in only, never a default
 
 
 def _rights(
@@ -79,6 +80,7 @@ def _planned(
     history: str = "",
     statistic: str = "mean",
     state: ImplementationState = "unimplemented",
+    research_only: bool = False,
 ) -> RegistryEntry:
     spec = CapabilitySpec(
         method_id=method_id,
@@ -100,6 +102,7 @@ def _planned(
         implementation_state=state,
         static_eligibility=eligibility,
         milestone=milestone,
+        research_only=research_only,
         reason=reason or f"adapter not implemented yet (planned for Milestone {milestone})",
         remedy=remedy or f"implement and test the adapter in Milestone {milestone}; no score is reported until then",
     )
@@ -439,6 +442,7 @@ def _builtin() -> list[RegistryEntry]:
             statistic="quantile",
             reason="downloaded weights carry a non-commercial, non-production license",
             remedy="obtain and record an exact commercial grant, or run in a documented research context",
+            research_only=True,
         ),
         _planned(
             "FM.moirai2",
@@ -461,6 +465,7 @@ def _builtin() -> list[RegistryEntry]:
             statistic="quantile",
             reason="weights are CC-BY-NC-4.0 / research only; open code does not grant weight rights",
             remedy="verify a permitted grant for the exact checkpoint before any run",
+            research_only=True,
         ),
         _planned(
             "FM.tabpfn_ts",
@@ -483,6 +488,29 @@ def _builtin() -> list[RegistryEntry]:
             statistic="quantile",
             reason="default TabPFN 3.5 weights are non-commercial; v2-reg terms not reviewed for this use",
             remedy="pin a checkpoint with a verified grant and review its obligations",
+            research_only=True,
+        ),
+        _planned(
+            "EXT.pop",
+            "external",
+            "POP (research-only external adapter)",
+            "donor_only",
+            "composite",
+            None,
+            [],
+            _rights(
+                "CC-BY-NC-SA-4.0",
+                "https://github.com/HumaticsLAB/POP",
+                revision="d0a6896",
+                commercial="restricted",
+                notes="internal_research_only; ShareAlike: derivatives must stay CC-BY-NC-SA-4.0, outside the Apache-2.0 core",
+            ),
+            "C",
+            "Optional external adapter for internal literature benchmarking only.",
+            eligibility="license_blocked",
+            reason="code is CC-BY-NC-SA-4.0 (non-commercial, ShareAlike); internal research only",
+            remedy="opt in with --allow-research-only; outputs are labeled internal research only",
+            research_only=True,
         ),
         _planned(
             "SVC.timegpt",
@@ -548,10 +576,16 @@ def get_entry(method_id: str) -> RegistryEntry:
     raise KeyError(method_id)
 
 
-def entries_for_profile(profile: str) -> list[RegistryEntry]:
+def research_only_ids() -> set[str]:
+    return {e.spec.method_id for e in all_entries() if e.research_only}
+
+
+def entries_for_profile(profile: str, allow_research_only: bool = False) -> list[RegistryEntry]:
+    """Default method sets never include research-only entries unless explicitly allowed."""
+    pool = [e for e in all_entries() if allow_research_only or not e.research_only]
     if profile == "all":
-        return all_entries()
-    out = [e for e in all_entries() if profile in e.profiles]
+        return pool
+    out = [e for e in pool if profile in e.profiles]
     if not out:
         known = sorted({p for e in all_entries() for p in e.profiles})
         raise KeyError(f"unknown method profile '{profile}'; known profiles: {known}")
