@@ -29,7 +29,8 @@ def bias(forecast: np.ndarray, actual: np.ndarray) -> tuple[float | None, str]:
     denom = a.sum()
     if denom <= 0:
         return None, ZERO_ACTUAL_REASON
-    return float(f.sum() / denom - 1.0), ""
+    # typing-only: float(np.float64 / np.float64) is the same IEEE-754 division as float / float
+    return float(f.sum()) / float(denom) - 1.0, ""
 
 
 def mae(forecast: np.ndarray, actual: np.ndarray) -> float | None:
