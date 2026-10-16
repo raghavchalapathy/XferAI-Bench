@@ -130,6 +130,8 @@ def build_context(run_dir: Path) -> dict[str, Any]:
         "metrics": metrics,
         "ranked": ranked,
         "unrankable": unrankable,
+        "ranking_heading": RANKING_HEADING,
+        "ranking_note": RANKING_NOTE,
         "families": fam,
         "wmape_chart": wmape_chart,
         "bias_chart": bias_chart,
@@ -183,6 +185,13 @@ def _progression(manifest: dict, entries: list[dict], support: list[dict]) -> di
     )
 
 
+RANKING_HEADING = "Interface check: method ordering on this run (real benchmark rankings pending)"
+RANKING_NOTE = (
+    "Real benchmark rankings are pending: no rights-cleared real benchmark has been run. "
+    "Synthetic runs only test the interface and do not show which method is better."
+)
+
+
 def write_run_report(run_dir: Path, out: Path) -> Path:
     ctx = build_context(run_dir)
     html = _env().get_template("report.html.j2").render(**ctx)
@@ -219,6 +228,10 @@ def executive_summary(ctx: dict[str, Any]) -> str:
     lines += [
         f"Population (cold_c0 board): {m['population']['launches'].get('cold_c0', 0)} launches, "
         f"{m['population']['eligible_weeks'].get('cold_c0', 0)} eligible weeks.",
+        "",
+        f"## {RANKING_HEADING}",
+        "",
+        f"> {RANKING_NOTE}",
         "",
         "| Rank | Variant | WMAPE E | WMAPE N | Bias E | Bias N | Objective |",
         "|---|---|---|---|---|---|---|",

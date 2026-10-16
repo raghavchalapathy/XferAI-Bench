@@ -91,7 +91,8 @@ Hashes: data <code>{{ m.dataset_hash|short }}</code> split <code>{{ m.split_hash
 </tbody></table></div>
 {% endif %}
 
-<h2 id="leaderboard">Top eligible methods (cold_c0 board)</h2>
+<h2 id="leaderboard">{{ ranking_heading }} (cold_c0 board)</h2>
+<p class="banner">{{ ranking_note }}</p>
 <p class="muted">Ranked by the <abbr title="{{ glossary['Equal-scenario objective'] }}" tabindex="0">equal-scenario objective</abbr>; each scenario is shown separately. <abbr title="{{ glossary['WMAPE'] }}" tabindex="0">WMAPE</abbr>, <abbr title="{{ glossary['Bias'] }}" tabindex="0">Bias</abbr>, <abbr title="{{ glossary['Coverage'] }}" tabindex="0">coverage</abbr>. Units: item units per week.</p>
 <div class="tw"><table>
 <thead><tr><th>Rank</th><th>Variant</th><th class="n">WMAPE E</th><th class="n">WMAPE N</th><th class="n">Bias E</th><th class="n">Bias N</th><th class="n">Objective</th><th class="n">Coverage E/N</th><th class="n"><abbr title="{{ glossary['Fallback'] }}" tabindex="0">Fallback</abbr> weeks</th><th class="n"><abbr title="Total forecast units on launches whose 52-week actual total is zero (E / N)" tabindex="0">Zero-sale units</abbr> E/N</th></tr></thead>

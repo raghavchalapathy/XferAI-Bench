@@ -348,6 +348,10 @@ def _print_board(run_dir: Path) -> None:
     def p(v: float | None) -> str:
         return "   N/A" if v is None else f"{v * 100:6.1f}%"
 
+    from xferbench.reports.html import RANKING_HEADING, RANKING_NOTE
+
+    typer.echo(RANKING_HEADING)
+    typer.echo(RANKING_NOTE)
     typer.echo(
         f"{'rank':>4} {'variant':<34} {'WMAPE E':>8} {'WMAPE N':>8} {'Bias E':>8} {'Bias N':>8} {'objective':>9}"
     )
