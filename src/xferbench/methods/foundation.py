@@ -26,6 +26,7 @@ import pandas as pd
 
 from xferbench.contracts.methods import CapabilitySpec, ModelArtifact, Rights
 from xferbench.features.context import OriginContext
+from xferbench.features.hierarchy import group_items
 from xferbench.methods.base import RowResult, TrainingContext, expand, stateless_artifact
 from xferbench.methods.baselines.rates import _target_households
 
@@ -59,6 +60,7 @@ class DonorSeries:
     weeks: pd.DatetimeIndex
     units: np.ndarray
     households: np.ndarray
+    level: str = "item"  # shared rate-hierarchy level the series comes from
 
     @property
     def rate(self) -> np.ndarray:
@@ -73,16 +75,17 @@ class ForecastBackend(Protocol):
         ...
 
 
-def donor_series(ctx: OriginContext, item_id: str, max_weeks: int = MAX_CONTEXT_WEEKS) -> DonorSeries | None:
-    """Same-item weekly units / households over measured donor pairs, up to the latest usable week only."""
+def _series(ctx: OriginContext, key: str, items: list[str], level: str, max_weeks: int) -> DonorSeries | None:
     obs = ctx.observations
     last = ctx.latest_usable_week
-    o = obs[(obs["item_id"] == item_id) & obs["units"].notna() & (obs["week_start"] <= last)]
+    o = obs[obs["item_id"].isin(items) & obs["units"].notna() & (obs["week_start"] <= last)]
     if o.empty:
         return None
     hh = ctx.locations.set_index("fpg_id")["households"]
     o = o.assign(hh=o["fpg_id"].map(hh).astype(float))
     o = o[o["hh"].notna() & (o["hh"] > 0)]
+    if level != "item" and o["fpg_id"].nunique() < ctx.metadata.features.hierarchy.min_rate_support_fpgs:
+        return None
     g = o.groupby("week_start", sort=True).agg(units=("units", "sum"), hh=("hh", "sum"))
     if g.empty:
         return None
@@ -93,7 +96,20 @@ def donor_series(ctx: OriginContext, item_id: str, max_weeks: int = MAX_CONTEXT_
         return None
     g["hh"] = g["hh"].ffill()
     g["units"] = g["units"].fillna(0.0)
-    return DonorSeries(item_id, pd.DatetimeIndex(g.index), g["units"].to_numpy(float), g["hh"].to_numpy(float))
+    return DonorSeries(key, pd.DatetimeIndex(g.index), g["units"].to_numpy(float), g["hh"].to_numpy(float), level)
+
+
+def donor_series(ctx: OriginContext, item_id: str, max_weeks: int = MAX_CONTEXT_WEEKS) -> DonorSeries | None:
+    """Weekly donor units / households up to the latest usable week only, using the shared rate hierarchy:
+    the item's own donor pairs, else its subcategory's, else its product type's (levels from metadata)."""
+    for level in ctx.metadata.features.hierarchy.rate_levels:
+        items = group_items(ctx, item_id, level)
+        if not items:
+            continue
+        s = _series(ctx, item_id, items, level, max_weeks)
+        if s is not None:
+            return s
+    return None
 
 
 def _require(module: str, extra: str) -> Any:
@@ -283,7 +299,17 @@ class DonorPriorComposite:
                     RowResult(req.request_id, None, "failed", f"fewer than {MIN_CONTEXT_WEEKS} donor weeks at origin")
                 )
                 continue
-            results.append(RowResult(req.request_id, np.clip(np.asarray(r, float), 0, None) * hh, "success"))
+            lv = todo[req.item_id].level
+            results.append(
+                RowResult(
+                    req.request_id,
+                    np.clip(np.asarray(r, float), 0, None) * hh,
+                    "success" if lv == "item" else "fallback",
+                    "" if lv == "item" else f"donor series from {lv} (item lacks history)",
+                    rate_level=lv,
+                    season_level="model (learned from the donor series)",
+                )
+            )
         return expand(requests, results, h)
 
 

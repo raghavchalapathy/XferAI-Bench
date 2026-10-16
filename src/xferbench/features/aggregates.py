@@ -96,21 +96,29 @@ def _circular_smooth(x: np.ndarray, window: int) -> np.ndarray:
 
 
 def seasonal_profiles(ctx: OriginContext) -> dict[str, SeasonalProfile]:
-    """Category-level, calendar-aligned, mean-one seasonal index estimated from donor history.
+    """Category-level profiles (kept for backward compatibility; see seasonal_profiles_by)."""
+    return {k: v for k, (v, _) in seasonal_profiles_by(ctx, "category").items()}
+
+
+def seasonal_profiles_by(ctx: OriginContext, level: str) -> dict[str, tuple[SeasonalProfile, int]]:
+    """Per-group (``level`` column, e.g. category or product_type), calendar-aligned, mean-one seasonal index estimated from donor history.
 
     For each complete 52-week cycle ending at the latest usable week, the category's weekly rate per
     measured household is divided by that cycle's mean rate (removing level and slow trend between
     cycles); indices are averaged by cycle position, circularly smoothed and renormalized to mean one.
     """
 
-    def build() -> dict[str, SeasonalProfile]:
+    def build() -> dict[str, tuple[SeasonalProfile, int]]:
         spec = ctx.metadata.features.seasonality
         obs = ctx.observations
         meas = obs[obs["units"].notna()]
-        cat = ctx.items.set_index("item_id")["category"]
+        if level not in ctx.items.columns:
+            return {}
+        cat = ctx.items.set_index("item_id")[level]
         hh = ctx.locations.set_index("fpg_id")["households"]
         frame = pd.DataFrame(
             {
+                "item_id": meas["item_id"],
                 "category": meas["item_id"].map(cat),
                 "week_start": meas["week_start"],
                 "units": meas["units"].astype(float),
@@ -118,8 +126,9 @@ def seasonal_profiles(ctx: OriginContext) -> dict[str, SeasonalProfile]:
             }
         ).dropna(subset=["category", "hh"])
         last = ctx.latest_usable_week
-        out: dict[str, SeasonalProfile] = {}
+        out: dict[str, tuple[SeasonalProfile, int]] = {}
         for c, grp in frame.groupby("category", sort=True):
+            n_items = int(grp["item_id"].nunique())
             wk = grp.groupby("week_start").agg(units=("units", "sum"), hh=("hh", "sum"))
             wk = wk[wk["hh"] > 0]
             rate = wk["units"] / wk["hh"]
@@ -132,28 +141,27 @@ def seasonal_profiles(ctx: OriginContext) -> dict[str, SeasonalProfile]:
                     break
                 idx_rows.append(pd.Series((seg / seg.mean()).to_numpy(), index=cycle_week(seg.index)))
             if not idx_rows:
-                out[str(c)] = SeasonalProfile(FLAT.copy(), 0, "flat_fallback", "fewer than one complete donor cycle")
+                out[str(c)] = (
+                    SeasonalProfile(FLAT.copy(), 0, "flat_fallback", "fewer than one complete donor cycle"),
+                    n_items,
+                )
                 continue
             stacked = pd.concat(idx_rows).groupby(level=0).mean()
             raw = stacked.reindex(range(1, CYCLE_WEEKS + 1))
             raw = raw.interpolate(limit_direction="both").fillna(1.0).to_numpy(dtype=float)
             sm = _circular_smooth(raw, spec.smoothing_window)
             sm = np.clip(sm, 1e-6, None)
-            out[str(c)] = SeasonalProfile(sm / sm.mean(), len(idx_rows), "estimated")
+            out[str(c)] = (SeasonalProfile(sm / sm.mean(), len(idx_rows), "estimated"), n_items)
         return out
 
-    return ctx.cached("seasonal_profiles", build)
+    return ctx.cached(f"seasonal_profiles:{level}", build)
 
 
 def profile_for_item(ctx: OriginContext, item_id: str) -> SeasonalProfile:
-    cat_map = ctx.items.set_index("item_id")["category"]
-    cat = cat_map.get(item_id)
-    if cat is None or (isinstance(cat, float) and np.isnan(cat)):
-        return SeasonalProfile(FLAT.copy(), 0, "flat_fallback", "item category unknown at origin")
-    prof = seasonal_profiles(ctx).get(str(cat))
-    if prof is None:
-        return SeasonalProfile(FLAT.copy(), 0, "flat_fallback", f"no donor history for category '{cat}'")
-    return prof
+    """Hierarchical seasonal profile (category -> product type by default); see features/hierarchy.py."""
+    from xferbench.features.hierarchy import profile_for_item as hier
+
+    return hier(ctx, item_id).profile
 
 
 def location_attributes(ctx: OriginContext) -> pd.DataFrame:

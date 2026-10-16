@@ -14,7 +14,7 @@ xferbench keeps two classes of data apart.
 
 `xferbench compare` refuses to compare runs from different data classes.
 
-Built-in benchmarks: `xferbench benchmarks` lists them (`synthetic-tiny@1.0.0`, `synthetic-small@1.0.0`). Their
+Built-in benchmarks: `xferbench benchmarks` lists them (`synthetic-tiny@1.1.0`, `synthetic-small@1.1.0`). Their
 manifests ship inside the package (`src/xferbench/benchmarks/`) so an installed wheel can resolve them;
 `benchmarks/` at the repository root holds externally supplied benchmark manifests such as the planned
 user synthetic sample.

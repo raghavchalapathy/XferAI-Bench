@@ -16,6 +16,8 @@ import pandas as pd
 from xferbench.contracts.methods import CapabilitySpec, ModelArtifact, Rights
 from xferbench.features.aggregates import profile_for_item
 from xferbench.features.context import OriginContext
+from xferbench.features.hierarchy import profile_for_item as hier_profile
+from xferbench.features.hierarchy import rate_for_item
 from xferbench.methods.base import RowResult, TrainingContext, expand
 from xferbench.methods.baselines.rates import _forecast_weeks, _target_households, national_level, propensity
 
@@ -169,5 +171,13 @@ class M4LightGBM:
                 results.append(RowResult(req.request_id, None, "failed", "target households unknown at origin"))
                 continue
             pred = np.clip(self._booster.predict(self._matrix([f])), 0, None)
-            results.append(RowResult(req.request_id, pred, "success"))
+            results.append(
+                RowResult(
+                    req.request_id,
+                    pred,
+                    "success",
+                    rate_level=rate_for_item(ctx, req.item_id).level,
+                    season_level=hier_profile(ctx, req.item_id).level,
+                )
+            )
         return expand(requests, results, h)

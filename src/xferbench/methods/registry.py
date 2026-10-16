@@ -23,7 +23,7 @@ from xferbench.contracts.methods import (
 from xferbench.data.io import Dataset
 from xferbench.methods.base import Method
 
-REGISTRY_VERSION = "2026.10.16-d"
+REGISTRY_VERSION = "2026.10.16-e"
 
 
 @dataclass(frozen=True)

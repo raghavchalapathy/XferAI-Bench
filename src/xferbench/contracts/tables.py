@@ -118,8 +118,15 @@ TABLES: dict[str, TableSpec] = {
         key=("item_id", "effective_from"),
         columns=(
             Column("item_id", S),
-            Column("category", S, nullable=True, description="Category; null means unknown."),
-            Column("product_type", S, nullable=True),
+            Column("category", S, nullable=True, description="Category (seasonality level); null means unknown."),
+            Column("product_type", S, nullable=True, description="Product type (broadest hierarchy level)."),
+            Column(
+                "subcategory",
+                S,
+                required=False,
+                nullable=True,
+                description="Subcategory (finest group level of the rate fallback hierarchy).",
+            ),
             Column(
                 "seasonality_class",
                 S,

@@ -74,7 +74,7 @@ xferbench list-methods --all
 ### Methods in order, and your own data
 
 ```bash
-xferbench steps --benchmark synthetic-tiny@1.0.0 --out ./xb-steps          # shared benchmark data (hashed)
+xferbench steps --benchmark synthetic-tiny@1.1.0 --out ./xb-steps          # shared benchmark data (hashed)
 xferbench steps --local-data /path/to/my/metadata.json --out ~/xb-local-1  # your own data, labeled local
 ```
 

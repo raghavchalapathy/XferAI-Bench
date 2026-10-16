@@ -78,6 +78,7 @@ def _entities(cfg: SynthConfig, rng: np.random.Generator) -> _Entities:
                 "category": name,
                 "seasonality_class": cls,
                 "product_type": f"{name}_{'ab'[int(rng.integers(2))]}",
+                "subcat_digit": str(1 + i % 2),
                 "amp": amp,
                 "peak": peak,
                 "fixture": False,
@@ -91,12 +92,16 @@ def _entities(cfg: SynthConfig, rng: np.random.Generator) -> _Entities:
                 "category": name,
                 "seasonality_class": cls,
                 "product_type": f"{name}_a",
+                "subcat_digit": "1",
                 "amp": amp,
                 "peak": peak,
                 "fixture": True,
             }
         )
     items = pd.DataFrame(rows)
+    items["family"] = items["category"]
+    items["category_fine"] = items["product_type"]
+    items["subcat"] = items["category_fine"] + "_" + items["subcat_digit"]
     m = len(items)
     items["true_rate"] = rng.lognormal(0.0, 0.7, m)
     items["true_gate"] = rng.beta(3.0, 1.5, m)
@@ -423,8 +428,10 @@ def _frames(
     offers["exposure_fraction"] = offers["offered_days"] / 7.0
     offers = offers[TABLES["offers"].column_names]
     eff = to_ts("2018-01-01")
-    items = ent.items.assign(effective_from=eff, known_at=eff)[
-        ["item_id", "category", "product_type", "seasonality_class", "effective_from", "known_at"]
+    # Retail hierarchy (broad -> fine): product_type (family) -> category -> subcategory.
+    items = ent.items.assign(effective_from=eff, known_at=eff)
+    items = items.assign(product_type=items["family"], category=items["category_fine"], subcategory=items["subcat"])[
+        ["item_id", "category", "subcategory", "product_type", "seasonality_class", "effective_from", "known_at"]
     ]
     f = ent.fpgs.set_index("fpg_id")
     loc = hh_versions.copy()

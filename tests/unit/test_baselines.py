@@ -111,8 +111,13 @@ def test_b0_b1_fallback_is_visible() -> None:
     out = _predict(B1NationalSeasonal(), item="I2")
     assert set(out["status"]) == {"fallback"}
     assert "consistently exposed" in out["reason"].iloc[0]
-    assert "flat seasonal profile" in out["reason"].iloc[0]
-    np.testing.assert_allclose(out["point_units"], 80 * 40 / 3000)
+    # C2 has less than one donor cycle, so the shared hierarchy falls back to product type 't'
+    assert "season fallback to product_type" in out["reason"].iloc[0]
+    assert set(out["season_level"]) == {"product_type"} and set(out["rate_level"]) == {"item"}
+    from xferbench.features.hierarchy import profile_for_item
+
+    ctx = ContextBuilder(hm.build(), EXCL).at(hm.ORIGIN)
+    np.testing.assert_allclose(out["point_units"], 80 * 40 / 3000 * profile_for_item(ctx, "I2").at(hm.FORECAST_WEEKS))
 
 
 @pytest.mark.parametrize("kappa", [1.0, 4.0])

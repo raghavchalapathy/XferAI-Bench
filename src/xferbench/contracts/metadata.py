@@ -80,10 +80,22 @@ class SeasonalitySpec(_Strict):
     smoothing_window: int = Field(3, ge=1, le=9)
 
 
+class HierarchySpec(_Strict):
+    """Shared fallback hierarchy (retail defaults). Levels are item-table columns; 'item' means the item itself."""
+
+    rate_levels: list[str] = Field(default_factory=lambda: ["item", "subcategory", "product_type"])
+    season_levels: list[str] = Field(default_factory=lambda: ["category", "product_type"])
+    min_rate_support_fpgs: int = Field(3, ge=1, description="Donor FPGs a group level needs to supply a rate.")
+    min_season_support_items: int = Field(
+        2, ge=1, description="Items with donor history a seasonal level needs; sparser levels fall back."
+    )
+
+
 class FeatureSpec(_Strict):
     households: HouseholdSpec = Field(default_factory=HouseholdSpec)
     propensity: PropensitySpec | None = Field(default_factory=PropensitySpec)
     seasonality: SeasonalitySpec = Field(default_factory=SeasonalitySpec)
+    hierarchy: HierarchySpec = Field(default_factory=HierarchySpec)
     demographic_share_columns: list[str] = Field(default_factory=list)
     item_rank_feature: str | None = "item_prelaunch_rank"
     item_affinity_prefix: str | None = "item_affinity_"

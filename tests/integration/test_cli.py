@@ -5,6 +5,7 @@ import subprocess
 import sys
 from pathlib import Path
 
+import pytest
 from typer.testing import CliRunner
 
 from xferbench.cli.main import app
@@ -68,3 +69,43 @@ def test_import_has_no_side_effects() -> None:
         "assert not heavy, heavy\n"
     )
     subprocess.run([sys.executable, "-c", code], check=True)
+
+
+def test_run_selection_directory_is_a_clear_user_error(tmp_path: Path) -> None:
+    from xferbench.orchestration.runner import RunError, load_selection_file
+
+    d = tmp_path / "sel"
+    d.mkdir()
+    (d / "selection.json").write_text("{}")
+    with pytest.raises(RunError, match="not a directory") as ei:
+        load_selection_file(d)
+    assert ei.value.exit_code == 2 and "did you mean" in str(ei.value)
+    with pytest.raises(RunError, match="not found") as ei:
+        load_selection_file(tmp_path / "missing.json")
+    assert ei.value.exit_code == 2
+    with pytest.raises(RunError, match=r"not a valid selection\.json") as ei:
+        load_selection_file(d / "selection.json")
+    assert ei.value.exit_code == 2
+
+
+def test_cli_run_selection_dir_exits_2_without_traceback(tiny_dir: Path, tiny_split_path: Path, tmp_path: Path) -> None:
+    d = tmp_path / "seldir"
+    d.mkdir()
+    res = runner.invoke(
+        app,
+        [
+            "run",
+            "--metadata",
+            str(tiny_dir / "metadata.json"),
+            "--splits",
+            str(tiny_split_path),
+            "--stage",
+            "test",
+            "--selection",
+            str(d),
+            "--out",
+            str(tmp_path / "out"),
+        ],
+    )
+    assert res.exit_code == 2, res.output
+    assert "not a directory" in res.output and "Traceback" not in res.output

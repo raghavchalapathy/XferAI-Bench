@@ -13,8 +13,10 @@ import numpy as np
 import pandas as pd
 
 from xferbench.contracts.methods import CapabilitySpec, ModelArtifact, Rights
-from xferbench.features.aggregates import national_rates, pair_rates, profile_for_item
+from xferbench.features.aggregates import pair_rates, profile_for_item
 from xferbench.features.context import OriginContext
+from xferbench.features.hierarchy import profile_for_item as hier_profile
+from xferbench.features.hierarchy import rate_for_item
 from xferbench.methods.base import RowResult, TrainingContext, expand, join_reasons, stateless_artifact
 
 VERSION = "1.0.0"
@@ -84,11 +86,26 @@ class _Base:
 
     def predict_batch(self, requests: pd.DataFrame, ctx: OriginContext, artifact: ModelArtifact) -> pd.DataFrame:
         h = ctx.metadata.time.horizon_weeks
-        results = [self._one(r, ctx, artifact.config, h) for r in requests.itertuples(index=False)]
+        results = [
+            self._annotate(self._one(r, ctx, artifact.config, h), r, ctx) for r in requests.itertuples(index=False)
+        ]
         return expand(requests, results, h)
 
     def _one(self, req: Any, ctx: OriginContext, cfg: dict[str, Any], h: int) -> RowResult:
         raise NotImplementedError
+
+    # Which shared hierarchies this recipe uses (recorded per row; see features/hierarchy.py).
+    rate_source: str = "hierarchy"  # hierarchy | propensity
+    uses_season: bool = False
+
+    def _annotate(self, res: RowResult, req: Any, ctx: OriginContext) -> RowResult:
+        if res.values is None:
+            return res
+        if not res.rate_level:
+            res.rate_level = rate_for_item(ctx, req.item_id).level if self.rate_source == "hierarchy" else "propensity"
+        if self.uses_season and not res.season_level:
+            res.season_level = hier_profile(ctx, req.item_id).level
+        return res
 
 
 def national_level(ctx: OriginContext, req: Any) -> tuple[float | None, str, str]:
@@ -96,17 +113,21 @@ def national_level(ctx: OriginContext, req: Any) -> tuple[float | None, str, str
     hh = _target_households(ctx, req.fpg_id)
     if hh is None:
         return None, "failed", "target households unknown at origin"
-    nr = national_rates(ctx).get(req.item_id)
-    if nr is None or nr.rate is None:
-        return None, "failed", "no origin-valid national history for item"
-    if nr.footprint != "consistent":
-        return hh * nr.rate, "fallback", "no consistently exposed donor footprint; used all measured donor weeks"
-    return hh * nr.rate, "success", ""
+    lr = rate_for_item(ctx, req.item_id)
+    if lr.rate is None:
+        return None, "failed", lr.reason
+    reasons = [lr.reason] if lr.level != "item" else []
+    if lr.footprint != "consistent":
+        reasons.append("no consistently exposed donor footprint; used all measured donor weeks")
+    return hh * lr.rate, ("fallback" if reasons else "success"), join_reasons(*reasons)
 
 
 def _seasonal(ctx: OriginContext, req: Any, h: int) -> tuple[np.ndarray, str]:
     prof = profile_for_item(ctx, req.item_id)
-    reason = "" if prof.status == "estimated" else f"flat seasonal profile ({prof.reason})"
+    if prof.status != "estimated":
+        reason = f"flat seasonal profile ({prof.reason})"
+    else:
+        reason = prof.reason  # non-empty when the profile fell back to a higher level
     return prof.at(_forecast_weeks(req.origin, h)), reason
 
 
@@ -126,6 +147,7 @@ class B0NationalRate(_Base):
 
 
 class B1NationalSeasonal(_Base):
+    uses_season = True
     spec = _spec(
         "B1",
         "National rate x households x seasonal profile",
@@ -190,6 +212,7 @@ B2_GRID = [
 
 
 class B2AnalogRate(_Base):
+    uses_season = True
     spec = _spec(
         "B2",
         "B2: target households x similar-FPG per-household rate (no shrinkage)",
@@ -207,6 +230,7 @@ class B2AnalogRate(_Base):
 
 
 class B3AnalogRate(_Base):
+    uses_season = True
     spec = _spec(
         "B3",
         "B3: B2 shrunk toward the national rate",
@@ -236,7 +260,11 @@ class B3AnalogRate(_Base):
         r_analog = float((donors["weight"] * donors["rate"]).sum() / donors["weight"].sum())
         r = (n * r_analog + cfg["kappa"] * r_nat) / (n + cfg["kappa"])
         st = "fallback" if (s_reason or status == "fallback") else "success"
-        return RowResult(req.request_id, hh * r * s, st, join_reasons(reason, s_reason))
+        res = RowResult(req.request_id, hh * r * s, st, join_reasons(reason, s_reason))
+        res.rate_level = (
+            "item" if cfg["kappa"] == 0 else f"item (shrunk to {rate_for_item(ctx, req.item_id).level} rate)"
+        )
+        return res
 
 
 B2_RAW_GRID = [
@@ -245,6 +273,7 @@ B2_RAW_GRID = [
 
 
 class B2RawUnits(_Base):
+    uses_season = True
     spec = _spec(
         "ABL.b2_raw_units",
         "Unregistered ablation: raw k-FPG unit mean (no household adjustment)",
@@ -286,6 +315,7 @@ def _m_spec(method_id: str, name: str, desc: str, seasonal: bool) -> CapabilityS
 
 
 class M1FlatRule(_Base):
+    rate_source = "propensity"
     spec = _m_spec(
         "M1",
         "Business rule H x P",
@@ -304,6 +334,8 @@ class M1FlatRule(_Base):
 
 
 class M2SeasonalRule(_Base):
+    rate_source = "propensity"
+    uses_season = True
     spec = _m_spec(
         "M2",
         "Business rule H x P x S",

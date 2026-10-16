@@ -472,7 +472,7 @@ def _demo_label(preset: str, seed: int, content_hash: str) -> dict[str, Any]:
     from xferbench.data.classes import DataClassError, load_benchmark_manifest
 
     try:
-        man, _ = load_benchmark_manifest(f"synthetic-{preset}@1.0.0")
+        man, _ = load_benchmark_manifest(f"synthetic-{preset}@1.1.0")
     except DataClassError:
         man = None
     if man and man["source"].get("seed") == seed:

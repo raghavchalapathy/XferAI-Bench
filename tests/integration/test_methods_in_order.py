@@ -64,7 +64,7 @@ def test_m3_explicit_request_exits_3(tiny_runs: dict[str, Path], tmp_path: Path)
 
 def test_steps_command_on_tiny_benchmark(tmp_path: Path) -> None:
     out = tmp_path / "steps"
-    res = runner.invoke(app, ["steps", "--benchmark", "synthetic-tiny@1.0.0", "--out", str(out)])
+    res = runner.invoke(app, ["steps", "--benchmark", "synthetic-tiny@1.1.0", "--out", str(out)])
     assert res.exit_code == 0, res.output
     p = json.loads((out / "test-run" / "methods_in_order.json").read_text())
     ran = {s["method_id"] for s in p["steps"] if s["ran"]}

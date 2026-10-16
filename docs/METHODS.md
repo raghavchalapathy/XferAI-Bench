@@ -38,7 +38,7 @@ Each recipe uses `S` at most once, so seasonality is never double counted.
 
 ## Methods in order, each adding one idea
 
-`xferbench steps --benchmark synthetic-tiny@1.0.0 --out ./steps` (or `--local-data PATH/metadata.json`) runs the
+`xferbench steps --benchmark synthetic-tiny@1.1.0 --out ./steps` (or `--local-data PATH/metadata.json`) runs the
 domain plugin's method sequence and adds a report section with WMAPE and Bias for each scenario separately.
 For retail the sequence is:
 
@@ -93,3 +93,17 @@ HF weight revisions come from R3 pins.v2, still pending Reviewer review. Extras:
 Weights load from the local HF cache only unless `XFERBENCH_ALLOW_WEIGHT_DOWNLOAD=1`. They are not in the `core`
 profile; run with `--profile foundation` / `--profile neural` or `--methods`. Moirai, TabPFN-2.5 and POP stay behind
 `--allow-research-only`. `M4.xgboost` / `M4.catboost` stay unimplemented (not covered by the R3 pins).
+
+## Shared retail hierarchy (domain-configured)
+
+One shared component (`src/xferbench/features/hierarchy.py`) serves every method that needs a donor rate or a
+seasonal profile. It is configured in the domain metadata (`FeatureSpec.hierarchy`) and only reads
+origin-scoped data through `OriginContext`.
+
+- Rate: item -> subcategory -> product_type. A level is used when it has at least `min_rate_support_fpgs` (3)
+  supporting FPGs; otherwise the next level is tried.
+- Seasonality: category -> product_type, with at least `min_season_support_items` (2) items.
+- The level used is recorded per forecast row (`rate_level`, `season_level`) and summarised in the run manifest
+  (`hierarchy_summary`). M1/M2 use propensity P and record `rate_level="propensity"`; P is never silently
+  replaced by a hierarchy rate. `subcategory` is an optional column in the item table.
+- Leakage tests: `tests/leakage/test_hierarchy.py`; every fallback step has a test.

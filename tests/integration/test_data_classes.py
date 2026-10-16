@@ -53,25 +53,25 @@ def local_copy(tiny_dir: Path, tmp_path_factory: pytest.TempPathFactory) -> Path
 
 
 def test_builtin_benchmarks_listed_and_hash_verified(tmp_path: Path) -> None:
-    assert {"synthetic-tiny@1.0.0", "synthetic-small@1.0.0"} <= set(list_benchmarks())
-    src = materialize_benchmark("synthetic-tiny@1.0.0", tmp_path / "bench")
+    assert {"synthetic-tiny@1.1.0", "synthetic-small@1.1.0"} <= set(list_benchmarks())
+    src = materialize_benchmark("synthetic-tiny@1.1.0", tmp_path / "bench")
     assert src.data_class == "benchmark" and src.benchmark_id == "synthetic-tiny"
 
 
 def test_tampered_benchmark_rejected(tmp_path: Path) -> None:
     d = tmp_path / "bench"
-    materialize_benchmark("synthetic-tiny@1.0.0", d)
+    materialize_benchmark("synthetic-tiny@1.1.0", d)
     p = d / "data" / "items.parquet"
     df = pd.read_parquet(p)
     df.loc[0, "category"] = "tampered"
     df.to_parquet(p, index=False)
     with pytest.raises(DataClassError, match="hash mismatch"):
-        materialize_benchmark("synthetic-tiny@1.0.0", d)
+        materialize_benchmark("synthetic-tiny@1.1.0", d)
 
 
 def test_exactly_one_source_and_legacy_metadata_is_local(tmp_path: Path) -> None:
     with pytest.raises(DataClassError):
-        resolve_source(benchmark="synthetic-tiny@1.0.0", local_data=tmp_path, metadata=None, data_dir=tmp_path)
+        resolve_source(benchmark="synthetic-tiny@1.1.0", local_data=tmp_path, metadata=None, data_dir=tmp_path)
     with pytest.warns(UserWarning, match="LOCAL"):
         src = resolve_source(benchmark=None, local_data=None, metadata=tmp_path / "metadata.json")
     assert src.data_class == "local"
@@ -106,7 +106,7 @@ def test_cli_rejects_mixed_flags(tmp_path: Path, tiny_split_path: Path) -> None:
         [
             "run",
             "--benchmark",
-            "synthetic-tiny@1.0.0",
+            "synthetic-tiny@1.1.0",
             "--benchmark-data",
             str(tmp_path / "b"),
             "--local-data",
@@ -175,6 +175,6 @@ def test_demo_is_labeled_benchmark(tmp_path: Path) -> None:
     assert man["data"] == {
         "data_class": "benchmark",
         "benchmark_id": "synthetic-tiny",
-        "benchmark_version": "1.0.0",
+        "benchmark_version": "1.1.0",
         "benchmark_kind": "synthetic",
     }

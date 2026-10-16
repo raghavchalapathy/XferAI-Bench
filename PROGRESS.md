@@ -172,3 +172,13 @@ ablation not added (kept out to avoid any anchor division in the default path).
 - SVC.timegpt removed (deferred by the user).
 - run_manifest.json `software.git_commit` / `git_dirty`.
 - Registry 2026.10.16-d. Suite: 128 passed; ruff, format, mypy clean.
+
+## Session 2026-10-16 (shared hierarchy, readiness fixes)
+
+- Shared retail hierarchy (`features/hierarchy.py`): rate item -> subcategory -> product_type, season category ->
+  product_type, thresholds in the domain FeatureSpec; origin-only; levels recorded in forecasts and the manifest.
+  Synthetic benchmarks bumped to 1.1.0 (subcategory column; 1.0.0 directories removed, hashes in manifests).
+- `run --selection <dir|bad file>` now gives a clear error and exit 2 (tests in test_cli.py).
+- evaluation/metrics.py: typing-only mypy fix (float cast), proven behaviour-neutral on synthetic-tiny 1.0.0
+  (metrics, method order and forecasts identical before/after). Evaluator logic unchanged.
+- Registry 2026.10.16-e.

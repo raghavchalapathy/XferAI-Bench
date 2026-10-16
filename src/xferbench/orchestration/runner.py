@@ -41,6 +41,38 @@ EXIT_OK, EXIT_ERROR, EXIT_REJECTED, EXIT_PARTIAL, EXIT_CANCELLED = 0, 1, 3, 4, 1
 EXIT_LICENCE = 2  # refused on licence / rights grounds
 
 
+EXIT_USAGE = 2  # bad user input (e.g. --selection is not a selection.json file)
+
+
+def load_selection_file(path: Path) -> Selection:
+    """Read a frozen selection.json, turning user mistakes into a clear RunError (exit 2) instead of a traceback."""
+    p = Path(path)
+    if p.is_dir():
+        hint = " (did you mean " + str(p / "selection.json") + "?)" if (p / "selection.json").is_file() else ""
+        raise RunError(f"--selection must be the selection.json file, not a directory: {p}{hint}", EXIT_USAGE)
+    if not p.is_file():
+        raise RunError(f"--selection file not found: {p}", EXIT_USAGE)
+    try:
+        return Selection.model_validate(read_json(p))
+    except (ValueError, OSError) as exc:
+        raise RunError(
+            f"--selection {p} is not a valid selection.json: {str(exc).splitlines()[0]}", EXIT_USAGE
+        ) from exc
+
+
+def hierarchy_summary(dataset: Dataset, forecasts: pd.DataFrame) -> dict[str, Any]:
+    """Shared hierarchy config and, per variant, how many requests used each rate/season level."""
+    used: dict[str, dict[str, dict[str, int]]] = {}
+    if len(forecasts) and "rate_level" in forecasts.columns:
+        per_req = forecasts.drop_duplicates(["variant_id", "request_id"])
+        for vid, g in per_req.groupby("variant_id"):
+            used[str(vid)] = {
+                k: {str(lv or "n/a"): int(n) for lv, n in g[k].value_counts().items()}
+                for k in ("rate_level", "season_level")
+            }
+    return {"config": dataset.metadata.features.hierarchy.model_dump(mode="json"), "levels_used": used}
+
+
 def code_provenance() -> dict[str, Any]:
     """Git commit of the xferbench source tree and whether it had uncommitted changes (None if not a git checkout)."""
     import subprocess
@@ -133,13 +165,21 @@ def validate_batch(raw: pd.DataFrame, requests: pd.DataFrame, horizon: int) -> t
         problems.append(f"batch missing columns {sorted(need - set(raw.columns))}")
         raw = pd.DataFrame(columns=[*need, "raw_point_units", "reason", "forecast_week"])
     raw = raw.copy()
-    defaults: dict[str, Any] = {"raw_point_units": np.nan, "reason": "", "forecast_week": pd.NaT}
+    defaults: dict[str, Any] = {
+        "raw_point_units": np.nan,
+        "reason": "",
+        "forecast_week": pd.NaT,
+        "rate_level": "",
+        "season_level": "",
+    }
     for c, default in defaults.items():
         if c not in raw.columns:
             raw[c] = default
     raw["forecast_week"] = pd.to_datetime(raw["forecast_week"]).astype("datetime64[ns]")
     raw["raw_point_units"] = pd.to_numeric(raw["raw_point_units"], errors="coerce").astype(float)
     raw["reason"] = raw["reason"].fillna("").astype(str)
+    raw["rate_level"] = raw["rate_level"].fillna("").astype(str)
+    raw["season_level"] = raw["season_level"].fillna("").astype(str)
     raw["point_units"] = pd.to_numeric(raw["point_units"], errors="coerce").astype(float)
     bad_ids: dict[str, str] = {}
     hw = set(range(1, horizon + 1))
@@ -189,6 +229,8 @@ def failed_rows(requests: pd.DataFrame, horizon: int, status: str, reason: str |
                     "raw_point_units": np.nan,
                     "status": status,
                     "reason": reason(r.request_id) if callable(reason) else reason,
+                    "rate_level": "",
+                    "season_level": "",
                 }
             )
         )
@@ -204,6 +246,8 @@ def failed_rows(requests: pd.DataFrame, horizon: int, status: str, reason: str |
                 "raw_point_units",
                 "status",
                 "reason",
+                "rate_level",
+                "season_level",
             ]
         )
     )
@@ -255,7 +299,7 @@ class BenchmarkRunner:
         if cfg.stage == "test":
             if cfg.selection_path is None:
                 raise RunError("the test stage requires --selection (frozen validation selection)")
-            selection = Selection.model_validate(read_json(cfg.selection_path))
+            selection = load_selection_file(cfg.selection_path)
             if selection.dataset_hash != dataset.content_hash or selection.split_hash != split.split_hash:
                 raise RunError("selection.json was frozen on a different dataset/split; refusing test run")
             if (
@@ -383,6 +427,7 @@ class BenchmarkRunner:
         manifest = self._manifest(
             run_id, status, dataset, split, selection, variants, support_json, result, requests, horizon
         )
+        manifest["hierarchy"] = hierarchy_summary(dataset, forecasts)
         write_json(out / "run_manifest.json", manifest)
 
         if cfg.write_report:
@@ -564,6 +609,8 @@ class BenchmarkRunner:
             "raw_point_units",
             "status",
             "reason",
+            "rate_level",
+            "season_level",
             "point_statistic",
             "postprocessing",
             "method_id",

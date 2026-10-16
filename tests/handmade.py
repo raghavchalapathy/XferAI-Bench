@@ -47,9 +47,11 @@ def _obs(item: str, fpg: str, weeks: pd.DatetimeIndex, units: np.ndarray, delay_
     )
 
 
-def build(smoothing_window: int = 1, propensity: float | None = 0.02) -> Dataset:
+def build(smoothing_window: int = 1, propensity: float | None = 0.02, min_season_items: int = 1) -> Dataset:
     md_dict = metadata_template(shares=["share_a", "share_b"])
     md_dict["features"]["seasonality"]["smoothing_window"] = smoothing_window
+    # Hand calculations below use single-item categories, so allow a one-item seasonal level here.
+    md_dict["features"].setdefault("hierarchy", {})["min_season_support_items"] = min_season_items
     md = Metadata.model_validate(md_dict)
 
     obs = [

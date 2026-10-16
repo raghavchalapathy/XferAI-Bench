@@ -32,6 +32,8 @@ PREDICTION_COLUMNS = [
     "raw_point_units",
     "status",
     "reason",
+    "rate_level",
+    "season_level",
 ]
 
 
@@ -105,6 +107,8 @@ class RowResult:
     status: str
     reason: str = ""
     raw: np.ndarray | None = None
+    rate_level: str = ""  # shared hierarchy level of the rate (item/subcategory/product_type/propensity/...)
+    season_level: str = ""  # shared hierarchy level of the seasonal profile (category/product_type/flat)
 
 
 def expand(requests: pd.DataFrame, results: Sequence[RowResult], horizon: int) -> pd.DataFrame:
@@ -125,6 +129,8 @@ def expand(requests: pd.DataFrame, results: Sequence[RowResult], horizon: int) -
                     "raw_point_units": raw,
                     "status": res.status,
                     "reason": res.reason,
+                    "rate_level": res.rate_level,
+                    "season_level": res.season_level,
                 }
             )
         )
