@@ -1,46 +1,318 @@
 {
   "schema_version": 1,
-  "source": "interim: in-scope items from assets/news.json + portal-view.json (2026-10-19); replace this file with Scout factory/inbox/scout/news_feed_v1.json once reviewed",
+  "provenance": {
+    "source": "factory/inbox/scout/news_feed_v2.json",
+    "source_sha256": "e261a936c5bda13fa20c1261cb629800776bbdabb175364d3fbc988e431a6d20",
+    "review": "factory/inbox/reviewer/news-feed-v1-review-20261019/v2/review.json",
+    "review_sha256": "ae4db24f3a135cb264f05e6c536a4c263370b909be9678c1e8a83b9f04fac207",
+    "verdict": "APPROVE"
+  },
   "items": [
     {
-      "id": "dif4ff-2024",
-      "title": "Dif4FF explores multiple sales paths for unreleased fashion items",
-      "date": "2024-12-07",
-      "tag": "research",
-      "summary": "Forecasts new fashion products from images and signals.",
-      "url": "https://arxiv.org/abs/2412.05566"
-    },
-    {
-      "id": "mdiff-2024",
-      "title": "MDiFF provides an author-linked diffusion implementation",
-      "date": "2024-12-07",
-      "tag": "research",
-      "summary": "A new-product forecasting paper with linked code.",
-      "url": "https://arxiv.org/abs/2412.06840"
-    },
-    {
-      "id": "amazon-geann-2023",
-      "title": "GEANN: Scalable Graph Augmentations for Multi-Horizon Time Series Forecasting",
-      "date": "2023-07-07",
-      "tag": "research",
-      "summary": "Use relationships between products to improve demand forecasts for newly launched items.",
-      "url": "https://arxiv.org/html/2307.03595v1"
-    },
-    {
-      "id": "aws-forecast-metadata-coldstart-2022",
-      "title": "Amazon Forecast: new-product metadata matching",
-      "date": "2022-11-18",
+      "id": "mistral-timestral-blog",
+      "title": "Timestral: Mistral's time-series foundation models",
+      "date": "2026-10-15",
       "tag": "industry",
-      "summary": "Forecast a never-sold product from similar products and item attributes.",
-      "url": "https://aws.amazon.com/blogs/machine-learning/generate-cold-start-forecasts-for-products-with-no-historical-data-using-amazon-forecast-now-up-to-45-more-accurate/"
+      "summary": "Mistral AI introduces Timestral, its first family of time-series foundation models.",
+      "url": "https://mistral.ai/news/timestral/",
+      "date_display": "2026-10-15"
     },
     {
-      "id": "kdd-2020-new-product-attention",
-      "title": "Attention based Multi-Modal New Product Sales Time-series Forecasting",
-      "date": "2020-08-23",
+      "id": "hf-mistralai-timestral-209m",
+      "title": "Timestral-209M (Hugging Face model page)",
+      "date": "2026-10-14",
+      "tag": "industry",
+      "summary": "Mistral AI's 209M-parameter Timestral time-series forecasting model on Hugging Face.",
+      "url": "https://huggingface.co/mistralai/Timestral-209M",
+      "date_display": "Repo created 2026-10-14 (PT)"
+    },
+    {
+      "id": "hf-theforecastingcompany-t0-gamma",
+      "title": "t0-gamma (Hugging Face model page)",
+      "date": "2026-10-12",
+      "tag": "industry",
+      "summary": "The Forecasting Company's t0-gamma forecasting model on Hugging Face; benchmark scores on the card are reported by the company.",
+      "url": "https://huggingface.co/theforecastingcompany/t0-gamma",
+      "date_display": "Repo created 2026-10-12 (PT)"
+    },
+    {
+      "id": "gcloud-bigquery-timesfm3",
+      "title": "BigQuery TimesFM 3.0 with multivariate time-series forecasting",
+      "date": "2026-10-12",
+      "tag": "industry",
+      "summary": "Google Cloud blog on TimesFM 3.0 multivariate forecasting in BigQuery.",
+      "url": "https://cloud.google.com/blog/products/data-analytics/bigquery-timesfm-3-0-with-multivariate-time-series-forecasting",
+      "date_display": "2026-10-12"
+    },
+    {
+      "id": "arxiv-2610.00589",
+      "title": "Foundation or Formula? A Simulation-Based Comparison of Google's TimesFM-3 and Classical Time-Series Models",
+      "date": "2026-09-30",
       "tag": "research",
-      "summary": "Images and attributes predict sales before the first sale.",
-      "url": "https://www.kdd.org/kdd2020/accepted-papers/view/attention-based-multi-modal-new-product-sales-time-series-forecasting.html"
+      "summary": "Exploratory study comparing TimesFM-3 with classical methods (e.g. ARIMA, exponential smoothing) on simulated series.",
+      "url": "https://arxiv.org/abs/2610.00589",
+      "date_display": "2026-09-30"
+    },
+    {
+      "id": "google-timesfm3-blog",
+      "title": "TimesFM-3: A zero-shot foundation model for multivariate forecasting",
+      "date": "2026-08-31",
+      "tag": "industry",
+      "summary": "Google Research blog introducing TimesFM-3, a zero-shot model for multivariate forecasting.",
+      "url": "https://research.google/blog/timesfm-3-a-zero-shot-foundation-model-for-multivariate-forecasting/",
+      "date_display": "2026-08-31"
+    },
+    {
+      "id": "aws-decathlon-chronos2",
+      "title": "How Decathlon runs demand forecasting at scale with Chronos-2",
+      "date": "2026-08-28",
+      "tag": "industry",
+      "summary": "AWS blog describing how Decathlon uses Chronos-2 for demand forecasting.",
+      "url": "https://aws.amazon.com/blogs/machine-learning/how-decathlon-runs-demand-forecasting-at-scale-with-chronos-2/",
+      "date_display": "2026-08-28"
+    },
+    {
+      "id": "hf-google-timesfm-3.0-pytorch",
+      "title": "TimesFM 3.0 PyTorch checkpoint (Hugging Face model page)",
+      "date": "2026-08-24",
+      "tag": "industry",
+      "summary": "Google Research's TimesFM 3.0 checkpoint on Hugging Face.",
+      "url": "https://huggingface.co/google/timesfm-3.0-pytorch",
+      "date_display": "Repo created 2026-08-24 (PT)"
+    },
+    {
+      "id": "synthefy-nori-coldstart",
+      "title": "Better Cold-Start Forecasting with Nori: New and Short-History SKUs",
+      "date": "2026-07-26",
+      "tag": "industry",
+      "summary": "Cold start: vendor blog where Synthefy compares its Nori model with XGBoost on new and short-history SKUs (vendor-reported).",
+      "url": "https://www.synthefy.com/blog/nori-cold-start-demand-forecasting",
+      "date_display": "2026-07-26"
+    },
+    {
+      "id": "hf-nx-ai-tirex-2",
+      "title": "TiRex-2 (Hugging Face model page)",
+      "date": "2026-06-16",
+      "tag": "industry",
+      "summary": "NXAI's TiRex-2 model repository on Hugging Face.",
+      "url": "https://huggingface.co/NX-AI/TiRex-2",
+      "date_display": "Repo created 2026-06-16 (PT)"
+    },
+    {
+      "id": "arxiv-2605.20119",
+      "title": "Toto 2.0: Time Series Forecasting Enters the Scaling Era",
+      "date": "2026-05-19",
+      "tag": "research",
+      "summary": "Toto 2.0: five open-weights forecasting models from 4M to 2.5B parameters trained with one recipe.",
+      "url": "https://arxiv.org/abs/2605.20119",
+      "date_display": "2026-05-19"
+    },
+    {
+      "id": "arxiv-2604.20370",
+      "title": "Cold-Start Forecasting of New Product Life-Cycles via Conditional Diffusion Models",
+      "date": "2026-04-22",
+      "tag": "research",
+      "summary": "Cold start: conditional diffusion model for forecasting new-product life-cycle trajectories before and shortly after launch.",
+      "url": "https://arxiv.org/abs/2604.20370",
+      "date_display": "2026-04-22"
+    },
+    {
+      "id": "zodiac-iclr2026-tsalm",
+      "title": "Zodiac — Zero-inflated overshoot controlled dual-head integration for asymmetric cross-domain forecasting",
+      "date": "2026",
+      "tag": "research",
+      "summary": "Cold start: Amazon model for forecasting products launched into new marketplaces with zero-inflated demand; compared with TabPFN, AutoGluon and TFT.",
+      "url": "https://www.amazon.science/publications/zodiac-zero-inflated-overshoot-controlled-dual-head-integration-for-asymmetric-cross-domain-forecasting",
+      "date_display": "2026 (day UNVERIFIED)"
+    },
+    {
+      "id": "hf-amazon-chronos-2",
+      "title": "Chronos-2 (Hugging Face model page)",
+      "date": "2025-10-30",
+      "tag": "industry",
+      "summary": "Amazon's Chronos-2 forecasting model weights on Hugging Face.",
+      "url": "https://huggingface.co/amazon/chronos-2",
+      "date_display": "Repo created 2025-10-30 (PT)"
+    },
+    {
+      "id": "arxiv-2510.15821",
+      "title": "Chronos-2: From Univariate to Universal Forecasting",
+      "date": "2025-10-17",
+      "tag": "research",
+      "summary": "Chronos-2: a pretrained model for univariate, multivariate and covariate-informed forecasting.",
+      "url": "https://arxiv.org/abs/2510.15821",
+      "date_display": "2025-10-17"
+    },
+    {
+      "id": "arxiv-2509.26468",
+      "title": "fev-bench: A Realistic Benchmark for Time Series Forecasting",
+      "date": "2025-09-30",
+      "tag": "research",
+      "summary": "fev-bench: a forecasting benchmark covering more domains, tasks with covariates, and statistically grounded aggregation.",
+      "url": "https://arxiv.org/abs/2509.26468",
+      "date_display": "2025-09-30"
+    },
+    {
+      "id": "arxiv-2505.23719",
+      "title": "TiRex: Zero-Shot Forecasting Across Long and Short Horizons with Enhanced In-Context Learning",
+      "date": "2025-05-29",
+      "tag": "research",
+      "summary": "TiRex: a zero-shot forecaster built on in-context learning, evaluated on long and short horizons.",
+      "url": "https://arxiv.org/abs/2505.23719",
+      "date_display": "2025-05-29"
+    },
+    {
+      "id": "hf-nx-ai-tirex",
+      "title": "TiRex (Hugging Face model page)",
+      "date": "2025-05-26",
+      "tag": "industry",
+      "summary": "NXAI's TiRex forecasting model on Hugging Face.",
+      "url": "https://huggingface.co/NX-AI/TiRex",
+      "date_display": "Repo created 2025-05-26 (PT)"
+    },
+    {
+      "id": "arxiv-2505.14766",
+      "title": "This Time is Different: An Observability Perspective on Time Series Foundation Models",
+      "date": "2025-05-20",
+      "tag": "research",
+      "summary": "Toto: a 151M-parameter decoder-only forecasting model aimed at observability time series.",
+      "url": "https://arxiv.org/abs/2505.14766",
+      "date_display": "2025-05-20"
+    },
+    {
+      "id": "hf-thuml-sundial-base-128m",
+      "title": "sundial-base-128m (Hugging Face model page)",
+      "date": "2025-05-13",
+      "tag": "industry",
+      "summary": "Tsinghua THUML's 128M Sundial base model on Hugging Face.",
+      "url": "https://huggingface.co/thuml/sundial-base-128m",
+      "date_display": "Repo created 2025-05-13 (PT)"
+    },
+    {
+      "id": "hf-datadog-toto-open-base-1.0",
+      "title": "Toto-Open-Base-1.0 (Hugging Face model page)",
+      "date": "2025-04-30",
+      "tag": "industry",
+      "summary": "Datadog's open-weights Toto 1.0 base model on Hugging Face.",
+      "url": "https://huggingface.co/Datadog/Toto-Open-Base-1.0",
+      "date_display": "Repo created 2025-04-30 (PT)"
+    },
+    {
+      "id": "arxiv-2502.00816",
+      "title": "Sundial: A Family of Highly Capable Time Series Foundation Models",
+      "date": "2025-02-02",
+      "tag": "research",
+      "summary": "Sundial: time-series foundation models pre-trained with a flow-matching 'TimeFlow' loss, no discrete tokenization.",
+      "url": "https://arxiv.org/abs/2502.00816",
+      "date_display": "2025-02-02"
+    },
+    {
+      "id": "arxiv-2501.10324",
+      "title": "New Fashion Products Performance Forecasting: A Survey on Evolutions, Models and Emerging Trends",
+      "date": "2025-01-17",
+      "tag": "research",
+      "summary": "Cold start: survey of learning-based methods for forecasting the performance of new fashion products (NFPPF).",
+      "url": "https://arxiv.org/abs/2501.10324",
+      "date_display": "2025-01-17"
+    },
+    {
+      "id": "arxiv-2412.06840",
+      "title": "MDiFF: Exploiting Multimodal Score-based Diffusion Models for New Fashion Product Performance Forecasting",
+      "date": "2024-12-07",
+      "tag": "research",
+      "summary": "Cold start: MDiFF forecasts sales of unreleased fashion products using a diffusion model plus a refinement MLP (VISUELLE).",
+      "url": "https://arxiv.org/abs/2412.06840",
+      "date_display": "2024-12-07"
+    },
+    {
+      "id": "hf-amazon-chronos-bolt-base",
+      "title": "Chronos-Bolt base (Hugging Face model page)",
+      "date": "2024-11-25",
+      "tag": "industry",
+      "summary": "Amazon's Chronos-Bolt base model weights on Hugging Face.",
+      "url": "https://huggingface.co/amazon/chronos-bolt-base",
+      "date_display": "Repo created 2024-11-25 (PT)"
+    },
+    {
+      "id": "hf-salesforce-moirai-moe-1.0-r-base",
+      "title": "moirai-moe-1.0-R-base (Hugging Face model page)",
+      "date": "2024-10-31",
+      "tag": "industry",
+      "summary": "Salesforce's Moirai-MoE base model on Hugging Face (card licence cc-by-nc-4.0).",
+      "url": "https://huggingface.co/Salesforce/moirai-moe-1.0-R-base",
+      "date_display": "Repo created 2024-10-31 (PT)"
+    },
+    {
+      "id": "arxiv-2410.10393",
+      "title": "GIFT-Eval: A Benchmark For General Time Series Forecasting Model Evaluation",
+      "date": "2024-10-14",
+      "tag": "research",
+      "summary": "GIFT-Eval: a benchmark for evaluating general time-series forecasting models across 23 datasets.",
+      "url": "https://arxiv.org/abs/2410.10393",
+      "date_display": "2024-10-14"
+    },
+    {
+      "id": "arxiv-2410.10469",
+      "title": "Moirai-MoE: Empowering Time Series Foundation Models with Sparse Mixture of Experts",
+      "date": "2024-10-14",
+      "tag": "research",
+      "summary": "Moirai-MoE: adds a sparse mixture-of-experts to a time-series foundation model.",
+      "url": "https://arxiv.org/abs/2410.10469",
+      "date_display": "2024-10-14"
+    },
+    {
+      "id": "hf-ibm-granite-granite-timeseries-ttm-r2",
+      "title": "granite-timeseries-ttm-r2 (Hugging Face model page)",
+      "date": "2024-10-08",
+      "tag": "industry",
+      "summary": "IBM's Tiny Time Mixers r2 models on Hugging Face.",
+      "url": "https://huggingface.co/ibm-granite/granite-timeseries-ttm-r2",
+      "date_display": "Repo created 2024-10-08 (PT)"
+    },
+    {
+      "id": "arxiv-2403.07815",
+      "title": "Chronos: Learning the Language of Time Series",
+      "date": "2024-03-12",
+      "tag": "research",
+      "summary": "Pretrained probabilistic forecasting models that tokenize scaled, quantized values and train T5-family language-model architectures on them.",
+      "url": "https://arxiv.org/abs/2403.07815",
+      "date_display": "2024-03-12"
+    },
+    {
+      "id": "arxiv-2402.03885",
+      "title": "MOMENT: A Family of Open Time-series Foundation Models",
+      "date": "2024-02-06",
+      "tag": "research",
+      "summary": "MOMENT: a family of open-source foundation models for general-purpose time-series analysis.",
+      "url": "https://arxiv.org/abs/2402.03885",
+      "date_display": "2024-02-06"
+    },
+    {
+      "id": "arxiv-2402.02592",
+      "title": "Unified Training of Universal Time Series Forecasting Transformers",
+      "date": "2024-02-04",
+      "tag": "research",
+      "summary": "Moirai: one pretrained transformer for 'universal' forecasting across many time-series datasets.",
+      "url": "https://arxiv.org/abs/2402.02592",
+      "date_display": "2024-02-04"
+    },
+    {
+      "id": "arxiv-2401.13096",
+      "title": "Probabilistic Demand Forecasting with Graph Neural Networks",
+      "date": "2024-01-23",
+      "tag": "research",
+      "summary": "Cold start: GraphDeepAR uses a graph of similar articles to improve retail demand forecasts, and reports cold-start articles (<5 weeks of history) separately.",
+      "url": "https://arxiv.org/abs/2401.13096",
+      "date_display": "2024-01-23"
+    },
+    {
+      "id": "arxiv-2401.03955",
+      "title": "Tiny Time Mixers (TTMs): Fast Pre-trained Models for Enhanced Zero/Few-Shot Forecasting of Multivariate Time Series",
+      "date": "2024-01-08",
+      "tag": "research",
+      "summary": "Tiny Time Mixers (TTM): small pretrained models for zero/few-shot multivariate forecasting.",
+      "url": "https://arxiv.org/abs/2401.03955",
+      "date_display": "2024-01-08"
     }
   ]
 }

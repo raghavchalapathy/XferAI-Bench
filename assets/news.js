@@ -7,7 +7,7 @@
   function card(i) {
     const a = el('a', 'feed-card'); a.href = i.url; a.target = '_blank'; a.rel = 'noopener';
     const top = el('div', 'feed-top'); const tag = (i.tag || '').toLowerCase();
-    top.append(el('span', 'tag-pill tag-' + tag, tag === 'industry' ? 'Industry' : 'Research'), el('time', '', fmt(i.date)));
+    top.append(el('span', 'tag-pill tag-' + tag, tag === 'industry' ? 'Industry' : 'Research'), el('time', '', i.date_display || i.date));
     a.append(top, el('strong', '', i.title), el('span', 'feed-summary', i.summary), el('span', 'text-link', 'Source ↗'));
     a.dataset.search = [i.title, i.summary, i.tag].join(' ').toLowerCase(); return a;
   }
