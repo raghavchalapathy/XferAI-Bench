@@ -22,7 +22,7 @@ benchmark has been run. The bundled synthetic data only tests that the software 
 - Docs: GETTING_STARTED, DIY-GettingStarted (for coding assistants), AGENTS.md, llms.txt.
 
 ### Changed
-- TimeGPT removed (deferred).
+- TimeGPT dropped before release (paid API; no use without owner authorization).
 
 ### Fixed
 - Windows CI: mypy `resource` stub issue; explicit UTF-8 text I/O; posix git pathspecs; no symlinks in tests.
