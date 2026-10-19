@@ -155,9 +155,12 @@ Alternative for a person at a terminal (interactive, not for agents): `xferbench
 ### Step 7. Validate (gate)
 
 ```bash
+grep -c "REPLACE" local/my-bench/metadata.json
 .venv/bin/xferbench validate --metadata local/my-bench/metadata.json --out local/my-bench/data_quality.json
 ```
-Expected: `dataset <id> <version> hash <hash>: 0 errors, ...`, exit 0.
+Expected: `grep` prints `0` (it exits 1 when there is no match, which is fine). Any other number means template
+placeholders such as `REPLACE: data owner` remain; validate does not catch them, so STOP and ask the user for the
+rights values. Then validate prints `dataset <id> <version> hash <hash>: 0 errors, 0 warnings`, exit 0.
 Nonzero exit: read the printed errors (also in `data_quality.json`). Fix `metadata.json` mapping mistakes yourself
 and re-run. If an error is about the data itself (missing column, wrong values, gaps), **STOP**: show the user the
 error text and ask how to fix the data. Do not continue to Step 8 until validate exits 0.
@@ -221,13 +224,13 @@ Ask the user for the real proxy, mirror and CA values (STOP); never guess them.
 
 ```bash
 python3 -m venv /tmp/wh-venv && /tmp/wh-venv/bin/python -m pip install --upgrade pip
-/tmp/wh-venv/bin/python -m pip wheel -c constraints/core.txt -w wheelhouse .
+/tmp/wh-venv/bin/python -m pip wheel -c constraints/core.txt -w local/wheelhouse .
 ```
-Expected: `wheelhouse/` holds `xferbench-<version>-py3-none-any.whl` plus every dependency wheel. Copy
-`wheelhouse/` to the target (with the repo folder), then on the target instead of Step 3:
+Expected: exit 0; `local/wheelhouse/` (gitignored) holds `xfer_bench-<version>-py3-none-any.whl` plus every dependency
+wheel. Copy the repo folder including `local/wheelhouse/` to the target, then on the target instead of Step 3:
 
 ```bash
-.venv/bin/python -m pip install --no-index --find-links wheelhouse xferbench
+.venv/bin/python -m pip install --no-index --find-links local/wheelhouse xfer-bench
 .venv/bin/xferbench doctor --profile core
 ```
 Expected: `profile 'core' satisfied`. This is a normal (non-editable) install; all later steps are the same.
@@ -239,9 +242,10 @@ No package index, network or telemetry is used after this.
 |---|---|
 | `requires a different Python` / assert in Step 2 | Recreate `.venv` with Python 3.11+ |
 | pip `ProxyError`, `SSLError`, timeouts | Set the proxy / mirror / `PIP_CERT` (Offline / enterprise), or use the wheelhouse |
-| `No matching distribution` with `--no-index` | Wheelhouse built for another OS/arch/Python; rebuild it on a matching machine |
-| `validate` reports an unknown key / extra field | Typo or unsupported key in `metadata.json`; compare with the `init` template |
-| `validate`: column not found / missing required column | Fix `tables.<name>.columns` mapping, or STOP if the column does not exist in the data |
+| `No matching distribution` with `--no-index` | The package name is `xfer-bench` (the command is `xferbench`); otherwise the wheelhouse was built for another OS/arch/Python: rebuild it on a matching machine |
+| `metadata invalid ... Extra inputs are not permitted` | Typo or unsupported key in `metadata.json` (the error names it, e.g. `time.frequncy`); compare with the `init` template |
+| `[error] missing_column <table>.<col>` (lists the available columns) | Fix `tables.<table>.columns.<col>`, or STOP if the column does not exist in the data |
+| `[error] file_not_found` | Fix `tables.<name>.path` (relative paths resolve from `metadata.json`) |
 | `dataset_hash_mismatch` | Data changed; set `dataset.expected_hash` to `null` or to the new hash after the user confirms |
 | `split` exits 1 | Cohort windows overlap, are empty, or lack 52 weeks of labels; STOP and agree new windows |
 | "splits.json was built for different data" | Re-run Step 8 |
