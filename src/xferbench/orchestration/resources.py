@@ -39,6 +39,8 @@ def measure(enabled: bool = True) -> Iterator[Measurement]:
 
 
 def max_rss_mib() -> float | None:
+    if sys.platform == "win32":  # no `resource` module on Windows (and none in its type stubs)
+        return None
     try:
         import resource
 
