@@ -18,6 +18,16 @@ Two scenarios are always scored and shown separately, with equal 0.5/0.5 selecti
 > data is synthetic: it tests that the software works, not which method is better. Nothing here claims that any
 > method forecasts well from day zero. The package is not on PyPI; install it from a clone or a locally built wheel.
 
+**Website:** [xferai.app](https://xferai.app): [Benchmark](https://xferai.app/benchmark/) ·
+[News & Research](https://xferai.app/news/) · [Getting started](https://xferai.app/getting-started/) ·
+[Offers | Services](https://xferai.app/services/).
+
+**Run on your own data, locally:** [docs/DIY-GettingStarted.md](docs/DIY-GettingStarted.md).
+
+**Scope.** Cold-start time-series forecasting (zero or near-zero own history). Foundation-model and zero-shot
+approaches (e.g. TimesFM, Chronos, Moirai) are tracked; see the method table below for what actually runs.
+Licence: Apache-2.0 ([LICENSE](LICENSE)). Contributor and site rules: [docs/SITE_AND_HARNESS.md](docs/SITE_AND_HARNESS.md).
+
 ## Quickstart (macOS / Linux)
 
 - New here? Follow **[docs/GETTING_STARTED.md](docs/GETTING_STARTED.md)**: install, demo, then your own data.

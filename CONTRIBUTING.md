@@ -28,6 +28,14 @@ The `.venv` stays inside the project; nothing is installed globally.
 - Keep the core dependency set small; heavy libraries go in an optional extra and are imported lazily
   inside the adapter.
 
+- **Evidence-only numbers.** Any benchmark number in docs or on the website is either paper-reported and has
+  passed Scout research, Scientist verification and Reviewer review, or comes from a reproducible XferAI-Bench
+  run. Never invent or convert results.
+- **No proprietary Walmart data.** Public papers that mention Walmart may be cited; their data is not used.
+- **Goals are not features.** Explainability and feature traceability are design goals; uncertainty intervals are
+  not computed yet ([docs/EVALUATION.md](docs/EVALUATION.md)). Do not describe them as shipped.
+- **Lean docs.** Short, scannable text. Site and harness rules: [docs/SITE_AND_HARNESS.md](docs/SITE_AND_HARNESS.md).
+
 ## Adding a method
 
 See [docs/EXTENDING.md](docs/EXTENDING.md). A new adapter needs: a `CapabilitySpec` with honest rights
@@ -38,11 +46,11 @@ implementation state, and a regenerated `METHOD_SUPPORT.md`:
 .venv/bin/xferbench list-methods --all --format markdown > METHOD_SUPPORT.md
 ```
 
-## Releases (not yet published)
+## Releases
 
 1. Update `src/xferbench/_version.py` and `PROGRESS.md`.
 2. Run the full checks above and `bash bootstrap.sh` from a fresh clone.
 3. `python -m build` and install the wheel into a clean environment outside the checkout; run
    `xferbench demo --out <tmp>`.
-4. Tag the commit locally. Publishing to a remote or to PyPI requires an explicit decision by the maintainers;
-   until then do not document `pip install xfer-bench` from PyPI.
+4. Tag the commit. v0.1.0 is published as a GitHub Release. Publishing to PyPI requires an explicit decision by
+   the maintainers; until then do not document `pip install xfer-bench` from PyPI.
