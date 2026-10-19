@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "source": "interim: in-scope items from assets/news.json + portal-view.json (2026-10-19); replace this file with Scout factory/inbox/scout/news_feed_v1.json once reviewed",
+  "items": [
+    {
+      "id": "dif4ff-2024",
+      "title": "Dif4FF explores multiple sales paths for unreleased fashion items",
+      "date": "2024-12-07",
+      "tag": "research",
+      "summary": "Forecasts new fashion products from images and signals.",
+      "url": "https://arxiv.org/abs/2412.05566"
+    },
+    {
+      "id": "mdiff-2024",
+      "title": "MDiFF provides an author-linked diffusion implementation",
+      "date": "2024-12-07",
+      "tag": "research",
+      "summary": "A new-product forecasting paper with linked code.",
+      "url": "https://arxiv.org/abs/2412.06840"
+    },
+    {
+      "id": "amazon-geann-2023",
+      "title": "GEANN: Scalable Graph Augmentations for Multi-Horizon Time Series Forecasting",
+      "date": "2023-07-07",
+      "tag": "research",
+      "summary": "Use relationships between products to improve demand forecasts for newly launched items.",
+      "url": "https://arxiv.org/html/2307.03595v1"
+    },
+    {
+      "id": "aws-forecast-metadata-coldstart-2022",
+      "title": "Amazon Forecast: new-product metadata matching",
+      "date": "2022-11-18",
+      "tag": "industry",
+      "summary": "Forecast a never-sold product from similar products and item attributes.",
+      "url": "https://aws.amazon.com/blogs/machine-learning/generate-cold-start-forecasts-for-products-with-no-historical-data-using-amazon-forecast-now-up-to-45-more-accurate/"
+    },
+    {
+      "id": "kdd-2020-new-product-attention",
+      "title": "Attention based Multi-Modal New Product Sales Time-series Forecasting",
+      "date": "2020-08-23",
+      "tag": "research",
+      "summary": "Images and attributes predict sales before the first sale.",
+      "url": "https://www.kdd.org/kdd2020/accepted-papers/view/attention-based-multi-modal-new-product-sales-time-series-forecasting.html"
+    }
+  ]
+}
