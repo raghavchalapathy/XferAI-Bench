@@ -800,3 +800,11 @@ body[data-page="home"] .home-hero > .wrap { width: min(1180px, calc(100% - 56px)
 .lean-steps pre { margin: 4px 0; padding: 12px; background: #0b0b12; border-radius: 6px; overflow-x: auto; font-size: 13px; }
 .lean-h2 { margin: 34px 0 16px; font-size: 20px; }
 .lean-card .text-link { margin-top: auto; }
+.bench-label { margin: -10px 0 14px; color: #e783bd; font-size: 13px; }
+.bench-sub { margin: 0 0 12px; color: #8f8ca6; font-size: 13px; }
+a.bar-row { text-decoration: none; color: inherit; border-radius: 6px; }
+a.bar-row:hover .bar-label { color: var(--aqua-soft); }
+.bench-bars { gap: 10px; }
+.bar-row { grid-template-columns: minmax(140px, 300px) 1fr 64px; }
+.bench-block + .bench-block { margin-top: 22px; padding-top: 18px; border-top: 1px solid #24222f; }
+@media (max-width: 760px) { .bar-row { grid-template-columns: 1fr 54px; } .bar-row .bar-track { grid-column: 1 / -1; grid-row: 2; } .bar-label { white-space: normal; } }

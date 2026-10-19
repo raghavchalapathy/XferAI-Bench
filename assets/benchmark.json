@@ -1,15 +1,1176 @@
 {
   "schema_version": 1,
-  "status": "pending_review",
+  "status": "reviewed",
   "metric": "WAPE",
-  "metric_label": "WAPE %, lower is better",
-  "scope": "cold-start time-series forecasting (zero or near-zero history); no VISUELLE fashion rows",
+  "metric_label": "WAPE, lower is better (values as printed by each paper)",
+  "chart_label": "Paper-reported, not XferAI results; retrospective backtest",
+  "scope": "cold-start time-series forecasting; public chart groups G1, G2, G4 only (Lead decision 2026-10-19 14:28)",
   "provenance": {
-    "scout_research": null,
-    "scientist_verified": "factory/inbox/scientist/coldstart_ts_wape_verified_v1.json",
-    "reviewer_review": "factory/inbox/reviewer/coldstart_ts_wape_review_v1.md",
-    "reviewed_at": null
+    "scout_research": {
+      "path": "factory/inbox/scout/coldstart_ts_wape_v1.json",
+      "sha256": "618d9b8336007bf789f184948be47e62dcf6b64996b030a90215f0a95bf2ad28",
+      "SHA256SUMS_check": "OK (json and search_log match)"
+    },
+    "scientist_verified": {
+      "path": "factory/inbox/scientist/coldstart_ts_wape_verified_v1.2.json",
+      "sha256": "02b82c450388f9dfe3b15ce9617404e2e35d42b1a2b690e18fc4852fb9311347"
+    },
+    "reviewer_review": {
+      "path": "factory/inbox/reviewer/coldstart_ts_wape_review_v1.md",
+      "sha256": "37d41f30c165267a467c3f2a2fd4a15106de1075849539375e1330178fa9ef14"
+    },
+    "reviewed_at": "2026-10-19",
+    "eligible_rows": 51,
+    "by_group": {
+      "G1": 44,
+      "G4": 1,
+      "G2": 6
+    }
   },
-  "methods": [],
-  "datasets": []
+  "display_conditions": [
+    "label every value paper-reported (vendor-reported for rows 142–144); not XferAI results; retrospective backtests",
+    "no metric conversion; Kozodoi WMAPE shown as printed fractions",
+    "plot duplicates once",
+    "dataset display licences (VISUELLE, Visuelle 2.0, Kaggle, UCI) UNVERIFIED: quoting numbers is OK, but showing data or images needs a check",
+    "no comparison across groups"
+  ],
+  "methods": [
+    {
+      "row_index": 50,
+      "method": "MuQAR w/ ConvLSTM+X [T+I+A+X+C]",
+      "value_as_printed": "52.63",
+      "value": 52.63,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2204.04014v2 (Papadopoulos et al., MuQAR, v2 5 May 2022) https://arxiv.org/pdf/2204.04014v2",
+      "source_url": "https://arxiv.org/pdf/2204.04014v2",
+      "locator": "Table 3, col 'IN:52, OUT:6' WAPE(↓)"
+    },
+    {
+      "row_index": 40,
+      "method": "FusionMLP [T+I+C]",
+      "value_as_printed": "53.50",
+      "value": 53.5,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2204.04014v2 (Papadopoulos et al., MuQAR, v2 5 May 2022) https://arxiv.org/pdf/2204.04014v2",
+      "source_url": "https://arxiv.org/pdf/2204.04014v2",
+      "locator": "Table 3, col 'IN:52, OUT:6' WAPE(↓)"
+    },
+    {
+      "row_index": 48,
+      "method": "MuQAR w/ ConvLSTM [T+I+A] (group UNVERIFIED in layout)",
+      "value_as_printed": "53.61",
+      "value": 53.61,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2204.04014v2 (Papadopoulos et al., MuQAR, v2 5 May 2022) https://arxiv.org/pdf/2204.04014v2",
+      "source_url": "https://arxiv.org/pdf/2204.04014v2",
+      "locator": "Table 3, col 'IN:52, OUT:6' WAPE(↓)"
+    },
+    {
+      "row_index": 47,
+      "method": "MuQAR w/CNN [T+I+A]",
+      "value_as_printed": "53.9",
+      "value": 53.9,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2204.04014v2 (Papadopoulos et al., MuQAR, v2 5 May 2022) https://arxiv.org/pdf/2204.04014v2",
+      "source_url": "https://arxiv.org/pdf/2204.04014v2",
+      "locator": "Table 3, col 'IN:52, OUT:6' WAPE(↓)"
+    },
+    {
+      "row_index": 39,
+      "method": "FusionMLP [T+I]",
+      "value_as_printed": "54.11",
+      "value": 54.11,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2204.04014v2 (Papadopoulos et al., MuQAR, v2 5 May 2022) https://arxiv.org/pdf/2204.04014v2",
+      "source_url": "https://arxiv.org/pdf/2204.04014v2",
+      "locator": "Table 3, col 'IN:52, OUT:6' WAPE(↓)"
+    },
+    {
+      "row_index": 20,
+      "method": "GTM-Transformer** [T+I+G] (Fashion IQ tags)",
+      "value_as_printed": "54,2",
+      "value": 54.2,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2109.09824v6 (Skenderi et al., 'Well Googled is Half Done', v6 14 Jan 2024) https://arxiv.org/pdf/2109.09824v6",
+      "source_url": "https://arxiv.org/pdf/2109.09824v6",
+      "locator": "Table 1, col '6 Weeks, G.Trends: 52 weeks'"
+    },
+    {
+      "row_index": 46,
+      "method": "MuQAR w/LSTM [T+I+A]",
+      "value_as_printed": "54.3",
+      "value": 54.3,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2204.04014v2 (Papadopoulos et al., MuQAR, v2 5 May 2022) https://arxiv.org/pdf/2204.04014v2",
+      "source_url": "https://arxiv.org/pdf/2204.04014v2",
+      "locator": "Table 3, col 'IN:52, OUT:6' WAPE(↓)"
+    },
+    {
+      "row_index": 45,
+      "method": "MuQAR w/ F-LSTM [T+I+A]",
+      "value_as_printed": "54.37",
+      "value": 54.37,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2204.04014v2 (Papadopoulos et al., MuQAR, v2 5 May 2022) https://arxiv.org/pdf/2204.04014v2",
+      "source_url": "https://arxiv.org/pdf/2204.04014v2",
+      "locator": "Table 3, col 'IN:52, OUT:6' WAPE(↓)"
+    },
+    {
+      "row_index": 49,
+      "method": "MuQAR w/ DA-RNN (group UNVERIFIED in layout)",
+      "value_as_printed": "54.43",
+      "value": 54.43,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2204.04014v2 (Papadopoulos et al., MuQAR, v2 5 May 2022) https://arxiv.org/pdf/2204.04014v2",
+      "source_url": "https://arxiv.org/pdf/2204.04014v2",
+      "locator": "Table 3, col 'IN:52, OUT:6' WAPE(↓)"
+    },
+    {
+      "row_index": 27,
+      "method": "FusionMLP [I]",
+      "value_as_printed": "54.59",
+      "value": 54.59,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2204.04014v2 (Papadopoulos et al., MuQAR, v2 5 May 2022) https://arxiv.org/pdf/2204.04014v2",
+      "source_url": "https://arxiv.org/pdf/2204.04014v2",
+      "locator": "Table 3, col 'IN:52, OUT:6' WAPE(↓)"
+    },
+    {
+      "row_index": 102,
+      "method": "MDiFF (ours)",
+      "value_as_printed": "54.7",
+      "value": 54.7,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2412.06840v1 (Avogaro et al., MDiFF; v1 7 Dec 2024) https://arxiv.org/pdf/2412.06840v1",
+      "source_url": "https://arxiv.org/pdf/2412.06840v1",
+      "locator": "Table 1, col WAPE ↓"
+    },
+    {
+      "row_index": 44,
+      "method": "MuQAR w/ Transformer [T+I+A]",
+      "value_as_printed": "54.87",
+      "value": 54.87,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2204.04014v2 (Papadopoulos et al., MuQAR, v2 5 May 2022) https://arxiv.org/pdf/2204.04014v2",
+      "source_url": "https://arxiv.org/pdf/2204.04014v2",
+      "locator": "Table 3, col 'IN:52, OUT:6' WAPE(↓)"
+    },
+    {
+      "row_index": 24,
+      "method": "FusionMLP [T]",
+      "value_as_printed": "55.15",
+      "value": 55.15,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2204.04014v2 (Papadopoulos et al., MuQAR, v2 5 May 2022) https://arxiv.org/pdf/2204.04014v2",
+      "source_url": "https://arxiv.org/pdf/2204.04014v2",
+      "locator": "Table 3, col 'IN:52, OUT:6' WAPE(↓)"
+    },
+    {
+      "row_index": 18,
+      "method": "GTM-Transformer [T+I+G]",
+      "value_as_printed": "55,2",
+      "value": 55.2,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2109.09824v6 (Skenderi et al., 'Well Googled is Half Done', v6 14 Jan 2024) https://arxiv.org/pdf/2109.09824v6",
+      "source_url": "https://arxiv.org/pdf/2109.09824v6",
+      "locator": "Table 1, col '6 Weeks, G.Trends: 52 weeks'"
+    },
+    {
+      "row_index": 43,
+      "method": "GTM-Transformer [8] (input group UNVERIFIED in layout)",
+      "value_as_printed": "55.2",
+      "value": 55.2,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2204.04014v2 (Papadopoulos et al., MuQAR, v2 5 May 2022) https://arxiv.org/pdf/2204.04014v2",
+      "source_url": "https://arxiv.org/pdf/2204.04014v2",
+      "locator": "Table 3, col 'IN:52, OUT:6' WAPE(↓)"
+    },
+    {
+      "row_index": 34,
+      "method": "ConvLSTM+X [A+X]",
+      "value_as_printed": "55.73",
+      "value": 55.73,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2204.04014v2 (Papadopoulos et al., MuQAR, v2 5 May 2022) https://arxiv.org/pdf/2204.04014v2",
+      "source_url": "https://arxiv.org/pdf/2204.04014v2",
+      "locator": "Table 3, col 'IN:52, OUT:6' WAPE(↓)"
+    },
+    {
+      "row_index": 26,
+      "method": "GTM-Transformer [8] [I]",
+      "value_as_printed": "56.4",
+      "value": 56.4,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2204.04014v2 (Papadopoulos et al., MuQAR, v2 5 May 2022) https://arxiv.org/pdf/2204.04014v2",
+      "source_url": "https://arxiv.org/pdf/2204.04014v2",
+      "locator": "Table 3, col 'IN:52, OUT:6' WAPE(↓)"
+    },
+    {
+      "row_index": 103,
+      "method": "MDiFF without the temporal condition",
+      "value_as_printed": "56.4",
+      "value": 56.4,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2412.06840v1 (Avogaro et al., MDiFF; v1 7 Dec 2024) https://arxiv.org/pdf/2412.06840v1",
+      "source_url": "https://arxiv.org/pdf/2412.06840v1",
+      "locator": "Table 2, col WAPE ↓"
+    },
+    {
+      "row_index": 38,
+      "method": "GTM-Transformer [8] [T+I]",
+      "value_as_printed": "56.7",
+      "value": 56.7,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2204.04014v2 (Papadopoulos et al., MuQAR, v2 5 May 2022) https://arxiv.org/pdf/2204.04014v2",
+      "source_url": "https://arxiv.org/pdf/2204.04014v2",
+      "locator": "Table 3, col 'IN:52, OUT:6' WAPE(↓)"
+    },
+    {
+      "row_index": 104,
+      "method": "MDiFF without the images",
+      "value_as_printed": "56.8",
+      "value": 56.8,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2412.06840v1 (Avogaro et al., MDiFF; v1 7 Dec 2024) https://arxiv.org/pdf/2412.06840v1",
+      "source_url": "https://arxiv.org/pdf/2412.06840v1",
+      "locator": "Table 2, col WAPE ↓"
+    },
+    {
+      "row_index": 33,
+      "method": "CNN [A]",
+      "value_as_printed": "57.4",
+      "value": 57.4,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2204.04014v2 (Papadopoulos et al., MuQAR, v2 5 May 2022) https://arxiv.org/pdf/2204.04014v2",
+      "source_url": "https://arxiv.org/pdf/2204.04014v2",
+      "locator": "Table 3, col 'IN:52, OUT:6' WAPE(↓)"
+    },
+    {
+      "row_index": 32,
+      "method": "F-LSTM [A]",
+      "value_as_printed": "58.0",
+      "value": 58.0,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2204.04014v2 (Papadopoulos et al., MuQAR, v2 5 May 2022) https://arxiv.org/pdf/2204.04014v2",
+      "source_url": "https://arxiv.org/pdf/2204.04014v2",
+      "locator": "Table 3, col 'IN:52, OUT:6' WAPE(↓)"
+    },
+    {
+      "row_index": 35,
+      "method": "DA-RNN [A+X]",
+      "value_as_printed": "58.05",
+      "value": 58.05,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2204.04014v2 (Papadopoulos et al., MuQAR, v2 5 May 2022) https://arxiv.org/pdf/2204.04014v2",
+      "source_url": "https://arxiv.org/pdf/2204.04014v2",
+      "locator": "Table 3, col 'IN:52, OUT:6' WAPE(↓)"
+    },
+    {
+      "row_index": 31,
+      "method": "GTM-Transformer [8] [A]",
+      "value_as_printed": "58.2",
+      "value": 58.2,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2204.04014v2 (Papadopoulos et al., MuQAR, v2 5 May 2022) https://arxiv.org/pdf/2204.04014v2",
+      "source_url": "https://arxiv.org/pdf/2204.04014v2",
+      "locator": "Table 3, col 'IN:52, OUT:6' WAPE(↓)"
+    },
+    {
+      "row_index": 30,
+      "method": "ConvLSTM [A]",
+      "value_as_printed": "58.6",
+      "value": 58.6,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2204.04014v2 (Papadopoulos et al., MuQAR, v2 5 May 2022) https://arxiv.org/pdf/2204.04014v2",
+      "source_url": "https://arxiv.org/pdf/2204.04014v2",
+      "locator": "Table 3, col 'IN:52, OUT:6' WAPE(↓)"
+    },
+    {
+      "row_index": 17,
+      "method": "X-Att-RNN+G [T+I+G]",
+      "value_as_printed": "58,7",
+      "value": 58.7,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2109.09824v6 (Skenderi et al., 'Well Googled is Half Done', v6 14 Jan 2024) https://arxiv.org/pdf/2109.09824v6",
+      "source_url": "https://arxiv.org/pdf/2109.09824v6",
+      "locator": "Table 1, col '6 Weeks, G.Trends: 28 weeks'"
+    },
+    {
+      "row_index": 29,
+      "method": "LSTM [A]",
+      "value_as_printed": "58.7",
+      "value": 58.7,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2204.04014v2 (Papadopoulos et al., MuQAR, v2 5 May 2022) https://arxiv.org/pdf/2204.04014v2",
+      "source_url": "https://arxiv.org/pdf/2204.04014v2",
+      "locator": "Table 3, col 'IN:52, OUT:6' WAPE(↓)"
+    },
+    {
+      "row_index": 14,
+      "method": "X-Att-RNN [T+I]",
+      "value_as_printed": "59,5",
+      "value": 59.5,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2109.09824v6 (Skenderi et al., 'Well Googled is Half Done', v6 14 Jan 2024) https://arxiv.org/pdf/2109.09824v6",
+      "source_url": "https://arxiv.org/pdf/2109.09824v6",
+      "locator": "Table 1, col '6 Weeks, G.Trends: 52 weeks'"
+    },
+    {
+      "row_index": 41,
+      "method": "GTM-Transformer AR [8] (input group UNVERIFIED in layout)",
+      "value_as_printed": "59.6",
+      "value": 59.6,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2204.04014v2 (Papadopoulos et al., MuQAR, v2 5 May 2022) https://arxiv.org/pdf/2204.04014v2",
+      "source_url": "https://arxiv.org/pdf/2204.04014v2",
+      "locator": "Table 3, col 'IN:52, OUT:6' WAPE(↓)"
+    },
+    {
+      "row_index": 0,
+      "method": "Attribute KNN (Ekambaram et al., 2020) [T]",
+      "value_as_printed": "59,8",
+      "value": 59.8,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2109.09824v6 (Skenderi et al., 'Well Googled is Half Done', v6 14 Jan 2024) https://arxiv.org/pdf/2109.09824v6",
+      "source_url": "https://arxiv.org/pdf/2109.09824v6",
+      "locator": "Table 1, col '6 Weeks, G.Trends: 52 weeks'"
+    },
+    {
+      "row_index": 4,
+      "method": "Attr+Image KNN [T+I]",
+      "value_as_printed": "61,3",
+      "value": 61.3,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2109.09824v6 (Skenderi et al., 'Well Googled is Half Done', v6 14 Jan 2024) https://arxiv.org/pdf/2109.09824v6",
+      "source_url": "https://arxiv.org/pdf/2109.09824v6",
+      "locator": "Table 1, col '6 Weeks, G.Trends: 52 weeks'"
+    },
+    {
+      "row_index": 2,
+      "method": "ImageKNN [I]",
+      "value_as_printed": "62,2",
+      "value": 62.2,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2109.09824v6 (Skenderi et al., 'Well Googled is Half Done', v6 14 Jan 2024) https://arxiv.org/pdf/2109.09824v6",
+      "source_url": "https://arxiv.org/pdf/2109.09824v6",
+      "locator": "Table 1, col '6 Weeks, G.Trends: 52 weeks'"
+    },
+    {
+      "row_index": 28,
+      "method": "Transformer [A]",
+      "value_as_printed": "62.5",
+      "value": 62.5,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2204.04014v2 (Papadopoulos et al., MuQAR, v2 5 May 2022) https://arxiv.org/pdf/2204.04014v2",
+      "source_url": "https://arxiv.org/pdf/2204.04014v2",
+      "locator": "Table 3, col 'IN:52, OUT:6' WAPE(↓)"
+    },
+    {
+      "row_index": 22,
+      "method": "GTM-Transformer [8] [T]",
+      "value_as_printed": "62.6",
+      "value": 62.6,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2204.04014v2 (Papadopoulos et al., MuQAR, v2 5 May 2022) https://arxiv.org/pdf/2204.04014v2",
+      "source_url": "https://arxiv.org/pdf/2204.04014v2",
+      "locator": "Table 3, col 'IN:52, OUT:6' WAPE(↓)"
+    },
+    {
+      "row_index": 10,
+      "method": "Cat-MM-RNN [T+I]",
+      "value_as_printed": "63,3",
+      "value": 63.3,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2109.09824v6 (Skenderi et al., 'Well Googled is Half Done', v6 14 Jan 2024) https://arxiv.org/pdf/2109.09824v6",
+      "source_url": "https://arxiv.org/pdf/2109.09824v6",
+      "locator": "Table 1, col '6 Weeks, G.Trends: 52 weeks'"
+    },
+    {
+      "row_index": 8,
+      "method": "GBoosting+G [T+I+G]",
+      "value_as_printed": "63,5",
+      "value": 63.5,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2109.09824v6 (Skenderi et al., 'Well Googled is Half Done', v6 14 Jan 2024) https://arxiv.org/pdf/2109.09824v6",
+      "source_url": "https://arxiv.org/pdf/2109.09824v6",
+      "locator": "Table 1, col '6 Weeks, G.Trends: 52 weeks'"
+    },
+    {
+      "row_index": 6,
+      "method": "GBoosting [T+I]",
+      "value_as_printed": "64,1",
+      "value": 64.1,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2109.09824v6 (Skenderi et al., 'Well Googled is Half Done', v6 14 Jan 2024) https://arxiv.org/pdf/2109.09824v6",
+      "source_url": "https://arxiv.org/pdf/2109.09824v6",
+      "locator": "Table 1, col '6 Weeks, G.Trends: 52 weeks'"
+    },
+    {
+      "row_index": 13,
+      "method": "Cat-MM-RNN+G [T+I+G]",
+      "value_as_printed": "64,1",
+      "value": 64.1,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2109.09824v6 (Skenderi et al., 'Well Googled is Half Done', v6 14 Jan 2024) https://arxiv.org/pdf/2109.09824v6",
+      "source_url": "https://arxiv.org/pdf/2109.09824v6",
+      "locator": "Table 1, col '6 Weeks, G.Trends: 28 weeks'"
+    }
+  ],
+  "datasets": [
+    {
+      "group": "G1",
+      "dataset": "VISUELLE · GTM protocol · zero history · 6 weeks",
+      "note": "Compare within this block only",
+      "results": [
+        {
+          "row_index": 50,
+          "method": "MuQAR w/ ConvLSTM+X [T+I+A+X+C]",
+          "value_as_printed": "52.63",
+          "value": 52.63,
+          "metric": "WAPE",
+          "dataset": "VISUELLE",
+          "source": "arXiv:2204.04014v2 (Papadopoulos et al., MuQAR, v2 5 May 2022) https://arxiv.org/pdf/2204.04014v2",
+          "source_url": "https://arxiv.org/pdf/2204.04014v2",
+          "locator": "Table 3, col 'IN:52, OUT:6' WAPE(↓)"
+        },
+        {
+          "row_index": 40,
+          "method": "FusionMLP [T+I+C]",
+          "value_as_printed": "53.50",
+          "value": 53.5,
+          "metric": "WAPE",
+          "dataset": "VISUELLE",
+          "source": "arXiv:2204.04014v2 (Papadopoulos et al., MuQAR, v2 5 May 2022) https://arxiv.org/pdf/2204.04014v2",
+          "source_url": "https://arxiv.org/pdf/2204.04014v2",
+          "locator": "Table 3, col 'IN:52, OUT:6' WAPE(↓)"
+        },
+        {
+          "row_index": 48,
+          "method": "MuQAR w/ ConvLSTM [T+I+A] (group UNVERIFIED in layout)",
+          "value_as_printed": "53.61",
+          "value": 53.61,
+          "metric": "WAPE",
+          "dataset": "VISUELLE",
+          "source": "arXiv:2204.04014v2 (Papadopoulos et al., MuQAR, v2 5 May 2022) https://arxiv.org/pdf/2204.04014v2",
+          "source_url": "https://arxiv.org/pdf/2204.04014v2",
+          "locator": "Table 3, col 'IN:52, OUT:6' WAPE(↓)"
+        },
+        {
+          "row_index": 47,
+          "method": "MuQAR w/CNN [T+I+A]",
+          "value_as_printed": "53.9",
+          "value": 53.9,
+          "metric": "WAPE",
+          "dataset": "VISUELLE",
+          "source": "arXiv:2204.04014v2 (Papadopoulos et al., MuQAR, v2 5 May 2022) https://arxiv.org/pdf/2204.04014v2",
+          "source_url": "https://arxiv.org/pdf/2204.04014v2",
+          "locator": "Table 3, col 'IN:52, OUT:6' WAPE(↓)"
+        },
+        {
+          "row_index": 39,
+          "method": "FusionMLP [T+I]",
+          "value_as_printed": "54.11",
+          "value": 54.11,
+          "metric": "WAPE",
+          "dataset": "VISUELLE",
+          "source": "arXiv:2204.04014v2 (Papadopoulos et al., MuQAR, v2 5 May 2022) https://arxiv.org/pdf/2204.04014v2",
+          "source_url": "https://arxiv.org/pdf/2204.04014v2",
+          "locator": "Table 3, col 'IN:52, OUT:6' WAPE(↓)"
+        }
+      ],
+      "shown": "best 5 of 38 methods (all in Chart 1)"
+    },
+    {
+      "group": "G2",
+      "dataset": "Visuelle 2.0 · 2 weeks of history · 10 weeks",
+      "note": "Compare within this block only",
+      "results": [
+        {
+          "row_index": 87,
+          "method": "CrossAttnRNN w/ image",
+          "value_as_printed": "85.65",
+          "value": 85.65,
+          "metric": "WAPE",
+          "dataset": "Visuelle 2.0 (item-shop level; test = 10% most recent item-shop pairs)",
+          "source": "arXiv:2204.06972v2 (Skenderi et al., Visuelle 2.0 benchmark, CVPRW 2022; v2 30 Nov 2022) https://arxiv.org/pdf/2204.06972v2",
+          "source_url": "https://arxiv.org/pdf/2204.06972v2",
+          "locator": "Table 1 (SO-fore2-10)"
+        },
+        {
+          "row_index": 86,
+          "method": "CrossAttnRNN",
+          "value_as_printed": "87.39",
+          "value": 87.39,
+          "metric": "WAPE",
+          "dataset": "Visuelle 2.0 (item-shop level; test = 10% most recent item-shop pairs)",
+          "source": "arXiv:2204.06972v2 (Skenderi et al., Visuelle 2.0 benchmark, CVPRW 2022; v2 30 Nov 2022) https://arxiv.org/pdf/2204.06972v2",
+          "source_url": "https://arxiv.org/pdf/2204.06972v2",
+          "locator": "Table 1 (SO-fore2-10)"
+        },
+        {
+          "row_index": 84,
+          "method": "kNN",
+          "value_as_printed": "91.13",
+          "value": 91.13,
+          "metric": "WAPE",
+          "dataset": "Visuelle 2.0 (item-shop level; test = 10% most recent item-shop pairs)",
+          "source": "arXiv:2204.06972v2 (Skenderi et al., Visuelle 2.0 benchmark, CVPRW 2022; v2 30 Nov 2022) https://arxiv.org/pdf/2204.06972v2",
+          "source_url": "https://arxiv.org/pdf/2204.06972v2",
+          "locator": "Table 1 (SO-fore2-10)"
+        },
+        {
+          "row_index": 85,
+          "method": "kNN + image",
+          "value_as_printed": "97.97",
+          "value": 97.97,
+          "metric": "WAPE",
+          "dataset": "Visuelle 2.0 (item-shop level; test = 10% most recent item-shop pairs)",
+          "source": "arXiv:2204.06972v2 (Skenderi et al., Visuelle 2.0 benchmark, CVPRW 2022; v2 30 Nov 2022) https://arxiv.org/pdf/2204.06972v2",
+          "source_url": "https://arxiv.org/pdf/2204.06972v2",
+          "locator": "Table 1 (SO-fore2-10)"
+        },
+        {
+          "row_index": 83,
+          "method": "SES",
+          "value_as_printed": "111.265",
+          "value": 111.265,
+          "metric": "WAPE",
+          "dataset": "Visuelle 2.0 (item-shop level; test = 10% most recent item-shop pairs)",
+          "source": "arXiv:2204.06972v2 (Skenderi et al., Visuelle 2.0 benchmark, CVPRW 2022; v2 30 Nov 2022) https://arxiv.org/pdf/2204.06972v2",
+          "source_url": "https://arxiv.org/pdf/2204.06972v2",
+          "locator": "Table 1 (SO-fore2-10)"
+        },
+        {
+          "row_index": 82,
+          "method": "Naive",
+          "value_as_printed": "118.176",
+          "value": 118.176,
+          "metric": "WAPE",
+          "dataset": "Visuelle 2.0 (item-shop level; test = 10% most recent item-shop pairs)",
+          "source": "arXiv:2204.06972v2 (Skenderi et al., Visuelle 2.0 benchmark, CVPRW 2022; v2 30 Nov 2022) https://arxiv.org/pdf/2204.06972v2",
+          "source_url": "https://arxiv.org/pdf/2204.06972v2",
+          "locator": "Table 1 (SO-fore2-10)"
+        }
+      ]
+    },
+    {
+      "group": "G4",
+      "dataset": "Visuelle 2.0 · image-only · zero history",
+      "note": "Compare within this block only",
+      "results": [
+        {
+          "row_index": 81,
+          "method": "Demand CrossAttnRNN w/ image",
+          "value_as_printed": "89.02",
+          "value": 89.02,
+          "metric": "WAPE",
+          "dataset": "Visuelle 2.0 (item-shop level; test = 10% most recent item-shop pairs)",
+          "source": "arXiv:2204.06972v2 (Skenderi et al., Visuelle 2.0 benchmark, CVPRW 2022; v2 30 Nov 2022) https://arxiv.org/pdf/2204.06972v2",
+          "source_url": "https://arxiv.org/pdf/2204.06972v2",
+          "locator": "Table 1 (SO-fore2-10)"
+        }
+      ]
+    }
+  ],
+  "all_eligible_rows": [
+    {
+      "row_index": 0,
+      "method": "Attribute KNN (Ekambaram et al., 2020) [T]",
+      "value_as_printed": "59,8",
+      "value": 59.8,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2109.09824v6 (Skenderi et al., 'Well Googled is Half Done', v6 14 Jan 2024) https://arxiv.org/pdf/2109.09824v6",
+      "source_url": "https://arxiv.org/pdf/2109.09824v6",
+      "locator": "Table 1, col '6 Weeks, G.Trends: 52 weeks'"
+    },
+    {
+      "row_index": 2,
+      "method": "ImageKNN [I]",
+      "value_as_printed": "62,2",
+      "value": 62.2,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2109.09824v6 (Skenderi et al., 'Well Googled is Half Done', v6 14 Jan 2024) https://arxiv.org/pdf/2109.09824v6",
+      "source_url": "https://arxiv.org/pdf/2109.09824v6",
+      "locator": "Table 1, col '6 Weeks, G.Trends: 52 weeks'"
+    },
+    {
+      "row_index": 4,
+      "method": "Attr+Image KNN [T+I]",
+      "value_as_printed": "61,3",
+      "value": 61.3,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2109.09824v6 (Skenderi et al., 'Well Googled is Half Done', v6 14 Jan 2024) https://arxiv.org/pdf/2109.09824v6",
+      "source_url": "https://arxiv.org/pdf/2109.09824v6",
+      "locator": "Table 1, col '6 Weeks, G.Trends: 52 weeks'"
+    },
+    {
+      "row_index": 6,
+      "method": "GBoosting [T+I]",
+      "value_as_printed": "64,1",
+      "value": 64.1,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2109.09824v6 (Skenderi et al., 'Well Googled is Half Done', v6 14 Jan 2024) https://arxiv.org/pdf/2109.09824v6",
+      "source_url": "https://arxiv.org/pdf/2109.09824v6",
+      "locator": "Table 1, col '6 Weeks, G.Trends: 52 weeks'"
+    },
+    {
+      "row_index": 8,
+      "method": "GBoosting+G [T+I+G]",
+      "value_as_printed": "63,5",
+      "value": 63.5,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2109.09824v6 (Skenderi et al., 'Well Googled is Half Done', v6 14 Jan 2024) https://arxiv.org/pdf/2109.09824v6",
+      "source_url": "https://arxiv.org/pdf/2109.09824v6",
+      "locator": "Table 1, col '6 Weeks, G.Trends: 52 weeks'"
+    },
+    {
+      "row_index": 9,
+      "method": "GBoosting+G [T+I+G]",
+      "value_as_printed": "64,3",
+      "value": 64.3,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2109.09824v6 (Skenderi et al., 'Well Googled is Half Done', v6 14 Jan 2024) https://arxiv.org/pdf/2109.09824v6",
+      "source_url": "https://arxiv.org/pdf/2109.09824v6",
+      "locator": "Table 1, col '6 Weeks, G.Trends: 28 weeks'"
+    },
+    {
+      "row_index": 10,
+      "method": "Cat-MM-RNN [T+I]",
+      "value_as_printed": "63,3",
+      "value": 63.3,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2109.09824v6 (Skenderi et al., 'Well Googled is Half Done', v6 14 Jan 2024) https://arxiv.org/pdf/2109.09824v6",
+      "source_url": "https://arxiv.org/pdf/2109.09824v6",
+      "locator": "Table 1, col '6 Weeks, G.Trends: 52 weeks'"
+    },
+    {
+      "row_index": 12,
+      "method": "Cat-MM-RNN+G [T+I+G]",
+      "value_as_printed": "65,9",
+      "value": 65.9,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2109.09824v6 (Skenderi et al., 'Well Googled is Half Done', v6 14 Jan 2024) https://arxiv.org/pdf/2109.09824v6",
+      "source_url": "https://arxiv.org/pdf/2109.09824v6",
+      "locator": "Table 1, col '6 Weeks, G.Trends: 52 weeks'"
+    },
+    {
+      "row_index": 13,
+      "method": "Cat-MM-RNN+G [T+I+G]",
+      "value_as_printed": "64,1",
+      "value": 64.1,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2109.09824v6 (Skenderi et al., 'Well Googled is Half Done', v6 14 Jan 2024) https://arxiv.org/pdf/2109.09824v6",
+      "source_url": "https://arxiv.org/pdf/2109.09824v6",
+      "locator": "Table 1, col '6 Weeks, G.Trends: 28 weeks'"
+    },
+    {
+      "row_index": 14,
+      "method": "X-Att-RNN [T+I]",
+      "value_as_printed": "59,5",
+      "value": 59.5,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2109.09824v6 (Skenderi et al., 'Well Googled is Half Done', v6 14 Jan 2024) https://arxiv.org/pdf/2109.09824v6",
+      "source_url": "https://arxiv.org/pdf/2109.09824v6",
+      "locator": "Table 1, col '6 Weeks, G.Trends: 52 weeks'"
+    },
+    {
+      "row_index": 16,
+      "method": "X-Att-RNN+G [T+I+G]",
+      "value_as_printed": "59,0",
+      "value": 59.0,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2109.09824v6 (Skenderi et al., 'Well Googled is Half Done', v6 14 Jan 2024) https://arxiv.org/pdf/2109.09824v6",
+      "source_url": "https://arxiv.org/pdf/2109.09824v6",
+      "locator": "Table 1, col '6 Weeks, G.Trends: 52 weeks'"
+    },
+    {
+      "row_index": 17,
+      "method": "X-Att-RNN+G [T+I+G]",
+      "value_as_printed": "58,7",
+      "value": 58.7,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2109.09824v6 (Skenderi et al., 'Well Googled is Half Done', v6 14 Jan 2024) https://arxiv.org/pdf/2109.09824v6",
+      "source_url": "https://arxiv.org/pdf/2109.09824v6",
+      "locator": "Table 1, col '6 Weeks, G.Trends: 28 weeks'"
+    },
+    {
+      "row_index": 18,
+      "method": "GTM-Transformer [T+I+G]",
+      "value_as_printed": "55,2",
+      "value": 55.2,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2109.09824v6 (Skenderi et al., 'Well Googled is Half Done', v6 14 Jan 2024) https://arxiv.org/pdf/2109.09824v6",
+      "source_url": "https://arxiv.org/pdf/2109.09824v6",
+      "locator": "Table 1, col '6 Weeks, G.Trends: 52 weeks'"
+    },
+    {
+      "row_index": 19,
+      "method": "GTM-Transformer [T+I+G]",
+      "value_as_printed": "56,8",
+      "value": 56.8,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2109.09824v6 (Skenderi et al., 'Well Googled is Half Done', v6 14 Jan 2024) https://arxiv.org/pdf/2109.09824v6",
+      "source_url": "https://arxiv.org/pdf/2109.09824v6",
+      "locator": "Table 1, col '6 Weeks, G.Trends: 28 weeks'"
+    },
+    {
+      "row_index": 20,
+      "method": "GTM-Transformer** [T+I+G] (Fashion IQ tags)",
+      "value_as_printed": "54,2",
+      "value": 54.2,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2109.09824v6 (Skenderi et al., 'Well Googled is Half Done', v6 14 Jan 2024) https://arxiv.org/pdf/2109.09824v6",
+      "source_url": "https://arxiv.org/pdf/2109.09824v6",
+      "locator": "Table 1, col '6 Weeks, G.Trends: 52 weeks'"
+    },
+    {
+      "row_index": 21,
+      "method": "GTM-Transformer** [T+I+G] (Fashion IQ tags)",
+      "value_as_printed": "54,4",
+      "value": 54.4,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2109.09824v6 (Skenderi et al., 'Well Googled is Half Done', v6 14 Jan 2024) https://arxiv.org/pdf/2109.09824v6",
+      "source_url": "https://arxiv.org/pdf/2109.09824v6",
+      "locator": "Table 1, col '6 Weeks, G.Trends: 28 weeks'"
+    },
+    {
+      "row_index": 22,
+      "method": "GTM-Transformer [8] [T]",
+      "value_as_printed": "62.6",
+      "value": 62.6,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2204.04014v2 (Papadopoulos et al., MuQAR, v2 5 May 2022) https://arxiv.org/pdf/2204.04014v2",
+      "source_url": "https://arxiv.org/pdf/2204.04014v2",
+      "locator": "Table 3, col 'IN:52, OUT:6' WAPE(↓)"
+    },
+    {
+      "row_index": 24,
+      "method": "FusionMLP [T]",
+      "value_as_printed": "55.15",
+      "value": 55.15,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2204.04014v2 (Papadopoulos et al., MuQAR, v2 5 May 2022) https://arxiv.org/pdf/2204.04014v2",
+      "source_url": "https://arxiv.org/pdf/2204.04014v2",
+      "locator": "Table 3, col 'IN:52, OUT:6' WAPE(↓)"
+    },
+    {
+      "row_index": 26,
+      "method": "GTM-Transformer [8] [I]",
+      "value_as_printed": "56.4",
+      "value": 56.4,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2204.04014v2 (Papadopoulos et al., MuQAR, v2 5 May 2022) https://arxiv.org/pdf/2204.04014v2",
+      "source_url": "https://arxiv.org/pdf/2204.04014v2",
+      "locator": "Table 3, col 'IN:52, OUT:6' WAPE(↓)"
+    },
+    {
+      "row_index": 27,
+      "method": "FusionMLP [I]",
+      "value_as_printed": "54.59",
+      "value": 54.59,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2204.04014v2 (Papadopoulos et al., MuQAR, v2 5 May 2022) https://arxiv.org/pdf/2204.04014v2",
+      "source_url": "https://arxiv.org/pdf/2204.04014v2",
+      "locator": "Table 3, col 'IN:52, OUT:6' WAPE(↓)"
+    },
+    {
+      "row_index": 28,
+      "method": "Transformer [A]",
+      "value_as_printed": "62.5",
+      "value": 62.5,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2204.04014v2 (Papadopoulos et al., MuQAR, v2 5 May 2022) https://arxiv.org/pdf/2204.04014v2",
+      "source_url": "https://arxiv.org/pdf/2204.04014v2",
+      "locator": "Table 3, col 'IN:52, OUT:6' WAPE(↓)"
+    },
+    {
+      "row_index": 29,
+      "method": "LSTM [A]",
+      "value_as_printed": "58.7",
+      "value": 58.7,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2204.04014v2 (Papadopoulos et al., MuQAR, v2 5 May 2022) https://arxiv.org/pdf/2204.04014v2",
+      "source_url": "https://arxiv.org/pdf/2204.04014v2",
+      "locator": "Table 3, col 'IN:52, OUT:6' WAPE(↓)"
+    },
+    {
+      "row_index": 30,
+      "method": "ConvLSTM [A]",
+      "value_as_printed": "58.6",
+      "value": 58.6,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2204.04014v2 (Papadopoulos et al., MuQAR, v2 5 May 2022) https://arxiv.org/pdf/2204.04014v2",
+      "source_url": "https://arxiv.org/pdf/2204.04014v2",
+      "locator": "Table 3, col 'IN:52, OUT:6' WAPE(↓)"
+    },
+    {
+      "row_index": 31,
+      "method": "GTM-Transformer [8] [A]",
+      "value_as_printed": "58.2",
+      "value": 58.2,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2204.04014v2 (Papadopoulos et al., MuQAR, v2 5 May 2022) https://arxiv.org/pdf/2204.04014v2",
+      "source_url": "https://arxiv.org/pdf/2204.04014v2",
+      "locator": "Table 3, col 'IN:52, OUT:6' WAPE(↓)"
+    },
+    {
+      "row_index": 32,
+      "method": "F-LSTM [A]",
+      "value_as_printed": "58.0",
+      "value": 58.0,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2204.04014v2 (Papadopoulos et al., MuQAR, v2 5 May 2022) https://arxiv.org/pdf/2204.04014v2",
+      "source_url": "https://arxiv.org/pdf/2204.04014v2",
+      "locator": "Table 3, col 'IN:52, OUT:6' WAPE(↓)"
+    },
+    {
+      "row_index": 33,
+      "method": "CNN [A]",
+      "value_as_printed": "57.4",
+      "value": 57.4,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2204.04014v2 (Papadopoulos et al., MuQAR, v2 5 May 2022) https://arxiv.org/pdf/2204.04014v2",
+      "source_url": "https://arxiv.org/pdf/2204.04014v2",
+      "locator": "Table 3, col 'IN:52, OUT:6' WAPE(↓)"
+    },
+    {
+      "row_index": 34,
+      "method": "ConvLSTM+X [A+X]",
+      "value_as_printed": "55.73",
+      "value": 55.73,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2204.04014v2 (Papadopoulos et al., MuQAR, v2 5 May 2022) https://arxiv.org/pdf/2204.04014v2",
+      "source_url": "https://arxiv.org/pdf/2204.04014v2",
+      "locator": "Table 3, col 'IN:52, OUT:6' WAPE(↓)"
+    },
+    {
+      "row_index": 35,
+      "method": "DA-RNN [A+X]",
+      "value_as_printed": "58.05",
+      "value": 58.05,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2204.04014v2 (Papadopoulos et al., MuQAR, v2 5 May 2022) https://arxiv.org/pdf/2204.04014v2",
+      "source_url": "https://arxiv.org/pdf/2204.04014v2",
+      "locator": "Table 3, col 'IN:52, OUT:6' WAPE(↓)"
+    },
+    {
+      "row_index": 38,
+      "method": "GTM-Transformer [8] [T+I]",
+      "value_as_printed": "56.7",
+      "value": 56.7,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2204.04014v2 (Papadopoulos et al., MuQAR, v2 5 May 2022) https://arxiv.org/pdf/2204.04014v2",
+      "source_url": "https://arxiv.org/pdf/2204.04014v2",
+      "locator": "Table 3, col 'IN:52, OUT:6' WAPE(↓)"
+    },
+    {
+      "row_index": 39,
+      "method": "FusionMLP [T+I]",
+      "value_as_printed": "54.11",
+      "value": 54.11,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2204.04014v2 (Papadopoulos et al., MuQAR, v2 5 May 2022) https://arxiv.org/pdf/2204.04014v2",
+      "source_url": "https://arxiv.org/pdf/2204.04014v2",
+      "locator": "Table 3, col 'IN:52, OUT:6' WAPE(↓)"
+    },
+    {
+      "row_index": 40,
+      "method": "FusionMLP [T+I+C]",
+      "value_as_printed": "53.50",
+      "value": 53.5,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2204.04014v2 (Papadopoulos et al., MuQAR, v2 5 May 2022) https://arxiv.org/pdf/2204.04014v2",
+      "source_url": "https://arxiv.org/pdf/2204.04014v2",
+      "locator": "Table 3, col 'IN:52, OUT:6' WAPE(↓)"
+    },
+    {
+      "row_index": 41,
+      "method": "GTM-Transformer AR [8] (input group UNVERIFIED in layout)",
+      "value_as_printed": "59.6",
+      "value": 59.6,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2204.04014v2 (Papadopoulos et al., MuQAR, v2 5 May 2022) https://arxiv.org/pdf/2204.04014v2",
+      "source_url": "https://arxiv.org/pdf/2204.04014v2",
+      "locator": "Table 3, col 'IN:52, OUT:6' WAPE(↓)"
+    },
+    {
+      "row_index": 43,
+      "method": "GTM-Transformer [8] (input group UNVERIFIED in layout)",
+      "value_as_printed": "55.2",
+      "value": 55.2,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2204.04014v2 (Papadopoulos et al., MuQAR, v2 5 May 2022) https://arxiv.org/pdf/2204.04014v2",
+      "source_url": "https://arxiv.org/pdf/2204.04014v2",
+      "locator": "Table 3, col 'IN:52, OUT:6' WAPE(↓)"
+    },
+    {
+      "row_index": 44,
+      "method": "MuQAR w/ Transformer [T+I+A]",
+      "value_as_printed": "54.87",
+      "value": 54.87,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2204.04014v2 (Papadopoulos et al., MuQAR, v2 5 May 2022) https://arxiv.org/pdf/2204.04014v2",
+      "source_url": "https://arxiv.org/pdf/2204.04014v2",
+      "locator": "Table 3, col 'IN:52, OUT:6' WAPE(↓)"
+    },
+    {
+      "row_index": 45,
+      "method": "MuQAR w/ F-LSTM [T+I+A]",
+      "value_as_printed": "54.37",
+      "value": 54.37,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2204.04014v2 (Papadopoulos et al., MuQAR, v2 5 May 2022) https://arxiv.org/pdf/2204.04014v2",
+      "source_url": "https://arxiv.org/pdf/2204.04014v2",
+      "locator": "Table 3, col 'IN:52, OUT:6' WAPE(↓)"
+    },
+    {
+      "row_index": 46,
+      "method": "MuQAR w/LSTM [T+I+A]",
+      "value_as_printed": "54.3",
+      "value": 54.3,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2204.04014v2 (Papadopoulos et al., MuQAR, v2 5 May 2022) https://arxiv.org/pdf/2204.04014v2",
+      "source_url": "https://arxiv.org/pdf/2204.04014v2",
+      "locator": "Table 3, col 'IN:52, OUT:6' WAPE(↓)"
+    },
+    {
+      "row_index": 47,
+      "method": "MuQAR w/CNN [T+I+A]",
+      "value_as_printed": "53.9",
+      "value": 53.9,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2204.04014v2 (Papadopoulos et al., MuQAR, v2 5 May 2022) https://arxiv.org/pdf/2204.04014v2",
+      "source_url": "https://arxiv.org/pdf/2204.04014v2",
+      "locator": "Table 3, col 'IN:52, OUT:6' WAPE(↓)"
+    },
+    {
+      "row_index": 48,
+      "method": "MuQAR w/ ConvLSTM [T+I+A] (group UNVERIFIED in layout)",
+      "value_as_printed": "53.61",
+      "value": 53.61,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2204.04014v2 (Papadopoulos et al., MuQAR, v2 5 May 2022) https://arxiv.org/pdf/2204.04014v2",
+      "source_url": "https://arxiv.org/pdf/2204.04014v2",
+      "locator": "Table 3, col 'IN:52, OUT:6' WAPE(↓)"
+    },
+    {
+      "row_index": 49,
+      "method": "MuQAR w/ DA-RNN (group UNVERIFIED in layout)",
+      "value_as_printed": "54.43",
+      "value": 54.43,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2204.04014v2 (Papadopoulos et al., MuQAR, v2 5 May 2022) https://arxiv.org/pdf/2204.04014v2",
+      "source_url": "https://arxiv.org/pdf/2204.04014v2",
+      "locator": "Table 3, col 'IN:52, OUT:6' WAPE(↓)"
+    },
+    {
+      "row_index": 50,
+      "method": "MuQAR w/ ConvLSTM+X [T+I+A+X+C]",
+      "value_as_printed": "52.63",
+      "value": 52.63,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2204.04014v2 (Papadopoulos et al., MuQAR, v2 5 May 2022) https://arxiv.org/pdf/2204.04014v2",
+      "source_url": "https://arxiv.org/pdf/2204.04014v2",
+      "locator": "Table 3, col 'IN:52, OUT:6' WAPE(↓)"
+    },
+    {
+      "row_index": 81,
+      "method": "Demand CrossAttnRNN w/ image",
+      "value_as_printed": "89.02",
+      "value": 89.02,
+      "metric": "WAPE",
+      "dataset": "Visuelle 2.0 (item-shop level; test = 10% most recent item-shop pairs)",
+      "source": "arXiv:2204.06972v2 (Skenderi et al., Visuelle 2.0 benchmark, CVPRW 2022; v2 30 Nov 2022) https://arxiv.org/pdf/2204.06972v2",
+      "source_url": "https://arxiv.org/pdf/2204.06972v2",
+      "locator": "Table 1 (SO-fore2-10)"
+    },
+    {
+      "row_index": 82,
+      "method": "Naive",
+      "value_as_printed": "118.176",
+      "value": 118.176,
+      "metric": "WAPE",
+      "dataset": "Visuelle 2.0 (item-shop level; test = 10% most recent item-shop pairs)",
+      "source": "arXiv:2204.06972v2 (Skenderi et al., Visuelle 2.0 benchmark, CVPRW 2022; v2 30 Nov 2022) https://arxiv.org/pdf/2204.06972v2",
+      "source_url": "https://arxiv.org/pdf/2204.06972v2",
+      "locator": "Table 1 (SO-fore2-10)"
+    },
+    {
+      "row_index": 83,
+      "method": "SES",
+      "value_as_printed": "111.265",
+      "value": 111.265,
+      "metric": "WAPE",
+      "dataset": "Visuelle 2.0 (item-shop level; test = 10% most recent item-shop pairs)",
+      "source": "arXiv:2204.06972v2 (Skenderi et al., Visuelle 2.0 benchmark, CVPRW 2022; v2 30 Nov 2022) https://arxiv.org/pdf/2204.06972v2",
+      "source_url": "https://arxiv.org/pdf/2204.06972v2",
+      "locator": "Table 1 (SO-fore2-10)"
+    },
+    {
+      "row_index": 84,
+      "method": "kNN",
+      "value_as_printed": "91.13",
+      "value": 91.13,
+      "metric": "WAPE",
+      "dataset": "Visuelle 2.0 (item-shop level; test = 10% most recent item-shop pairs)",
+      "source": "arXiv:2204.06972v2 (Skenderi et al., Visuelle 2.0 benchmark, CVPRW 2022; v2 30 Nov 2022) https://arxiv.org/pdf/2204.06972v2",
+      "source_url": "https://arxiv.org/pdf/2204.06972v2",
+      "locator": "Table 1 (SO-fore2-10)"
+    },
+    {
+      "row_index": 85,
+      "method": "kNN + image",
+      "value_as_printed": "97.97",
+      "value": 97.97,
+      "metric": "WAPE",
+      "dataset": "Visuelle 2.0 (item-shop level; test = 10% most recent item-shop pairs)",
+      "source": "arXiv:2204.06972v2 (Skenderi et al., Visuelle 2.0 benchmark, CVPRW 2022; v2 30 Nov 2022) https://arxiv.org/pdf/2204.06972v2",
+      "source_url": "https://arxiv.org/pdf/2204.06972v2",
+      "locator": "Table 1 (SO-fore2-10)"
+    },
+    {
+      "row_index": 86,
+      "method": "CrossAttnRNN",
+      "value_as_printed": "87.39",
+      "value": 87.39,
+      "metric": "WAPE",
+      "dataset": "Visuelle 2.0 (item-shop level; test = 10% most recent item-shop pairs)",
+      "source": "arXiv:2204.06972v2 (Skenderi et al., Visuelle 2.0 benchmark, CVPRW 2022; v2 30 Nov 2022) https://arxiv.org/pdf/2204.06972v2",
+      "source_url": "https://arxiv.org/pdf/2204.06972v2",
+      "locator": "Table 1 (SO-fore2-10)"
+    },
+    {
+      "row_index": 87,
+      "method": "CrossAttnRNN w/ image",
+      "value_as_printed": "85.65",
+      "value": 85.65,
+      "metric": "WAPE",
+      "dataset": "Visuelle 2.0 (item-shop level; test = 10% most recent item-shop pairs)",
+      "source": "arXiv:2204.06972v2 (Skenderi et al., Visuelle 2.0 benchmark, CVPRW 2022; v2 30 Nov 2022) https://arxiv.org/pdf/2204.06972v2",
+      "source_url": "https://arxiv.org/pdf/2204.06972v2",
+      "locator": "Table 1 (SO-fore2-10)"
+    },
+    {
+      "row_index": 102,
+      "method": "MDiFF (ours)",
+      "value_as_printed": "54.7",
+      "value": 54.7,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2412.06840v1 (Avogaro et al., MDiFF; v1 7 Dec 2024) https://arxiv.org/pdf/2412.06840v1",
+      "source_url": "https://arxiv.org/pdf/2412.06840v1",
+      "locator": "Table 1, col WAPE ↓"
+    },
+    {
+      "row_index": 103,
+      "method": "MDiFF without the temporal condition",
+      "value_as_printed": "56.4",
+      "value": 56.4,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2412.06840v1 (Avogaro et al., MDiFF; v1 7 Dec 2024) https://arxiv.org/pdf/2412.06840v1",
+      "source_url": "https://arxiv.org/pdf/2412.06840v1",
+      "locator": "Table 2, col WAPE ↓"
+    },
+    {
+      "row_index": 104,
+      "method": "MDiFF without the images",
+      "value_as_printed": "56.8",
+      "value": 56.8,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2412.06840v1 (Avogaro et al., MDiFF; v1 7 Dec 2024) https://arxiv.org/pdf/2412.06840v1",
+      "source_url": "https://arxiv.org/pdf/2412.06840v1",
+      "locator": "Table 2, col WAPE ↓"
+    },
+    {
+      "row_index": 105,
+      "method": "MDiFF (ours)",
+      "value_as_printed": "54.7",
+      "value": 54.7,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2412.06840v1 (Avogaro et al., MDiFF; v1 7 Dec 2024) https://arxiv.org/pdf/2412.06840v1",
+      "source_url": "https://arxiv.org/pdf/2412.06840v1",
+      "locator": "Table 2, col WAPE ↓"
+    }
+  ]
 }
