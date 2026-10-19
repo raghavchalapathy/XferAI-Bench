@@ -1,0 +1,41 @@
+{
+  "schema_version": 2,
+  "release_id": "2026-10-11-readable",
+  "published_at": "2026-10-12T04:25:36Z",
+  "previous_source_commit": "0e095fc4284c3bb948b487d195baae63aaa4e5f1",
+  "previous_release_id": "appgprj_6acc227cdb748191b1e2282f00d42e44~appgver_58bd58815ef881919f419a4f200007c2",
+  "previous_snapshot_sha256": "e79f9fd4021f28c2ded597031886fdfdfb1ddc4173dedfab0393e0436b3f6bd1",
+  "current_snapshot_sha256": "39d3f3b280ebc9996f5dc6c49b48a129f377d0376cb715a8b9d2436745eea264",
+  "snapshot_path": "/assets/news.json",
+  "predecessor_verified": true,
+  "reviewed": true,
+  "snapshot_hash_basis": "SHA256 of exact UTF-8 news.json bytes; record hashes use sorted-key compact UTF-8 JSON.",
+  "badge_days": 14,
+  "badge_meaning": "New means added in this reviewed catalog release, not newly published research. Updated means a reviewed material record change. Badges expire 14 days after first publication; unchanged builds do not reset them.",
+  "changes": [
+    {
+      "record_id": "kdd-2020-new-product-attention",
+      "record_type": "news",
+      "change_kind": "new",
+      "previous_release_id": "appgprj_6acc227cdb748191b1e2282f00d42e44~appgver_58bd58815ef881919f419a4f200007c2",
+      "previous_snapshot_sha256": "e79f9fd4021f28c2ded597031886fdfdfb1ddc4173dedfab0393e0436b3f6bd1",
+      "current_release_id": "2026-10-11-readable",
+      "current_snapshot_sha256": "39d3f3b280ebc9996f5dc6c49b48a129f377d0376cb715a8b9d2436745eea264",
+      "previous_record_sha256": null,
+      "current_record_sha256": "c208ba8fe2299a20ae4b38166b9cc81e5a9532262bd6f84ccfa0d5385681b325",
+      "change_reason": "First inclusion in public News; the older work was already canonical R08. Official abstract and Applied Data Science track checked; full text still pending.",
+      "review_id": "coldstart-review-kdd2020-news-20261012T042413Z",
+      "reviewed_at": "2026-10-12T04:24:13Z",
+      "first_published_at": "2026-10-12T04:25:36Z",
+      "badge_expires_at": "2026-10-26T04:25:36Z",
+      "review_status": "source_checked_provisional",
+      "evidence_links": [
+        "https://www.kdd.org/kdd2020/accepted-papers/view/attention-based-multi-modal-new-product-sales-time-series-forecasting.html",
+        "https://www.kdd.org/kdd2020/accepted-papers.html",
+        "https://research.ibm.com/publications/attention-based-multi-modal-new-product-sales-time-series-forecasting"
+      ]
+    }
+  ],
+  "weekly_updates": "Grok team workflow prepared in factory; no native Grok scheduler or unattended publisher has been installed.",
+  "evidence_status": "Partial curated literature; no model runs."
+}

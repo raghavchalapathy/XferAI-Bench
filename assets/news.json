@@ -1,0 +1,261 @@
+{
+  "as_of": "2026-10-11",
+  "headline": "Latest recorded developments",
+  "verification_note": "A manually checked, partial collection of primary-source updates as of 11 October 2026. This is not a live feed or a completed five-year systematic search. Older records are dated archive entries, not new announcements. News inclusion does not admit a method to a benchmark.",
+  "coverage_window": {
+    "start": "2021-10-11",
+    "end": "2026-10-11"
+  },
+  "coverage_gaps": [
+    "No directly eligible, currently open new-product cold-start forecasting competition was verified in this partial search.",
+    "No newly released commercial tool was independently validated against genuine zero-history or <=28-calendar-day first-launch cases.",
+    "News checks do not establish complete coverage of papers, events or products."
+  ],
+  "items": [
+    {
+      "id": "kdd-2020-new-product-attention",
+      "source_id": "R08",
+      "title": "Attention based Multi-Modal New Product Sales Time-series Forecasting",
+      "short_title": "KDD 2020: new-product forecasting",
+      "category": "Paper",
+      "published_at": "2020-08-23",
+      "date_precision": "author_institution_conference_day",
+      "discovered_at": "2026-10-11",
+      "verified_at": "2026-10-12T04:14:11Z",
+      "summary": "Attention-based models forecast new fashion-product sales from images, attributes and external signals without product sales history.",
+      "short_summary": "Images and attributes predict sales before the first sale.",
+      "short_status": "Older lineage · full-text review pending",
+      "why_it_matters": "The official conference abstract explicitly specifies no historical time series for new products and fashion-retail evaluation. Metadata is confirmed by IBM Research.",
+      "url": "https://www.kdd.org/kdd2020/accepted-papers/view/attention-based-multi-modal-new-product-sales-time-series-forecasting.html",
+      "source_urls": [
+        "https://research.ibm.com/publications/attention-based-multi-modal-new-product-sales-time-series-forecasting",
+        "https://doi.org/10.1145/3394486.3403362"
+      ],
+      "scope": "Direct zero-history task stated in official abstract. Full-text protocol, exact retailer-wide first-launch identity and origin-time signals are not verified.",
+      "status": "older_lineage_abstract_verified_fulltext_pending",
+      "benchmark_admitted": false,
+      "numeric_ranking_authorized": false,
+      "limitations": [
+        "Before the five-year primary window; older lineage only.",
+        "Official abstract inspected; ACM access unavailable. No numerical scores extracted or benchmark admission.",
+        "Already in historical R08 triage; newly added to the public news catalog, not newly discovered research."
+      ],
+      "venue_track": "KDD 2020 Applied Data Science Track"
+    },
+    {
+      "id": "msi-kenvue-2026",
+      "title": "Kenvue presents new-product forecasting and incrementality",
+      "category": "Event",
+      "published_at": null,
+      "date_precision": "page_publication_date_unknown",
+      "event_start": "2026-09-14",
+      "event_end": "2026-09-15",
+      "discovered_at": "2026-10-11",
+      "summary": "The MSI Analytics and Forecasting 2026 agenda and conference summary describe a Kenvue/Cloverpop presentation about forecasting launches before sales history exists and estimating how much growth is incremental.",
+      "why_it_matters": "It connects launch forecasts to cannibalization and launch decisions. This is a recorded industry presentation, not a reproducible benchmark; its protocol and numerical claims need independent review.",
+      "url": "https://msi.org/2026-msi-analytics-and-forecasting-presentations-recordings-and-summaries/",
+      "source_urls": [
+        "https://msi.org/events/analytics-and-forecasting-2026/"
+      ],
+      "scope": "Prelaunch consumer-product industry report; exact-item information set and evaluation protocol unverified. Not an active method admission.",
+      "status": "recorded_event_not_benchmark_evidence",
+      "short_title": "Kenvue: forecasting product launches",
+      "short_summary": "An industry talk on launch forecasts and incremental sales.",
+      "short_status": "Industry report · not benchmark evidence"
+    },
+    {
+      "id": "censored-fashion-2025",
+      "title": "Forecast new-product demand after correcting historical stockouts",
+      "category": "Paper",
+      "published_at": "2025-01-01",
+      "date_precision": "journal_issue_date_not_first_online_date",
+      "discovered_at": "2026-10-11",
+      "summary": "A fashion-retail study reconstructs demand for past collections, then uses product attributes to forecast the next collection. It compares stockout corrections and Random Forest, neural, support-vector and similarity models.",
+      "why_it_matters": "Historical sales can understate demand when inventory runs out. The new-product task fits the zero-history question, but reconstructed demand is an estimate and the retailer data are confidential.",
+      "url": "https://www.sciencedirect.com/science/article/pii/S0957417424021808",
+      "source_urls": [
+        "https://doi.org/10.1016/j.eswa.2024.125313"
+      ],
+      "scope": "Next-collection products without own sales input; provisional direct-task fit. Exposure dates, stockout assumptions and full protocol require independent review.",
+      "status": "dated_archive_provisional_review",
+      "short_title": "New-product demand with stockouts",
+      "short_summary": "Uses past collections to forecast new products.",
+      "short_status": "Private data · review pending"
+    },
+    {
+      "id": "dif4ff-2024",
+      "title": "Dif4FF explores multiple sales paths for unreleased fashion items",
+      "category": "Paper",
+      "published_at": "2024-12-07",
+      "date_precision": "arxiv_submission_day",
+      "discovered_at": "2026-10-11",
+      "summary": "Dif4FF conditions a diffusion model on clothing information and refines generated sales paths with a graph network. The paper evaluates new-fashion-product forecasting on VISUELLE.",
+      "why_it_matters": "It is a candidate for testing richer launch trajectories. Generated paths do not by themselves establish calibrated uncertainty, retail-scale operation or revenue improvement.",
+      "url": "https://arxiv.org/abs/2412.05566",
+      "scope": "Zero-own-sales new-fashion-product task; provisional direct-task fit, not an independently reproduced result.",
+      "status": "dated_archive_provisional_review",
+      "short_title": "Dif4FF: multimodal diffusion",
+      "short_summary": "Forecasts new fashion products from images and signals.",
+      "short_status": "Paper result · not reproduced"
+    },
+    {
+      "id": "mdiff-2024",
+      "title": "MDiFF provides an author-linked diffusion implementation",
+      "category": "Code & paper",
+      "published_at": "2024-12-07",
+      "date_precision": "arxiv_submission_day_not_code_release_date",
+      "discovered_at": "2026-10-11",
+      "summary": "MDiFF generates possible sales paths for new fashion items and uses a small neural network to refine the point forecast. Its arXiv page links author code.",
+      "why_it_matters": "The code link gives the Builder a starting point for a reproduction audit. Code was not executed here; the paper overlaps with Dif4FF and is not independent corroboration.",
+      "url": "https://arxiv.org/abs/2412.06840",
+      "source_urls": [
+        "https://github.com/intelligolabs/MDiFF"
+      ],
+      "scope": "Zero-own-sales fashion task. Artifact version, license, dependencies and fair comparison still need review.",
+      "status": "dated_archive_code_link_not_run",
+      "short_title": "MDiFF: diffusion with author code",
+      "short_summary": "A new-product forecasting paper with linked code.",
+      "short_status": "Code not run · review pending"
+    },
+    {
+      "id": "visuelle2-2022",
+      "title": "VISUELLE 2.0 describes a short-history launch dataset (data licence not found; not usable by XferAI)",
+      "category": "Dataset",
+      "published_at": "2022-04-14",
+      "date_precision": "benchmark_paper_first_arxiv_submission_day",
+      "last_paper_revision": "2022-11-30",
+      "discovered_at": "2026-10-11",
+      "summary": "The benchmark covers 5,355 clothing products across six seasons, with item-shop sales, inventory, prices, discounts, images and external signals. Its short-observation task starts with only a few launch weeks.",
+      "why_it_matters": "It supports evaluating an early launch prefix. Access uses the authors' request form; enforce the first retailer-wide launch and <=28-day limit, and audit permissions before use.",
+      "url": "https://humaticslab.github.io/forecasting/visuelle",
+      "source_urls": [
+        "https://arxiv.org/abs/2204.06972"
+      ],
+      "scope": "Only zero-history and <=28-calendar-day origins qualify. Later rolling windows, recommendations and known-item/new-store-only tasks are excluded.",
+      "status": "dated_archive_dataset_candidate",
+      "short_title": "VISUELLE 2.0: launch data",
+      "short_summary": "Item-store sales, inventory, prices and images.",
+      "short_status": "1–28-day launch task only · access review pending"
+    }
+  ],
+  "applications": [
+    {
+      "id": "fashion",
+      "industry": "Fashion & retail",
+      "title": "Plan an opening assortment before the first sale",
+      "decision": "Choose new styles and initial buying budgets using product attributes and forecasts.",
+      "signals": [
+        "Item attributes",
+        "Price and planned discounts",
+        "Season",
+        "Historical distinct-product donors"
+      ],
+      "evidence_level": "verified_retail_reported_use",
+      "source_urls": [
+        "https://arxiv.org/html/1907.01960v1"
+      ],
+      "limitations": "Historical 2019 Myntra-Jabong case, outside the current five-year discovery window. Authors report assortment-budget use and observational sell-through changes, not controlled revenue or our benchmark results. Not an endorsement or customer relationship."
+    },
+    {
+      "id": "grocery",
+      "industry": "Grocery & seasonal retail",
+      "title": "Size the first order for a new seasonal or replenishable SKU",
+      "decision": "Compare opening stock and early replenishment choices for a genuinely new item.",
+      "signals": [
+        "Item and store attributes",
+        "Inventory",
+        "Weather forecasts",
+        "Promotions and calendar events",
+        "Separate store and delivery H3 resolution-7 cells"
+      ],
+      "evidence_level": "opportunity_not_validated",
+      "source_urls": [],
+      "limitations": "Proposed application, not a validated deployment. Seasonal and replenishable products need separate protocols; weather and plans must be known at the forecast date. No accuracy or monetary benefit established."
+    },
+    {
+      "id": "consumer-products",
+      "industry": "Consumer products",
+      "title": "Separate launch sales from net-new growth",
+      "decision": "Compare a new product's demand with substitution and cannibalization before committing launch resources.",
+      "signals": [
+        "Product attributes",
+        "Distinct past launches",
+        "Planned distribution",
+        "Promotion plans",
+        "Permitted aggregate market signals"
+      ],
+      "evidence_level": "opportunity_not_validated",
+      "source_urls": [
+        "https://msi.org/2026-msi-analytics-and-forecasting-presentations-recordings-and-summaries/"
+      ],
+      "limitations": "Industry presentation motivates this opportunity, but the proposed lab application is not validated. Forecast accuracy and incremental sales require separate evidence; no cross-industry method transfer is established."
+    },
+    {
+      "id": "service-parts",
+      "industry": "Service parts",
+      "title": "Set initial stock for a newly introduced part",
+      "decision": "Balance service availability and inventory cost for a new part without its own demand history.",
+      "signals": [
+        "Part attributes",
+        "Installed base known at origin",
+        "Engineering similarity",
+        "Supplier lead times"
+      ],
+      "evidence_level": "opportunity_not_validated",
+      "source_urls": [],
+      "limitations": "Future domain-expansion opportunity. Sparse demand in an established part is not a new-part launch. A dedicated genuine first-launch dataset and protocol are required before admission."
+    },
+    {
+      "id": "digital-products",
+      "industry": "Digital products",
+      "title": "Plan capacity for a newly launched offering",
+      "decision": "Explore launch demand and capacity needs before product-specific usage exists.",
+      "signals": [
+        "Offering attributes",
+        "Launch calendar",
+        "Permitted distinct-product analogs",
+        "Known acquisition plans"
+      ],
+      "evidence_level": "opportunity_not_validated",
+      "source_urls": [],
+      "limitations": "Future domain-expansion opportunity, outside the active retail unit-sales benchmark. Downloads, visits and popularity are not interchangeable with purchases or revenue. No validated method or result is claimed."
+    }
+  ],
+  "venue_watch": [
+    {
+      "name": "NeurIPS / NIPS",
+      "official_url": "https://proceedings.neurips.cc/",
+      "short_status": "Partial scan"
+    },
+    {
+      "name": "KDD",
+      "official_url": "https://www.kdd.org/kdd2020/accepted-papers.html",
+      "short_status": "Older paper found"
+    },
+    {
+      "name": "ICML",
+      "official_url": "https://proceedings.mlr.press/",
+      "short_status": "Partial scan"
+    },
+    {
+      "name": "JMLR",
+      "official_url": "https://www.jmlr.org/papers/",
+      "short_status": "Partial scan"
+    },
+    {
+      "name": "AAAI",
+      "official_url": "https://ojs.aaai.org/index.php/AAAI",
+      "short_status": "Partial scan"
+    },
+    {
+      "name": "ICDM",
+      "official_url": "https://www3.cs.stonybrook.edu/~icdm2025/",
+      "short_status": "Partial scan"
+    },
+    {
+      "name": "ICVR",
+      "official_url": null,
+      "short_status": "Name to confirm"
+    }
+  ]
+}

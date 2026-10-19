@@ -1,0 +1,1099 @@
+{
+  "schema_version": 1,
+  "title": "ColdStart",
+  "descriptor": "Forecasting for new products",
+  "mode": "literature_review",
+  "evidence_as_of": "2026-10-11",
+  "date_note": "Date of the existing scope triage, not a claim of exhaustive literature-search coverage through this date.",
+  "status_note": "Provisional literature comparison and review queue. No independent admissions or executed benchmark results yet.",
+  "scope": {
+    "N0": "A genuinely new retailer product with no own-sales history at forecast time.",
+    "K": "A genuinely new retailer product with all available history since first retailer-wide launch, at most 28 elapsed calendar days.",
+    "history_clock": "Calendar age from the first retailer-wide launch, not row count or first sale in another store.",
+    "observed_zero_rule": "Observed zero sales are history; missing sales and stockout censoring are separate.",
+    "external_exact_item_sales": "Not allowed as model input.",
+    "global_novelty": "Not required; annotate separately when evidenced."
+  },
+  "summary": {
+    "candidate_methods": 10,
+    "dataset_records": 4,
+    "direct_task_fit_papers": 9,
+    "independently_admitted_methods": 0,
+    "executed_benchmark_runs": 0
+  },
+  "methods": [
+    {
+      "id": "xgboost",
+      "name": "XGBoost with metadata and horizon features",
+      "tracks": [
+        "N0"
+      ],
+      "history_label": "Zero own-sales history",
+      "status": "scope_candidate_pending_independent_review",
+      "benchmark_admitted": false,
+      "scores": null,
+      "runtime": null,
+      "scope_basis": "Only the R01 attribute/covariate recipe and its origin-safe reproduction; remove unrelated M5 support.",
+      "strengths": [
+        "A practical tabular starting point; the paper tests demand prediction for styles before their own sales exist."
+      ],
+      "limitations": [
+        "Private fashion data; discount and visibility inputs need a forecast-time availability audit. No retail-wide superiority or dollar lift is established."
+      ],
+      "features": [
+        "item_attributes",
+        "merchandising_covariates",
+        "launch_age"
+      ],
+      "sources": [
+        {
+          "id": "R01",
+          "title": "Fashion Retail: Forecasting Demand for New Items",
+          "url": "https://arxiv.org/abs/1907.01960",
+          "version": "arXiv:1907.01960v1",
+          "locator": "Sections 4.1-4.4; Tables 1-4",
+          "primary_access_urls": [
+            "https://arxiv.org/html/1907.01960v1"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lightgbm",
+      "name": "LightGBM with metadata and horizon features",
+      "tracks": [
+        "N0"
+      ],
+      "history_label": "Zero own-sales history",
+      "status": "scope_candidate_pending_independent_review",
+      "benchmark_admitted": false,
+      "scores": null,
+      "runtime": null,
+      "scope_basis": "Algorithm was tested on new styles in R01; no architecture-wide superiority claim.",
+      "strengths": [
+        "The paper tests a tabular method using information about new styles."
+      ],
+      "limitations": [
+        "A tested comparator in one private fashion study; its inclusion does not establish the best result or transfer to another retailer."
+      ],
+      "features": [
+        "item_attributes",
+        "merchandising_covariates",
+        "launch_age"
+      ],
+      "sources": [
+        {
+          "id": "R01",
+          "title": "Fashion Retail: Forecasting Demand for New Items",
+          "url": "https://arxiv.org/abs/1907.01960",
+          "version": "arXiv:1907.01960v1",
+          "locator": "Sections 4.1-4.4; Tables 1-4",
+          "primary_access_urls": [
+            "https://arxiv.org/html/1907.01960v1"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "catboost",
+      "name": "CatBoost with metadata and horizon features",
+      "tracks": [
+        "N0"
+      ],
+      "history_label": "Zero own-sales history",
+      "status": "scope_candidate_pending_independent_review",
+      "benchmark_admitted": false,
+      "scores": null,
+      "runtime": null,
+      "scope_basis": "Algorithm was tested on new styles in R01; no architecture-wide superiority claim.",
+      "strengths": [
+        "The paper tests a tabular method using information about new styles."
+      ],
+      "limitations": [
+        "A tested comparator in one private fashion study; its inclusion does not establish the best result or transfer to another retailer."
+      ],
+      "features": [
+        "item_attributes",
+        "merchandising_covariates",
+        "launch_age"
+      ],
+      "sources": [
+        {
+          "id": "R01",
+          "title": "Fashion Retail: Forecasting Demand for New Items",
+          "url": "https://arxiv.org/abs/1907.01960",
+          "version": "arXiv:1907.01960v1",
+          "locator": "Sections 4.1-4.4; Tables 1-4",
+          "primary_access_urls": [
+            "https://arxiv.org/html/1907.01960v1"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "gtm",
+      "name": "GTM-Transformer",
+      "tracks": [
+        "N0"
+      ],
+      "history_label": "Zero own-sales history",
+      "status": "scope_candidate_pending_independent_review",
+      "benchmark_admitted": false,
+      "scores": null,
+      "runtime": null,
+      "scope_basis": "Use paper-specific zero-own-history VISUELLE recipe.",
+      "strengths": [
+        "Combines product images and attributes with category trends without needing the new product's sales."
+      ],
+      "limitations": [
+        "Single fashion retailer; web signals must be available at the forecast date. Six-week results are not revenue evidence."
+      ],
+      "features": [
+        "item_images",
+        "item_attributes",
+        "release_date",
+        "category_google_trends"
+      ],
+      "sources": [
+        {
+          "id": "R09",
+          "title": "Well Googled is Half Done: Multimodal Forecasting of New Fashion Product Sales with Image-based Google Trends",
+          "url": "https://doi.org/10.1002/for.3104",
+          "version": "arXiv:2109.09824v6; journal 2024; first preprint 2021",
+          "locator": "Sections 3.3, 5; Tables 1-4",
+          "primary_access_urls": [
+            "https://arxiv.org/html/2109.09824v6"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pop",
+      "name": "POP auxiliary signal plus fixed forecaster",
+      "tracks": [
+        "N0"
+      ],
+      "history_label": "Zero own-sales history",
+      "status": "rejected_for_admission_leak_unresolvable",
+      "benchmark_admitted": false,
+      "scores": null,
+      "runtime": null,
+      "scope_basis": "Treat POP plus fixed forecaster as one pipeline and audit web signal vintage/cost.",
+      "strengths": [
+        "Tests whether a web-image trend signal improves the same fixed new-product forecaster."
+      ],
+      "limitations": [
+        "A signal-and-forecaster pipeline, not a standalone forecasting model. Historical web timestamps, collection cost and repeatability need audit."
+      ],
+      "features": [
+        "item_images",
+        "item_attributes",
+        "release_date",
+        "web_image_trends"
+      ],
+      "sources": [
+        {
+          "id": "R10",
+          "title": "POP: Mining POtential Performance of New Fashion Products via Webly Cross-modal Query Expansion",
+          "url": "https://arxiv.org/abs/2207.11001",
+          "version": "arXiv:2207.11001; ECCV 2022",
+          "locator": "Section 4.1; Tables 1-3, pp.8-11",
+          "primary_access_urls": [
+            "https://arxiv.org/pdf/2207.11001"
+          ]
+        }
+      ],
+      "rejection_note": "Rejected for admission: post-origin leakage cannot be ruled out (reviewer 2026-10-16)"
+    },
+    {
+      "id": "muqar",
+      "name": "MuQAR",
+      "tracks": [
+        "N0"
+      ],
+      "history_label": "Zero own-sales history",
+      "status": "scope_candidate_pending_independent_review",
+      "benchmark_admitted": false,
+      "scores": null,
+      "runtime": null,
+      "scope_basis": "VISUELLE unit-sales experiment qualifies; popularity/review/demographic-proxy tasks do not.",
+      "strengths": [
+        "Combines visual and product attributes with category trends for the paper's new-garment unit-sales experiment."
+      ],
+      "limitations": [
+        "Only the VISUELLE sales task qualifies; its review/popularity and demographic proxy tasks are excluded. Cross-paper training budgets may differ."
+      ],
+      "features": [
+        "item_images",
+        "item_attributes",
+        "category_google_trends"
+      ],
+      "sources": [
+        {
+          "id": "R13",
+          "title": "Design-time Fashion Popularity Forecasting in VR Environments",
+          "url": "https://arxiv.org/abs/2212.07187",
+          "version": "arXiv:2212.07187v1; CVPR workshop 2022",
+          "locator": "Sections 3.2, 4.2-4.3, 5.2; Table 7 p.9",
+          "primary_access_urls": [
+            "https://arxiv.org/pdf/2212.07187"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mdiff",
+      "name": "MDiFF — original VISUELLE zero-history recipe",
+      "tracks": [
+        "N0"
+      ],
+      "history_label": "Zero own-sales history",
+      "status": "scope_candidate_pending_independent_review",
+      "benchmark_admitted": false,
+      "scores": null,
+      "runtime": null,
+      "scope_basis": "Keep MDiFF and Dif4FF named variants; same family does not provide independent replication.",
+      "strengths": [
+        "Generates several possible sales paths, then refines them into a point forecast for a product with no own sales."
+      ],
+      "limitations": [
+        "Generating paths does not prove calibrated uncertainty. The same dataset and related authors do not provide independent replication."
+      ],
+      "features": [
+        "item_images",
+        "release_date"
+      ],
+      "sources": [
+        {
+          "id": "R15",
+          "title": "MDiFF: Exploiting Multimodal Score-based Diffusion Models for New Fashion Product Performance Forecasting",
+          "url": "https://arxiv.org/abs/2412.06840",
+          "version": "arXiv:2412.06840v1; ECCV FashionAI workshop 2024",
+          "locator": "Sections 3.3-3.4, 4.1-4.3; Table 1 pp.9-10",
+          "primary_access_urls": [
+            "https://arxiv.org/pdf/2412.06840",
+            "https://github.com/intelligolabs/MDiFF"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dif4ff",
+      "name": "Dif4FF — original VISUELLE zero-history recipe",
+      "tracks": [
+        "N0"
+      ],
+      "history_label": "Zero own-sales history",
+      "status": "scope_candidate_pending_independent_review",
+      "benchmark_admitted": false,
+      "scores": null,
+      "runtime": null,
+      "scope_basis": "Keep MDiFF and Dif4FF named variants; same family does not provide independent replication.",
+      "strengths": [
+        "Combines generated sales paths with graph refinement for the original zero-history VISUELLE task."
+      ],
+      "limitations": [
+        "Checkpoint selection and small text/table differences need audit. Missing stronger comparator results limit claims of superiority."
+      ],
+      "features": [
+        "multimodal_product_information",
+        "release_date"
+      ],
+      "sources": [
+        {
+          "id": "R14",
+          "title": "Dif4FF: Leveraging Multimodal Diffusion Models and Graph Neural Networks for Accurate New Fashion Product Performance Forecasting",
+          "url": "https://arxiv.org/abs/2412.05566",
+          "version": "arXiv:2412.05566v1; ICPR 2024",
+          "locator": "Experimental setup; Table 1; diffusion/refinement and ablation sections",
+          "primary_access_urls": [
+            "https://arxiv.org/html/2412.05566v1"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "visuelle2_initial_prefix_rnn",
+      "name": "VISUELLE 2.0 image-conditioned RNN — initial two-week prefix only",
+      "tracks": [
+        "K"
+      ],
+      "history_label": "First two weeks only; 28-day maximum",
+      "status": "scope_candidate_pending_independent_review",
+      "benchmark_admitted": false,
+      "scores": null,
+      "runtime": null,
+      "scope_basis": "First two weeks predict subsequent ten; retailer-wide identity and launch-age audit required; later rolling windows excluded.",
+      "strengths": [
+        "Directly studies the first two weeks of observed sales to predict the following ten weeks."
+      ],
+      "limitations": [
+        "Reconcile first launch across all stores. Later rolling origins may exceed 28 days; stockout-free selection changes which products are represented."
+      ],
+      "features": [
+        "first_two_weeks_sales",
+        "item_images"
+      ],
+      "sources": [
+        {
+          "id": "visuelle2022",
+          "title": "The Multi-Modal Universe of Fast-Fashion: The Visuelle 2.0 Benchmark",
+          "url": "https://humaticslab.github.io/forecasting/visuelle",
+          "version": "arXiv:2204.06972v2; CVPRW 2022",
+          "locator": "Section 3; Tables 1-2; Section 2",
+          "primary_access_urls": [
+            "https://arxiv.org/pdf/2204.06972",
+            "https://humaticslab.github.io/forecasting/visuelle"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "myntra_naive_control",
+      "name": "Myntra paper naive control — original new-style recipe",
+      "tracks": [
+        "N0"
+      ],
+      "history_label": "Zero own-sales history",
+      "status": "scope_candidate_pending_independent_review",
+      "benchmark_admitted": false,
+      "scores": null,
+      "runtime": null,
+      "scope_basis": "Reproduce the actual new-item comparator, not a generic seasonal-history control.",
+      "strengths": [
+        "Provides the original study's new-style comparison point for a faithful reproduction."
+      ],
+      "limitations": [
+        "Reconstruct the original comparator from the paper. Do not substitute a seasonal method that needs the new item's unavailable sales history."
+      ],
+      "features": [
+        "paper_specific_new_style_control_inputs_pending_audit"
+      ],
+      "sources": [
+        {
+          "id": "R01",
+          "title": "Fashion Retail: Forecasting Demand for New Items",
+          "url": "https://arxiv.org/abs/1907.01960",
+          "version": "arXiv:1907.01960v1",
+          "locator": "Sections 4.1-4.4; Tables 1-4",
+          "primary_access_urls": [
+            "https://arxiv.org/html/1907.01960v1"
+          ]
+        }
+      ]
+    }
+  ],
+  "papers": [
+    {
+      "id": "R01",
+      "title": "Fashion Retail: Forecasting Demand for New Items",
+      "url": "https://arxiv.org/abs/1907.01960",
+      "year": 2019,
+      "first_public_year": 2019,
+      "tracks": [
+        "N0"
+      ],
+      "status": "direct_task_fit_provisional_independent_review_pending",
+      "recipe": "Attribute/covariate regression; tested RF, GBRT, XGBoost, LightGBM, CatBoost, MLP and LSTM variants",
+      "read_depth": "Full-text methods, data split, results and deployment subsection",
+      "version": "arXiv:1907.01960v1",
+      "locator": "Sections 4.1-4.4; Tables 1-4",
+      "primary_access_urls": [
+        "https://arxiv.org/html/1907.01960v1"
+      ],
+      "target_unit": "Weekly item/style unit sales",
+      "target_history_at_origin": {
+        "own_sales_observations": 0,
+        "launch_age_days": 0
+      },
+      "horizon": "Item-week and article aggregates; test series span 4-26 weeks",
+      "strengths": [
+        "Shows a practical attribute-to-demand approach and reports retailer use; useful for a tabular baseline."
+      ],
+      "limitations": [
+        "Private fashion data; forecast-time discount/visibility availability needs audit; no calibrated uncertainty."
+      ],
+      "paper_reported_result": {
+        "metric": "item-week wMAPE",
+        "dataset": "private Myntra shirts test cohort",
+        "method": "XGBoost/MSE",
+        "value": 0.52,
+        "comparator": "paper naive baseline",
+        "comparator_value": 0.97,
+        "locator": "Table 3",
+        "label": "Paper-reported result; not reproduced by this lab; do not rank across protocols.",
+        "independent_review_status": "pending"
+      },
+      "business_evidence": {
+        "type": "reported_use_not_monetized",
+        "deployment": "Myntra-Jabong, Section 4.4",
+        "reported_revenue_percent": null,
+        "reported_absolute_currency": null,
+        "sell_through_yoy_percent": [
+          10,
+          7
+        ],
+        "measurement_context": "Two major footwear brands, one-month sell-through after AW18 assortment budgeting; Section 4.4.",
+        "attribution_limit": "Year-on-year observational comparison; not controlled revenue or forecast-only causal lift."
+      },
+      "reproduction_status": "not_run",
+      "admission_ready": false,
+      "auxiliary_only": false
+    },
+    {
+      "id": "R07",
+      "title": "A Siamese Neural Network Application for Sales Forecasting of New Fashion Products Using Heterogeneous Data",
+      "url": "https://doi.org/10.2991/ijcis.d.191122.002",
+      "year": 2019,
+      "first_public_year": 2019,
+      "tracks": [
+        "N0"
+      ],
+      "status": "direct_task_fit_provisional_independent_review_pending",
+      "recipe": "Siamese image/attribute distance; average 20 nearest historical profiles",
+      "read_depth": "Primary full PDF, methods and empirical results",
+      "version": "IJCIS 2019 publisher PDF, 10 pages",
+      "locator": "Sections 3.1.1, 3.2, 4; Table 1, pp.1539-1543",
+      "primary_access_urls": [
+        "https://www.atlantis-press.com/article/125924347.pdf"
+      ],
+      "target_unit": "Weekly seasonal sales profile normalized to sum one; not unit volume",
+      "target_history_at_origin": {
+        "own_sales_observations": 0,
+        "launch_age_days": 0
+      },
+      "horizon": "Seasonal profile; fixed number of weeks not established",
+      "strengths": [
+        "Learns which older products have useful seasonal shapes for a new product."
+      ],
+      "limitations": [
+        "Shape-only output requires independent volume forecast. Price-normalization elasticity assumptions and small private sample limit transfer."
+      ],
+      "paper_reported_result": {
+        "metric": "normalized-profile RMSE",
+        "value": 0.0188,
+        "method": "SNN20",
+        "comparator": "CategoryProfile / KmDt",
+        "comparator_values": [
+          0.0234,
+          0.0199
+        ],
+        "context": "360 historical products; 88 next-collection products",
+        "label": "Paper-reported result; not reproduced by this lab; do not rank across protocols.",
+        "independent_review_status": "pending"
+      },
+      "business_evidence": {
+        "type": "none_verified",
+        "reported_revenue_percent": null,
+        "reported_absolute_currency": null
+      },
+      "reproduction_status": "not_run",
+      "admission_ready": false,
+      "auxiliary_only": true
+    },
+    {
+      "id": "R09",
+      "title": "Well Googled is Half Done: Multimodal Forecasting of New Fashion Product Sales with Image-based Google Trends",
+      "url": "https://doi.org/10.1002/for.3104",
+      "year": 2024,
+      "first_public_year": 2021,
+      "tracks": [
+        "N0"
+      ],
+      "status": "direct_task_fit_provisional_independent_review_pending",
+      "recipe": "GTM-Transformer with image, attributes, release and eligible Google Trends",
+      "read_depth": "Primary full HTML methods, results and first-order illustration",
+      "version": "arXiv:2109.09824v6; journal 2024; first preprint 2021",
+      "locator": "Sections 3.3, 5; Tables 1-4",
+      "primary_access_urls": [
+        "https://arxiv.org/html/2109.09824v6"
+      ],
+      "target_unit": "Weekly units aggregated by product across chain stores",
+      "target_history_at_origin": {
+        "own_sales_observations": 0,
+        "launch_age_days": 0,
+        "auxiliary_history": "Google Trends attributes, not target sales"
+      },
+      "horizon": "Main comparison six weeks; horizon sensitivity separately reported",
+      "strengths": [
+        "Makes zero-history multi-week prediction explicit and supplies a reusable fashion dataset protocol."
+      ],
+      "limitations": [
+        "First six weeks reduce discount/replenishment effects; private retailer scope; retrieved web signals need vintage audit."
+      ],
+      "paper_reported_result": {
+        "metric": "WAPE / MAE",
+        "value": [
+          55.2,
+          30.2
+        ],
+        "comparator": "Cross-Attention RNN",
+        "comparator_value": [
+          59.5,
+          32.3
+        ],
+        "context": "VISUELLE six-week comparison, Table 2",
+        "locator": "Tables 1-2, six-week release setup",
+        "label": "Paper-reported result; not reproduced by this lab; do not rank across protocols.",
+        "independent_review_status": "pending"
+      },
+      "business_evidence": {
+        "type": "hypothetical_currency_weighted_error",
+        "reported_revenue_percent": null,
+        "reported_absolute_currency": null,
+        "illustration": "Section 5.8/Table 4 assumes $25 per reference; discrepancy is not realized revenue or savings.",
+        "assumed_cost_usd_per_reference": 25,
+        "illustrative_discrepancy_usd": {
+          "60_percent_policy": 3920125,
+          "GTM_Transformer": 3236753
+        },
+        "illustrative_total_unit_absolute_error": {
+          "60_percent_policy": 313.6,
+          "GTM_Transformer": 262.3
+        },
+        "locator": "Section 5.8, Table 4",
+        "currency_status": "Assumption-weighted forecast discrepancy; not revenue/profit/savings."
+      },
+      "reproduction_status": "not_run",
+      "admission_ready": false,
+      "auxiliary_only": false
+    },
+    {
+      "id": "R10",
+      "title": "POP: Mining POtential Performance of New Fashion Products via Webly Cross-modal Query Expansion",
+      "url": "https://arxiv.org/abs/2207.11001",
+      "year": 2022,
+      "first_public_year": 2022,
+      "tracks": [
+        "N0"
+      ],
+      "status": "rejected_for_admission_leak_unresolvable",
+      "recipe": "POP web-image temporal signal plus fixed GTM-Transformer forecaster",
+      "read_depth": "Primary full PDF methods, Task 1 and tables",
+      "version": "arXiv:2207.11001; ECCV 2022",
+      "locator": "Section 4.1; Tables 1-3, pp.8-11",
+      "primary_access_urls": [
+        "https://arxiv.org/pdf/2207.11001"
+      ],
+      "target_unit": "VISUELLE weekly units; Task 2 style popularity excluded",
+      "target_history_at_origin": {
+        "own_sales_observations": 0,
+        "launch_age_days": 0,
+        "auxiliary_history": "28/52 weeks of exogenous signals, not item sales"
+      },
+      "horizon": "Six-week evaluation; models trained on 12-week signals",
+      "strengths": [
+        "Separates the value of an additional web signal by holding the main forecaster fixed."
+      ],
+      "limitations": [
+        "Feature pipeline, not stand-alone forecaster. Web timestamp/retrieval reproducibility and collection cost need audit."
+      ],
+      "paper_reported_result": {
+        "metric": "release-setup WAPE / MAE",
+        "value": [
+          52.39,
+          28.62
+        ],
+        "comparator": "same forecaster with Google Trends",
+        "comparator_value": [
+          55.24,
+          30.18
+        ],
+        "context": "497 held-out products; Table 2",
+        "label": "Paper-reported result; not reproduced by this lab; do not rank across protocols.",
+        "independent_review_status": "pending"
+      },
+      "business_evidence": {
+        "type": "none_verified",
+        "reported_revenue_percent": null,
+        "reported_absolute_currency": null
+      },
+      "reproduction_status": "not_run",
+      "admission_ready": false,
+      "auxiliary_only": false,
+      "rejection_note": "Rejected for admission: post-origin leakage cannot be ruled out (reviewer 2026-10-16)"
+    },
+    {
+      "id": "R13",
+      "title": "Design-time Fashion Popularity Forecasting in VR Environments",
+      "url": "https://arxiv.org/abs/2212.07187",
+      "year": 2022,
+      "first_public_year": 2022,
+      "tracks": [
+        "N0"
+      ],
+      "status": "direct_task_fit_provisional_independent_review_pending",
+      "recipe": "MuQAR visual/categorical fusion plus attribute-trend ConvLSTM",
+      "read_depth": "Primary full PDF; VISUELLE-specific experiment inspected",
+      "version": "arXiv:2212.07187v1; CVPR workshop 2022",
+      "locator": "Sections 3.2, 4.2-4.3, 5.2; Table 7 p.9",
+      "primary_access_urls": [
+        "https://arxiv.org/pdf/2212.07187"
+      ],
+      "target_unit": "VISUELLE weekly product unit sales; other popularity tasks excluded",
+      "target_history_at_origin": {
+        "own_sales_observations": 0,
+        "launch_age_days": 0,
+        "auxiliary_history": "52 weekly Google Trends inputs"
+      },
+      "horizon": "Six weekly sales values",
+      "strengths": [
+        "Provides a direct new-garment unit-sales experiment using visual, categorical and trend signals."
+      ],
+      "limitations": [
+        "Retain unit-sales component only; Mallzee demographics and Amazon reviews are not sales evidence. Cross-paper figures do not establish identical retraining budgets."
+      ],
+      "paper_reported_result": {
+        "metric": "WAPE / MAE",
+        "value": [
+          53.61,
+          29.28
+        ],
+        "comparator": "GTM-Transformer",
+        "comparator_value": [
+          55.2,
+          30.2
+        ],
+        "context": "Table 7; VISUELLE protocol",
+        "label": "Paper-reported result; not reproduced by this lab; do not rank across protocols.",
+        "independent_review_status": "pending"
+      },
+      "business_evidence": {
+        "type": "none_verified",
+        "reported_revenue_percent": null,
+        "reported_absolute_currency": null
+      },
+      "reproduction_status": "not_run",
+      "admission_ready": false,
+      "auxiliary_only": false
+    },
+    {
+      "id": "visuelle2022",
+      "title": "The Multi-Modal Universe of Fast-Fashion: The Visuelle 2.0 Benchmark",
+      "url": "https://humaticslab.github.io/forecasting/visuelle",
+      "year": 2022,
+      "first_public_year": 2022,
+      "tracks": [
+        "K"
+      ],
+      "status": "direct_task_fit_provisional_independent_review_pending",
+      "recipe": "Cross-Attention RNN with images; naive, SES and kNN controls",
+      "read_depth": "Primary arXiv PDF sections 1-3 and official dataset page",
+      "version": "arXiv:2204.06972v2; CVPRW 2022",
+      "locator": "Section 3; Tables 1-2; Section 2",
+      "primary_access_urls": [
+        "https://arxiv.org/pdf/2204.06972",
+        "https://humaticslab.github.io/forecasting/visuelle"
+      ],
+      "target_unit": "Weekly item-shop units, sizes aggregated",
+      "target_history_at_origin": {
+        "observed_weekly_points": 2,
+        "launch_age_days": 14,
+        "zero_history_row": true
+      },
+      "horizon": "First two weeks predict ten; rolling two-week/one-week origins need age filtering",
+      "strengths": [
+        "Provides a direct early-launch sales-prefix protocol and richer store-level data."
+      ],
+      "limitations": [
+        "Stockout-free selection changes population; per-shop release must be reconciled to retailer-wide SKU launch. Normalized prices prevent direct dollar validation."
+      ],
+      "paper_reported_result": {
+        "metric": "SO-fore2-10 WAPE / MAE",
+        "value": [
+          85.65,
+          0.94
+        ],
+        "comparator": "same RNN without image",
+        "comparator_value": [
+          87.39,
+          0.97
+        ],
+        "context": "Table 1; zero-history image-only row 89.02/0.99",
+        "label": "Paper-reported result; not reproduced by this lab; do not rank across protocols.",
+        "independent_review_status": "pending"
+      },
+      "business_evidence": {
+        "type": "none_verified",
+        "reported_revenue_percent": null,
+        "reported_absolute_currency": null
+      },
+      "reproduction_status": "not_run",
+      "admission_ready": false,
+      "auxiliary_only": false
+    },
+    {
+      "id": "R14",
+      "title": "Dif4FF: Leveraging Multimodal Diffusion Models and Graph Neural Networks for Accurate New Fashion Product Performance Forecasting",
+      "url": "https://arxiv.org/abs/2412.05566",
+      "year": 2024,
+      "first_public_year": 2024,
+      "tracks": [
+        "N0"
+      ],
+      "status": "direct_task_fit_provisional_independent_review_pending",
+      "recipe": "Dif4FF conditional diffusion with graph refinement of generated trajectories",
+      "read_depth": "Primary full HTML methods and results",
+      "version": "arXiv:2412.05566v1; ICPR 2024",
+      "locator": "Experimental setup; Table 1; diffusion/refinement and ablation sections",
+      "primary_access_urls": [
+        "https://arxiv.org/html/2412.05566v1"
+      ],
+      "target_unit": "VISUELLE weekly chain-wide product units",
+      "target_history_at_origin": {
+        "own_sales_observations": 0,
+        "launch_age_days": 0
+      },
+      "horizon": "Six weeks",
+      "strengths": [
+        "Studies conditional generation and graph refinement for new-product sales paths."
+      ],
+      "limitations": [
+        "Text/table values differ slightly; validation/checkpoint selection needs audit. Comparator set omits stronger POP/MuQAR results; no calibrated-distribution evidence."
+      ],
+      "paper_reported_result": {
+        "metric": "WAPE / MAE",
+        "value": [
+          54.6,
+          30.0
+        ],
+        "comparator": "GTM-Transformer",
+        "comparator_value": [
+          55.2,
+          30.2
+        ],
+        "context": "Table 1; 5080/497 chronological train/test products",
+        "label": "Paper-reported result; not reproduced by this lab; do not rank across protocols.",
+        "independent_review_status": "pending"
+      },
+      "business_evidence": {
+        "type": "none_verified",
+        "reported_revenue_percent": null,
+        "reported_absolute_currency": null
+      },
+      "reproduction_status": "not_run",
+      "admission_ready": false,
+      "auxiliary_only": false
+    },
+    {
+      "id": "R15",
+      "title": "MDiFF: Exploiting Multimodal Score-based Diffusion Models for New Fashion Product Performance Forecasting",
+      "url": "https://arxiv.org/abs/2412.06840",
+      "year": 2024,
+      "first_public_year": 2024,
+      "tracks": [
+        "N0"
+      ],
+      "status": "direct_task_fit_provisional_independent_review_pending",
+      "recipe": "MDiFF image/release-conditioned diffusion, 50 trajectories and MLP point refinement",
+      "read_depth": "Primary full PDF methods, experiment and Table 1",
+      "version": "arXiv:2412.06840v1; ECCV FashionAI workshop 2024",
+      "locator": "Sections 3.3-3.4, 4.1-4.3; Table 1 pp.9-10",
+      "primary_access_urls": [
+        "https://arxiv.org/pdf/2412.06840",
+        "https://github.com/intelligolabs/MDiFF"
+      ],
+      "target_unit": "VISUELLE weekly chain-wide product units",
+      "target_history_at_origin": {
+        "own_sales_observations": 0,
+        "launch_age_days": 0
+      },
+      "horizon": "Six weeks",
+      "strengths": [
+        "Studies multiple generated trajectories plus point refinement; an author code link is available for inspection."
+      ],
+      "limitations": [
+        "Related authors/text/data to Dif4FF; not independent replication. Missing POP/MuQAR comparators; generated quantiles alone do not demonstrate calibration."
+      ],
+      "paper_reported_result": {
+        "metric": "WAPE / MAE",
+        "value": [
+          54.7,
+          30.1
+        ],
+        "comparator": "GTM-Transformer",
+        "comparator_value": [
+          55.2,
+          30.2
+        ],
+        "context": "Table 1",
+        "label": "Paper-reported result; not reproduced by this lab; do not rank across protocols.",
+        "independent_review_status": "pending"
+      },
+      "business_evidence": {
+        "type": "none_verified",
+        "reported_revenue_percent": null,
+        "reported_absolute_currency": null
+      },
+      "reproduction_status": "not_run",
+      "admission_ready": false,
+      "auxiliary_only": false
+    },
+    {
+      "id": "censored2025",
+      "title": "Predicting demand for new products in fashion retailing using censored data",
+      "url": "https://doi.org/10.1016/j.eswa.2024.125313",
+      "year": 2025,
+      "first_public_year": 2025,
+      "tracks": [
+        "N0"
+      ],
+      "status": "direct_task_fit_provisional_independent_review_pending",
+      "recipe": "Historical stockout reconstruction/EM substitution plus RF, DNN, SVR or distance-based new-product model",
+      "read_depth": "Publisher-indexed abstract and Sections 3-4, limitations; direct fetch blocked",
+      "version": "ESWA 259(2025)125313; DOI registered 2024",
+      "locator": "Sections 3,4,4.3; conclusion/limitations",
+      "primary_access_urls": [
+        "https://doi.org/10.1016/j.eswa.2024.125313"
+      ],
+      "target_unit": "Aggregate demand for a new collection product; not a daily forecast target",
+      "target_history_at_origin": {
+        "own_sales_observations": 0,
+        "launch_age_days": 0
+      },
+      "horizon": "Product exposure period; native duration varies, not a history prefix",
+      "strengths": [
+        "Addresses the difference between sales and demand when older training products were out of stock."
+      ],
+      "limitations": [
+        "First sale proxies exposure; zero-stock and zero-sales rule misses partial-day stockouts. Reconstructed demand is estimated, not observed ground truth."
+      ],
+      "paper_reported_result": null,
+      "business_evidence": {
+        "type": "none_verified",
+        "reported_revenue_percent": null,
+        "reported_absolute_currency": null
+      },
+      "reproduction_status": "not_run",
+      "admission_ready": false,
+      "auxiliary_only": false
+    }
+  ],
+  "datasets": [
+    {
+      "id": "VISUELLE-v1",
+      "name": "VISUELLE-v1",
+      "tracks": [
+        "N0"
+      ],
+      "native_grain": "product-week across chain stores",
+      "history_rule": "zero exact-item sales",
+      "access": "Blocked: no data licence found; not offered, not downloadable, not used as XferAI benchmark data. Paper-reported results only.",
+      "rights_status": "blocked_no_data_licence",
+      "status": "dataset_review_candidate_not_admitted",
+      "product_count": 5577,
+      "store_count": null,
+      "limitations": [
+        "No realized dollar outcomes verified."
+      ],
+      "sources": [
+        {
+          "id": "R09",
+          "title": "Well Googled is Half Done: Multimodal Forecasting of New Fashion Product Sales with Image-based Google Trends",
+          "url": "https://doi.org/10.1002/for.3104",
+          "version": "arXiv:2109.09824v6; journal 2024; first preprint 2021",
+          "locator": "Sections 3.3, 5; Tables 1-4",
+          "primary_access_urls": [
+            "https://arxiv.org/html/2109.09824v6"
+          ]
+        },
+        {
+          "id": "R10",
+          "title": "POP: Mining POtential Performance of New Fashion Products via Webly Cross-modal Query Expansion",
+          "url": "https://arxiv.org/abs/2207.11001",
+          "version": "arXiv:2207.11001; ECCV 2022",
+          "locator": "Section 4.1; Tables 1-3, pp.8-11",
+          "primary_access_urls": [
+            "https://arxiv.org/pdf/2207.11001"
+          ]
+        },
+        {
+          "id": "R13",
+          "title": "Design-time Fashion Popularity Forecasting in VR Environments",
+          "url": "https://arxiv.org/abs/2212.07187",
+          "version": "arXiv:2212.07187v1; CVPR workshop 2022",
+          "locator": "Sections 3.2, 4.2-4.3, 5.2; Table 7 p.9",
+          "primary_access_urls": [
+            "https://arxiv.org/pdf/2212.07187"
+          ]
+        },
+        {
+          "id": "R14",
+          "title": "Dif4FF: Leveraging Multimodal Diffusion Models and Graph Neural Networks for Accurate New Fashion Product Performance Forecasting",
+          "url": "https://arxiv.org/abs/2412.05566",
+          "version": "arXiv:2412.05566v1; ICPR 2024",
+          "locator": "Experimental setup; Table 1; diffusion/refinement and ablation sections",
+          "primary_access_urls": [
+            "https://arxiv.org/html/2412.05566v1"
+          ]
+        },
+        {
+          "id": "R15",
+          "title": "MDiFF: Exploiting Multimodal Score-based Diffusion Models for New Fashion Product Performance Forecasting",
+          "url": "https://arxiv.org/abs/2412.06840",
+          "version": "arXiv:2412.06840v1; ECCV FashionAI workshop 2024",
+          "locator": "Sections 3.3-3.4, 4.1-4.3; Table 1 pp.9-10",
+          "primary_access_urls": [
+            "https://arxiv.org/pdf/2412.06840",
+            "https://github.com/intelligolabs/MDiFF"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "VISUELLE-2.0",
+      "name": "VISUELLE-2.0",
+      "tracks": [
+        "K"
+      ],
+      "native_grain": "item-shop-week after size aggregation",
+      "history_rule": "Filter retailer-wide item age <=28 calendar days; two-week origin is direct evidence; later rolling origins may be out of scope.",
+      "access": "Blocked: no data licence found; not offered, not downloadable, not used as XferAI benchmark data. Paper-reported results only.",
+      "rights_status": "blocked_no_data_licence",
+      "status": "dataset_review_candidate_not_admitted",
+      "product_count": 5355,
+      "store_count": 110,
+      "limitations": [
+        "Resolve per-shop release dates to first retailer-wide SKU launch; exclude known-SKU/new-store pairs.",
+        "Author arXiv v2 Sec.2; official web description has differing broad date wording, so pin downloaded release."
+      ],
+      "sources": [
+        {
+          "id": "visuelle2022",
+          "title": "The Multi-Modal Universe of Fast-Fashion: The Visuelle 2.0 Benchmark",
+          "url": "https://humaticslab.github.io/forecasting/visuelle",
+          "version": "arXiv:2204.06972v2; CVPRW 2022",
+          "locator": "Section 3; Tables 1-2; Section 2",
+          "primary_access_urls": [
+            "https://arxiv.org/pdf/2204.06972",
+            "https://humaticslab.github.io/forecasting/visuelle"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Myntra-private-new-styles",
+      "name": "Myntra-private-new-styles",
+      "tracks": [
+        "N0"
+      ],
+      "native_grain": "See original paper; exact released schema not audited",
+      "history_rule": "Zero exact-item own-sales input; retailer-wide launch identity audit pending",
+      "access": "Private; licence not verified; not offered or used by XferAI.",
+      "rights_status": "licence_not_verified",
+      "status": "dataset_review_candidate_not_admitted",
+      "product_count": null,
+      "store_count": null,
+      "limitations": [],
+      "sources": [
+        {
+          "id": "R01",
+          "title": "Fashion Retail: Forecasting Demand for New Items",
+          "url": "https://arxiv.org/abs/1907.01960",
+          "version": "arXiv:1907.01960v1",
+          "locator": "Sections 4.1-4.4; Tables 1-4",
+          "primary_access_urls": [
+            "https://arxiv.org/html/1907.01960v1"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "European-bags-censored-private",
+      "name": "European-bags-censored-private",
+      "tracks": [
+        "N0"
+      ],
+      "native_grain": "See original paper; exact released schema not audited",
+      "history_rule": "Zero exact-item own-sales input; retailer-wide launch identity audit pending",
+      "access": "Blocked: private data; CC BY-NC-ND covers the article only. Not offered or used by XferAI.",
+      "rights_status": "blocked_private_data",
+      "status": "dataset_review_candidate_not_admitted",
+      "product_count": null,
+      "store_count": null,
+      "limitations": [],
+      "sources": [
+        {
+          "id": "censored2025",
+          "title": "Predicting demand for new products in fashion retailing using censored data",
+          "url": "https://doi.org/10.1016/j.eswa.2024.125313",
+          "version": "ESWA 259(2025)125313; DOI registered 2024",
+          "locator": "Sections 3,4,4.3; conclusion/limitations",
+          "primary_access_urls": [
+            "https://doi.org/10.1016/j.eswa.2024.125313"
+          ]
+        }
+      ]
+    }
+  ],
+  "lineage": [
+    {
+      "first_public_year": 2019,
+      "source_ids": [
+        "R01",
+        "R07"
+      ],
+      "development": "Direct new-style tabular regression; learned multimodal donor profiles",
+      "detail_refs": [
+        "R01",
+        "R07"
+      ]
+    },
+    {
+      "first_public_year": 2021,
+      "source_ids": [
+        "R09"
+      ],
+      "development": "Zero-history multimodal forecasts with auxiliary category-trend signals",
+      "detail_refs": [
+        "R09"
+      ],
+      "publication_year_note": "Journal version 2024; preprint first appeared 2021."
+    },
+    {
+      "first_public_year": 2022,
+      "source_ids": [
+        "R10",
+        "R13",
+        "visuelle2022"
+      ],
+      "development": "Web-image auxiliary signals; attribute-trend fusion; explicit two-week new-item prefix benchmark",
+      "detail_refs": [
+        "R10",
+        "R13",
+        "visuelle2022"
+      ]
+    },
+    {
+      "first_public_year": 2024,
+      "source_ids": [
+        "R14",
+        "R15"
+      ],
+      "development": "Conditional diffusion trajectories with learned point refinement",
+      "detail_refs": [
+        "R14",
+        "R15"
+      ],
+      "limitation": "Same VISUELLE family; publication recency is not superiority or independent validation."
+    },
+    {
+      "first_public_year": 2025,
+      "source_ids": [
+        "censored2025"
+      ],
+      "development": "Lost-demand reconstruction coupled to new-collection prediction",
+      "detail_refs": [
+        "censored2025"
+      ],
+      "publication_year_note": "2024 DOI; 2025 volume."
+    }
+  ],
+  "executed_results": [],
+  "input_sha256": {
+    "evidence/STRICT_SCOPE_TRIAGE.json": "4a26fcba4f4dd17b1f02f0da278ea607be593cc0b1697b7480cd11076171eb7f",
+    "benchmark/CANDIDATE_REVIEW_QUEUE.json": "c2d5d059674f521c57e38fcab37fea32fbc2d6cc63b348e4ca3ab5b70e645c13",
+    "benchmark/DATASET_REVIEW_QUEUE.json": "0186f5894c6bd5818fef90b6539837e78e23727e38ccce355570d3630c522da7",
+    "benchmark/model_registry.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+  }
+}

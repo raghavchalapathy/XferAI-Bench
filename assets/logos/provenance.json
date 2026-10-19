@@ -1,0 +1,436 @@
+{
+  "schema_version": "1.0",
+  "checked_on": "2026-10-14",
+  "display_label": "Research & industry sources",
+  "purpose": "Linked research and industry source identities. User-requested IBM Research and KDD are explicitly retained as historical lineage in the strip; this does not change the five-year evidence views. Amazon Science is the sole displayed Amazon-family mark. arXiv is a repository; conference main tracks and workshops remain distinct.",
+  "verification": "Official website asset URLs, original bytes and actual author-paper or venue relationships checked separately. IBM reversed mark is an exact original inline SVG plus its official fill rule packaged for image rendering; component hash recorded. SVG parsed and checked for scripts, external references, event handlers, foreignObject and animation; PNG signatures, dimensions and transparency inspected.",
+  "logos": [
+    {
+      "id": "ibm-research",
+      "name": "IBM Research",
+      "asset_url": "https://www.ibm.com/design/language/ibm-logos/8-bar/",
+      "asset_page_url": "https://www.ibm.com/design/language/ibm-logos/8-bar/",
+      "source_url": "https://research.ibm.com/publications/attention-based-multi-modal-new-product-sales-time-series-forecasting",
+      "relationship": "Author institution for the KDD 2020 new-product forecasting paper; older lineage, abstract-depth review.",
+      "paper_ids": [
+        "R08"
+      ],
+      "relationship_locator": "IBM Research publication record: Authors; IBM-affiliated at time of publication. KDD 2020 official accepted-paper list: Applied Data Science Track.",
+      "logo_variant": "Official reversed IBM footer mark and its official #f4f4f4 fill, extracted from the IBM Design Language page. The original geometry and official color are retained; this is not a recolored positive mark.",
+      "display_background": "dark",
+      "usage_guidance_url": "https://www.ibm.com/design/language/ibm-logos/8-bar/",
+      "image": "/assets/logos/ibm-reversed.svg",
+      "asset_final_url": "https://www.ibm.com/design/language/ibm-logos/8-bar/",
+      "checked_on": "2026-10-12",
+      "content_type": "image/svg+xml",
+      "byte_size": 1719,
+      "sha256": "e2be023694c41cfee9a0d7ac0437f7efc90d387a2273c0ab23698effe2db2ec4",
+      "dimensions": {
+        "width": "81",
+        "height": "32"
+      },
+      "asset_modification": "Packaging only: original inline SVG markup retained and its exact official fill rule embedded in a style element so it renders as the original white footer mark when loaded as an image. No geometry, proportions, or brand color changed.",
+      "previous_asset": {
+        "asset_url": "https://www.ibm.com/design/language/2285fa814297ab5eb0ffa21d2ee009db/ibm.svg",
+        "asset_page_url": "https://www.ibm.com/design/language/ibm-logos/8-bar/",
+        "asset_final_url": "https://www.ibm.com/design/language/2285fa814297ab5eb0ffa21d2ee009db/ibm.svg",
+        "image": "/assets/logos/ibm.svg",
+        "byte_size": 6609,
+        "sha256": "e04c17b10b3407363a56270f043d65040ef6c2e1e3ddb6fdb4d44450d09b8c45",
+        "dimensions": {
+          "view_box": "0 0 50 21",
+          "width": "50px",
+          "height": "21px"
+        },
+        "content_type": "image/svg+xml",
+        "asset_modification": "none; original downloaded bytes retained"
+      },
+      "source_component_sha256": "85e1dab207b8e6ac853dc58e4311da1a6b5b914c0ffb75bd36bb5bc2bbb88ab3",
+      "source_selector": "svg.Footer-module--logo--ziLRb",
+      "source_style_rule": ".Footer-module--logo--ziLRb{fill:#f4f4f4}",
+      "source_style_locator": "Official page stylesheet: .Footer-module--logo--ziLRb{fill:#f4f4f4;margin-top:2rem}; margin is a page layout property and is not part of the logo.",
+      "display_in_ticker": false,
+      "ticker_scope": "historical_lineage",
+      "requested_display_on": "2026-10-14",
+      "removal_note": "Hidden 2026-10-18: current mark was extracted from an inline SVG on a guidelines page; no direct asset file URL to pin."
+    },
+    {
+      "id": "acm-sigkdd",
+      "name": "ACM SIGKDD",
+      "asset_url": "https://kdd.org/images/kdd.png",
+      "asset_page_url": "https://www.kdd.org/",
+      "source_url": "https://www.kdd.org/kdd2020/accepted-papers/view/attention-based-multi-modal-new-product-sales-time-series-forecasting.html",
+      "relationship": "KDD 2020 publication venue for the R08 new-product forecasting paper; not evidence of deployment.",
+      "paper_ids": [
+        "R08"
+      ],
+      "relationship_locator": "KDD 2020 official accepted-paper list, Applied Data Science Track, Attention based multi-modal new product sales time-series forecasting.",
+      "logo_variant": "Original SIGKDD website header/footer PNG.",
+      "display_background": "dark",
+      "image": "/assets/logos/sigkdd.png",
+      "asset_final_url": "https://kdd.org/images/kdd.png",
+      "checked_on": "2026-10-12",
+      "content_type": "image/png",
+      "byte_size": 8480,
+      "sha256": "9b1c8374b4bad685297ba4834e036de4829816a774ad41f0b6898c7f909d70d7",
+      "dimensions": {
+        "width": 130,
+        "height": 74
+      },
+      "asset_modification": "none; original downloaded bytes retained",
+      "display_in_ticker": true,
+      "ticker_scope": "historical_lineage",
+      "requested_display_on": "2026-10-14"
+    },
+    {
+      "id": "arxiv",
+      "name": "arXiv",
+      "image": "/assets/logos/arxiv-white.svg",
+      "source_url": "https://arxiv.org/abs/2207.11001",
+      "relationship": "Repository hosting actual reviewed paper versions; not a conference acceptance or industrial deployment.",
+      "relationship_locator": "POP arXiv source already used by catalog; repository logo identifies full-text hosting only.",
+      "paper_ids": [
+        "R10",
+        "R13",
+        "R14",
+        "R15",
+        "visuelle2022"
+      ],
+      "asset_url": "https://info.arxiv.org/assets/arxiv-logo-one-color-white.svg",
+      "asset_page_url": "https://info.arxiv.org/brand/index.html",
+      "sha256": "a2fb517a6fa919f35b48f224a417b63d3c7794f4687e7081b4bdd32136c99f2f",
+      "byte_size": 3081,
+      "content_type": "image/svg+xml",
+      "checked_on": "2026-10-14",
+      "asset_modification": "none; official original bytes retained",
+      "source_provenance": {
+        "organization": "arXiv",
+        "label": "arXiv",
+        "path": "arxiv-white.svg",
+        "asset_url": "https://info.arxiv.org/assets/arxiv-logo-one-color-white.svg",
+        "official_observed_on": "https://info.arxiv.org/brand/index.html",
+        "locator": "Brand page footer/header image referencing ../assets/arxiv-logo-one-color-white.svg",
+        "source_binding_ids": [
+          "R10",
+          "R13",
+          "R14",
+          "R15",
+          "visuelle2022"
+        ],
+        "binding_type": "Repository hosting actual reviewed paper versions; not a conference acceptance or industrial deployment.",
+        "sha256": "a2fb517a6fa919f35b48f224a417b63d3c7794f4687e7081b4bdd32136c99f2f",
+        "bytes": 3081,
+        "checked_on": "2026-10-14",
+        "modified": false,
+        "safe_svg_checks": "XML parsed; no scripts, events, embedded image/use, external hrefs or CSS URLs.",
+        "source_binding_url": "https://arxiv.org/abs/2207.11001",
+        "binding_locator": "POP arXiv source already used by catalog; repository logo identifies full-text hosting only.",
+        "usage_guidance_url": "https://info.arxiv.org/brand/brand-guidelines.html",
+        "usage_guidance_note": "Official guidance allows acknowledgement of use of arXiv API or corpus data with the original logo, preserving its visual layout. Do not imply endorsement or affiliation."
+      },
+      "display_in_ticker": true,
+      "ticker_scope": "current_sources",
+      "usage_guidance_url": "https://info.arxiv.org/brand/brand-guidelines.html",
+      "usage_note": "Official arXiv guidelines reserve logo rights and refer third parties to usage criteria. Original asset used solely to identify and link to hosted research; no partnership or permission claimed."
+    },
+    {
+      "id": "amazon-science",
+      "name": "Amazon Science",
+      "image": "/assets/logos/amazon-science-white.svg",
+      "asset_url": "https://cdn.amazon.science/ce/51/a0ecec814b0894e11c0f22dbcc17/amazonscience-white.svg",
+      "asset_page_url": "https://www.amazon.science/publications/geann-scalable-graph-augmentations-for-multi-horizon-time-series-forecasting",
+      "source_url": "https://www.amazon.science/publications/geann-scalable-graph-augmentations-for-multi-horizon-time-series-forecasting",
+      "relationship": "Publisher and author institution of GEANN; exact new-product history limit remains under review.",
+      "industry_source_ids": [
+        "amazon-geann-2023"
+      ],
+      "paper_ids": [],
+      "checked_on": "2026-10-14",
+      "sha256": "8b12e2efb9c848cbdeccc8b817176ba4afab0864f93b3b8e501a6cb9534f70f8",
+      "byte_size": 18559,
+      "content_type": "image/svg+xml",
+      "display_background": "dark",
+      "source_provenance": {
+        "organization": "Amazon Science",
+        "path": "amazon-science-white.svg",
+        "asset_url": "https://cdn.amazon.science/ce/51/a0ecec814b0894e11c0f22dbcc17/amazonscience-white.svg",
+        "official_observed_on": "https://www.amazon.science/publications/geann-scalable-graph-augmentations-for-multi-horizon-time-series-forecasting",
+        "locator": "header img.PageLogo-image dark-background asset, alt Amazon Science",
+        "sha256": "8b12e2efb9c848cbdeccc8b817176ba4afab0864f93b3b8e501a6cb9534f70f8",
+        "purpose": "Editorial identification of linked Amazon Science research source; not an endorsement, partner or Powered by AWS badge.",
+        "source_binding_ids": [
+          "amazon-geann-2023"
+        ],
+        "checked_on": "2026-10-14"
+      },
+      "asset_modification": "none; original official white asset bytes retained"
+    },
+    {
+      "id": "ecva",
+      "name": "ECVA / ECCV",
+      "asset_url": "https://www.ecva.net/src/img/ECVAlogo.png",
+      "asset_page_url": "https://www.ecva.net/",
+      "source_url": "https://www.ecva.net/papers/eccv_2022/papers_ECCV/html/5561_ECCV_2022_paper.php",
+      "relationship": "ECVA organizes the ECCV conference series and hosts the official POP ECCV 2022 proceedings record and paper.",
+      "paper_ids": [
+        "R10"
+      ],
+      "relationship_locator": "Official ECVA About/Conferences describes ECCV organization; official ECVA proceedings record lists POP and its authors. ECCV 2022 accepted list also lists paper 5561.",
+      "supporting_source_urls": [
+        "https://eccv2022.ecva.net/program/accepted-papers/"
+      ],
+      "logo_variant": "Original transparent green ECVA official website mark; colors unchanged. The caption distinguishes ECVA from the ECCV venue.",
+      "display_background": "dark",
+      "image": "/assets/logos/ecva.png",
+      "asset_final_url": "https://www.ecva.net/src/img/ECVAlogo.png",
+      "checked_on": "2026-10-12",
+      "content_type": "image/png",
+      "byte_size": 10414,
+      "sha256": "e1235f4c4f67fede5e038a41c0fd145d69cdea2c419108b7acdc158bfc458347",
+      "dimensions": {
+        "width": 1042,
+        "height": 329
+      },
+      "asset_modification": "none; original downloaded bytes retained",
+      "caption": "ECCV"
+    },
+    {
+      "id": "cvpr-workshops",
+      "name": "CVPR 2022 Workshops",
+      "image": "/assets/logos/cvpr-2022.png",
+      "source_url": "https://openaccess.thecvf.com/content/CVPR2022W/CVFAD/html/Skenderi_The_Multi-Modal_Universe_of_Fast-Fashion_The_Visuelle_2.0_Benchmark_CVPRW_2022_paper.html",
+      "relationship": "Workshop venue identification only; not CVPR main-conference acceptance.",
+      "relationship_locator": "Official CVF record explicitly identifies Proceedings of CVPR Workshops, 2022, pp.2241–2246.",
+      "paper_ids": [
+        "visuelle2022"
+      ],
+      "asset_url": "https://cvpr2022.thecvf.com/sites/default/files/CVPR%20NewOrleansLogo_WebsiteCorner.png",
+      "asset_page_url": "https://cvpr2022.thecvf.com/",
+      "sha256": "192e215a97b9ba7d6e894ed127b770fdbce2a9a3e16c718878bf1cbb7d95cdb6",
+      "byte_size": 68766,
+      "content_type": "image/png",
+      "checked_on": "2026-10-14",
+      "asset_modification": "none; official original bytes retained",
+      "source_provenance": {
+        "organization": "CVPR",
+        "label": "CVPR 2022 Workshops",
+        "path": "cvpr-2022.png",
+        "asset_url": "https://cvpr2022.thecvf.com/sites/default/files/CVPR%20NewOrleansLogo_WebsiteCorner.png",
+        "official_observed_on": "https://cvpr2022.thecvf.com/",
+        "locator": "Homepage header img alt Home; CVPR NewOrleansLogo WebsiteCorner",
+        "source_binding_ids": [
+          "visuelle2022"
+        ],
+        "binding_type": "Workshop venue identification only; not CVPR main-conference acceptance.",
+        "sha256": "192e215a97b9ba7d6e894ed127b770fdbce2a9a3e16c718878bf1cbb7d95cdb6",
+        "bytes": 68766,
+        "checked_on": "2026-10-14",
+        "modified": false,
+        "pixel_dimensions": [
+          2278,
+          519
+        ],
+        "source_binding_url": "https://openaccess.thecvf.com/content/CVPR2022W/CVFAD/html/Skenderi_The_Multi-Modal_Universe_of_Fast-Fashion_The_Visuelle_2.0_Benchmark_CVPRW_2022_paper.html",
+        "binding_locator": "Official CVF record explicitly identifies Proceedings of CVPR Workshops, 2022, pp.2241–2246.",
+        "display_requirement": "Use label/title CVPR 2022 Workshops; do not imply main-conference acceptance. Preserve original bytes and aspect ratio; CSS screen blending may reduce backdrop contrast, or fall back to plain CVPR text if unsuitable.",
+        "background_note": "Original RGBA PNG contains a black backdrop, largely opaque; it is not a fully transparent logo. Earlier scout visual description of transparency was incorrect.",
+        "alpha_check": {
+          "method": "PNG IDAT zlib decode and row-unfilter; no image modification",
+          "range": [
+            96,
+            255
+          ],
+          "fully_transparent_pixels": 0,
+          "fully_opaque_pixels": 1177209,
+          "total_pixels": 1182282,
+          "corner_rgba": [
+            [
+              0,
+              0,
+              0,
+              192
+            ],
+            [
+              0,
+              0,
+              0,
+              96
+            ],
+            [
+              0,
+              0,
+              0,
+              192
+            ],
+            [
+              0,
+              0,
+              0,
+              96
+            ]
+          ]
+        }
+      },
+      "display_in_ticker": true,
+      "ticker_scope": "current_sources",
+      "caption": "Workshops",
+      "display_treatment": "CSS screen blending removes the original black canvas against the dark strip; official asset bytes and proportions stay unchanged."
+    },
+    {
+      "id": "university-of-verona",
+      "name": "University of Verona",
+      "asset_url": "https://cdn.univr.it/o/aol-theme/images/univr-logo-white.png",
+      "asset_page_url": "https://www.univr.it/it/home",
+      "source_url": "https://arxiv.org/html/2412.05566v1",
+      "relationship": "Author institution for Dif4FF and the earlier GTM-Transformer / VISUELLE paper.",
+      "paper_ids": [
+        "R14",
+        "R09"
+      ],
+      "relationship_locator": "Dif4FF arXiv:2412.05566v1 title block lists Department of Engineering for Innovation Medicine, University of Verona, Italy; GTM-Transformer arXiv:2109.09824v6 also lists the university.",
+      "logo_variant": "Original university website white footer logo.",
+      "display_background": "dark",
+      "image": "/assets/logos/university-of-verona.png",
+      "asset_final_url": "https://cdn.univr.it/o/aol-theme/images/univr-logo-white.png",
+      "checked_on": "2026-10-14",
+      "content_type": "image/png",
+      "byte_size": 12708,
+      "sha256": "5b02c28a62ee43e91668a986e77c4800d55b6d5be562975e6952a5f047964be8",
+      "dimensions": {
+        "width": 256,
+        "height": 80
+      },
+      "asset_modification": "none; original downloaded bytes retained"
+    },
+    {
+      "id": "certh-iti",
+      "name": "CERTH–ITI",
+      "asset_url": "https://www.iti.gr/iti/wp-content/uploads/2022/04/iti_logo_en.png",
+      "asset_page_url": "https://www.iti.gr/iti/en/home/",
+      "source_url": "https://arxiv.org/pdf/2212.07187v1",
+      "relationship": "Author institution for the MuQAR paper; only its VISUELLE unit-sales experiment is relevant to the active new-product forecasting catalog.",
+      "paper_ids": [
+        "R13"
+      ],
+      "relationship_locator": "arXiv:2212.07187v1 p.1 title block lists CERTH-ITI, Thessaloniki Greece. Official ITI home page identifies ITI as a founding CERTH institute.",
+      "logo_variant": "Original transparent English ITI/CERTH website logo; colors unchanged.",
+      "display_background": "dark",
+      "image": "/assets/logos/certh-iti.png",
+      "asset_final_url": "https://www.iti.gr/iti/wp-content/uploads/2022/04/iti_logo_en.png",
+      "checked_on": "2026-10-12",
+      "content_type": "image/png",
+      "byte_size": 24507,
+      "sha256": "48649f65fc18fef62a1663b9eff4d75d3a82bed36f6516b0fd743903b23ff456",
+      "dimensions": {
+        "width": 450,
+        "height": 60
+      },
+      "asset_modification": "none; original downloaded bytes retained"
+    },
+    {
+      "id": "qualyco",
+      "name": "QUALYCO",
+      "asset_url": "https://www.qualyco.com/assets/qualyco-logo-white.png?v=1790167210",
+      "asset_page_url": "https://www.qualyco.com/",
+      "source_url": "https://arxiv.org/html/2412.05566v1",
+      "relationship": "Coauthor institution for Dif4FF; Marco Cristani lists QUALYCO S.r.l. as an affiliation.",
+      "paper_ids": [
+        "R14"
+      ],
+      "relationship_locator": "arXiv:2412.05566v1 title block, Marco Cristani affiliation: QUALYCO S.r.l., Spin-off of the University of Verona. Official company page independently identifies the university spin-off.",
+      "logo_variant": "Original current official company white transparent PNG; no historical identity assumption. Native canvas and pixels retained.",
+      "display_background": "dark",
+      "image": "/assets/logos/qualyco.png",
+      "asset_final_url": "https://www.qualyco.com/assets/qualyco-logo-white.png?v=1790167210",
+      "checked_on": "2026-10-12",
+      "content_type": "image/png",
+      "byte_size": 115966,
+      "sha256": "a13ce0c242d2697f3f035c1be2e96bb4714f8cd124aa317caec55ee2b40cfddb",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "asset_modification": "none; original downloaded bytes retained"
+    },
+    {
+      "id": "aws",
+      "name": "AWS",
+      "image": "/assets/logos/aws-official-dark.svg",
+      "asset_url": null,
+      "asset_page_url": "https://aws.amazon.com/about-aws/whats-new/2022/11/amazon-forecast-generates-predictions-products-historical-data-more-accurate/",
+      "source_url": "https://aws.amazon.com/about-aws/whats-new/2022/11/amazon-forecast-generates-predictions-products-historical-data-more-accurate/",
+      "relationship": "Official publisher of the linked new-product forecasting guidance; service capability, not a reproduced benchmark.",
+      "industry_source_ids": [
+        "aws-forecast-metadata-coldstart-2022"
+      ],
+      "paper_ids": [],
+      "checked_on": "2026-10-14",
+      "sha256": "05456ec219c952a9c5c0a1b85b82bd5650fe77f304d9e2be16cf88aa1c00f92d",
+      "byte_size": 7606,
+      "content_type": "image/svg+xml",
+      "display_background": "dark",
+      "source_provenance": {
+        "organization": "AWS",
+        "path": "aws-official-dark.svg",
+        "asset_url": null,
+        "official_observed_on": "https://aws.amazon.com/about-aws/whats-new/2022/11/amazon-forecast-generates-predictions-products-historical-data-more-accurate/",
+        "css_source_url": "https://t0.m.awsstatic.com/tmpl/awsm-rt/esm/templates/rt-global-nav/1.0.0/rt-global-nav.23efa1dd8a.css",
+        "css_source_sha256": "52974f017cb706998920c45f476e61603db155ac489717c224825294108f87ca",
+        "locator": "Header a[data-testid=nav-item-logo-link] SVG plus exact official CSS dark-theme variable/fill chain. The official selector [data-rg-mode=dark] sets --rg-color-link-alternate:#fff; logo color uses this variable; icon sets --icon-color:currentcolor; path[data-rg-fill]:not([fill]) sets fill:var(--icon-color).",
+        "materialization": "Resolved official dark-theme variables into a self-contained style; all path attributes and viewBox match original SVG exactly. No invented palette, geometry edits, external dependencies or scripts.",
+        "sha256": "05456ec219c952a9c5c0a1b85b82bd5650fe77f304d9e2be16cf88aa1c00f92d",
+        "source_binding_ids": [
+          "aws-forecast-metadata-coldstart-2022",
+          "aws-getir-2023"
+        ],
+        "purpose": "Source identification only, not endorsement/deployment/partner status.",
+        "checked_on": "2026-10-14",
+        "safe_svg_checks": "XML parsed; no script, foreignObject, image, use, external refs, event attrs, CSS URL or @import."
+      },
+      "asset_modification": "Exact official dark header fill materialized; original path attributes and viewBox unchanged.",
+      "display_in_ticker": false,
+      "display_note": "User requested one Amazon-family identity in the strip: Amazon Science. AWS source evidence remains available."
+    },
+    {
+      "id": "humatics",
+      "name": "Humatics",
+      "asset_url": "https://www.sys-datgroup.com/wp-content/uploads/2026/07/humatics-logo-w.svg",
+      "asset_page_url": "https://www.sys-datgroup.com/societa/humatics/",
+      "source_url": "https://arxiv.org/html/2109.09824v6",
+      "relationship": "Author affiliation in the GTM-Transformer / VISUELLE new-product sales paper.",
+      "paper_ids": [
+        "R09"
+      ],
+      "relationship_locator": "arXiv:2109.09824v6 title block: Humatics Srl, Verona, Italy. Official current Humatics page identifies the combined Humatics / SYS-DAT Verona / VCUBE identity.",
+      "logo_variant": "Original current Humatics logo from its official SYS-DAT Group company page. This is the 2026 identity, not an assertion of the 2021 or 2024 logo design.",
+      "display_background": "dark",
+      "official_redirect_from": "https://www.humatics.it/",
+      "image": "/assets/logos/humatics.svg",
+      "asset_final_url": "https://www.sys-datgroup.com/wp-content/uploads/2026/07/humatics-logo-w.svg",
+      "checked_on": "2026-10-12",
+      "content_type": "image/svg+xml",
+      "byte_size": 7837,
+      "sha256": "d44d27d6e2073804b027bb7a71c9d2d008abe62f360b891991ce520342408131",
+      "dimensions": {
+        "view_box": "0 0 1733 334",
+        "width": "100%",
+        "height": "100%"
+      },
+      "asset_modification": "none; original downloaded bytes retained"
+    }
+  ],
+  "rejected_assets": [
+    {
+      "source_url": "https://wp.mpi-sws.org/eccv2022/files/2022/03/ECCV-logo3.png",
+      "reason": "Original asset includes an opaque white background, inconsistent with the requested box-free dark strip. Not shipped."
+    },
+    {
+      "source_url": "https://icpr2024.org/img/logo.png",
+      "reason": "Original asset contains a white panel; not shipped to the box-free strip."
+    },
+    {
+      "source_url": "https://icpr2024.org/img/footer-logo.png",
+      "reason": "This is an organizer-logo collage, not the ICPR conference mark; not shipped."
+    }
+  ]
+}

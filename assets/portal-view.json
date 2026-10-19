@@ -1,0 +1,653 @@
+{
+  "schema_version": 1,
+  "purpose": "Shared display window and source-backed data types; no scientific admission or score changes.",
+  "window": {
+    "years": 5,
+    "timezone": "America/Los_Angeles",
+    "clock": "current_view_calendar_date",
+    "date_basis": "earliest_verified_public_date_else_first_public_year",
+    "inclusive_boundaries": true,
+    "leap_day_policy": "february_28_when_start_year_has_no_february_29",
+    "boundary_unknown_policy": "exclude_from_default_view",
+    "future_policy": "exclude",
+    "dataset_date_basis": "linked_nonauxiliary_direct_papers_not_dataset_creation_date",
+    "archive_policy": "preserve_full_source_exports_and_label_older_lineage_separately",
+    "not_a_search_cutoff": true
+  },
+  "build_view_date": "2026-10-14",
+  "window_start_at_build": "2021-10-14",
+  "metadata_checked_on": "2026-10-14",
+  "evidence_as_of": "2026-10-11",
+  "last_successful_search_at": null,
+  "freshness_note": "Build/view dates define a rolling display window. They do not establish a fresh or complete literature search.",
+  "papers": {
+    "R01": {
+      "id": "R01",
+      "first_public_year": 2019,
+      "first_public_date": null,
+      "first_public_date_precision": "year",
+      "first_public_date_source": null,
+      "date_note": "Only the first-public year is established in the current source record.",
+      "datasets": [
+        "Myntra-private-new-styles"
+      ],
+      "target_unit": "Weekly item/style unit sales",
+      "auxiliary_only": false,
+      "direct_task_fit_provisional": true,
+      "window_at_build": "historical"
+    },
+    "R09": {
+      "id": "R09",
+      "first_public_year": 2021,
+      "first_public_date": "2021-09-20",
+      "first_public_date_precision": "day",
+      "first_public_date_source": {
+        "url": "https://arxiv.org/abs/2109.09824",
+        "locator": "Submission history, first version",
+        "checked_on": "2026-10-12",
+        "kind": "primary_metadata_check"
+      },
+      "date_note": "First public date and later publication year are kept separate.",
+      "datasets": [
+        "VISUELLE-v1"
+      ],
+      "target_unit": "Weekly units aggregated by product across chain stores",
+      "auxiliary_only": false,
+      "direct_task_fit_provisional": true,
+      "window_at_build": "historical"
+    },
+    "R13": {
+      "id": "R13",
+      "first_public_year": 2022,
+      "first_public_date": null,
+      "first_public_date_precision": "year",
+      "first_public_date_source": null,
+      "date_note": "Only the first-public year is established in the current source record.",
+      "datasets": [
+        "VISUELLE-v1"
+      ],
+      "target_unit": "VISUELLE weekly product unit sales; other popularity tasks excluded",
+      "auxiliary_only": false,
+      "direct_task_fit_provisional": true,
+      "window_at_build": "in_window"
+    },
+    "visuelle2022": {
+      "id": "visuelle2022",
+      "first_public_year": 2022,
+      "first_public_date": "2022-04-14",
+      "first_public_date_precision": "day",
+      "first_public_date_source": {
+        "url": "https://arxiv.org/abs/2204.06972",
+        "locator": "Submission history, first version",
+        "checked_on": "2026-10-12",
+        "kind": "primary_metadata_check"
+      },
+      "date_note": "First public date and later publication year are kept separate.",
+      "datasets": [
+        "VISUELLE-2.0"
+      ],
+      "target_unit": "Weekly item-shop units, sizes aggregated",
+      "auxiliary_only": false,
+      "direct_task_fit_provisional": true,
+      "window_at_build": "in_window"
+    },
+    "R10": {
+      "id": "R10",
+      "first_public_year": 2022,
+      "first_public_date": "2022-07-22",
+      "first_public_date_precision": "day",
+      "first_public_date_source": {
+        "url": "https://arxiv.org/abs/2207.11001",
+        "locator": "Submission history, first version",
+        "checked_on": "2026-10-12",
+        "kind": "primary_metadata_check"
+      },
+      "date_note": "First public date and later publication year are kept separate.",
+      "datasets": [
+        "VISUELLE-v1"
+      ],
+      "target_unit": "VISUELLE weekly units; Task 2 style popularity excluded",
+      "auxiliary_only": false,
+      "direct_task_fit_provisional": true,
+      "window_at_build": "in_window",
+      "status": "rejected_for_admission_leak_unresolvable",
+      "rejection_note": "Rejected for admission: post-origin leakage cannot be ruled out (reviewer 2026-10-16)"
+    },
+    "R14": {
+      "id": "R14",
+      "first_public_year": 2024,
+      "first_public_date": null,
+      "first_public_date_precision": "year",
+      "first_public_date_source": null,
+      "date_note": "Only the first-public year is established in the current source record.",
+      "datasets": [
+        "VISUELLE-v1"
+      ],
+      "target_unit": "VISUELLE weekly chain-wide product units",
+      "auxiliary_only": false,
+      "direct_task_fit_provisional": true,
+      "window_at_build": "in_window"
+    },
+    "R15": {
+      "id": "R15",
+      "first_public_year": 2024,
+      "first_public_date": null,
+      "first_public_date_precision": "year",
+      "first_public_date_source": null,
+      "date_note": "Only the first-public year is established in the current source record.",
+      "datasets": [
+        "VISUELLE-v1"
+      ],
+      "target_unit": "VISUELLE weekly chain-wide product units",
+      "auxiliary_only": false,
+      "direct_task_fit_provisional": true,
+      "window_at_build": "in_window"
+    },
+    "censored2025": {
+      "id": "censored2025",
+      "first_public_year": 2025,
+      "first_public_date": null,
+      "first_public_date_precision": "year",
+      "first_public_date_source": null,
+      "date_note": "Volume year 2025; DOI registered 2024. Exact first-public date is not established.",
+      "datasets": [
+        "European-bags-censored-private"
+      ],
+      "target_unit": "Aggregate demand for a new collection product; not a daily forecast target",
+      "auxiliary_only": false,
+      "direct_task_fit_provisional": true,
+      "window_at_build": "in_window"
+    }
+  },
+  "datasets": {
+    "VISUELLE-v1": {
+      "label": "VISUELLE",
+      "modalities": [
+        "time_series",
+        "images",
+        "metadata"
+      ],
+      "signals": [
+        "Historical product sales",
+        "Category trends",
+        "Product images",
+        "Product attributes"
+      ],
+      "forecast_target": "Weekly product unit sales",
+      "target_kind": "sales_time_series",
+      "images_role": "Available product input; required only by recipes that name images.",
+      "time_series_role": "Training-product sales and prelaunch category trends; no target-product sales at a zero-history origin.",
+      "metadata_role": "Category, color, fabric and planned release date.",
+      "modality_evidence": [
+        {
+          "url": "https://arxiv.org/html/2109.09824v6",
+          "locator": "Sections 3.1–3.4: images, tags, weekly sales and Google Trends; Section 4.1: no target-product sales input",
+          "checked_on": "2026-10-14",
+          "basis": "primary_source_checked"
+        }
+      ],
+      "id": "VISUELLE-v1",
+      "source_ids": [
+        "R09",
+        "R10",
+        "R13",
+        "R14",
+        "R15"
+      ],
+      "date_basis": "linked_nonauxiliary_direct_papers_not_dataset_creation_date",
+      "data_class": "both",
+      "modality_note": "Available data types; individual recipes may use a subset. Images are inputs to a demand forecast, not the forecast target.",
+      "data_class_label": "Time series + images",
+      "window_source_ids_at_build": [
+        "R10",
+        "R13",
+        "R14",
+        "R15"
+      ],
+      "in_window_at_build": true
+    },
+    "VISUELLE-2.0": {
+      "label": "VISUELLE 2.0",
+      "modalities": [
+        "time_series",
+        "images",
+        "metadata"
+      ],
+      "signals": [
+        "Sales and inventory",
+        "Prices and discounts",
+        "Weather and trends",
+        "Product images and tags"
+      ],
+      "forecast_target": "Weekly item–shop unit sales",
+      "target_kind": "sales_time_series",
+      "images_role": "Available product input; Table 1 includes methods with and without images.",
+      "time_series_role": "Donor sales and covariates; the included early-sales comparison uses the first two weekly target observations.",
+      "metadata_role": "Product tags, shop context and launch timing; exact artifact schema still needs audit.",
+      "modality_evidence": [
+        {
+          "url": "https://humaticslab.github.io/forecasting/visuelle",
+          "locator": "Dataset description: HD image and tags; shop-level sales, stock, prices, discounts, trends and weather",
+          "checked_on": "2026-10-14",
+          "basis": "primary_source_checked"
+        },
+        {
+          "url": "https://arxiv.org/pdf/2204.06972v2",
+          "locator": "Section 2 and Table 1, SO-fore2–10: multimodal data and image/no-image method variants",
+          "checked_on": "2026-10-14",
+          "basis": "primary_source_checked"
+        }
+      ],
+      "id": "VISUELLE-2.0",
+      "source_ids": [
+        "visuelle2022"
+      ],
+      "date_basis": "linked_nonauxiliary_direct_papers_not_dataset_creation_date",
+      "data_class": "both",
+      "modality_note": "Available data types; individual recipes may use a subset. Images are inputs to a demand forecast, not the forecast target.",
+      "data_class_label": "Time series + images",
+      "window_source_ids_at_build": [
+        "visuelle2022"
+      ],
+      "in_window_at_build": true
+    },
+    "Myntra-private-new-styles": {
+      "label": "Myntra new styles",
+      "modalities": [
+        "time_series",
+        "metadata"
+      ],
+      "signals": [
+        "Historical weekly sales",
+        "Product attributes",
+        "Merchandising and promotion features"
+      ],
+      "forecast_target": "Weekly new-style unit sales",
+      "target_kind": "sales_time_series",
+      "images_role": "Image features are not used by the inspected forecasting recipes.",
+      "time_series_role": "Earlier styles' weekly sales train the model; new styles are forecast from attributes and covariates.",
+      "metadata_role": "Fashion attributes, prices, merchandising, planned promotion and calendar features.",
+      "modality_evidence": [
+        {
+          "url": "https://arxiv.org/html/1907.01960v1",
+          "locator": "Sections 3 and 4.1: temporal sales, tabular attributes, merchandising regressors and data split",
+          "checked_on": "2026-10-14",
+          "basis": "primary_source_checked"
+        },
+        {
+          "url": "https://arxiv.org/html/2109.09824v6",
+          "locator": "Section 2.1: Singh et al. use attributes and merchandising, not image features",
+          "checked_on": "2026-10-14",
+          "basis": "primary_source_checked"
+        }
+      ],
+      "id": "Myntra-private-new-styles",
+      "source_ids": [
+        "R01"
+      ],
+      "date_basis": "linked_nonauxiliary_direct_papers_not_dataset_creation_date",
+      "data_class": "time_series",
+      "modality_note": "Available data types; individual recipes may use a subset. Images are inputs to a demand forecast, not the forecast target.",
+      "data_class_label": "Time series",
+      "window_source_ids_at_build": [],
+      "in_window_at_build": false
+    },
+    "European-bags-censored-private": {
+      "label": "European bags",
+      "modalities": [
+        "time_series",
+        "metadata"
+      ],
+      "signals": [
+        "Historical daily sales and stock",
+        "Prices",
+        "Product and store attributes"
+      ],
+      "forecast_target": "Aggregate new-product demand over its exposure period",
+      "target_kind": "aggregate_product_demand",
+      "images_role": "Image inputs are not reported in the inspected data description.",
+      "time_series_role": "Historical daily sales and stock estimate censored demand; the final target is aggregate SKU demand, not a daily curve.",
+      "metadata_role": "Product/store categorical attributes and prices.",
+      "modality_evidence": [
+        {
+          "url": "https://doi.org/10.1016/j.eswa.2024.125313",
+          "locator": "Publisher-indexed Sections 3 and 5.1: dated daily sales/stock and attributes; daily estimates aggregated by SKU",
+          "checked_on": "2026-10-14",
+          "basis": "primary_publisher_indexed_text_checked_direct_fetch_blocked"
+        }
+      ],
+      "id": "European-bags-censored-private",
+      "source_ids": [
+        "censored2025"
+      ],
+      "date_basis": "linked_nonauxiliary_direct_papers_not_dataset_creation_date",
+      "data_class": "time_series",
+      "modality_note": "Available data types; individual recipes may use a subset. Images are inputs to a demand forecast, not the forecast target.",
+      "data_class_label": "Time series",
+      "window_source_ids_at_build": [
+        "censored2025"
+      ],
+      "in_window_at_build": true
+    }
+  },
+  "comparison_groups": {
+    "R13_visuelle6": {
+      "source_id": "R13",
+      "dataset_id": "VISUELLE-v1",
+      "in_window_at_build": true
+    },
+    "visuelle2022_so2_10": {
+      "source_id": "visuelle2022",
+      "dataset_id": "VISUELLE-2.0",
+      "in_window_at_build": true
+    },
+    "R14_visuelle6": {
+      "source_id": "R14",
+      "dataset_id": "VISUELLE-v1",
+      "in_window_at_build": true
+    },
+    "R15_visuelle6": {
+      "source_id": "R15",
+      "dataset_id": "VISUELLE-v1",
+      "in_window_at_build": true
+    },
+    "R09_release6": {
+      "source_id": "R09",
+      "dataset_id": "VISUELLE-v1",
+      "in_window_at_build": false
+    }
+  },
+  "industry_sources": [
+    {
+      "id": "aws-forecast-metadata-coldstart-2022",
+      "title": "Amazon Forecast: new-product metadata matching",
+      "organization": "AWS",
+      "source_type": "vendor_announcement",
+      "first_public_year": 2022,
+      "first_public_date": "2022-11-18",
+      "year": 2022,
+      "date_precision": "day",
+      "date_note": "Official What’s New post; follow-up walkthrough dated 2022-11-21. Same capability, not separate methods.",
+      "scope_status": "direct_new_item_provisional",
+      "checked_on": "2026-10-14",
+      "summary": "Forecast a never-sold product from similar products and item attributes.",
+      "tracks": [
+        "N0"
+      ],
+      "history_label": "Zero history capability",
+      "show_in_survey": true,
+      "paper_url": "https://aws.amazon.com/about-aws/whats-new/2022/11/amazon-forecast-generates-predictions-products-historical-data-more-accurate/",
+      "full_text_url": "https://aws.amazon.com/blogs/machine-learning/generate-cold-start-forecasts-for-products-with-no-historical-data-using-amazon-forecast-now-up-to-45-more-accurate/",
+      "action_label": "Read guide ↗",
+      "pdf": null,
+      "admission_ready": false,
+      "benchmark_admitted": false,
+      "reproduction_status": "not_run",
+      "scores": null,
+      "recipe": "Metadata matching across products",
+      "method_ids": [],
+      "datasets": [],
+      "modality_label": "Time series + metadata",
+      "modalities": [
+        "time_series",
+        "metadata"
+      ],
+      "history": {},
+      "strengths": [
+        "Explicit no-history new-item workflow.",
+        "Metadata selects related historical donor products."
+      ],
+      "limitations": [
+        "Proprietary backend; no reusable matched public evaluation supplied.",
+        "Current Forecast API docs say unavailable to new customers."
+      ],
+      "horizon": "User-defined; no matched public N0 comparison",
+      "version": "Official industry source",
+      "locator": "Announcement paragraphs 1-4; Walkthrough: Import your training data; Train a predictor",
+      "venue": {
+        "label": "AWS · 2022"
+      },
+      "scope_review_status": "independent_source_check_complete_admission_pending",
+      "source_review": {
+        "author": "/root/industry_refresh",
+        "reviewer": "/root",
+        "checked_on": "2026-10-14",
+        "status": "primary_source_card_checked_not_scientific_admission"
+      },
+      "business_evidence": "Inventory-planning motivation; no attributable measured dollars.",
+      "code_url": "https://github.com/aws-samples/amazon-forecast-samples/tree/main/notebooks/advanced/Forecast%20with%20Cold%20Start%20Items",
+      "dataset_listing_eligible": false,
+      "first_public_date_precision": "day",
+      "window_at_build": "in_window"
+    },
+    {
+      "id": "google-vertex-price-optimization-2022",
+      "title": "Price optimization notebook for apparel retail using Google Vertex AI",
+      "organization": "Google Cloud / Grid Dynamics",
+      "source_type": "industry_blog",
+      "first_public_year": 2022,
+      "first_public_date": "2022-04-06",
+      "year": 2022,
+      "date_precision": "day",
+      "date_note": "Date displayed in official Google Cloud article. Earliest family appearance not exhaustively traced.",
+      "scope_status": "direct_new_item_provisional",
+      "checked_on": "2026-10-14",
+      "summary": "Share demand patterns across products using their attributes, then explore pricing decisions.",
+      "tracks": [
+        "N0"
+      ],
+      "history_label": "Zero history capability",
+      "show_in_survey": true,
+      "paper_url": "https://cloud.google.com/blog/products/ai-machine-learning/price-optimization-using-vertex-ai-forecast",
+      "full_text_url": "https://cloud.google.com/blog/products/ai-machine-learning/price-optimization-using-vertex-ai-forecast",
+      "action_label": "Read guide ↗",
+      "pdf": null,
+      "admission_ready": false,
+      "benchmark_admitted": false,
+      "reproduction_status": "not_run",
+      "scores": null,
+      "recipe": "Attribute transfer across products",
+      "method_ids": [],
+      "datasets": [],
+      "modality_label": "Time series + metadata",
+      "modalities": [
+        "time_series",
+        "metadata"
+      ],
+      "history": {},
+      "strengths": [
+        "Runnable-reference link and explicit transfer across SKU attributes.",
+        "Connects forecasts to pricing and inventory constraints."
+      ],
+      "limitations": [
+        "Limited-history support only partly addressed by reference implementation.",
+        "No matched N0 leaderboard result or measured causal profit.",
+        "The article demonstrates synthetic data for 400 SKUs, not an evaluated real new-product cohort.",
+        "Notebook example uses 28 days of context; zero-history accuracy is not evaluated."
+      ],
+      "horizon": "User-defined; no matched public N0 comparison",
+      "version": "Official industry source",
+      "locator": "Demand Forecasting Model > Preparing the Training Data; Limitations and Caveats > Historical data availability",
+      "venue": {
+        "label": "Google Cloud / Grid Dynamics · 2022"
+      },
+      "scope_review_status": "independent_source_check_complete_admission_pending",
+      "source_review": {
+        "author": "/root/industry_refresh",
+        "reviewer": "/root",
+        "checked_on": "2026-10-14",
+        "status": "primary_source_card_checked_not_scientific_admission"
+      },
+      "business_evidence": "Profit optimization demonstration, not measured deployment uplift.",
+      "code_url": "https://colab.research.google.com/drive/1c8uSNi4WV7Aat5pUt5UyC3pNy1P7_ab1",
+      "dataset_listing_eligible": false,
+      "first_public_date_precision": "day",
+      "window_at_build": "in_window"
+    },
+    {
+      "id": "amazon-geann-2023",
+      "title": "GEANN: Scalable Graph Augmentations for Multi-Horizon Time Series Forecasting",
+      "organization": "Amazon Science",
+      "source_type": "industry_paper_pending",
+      "first_public_year": 2023,
+      "first_public_date": "2023-07-07",
+      "year": 2023,
+      "date_precision": "day",
+      "date_note": "arXiv v1 submission date; earliest verified public version.",
+      "scope_status": "review_queue",
+      "checked_on": "2026-10-14",
+      "summary": "Use relationships between products to improve demand forecasts for newly launched items.",
+      "tracks": [],
+      "history_label": "Launch-history limit unverified",
+      "show_in_survey": false,
+      "paper_url": "https://www.amazon.science/publications/geann-scalable-graph-augmentations-for-multi-horizon-time-series-forecasting",
+      "full_text_url": "https://arxiv.org/html/2307.03595v1",
+      "action_label": "Read PDF ↗",
+      "pdf": {
+        "url": "https://arxiv.org/pdf/2307.03595v1",
+        "label": "Read PDF ↗"
+      },
+      "admission_ready": false,
+      "benchmark_admitted": false,
+      "reproduction_status": "not_run",
+      "scores": null,
+      "recipe": "Graph augmentation",
+      "method_ids": [],
+      "datasets": [],
+      "modality_label": "Time series + metadata",
+      "modalities": [
+        "time_series",
+        "metadata"
+      ],
+      "history": {},
+      "strengths": [
+        "Industrial evaluation includes over two million products.",
+        "Newly launched and stockout cohorts reported separately."
+      ],
+      "limitations": [
+        "Launch-age bound unresolved; stockout cohort is not new-item evidence.",
+        "Industrial data not verified downloadable; learned kNN graph can degrade results."
+      ],
+      "horizon": "Weekly demand quantiles up to one-year horizon",
+      "version": "KDD 2023 Workshop on Deep Learning on Graphs",
+      "locator": "Section 3 Results: inputs and time split; Section 3.2 Newly launched and Recently Out-Of-Stock Products; Table 3",
+      "venue": {
+        "label": "Amazon Science · 2023"
+      },
+      "scope_review_status": "independent_source_check_complete_admission_pending",
+      "source_review": {
+        "author": "/root/industry_refresh",
+        "reviewer": "/root",
+        "checked_on": "2026-10-14",
+        "status": "primary_source_card_checked_not_scientific_admission"
+      },
+      "business_evidence": "Forecast accuracy study; no causal monetary impact established.",
+      "code_url": null,
+      "dataset_listing_eligible": false,
+      "first_public_date_precision": "day",
+      "window_at_build": "in_window"
+    },
+    {
+      "id": "aws-getir-2023",
+      "title": "Demand forecasting at Getir built with Amazon Forecast",
+      "organization": "AWS / Getir",
+      "source_type": "industry_blog",
+      "first_public_year": 2023,
+      "first_public_date": "2023-05-15",
+      "year": 2023,
+      "date_precision": "day",
+      "date_note": "Date on official AWS customer-authored post.",
+      "scope_status": "implementation_context",
+      "checked_on": "2026-10-14",
+      "summary": "Getir uses Amazon Forecast for daily SKU planning and discusses new-item forecasting.",
+      "tracks": [],
+      "history_label": "Launch-history limit unverified",
+      "show_in_survey": false,
+      "paper_url": "https://aws.amazon.com/blogs/machine-learning/demand-forecasting-at-getir-built-with-amazon-forecast/",
+      "full_text_url": "https://aws.amazon.com/blogs/machine-learning/demand-forecasting-at-getir-built-with-amazon-forecast/",
+      "action_label": "Read article ↗",
+      "pdf": null,
+      "admission_ready": false,
+      "benchmark_admitted": false,
+      "reproduction_status": "not_run",
+      "scores": null,
+      "recipe": "Managed demand forecasting",
+      "method_ids": [],
+      "datasets": [],
+      "modality_label": "Time series + metadata",
+      "modalities": [
+        "time_series",
+        "metadata"
+      ],
+      "history": {},
+      "strengths": [
+        "Reports an operating forecasting pipeline at grocery scale.",
+        "Describes CNN-QR choice and metadata use."
+      ],
+      "limitations": [
+        "No isolated no-history or <=28-day comparison.",
+        "System-wide commercial outcomes cannot be attributed to cold-start forecasting alone."
+      ],
+      "horizon": "Daily SKU demand",
+      "version": "Official industry source",
+      "locator": "Algorithm Selection; Solution overview; Conclusion",
+      "venue": {
+        "label": "AWS / Getir · 2023"
+      },
+      "scope_review_status": "independent_source_check_complete_admission_pending",
+      "source_review": {
+        "author": "/root/industry_refresh",
+        "reviewer": "/root",
+        "checked_on": "2026-10-14",
+        "status": "primary_source_card_checked_not_scientific_admission"
+      },
+      "business_evidence": "Vendor/customer-reported overall revenue and waste changes; no new-item attribution or measured dollar amount.",
+      "code_url": null,
+      "dataset_listing_eligible": false,
+      "first_public_date_precision": "day",
+      "window_at_build": "in_window"
+    }
+  ],
+  "industry_contract": {
+    "source_types": [
+      "industry_blog",
+      "vendor_announcement",
+      "industry_paper_pending",
+      "official_documentation"
+    ],
+    "date_basis": "original_publication_date_not_page_crawl_or_modified_date",
+    "required_fields": [
+      "id",
+      "title",
+      "organization",
+      "source_type",
+      "paper_url",
+      "first_public_year",
+      "first_public_date",
+      "date_precision",
+      "scope_status",
+      "checked_on",
+      "summary",
+      "tracks",
+      "history_label",
+      "show_in_survey",
+      "admission_ready",
+      "reproduction_status"
+    ],
+    "scope_statuses": [
+      "direct_new_item_provisional",
+      "implementation_context",
+      "background",
+      "review_queue"
+    ],
+    "survey_gate": "show_in_survey is true only for direct_new_item_provisional records with source-backed N0/K history; pending papers and unknown history stay review/News only.",
+    "benchmark_gate": "A source card or company affiliation does not create verified comparable scores or scientific admission.",
+    "logos": "Bind official logo provenance to exact source IDs; source association is not deployment or endorsement proof."
+  },
+  "input_sha256": {
+    "site/dist/assets/catalog.json": "1a3b623dce61cf8ad87b5c2181f8290ac9b9664cf54a2fafce7670bcbe498f7f",
+    "site/dist/assets/benchmark-hub.json": "06df59567b2fabdf7b58c352c80d0f77c493b06083da0e08c71bb719db229994",
+    "site/dist/assets/survey.json": "005bb2f3eaaf3914064f7efb3ee12f922c2418f924a97523d01d8e5b1e5cb1f3",
+    "evidence/industry_portal_sources.json": "2191289c4d04ed35e8c662d9ddcda54875669494574fd1631c94be3b3a18e655"
+  }
+}

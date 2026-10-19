@@ -1,0 +1,993 @@
+{
+  "schema_version": 1,
+  "brand": "ColdStart",
+  "descriptor": "Forecasting for new products",
+  "as_of": "2026-10-11",
+  "mode": "literature_review",
+  "discovery_window": {
+    "start": "2021-10-11",
+    "end": "2026-10-11",
+    "coverage_status": "bounded_existing_candidate_tables_checked_not_complete_five_year_survey",
+    "date_policy": "Separate first-public year/date from later preprint/journal versions. Date precision is explicit; unresolved boundary years are not silently admitted.",
+    "next_team_task": "Search the rolling five-year window systematically; trace older directly eligible predecessors separately; record coverage gaps and weekly changes."
+  },
+  "scope": {
+    "N0": "A genuinely new retailer product with no own-sales history at forecast time.",
+    "K": "A genuinely new retailer product with all available history since first retailer-wide launch, at most 28 elapsed calendar days.",
+    "history_clock": "Calendar age from the first retailer-wide launch, not row count or first sale in another store.",
+    "observed_zero_rule": "Observed zero sales are history; missing sales and stockout censoring are separate.",
+    "external_exact_item_sales": "Not allowed as model input.",
+    "global_novelty": "Not required; annotate separately when evidenced.",
+    "genuine_new_product_required": true,
+    "max_calendar_days": 28,
+    "known_item_new_store": "excluded",
+    "location_cases": "The product must still be genuinely new retailer-wide in every scenario."
+  },
+  "summary": {
+    "recent_paper_contexts": 5,
+    "predecessor_contexts": 1,
+    "reported_method_rows": 32,
+    "scored_lab_runs": 0,
+    "independently_admitted_methods": 0
+  },
+  "metrics": [
+    {
+      "id": "WAPE",
+      "name": "Weighted absolute percentage error",
+      "unit": "percent",
+      "direction": "lower_is_better",
+      "plain_language": "Total absolute miss divided by total actual units; lower is better and values can exceed 100%.",
+      "proposed_formula": "100 × sum(abs(actual − forecast)) / sum(actual)",
+      "proposal_status": "proposed_lab_standard_not_yet_executed",
+      "proposed_aggregation": "Pool the frozen evaluation item–time rows inside one declared scenario, history, horizon and target panel.",
+      "zero_handling": "Include observed zero-sales rows. If the whole panel actual sum is zero, WAPE is undefined: report null, denominator and MAE; never add an arbitrary epsilon.",
+      "reported_usage": [
+        "R09",
+        "R10",
+        "R13",
+        "R14",
+        "R15",
+        "visuelle2022"
+      ],
+      "source_url": "https://arxiv.org/html/2109.09824v6",
+      "source_locator": "Section 5.2, Eq.12",
+      "reporting_limit": "Published cells retain each paper's aggregation. WAPE and wMAPE names alone do not establish identical definitions or pooling; do not recalculate from table averages."
+    },
+    {
+      "id": "MAE",
+      "name": "Mean absolute error",
+      "unit": "native_target_units",
+      "direction": "lower_is_better",
+      "plain_language": "The average absolute miss, in the target's own units.",
+      "proposed_formula": "sum(abs(actual − forecast)) / number_of_evaluated_rows",
+      "proposal_status": "proposed_lab_standard_not_yet_executed",
+      "proposed_aggregation": "Same frozen item–time panel and masks as WAPE; show units, grain and evaluated row count.",
+      "zero_handling": "Zero actuals are valid. With no evaluated rows, report null and count zero; missing/censored labels follow the declared mask, not zero filling.",
+      "reported_usage": [
+        "R09",
+        "R10",
+        "R13",
+        "R14",
+        "R15",
+        "visuelle2022"
+      ],
+      "source_url": "https://arxiv.org/html/2109.09824v6",
+      "source_locator": "Section 5.2, Eq.13",
+      "reporting_limit": "MAE across chain-wide units and item–shop units has different scale. Same label is not enough for comparison."
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "new_product_existing_location",
+      "title": "New product · existing location",
+      "description": "Use established store or delivery-area information to forecast a genuinely new product.",
+      "evidence_coverage": "requested_stratum_not_verified_in_current_paper_tables"
+    },
+    {
+      "id": "new_product_new_store",
+      "title": "New product · new store",
+      "description": "The product and store are both launching; transfer evidence and local market signals need separate validation.",
+      "evidence_coverage": "requested_stratum_not_verified_in_current_paper_tables"
+    },
+    {
+      "id": "new_product_new_location_pair",
+      "title": "New product · location pair",
+      "description": "Forecast the joint launch at a location. A known product introduced elsewhere is outside this strict new-product scope.",
+      "evidence_coverage": "requested_stratum_not_verified_in_current_paper_tables"
+    }
+  ],
+  "product_types": [
+    {
+      "id": "seasonal",
+      "title": "Seasonal",
+      "evidence_coverage": "requested_benchmark_stratum_not_independently_verified"
+    },
+    {
+      "id": "replenishable",
+      "title": "Replenishable",
+      "evidence_coverage": "requested_benchmark_stratum_not_independently_verified"
+    }
+  ],
+  "paper_groups": [
+    {
+      "id": "R13_visuelle6",
+      "title": "MuQAR: new-garment sales experiment · Extraction under review; not admitted. Paper-reported (arXiv 2212.07187v1, Table 7); PDF page UNVERIFIED",
+      "source": {
+        "id": "R13",
+        "title": "Design-time Fashion Popularity Forecasting in VR Environments",
+        "url": "https://arxiv.org/pdf/2212.07187v1",
+        "landing_url": "https://arxiv.org/abs/2212.07187",
+        "version": "arXiv:2212.07187v1; CVPR workshop 2022",
+        "first_public_year": 2022,
+        "first_public_date": null,
+        "first_arxiv_date": "2022-12-14",
+        "reviewed_version_date": "2022-12-14",
+        "locator": "Section 5.2; Table 7, PDF p.9",
+        "numeric_cells_checked_at": "2026-10-11",
+        "pdf_page": "UNVERIFIED"
+      },
+      "context": {
+        "dataset": "VISUELLE",
+        "dataset_version": "Original VISUELLE protocol as reported by MuQAR (exact artifact hash pending)",
+        "split": "VISUELLE published new-product split; exact split hash pending",
+        "horizon_weeks": 6,
+        "track": "N0",
+        "history_days": 0,
+        "target": "Weekly product unit sales; popularity/review tasks are excluded",
+        "feature_policy": "Image, text attributes and 52 prior weeks of category/attribute Google Trends",
+        "metric_aggregation": "Native published aggregation; evaluated row IDs and pooling not reproduced",
+        "label_mask": "Native paper selection; exact row mask/hash pending",
+        "feature_budget_status": "Native source input labels; exact preprocessing, embeddings and tuning not independently audited",
+        "comparability_status": "one_source_table_with_row_specific_feature_budgets"
+      },
+      "scenario_tags": {
+        "store_context": "unknown",
+        "product_location_pair": "unknown",
+        "seasonal_or_replenishable": "unknown"
+      },
+      "tag_note": "Fashion-season context is reported; this does not establish the requested seasonal-versus-replenishable or new-store test strata.",
+      "evidence_status": "paper_reported_not_reproduced",
+      "independent_review_status": "pending",
+      "benchmark_admitted": false,
+      "rank": null,
+      "numeric_ranking_authorized": false,
+      "note": "Extraction under review; not admitted. Paper-reported (arXiv 2212.07187v1, Table 7). PDF page UNVERIFIED. Rows share the table's input labels. Cited comparator numbers are paper-reported references; equal retraining and tuning budgets are not verified.",
+      "rows": [
+        {
+          "id": "R13_visuelle6_1",
+          "method": "MuQAR + ConvLSTM",
+          "metrics": {
+            "WAPE": 53.61,
+            "MAE": 29.28
+          },
+          "features": [
+            "image",
+            "metadata",
+            "Google_Trends_52_weeks"
+          ],
+          "rank": null,
+          "reported_not_reproduced": true,
+          "independent_review_status": "pending",
+          "lab_run_id": null,
+          "comparison_keys": {
+            "WAPE": "aac2c5417ea99f42be1dceb367b55602bcbe3f4c3f2e5b2a36fe46cc6453d49f",
+            "MAE": "72c9e1288cff43c17fde291199c5650ada5bbff0f5479c46a05ba1d1bd2281e3"
+          }
+        },
+        {
+          "id": "R13_visuelle6_2",
+          "method": "MuQAR + CNN",
+          "metrics": {
+            "WAPE": 53.9,
+            "MAE": 29.44
+          },
+          "features": [
+            "image",
+            "metadata",
+            "Google_Trends_52_weeks"
+          ],
+          "rank": null,
+          "reported_not_reproduced": true,
+          "independent_review_status": "pending",
+          "lab_run_id": null,
+          "comparison_keys": {
+            "WAPE": "aac2c5417ea99f42be1dceb367b55602bcbe3f4c3f2e5b2a36fe46cc6453d49f",
+            "MAE": "72c9e1288cff43c17fde291199c5650ada5bbff0f5479c46a05ba1d1bd2281e3"
+          }
+        },
+        {
+          "id": "R13_visuelle6_3",
+          "method": "MuQAR + LSTM",
+          "metrics": {
+            "WAPE": 54.3,
+            "MAE": 29.66
+          },
+          "features": [
+            "image",
+            "metadata",
+            "Google_Trends_52_weeks"
+          ],
+          "rank": null,
+          "reported_not_reproduced": true,
+          "independent_review_status": "pending",
+          "lab_run_id": null,
+          "comparison_keys": {
+            "WAPE": "aac2c5417ea99f42be1dceb367b55602bcbe3f4c3f2e5b2a36fe46cc6453d49f",
+            "MAE": "72c9e1288cff43c17fde291199c5650ada5bbff0f5479c46a05ba1d1bd2281e3"
+          }
+        },
+        {
+          "id": "R13_visuelle6_4",
+          "method": "MuQAR + Feedback LSTM",
+          "metrics": {
+            "WAPE": 54.37,
+            "MAE": 29.7
+          },
+          "features": [
+            "image",
+            "metadata",
+            "Google_Trends_52_weeks"
+          ],
+          "rank": null,
+          "reported_not_reproduced": true,
+          "independent_review_status": "pending",
+          "lab_run_id": null,
+          "comparison_keys": {
+            "WAPE": "aac2c5417ea99f42be1dceb367b55602bcbe3f4c3f2e5b2a36fe46cc6453d49f",
+            "MAE": "72c9e1288cff43c17fde291199c5650ada5bbff0f5479c46a05ba1d1bd2281e3"
+          }
+        },
+        {
+          "id": "R13_visuelle6_5",
+          "method": "MuQAR + Transformer",
+          "metrics": {
+            "WAPE": 54.87,
+            "MAE": 29.97
+          },
+          "features": [
+            "image",
+            "metadata",
+            "Google_Trends_52_weeks"
+          ],
+          "rank": null,
+          "reported_not_reproduced": true,
+          "independent_review_status": "pending",
+          "lab_run_id": null,
+          "comparison_keys": {
+            "WAPE": "aac2c5417ea99f42be1dceb367b55602bcbe3f4c3f2e5b2a36fe46cc6453d49f",
+            "MAE": "72c9e1288cff43c17fde291199c5650ada5bbff0f5479c46a05ba1d1bd2281e3"
+          }
+        },
+        {
+          "id": "R13_visuelle6_6",
+          "method": "GTM-Transformer (cited comparator)",
+          "metrics": {
+            "WAPE": 55.2,
+            "MAE": 30.2
+          },
+          "features": [
+            "image",
+            "metadata",
+            "Google_Trends_52_weeks"
+          ],
+          "rank": null,
+          "reported_not_reproduced": true,
+          "independent_review_status": "pending",
+          "lab_run_id": null,
+          "comparison_keys": {
+            "WAPE": "aac2c5417ea99f42be1dceb367b55602bcbe3f4c3f2e5b2a36fe46cc6453d49f",
+            "MAE": "72c9e1288cff43c17fde291199c5650ada5bbff0f5479c46a05ba1d1bd2281e3"
+          }
+        },
+        {
+          "id": "R13_visuelle6_7",
+          "method": "Cross-Attention RNN + G (cited comparator)",
+          "metrics": {
+            "WAPE": 59.0,
+            "MAE": 32.1
+          },
+          "features": [
+            "image",
+            "metadata",
+            "Google_Trends_52_weeks"
+          ],
+          "rank": null,
+          "reported_not_reproduced": true,
+          "independent_review_status": "pending",
+          "lab_run_id": null,
+          "comparison_keys": {
+            "WAPE": "aac2c5417ea99f42be1dceb367b55602bcbe3f4c3f2e5b2a36fe46cc6453d49f",
+            "MAE": "72c9e1288cff43c17fde291199c5650ada5bbff0f5479c46a05ba1d1bd2281e3"
+          }
+        }
+      ],
+      "window": {
+        "initial_publication": "within_window",
+        "date_precision": "year_only",
+        "reviewed_version_within_window": true,
+        "new_method_in_window": true
+      },
+      "group_label": "Extraction under review; not admitted. Paper-reported (arXiv 2212.07187v1, Table 7)"
+    },
+    {
+      "id": "visuelle2022_so2_10",
+      "title": "VISUELLE 2.0: first two weeks → next ten",
+      "source": {
+        "id": "visuelle2022",
+        "title": "The Multi-Modal Universe of Fast-Fashion: The Visuelle 2.0 Benchmark",
+        "url": "https://arxiv.org/pdf/2204.06972v2",
+        "landing_url": "https://humaticslab.github.io/forecasting/visuelle",
+        "version": "arXiv:2204.06972v2; CVPRW 2022",
+        "first_public_year": 2022,
+        "first_public_date": null,
+        "first_arxiv_date": "2022-04-14",
+        "reviewed_version_date": "2022-11-30",
+        "locator": "Section 3; Table 1, PDF p.4; SO-fore2–10 only",
+        "numeric_cells_checked_at": "2026-10-11"
+      },
+      "context": {
+        "dataset": "VISUELLE 2.0",
+        "dataset_version": "VISUELLE 2.0 stockout-free selection used by SO-fore2–10 (exact artifact hash pending)",
+        "split": "Most recent 10% of item–shop pairs; retailer-wide item identity audit pending",
+        "horizon_weeks": 10,
+        "track": "K",
+        "history_days": 14,
+        "target": "Weekly item–shop unit sales; sizes aggregated",
+        "feature_policy": "First two weekly sales values; image added only where named",
+        "metric_aggregation": "Native published aggregation; evaluated row IDs and pooling not reproduced",
+        "label_mask": "Native paper selection; exact row mask/hash pending",
+        "feature_budget_status": "Native source input labels; exact preprocessing, embeddings and tuning not independently audited",
+        "comparability_status": "one_source_table_with_row_specific_feature_budgets"
+      },
+      "scenario_tags": {
+        "store_context": "unknown",
+        "product_location_pair": "unknown",
+        "seasonal_or_replenishable": "unknown"
+      },
+      "tag_note": "Fashion-season context is reported; this does not establish the requested seasonal-versus-replenishable or new-store test strata.",
+      "evidence_status": "paper_reported_not_reproduced",
+      "independent_review_status": "pending",
+      "benchmark_admitted": false,
+      "rank": null,
+      "numeric_ranking_authorized": false,
+      "note": "Use only the initial two-week origin. Later rolling windows are excluded. Per-store first observation must be reconciled to actual first retailer-wide launch before admission.",
+      "rows": [
+        {
+          "id": "visuelle2022_so2_10_1",
+          "method": "Cross-Attention RNN + image",
+          "metrics": {
+            "WAPE": 85.65,
+            "MAE": 0.94
+          },
+          "features": [
+            "first_two_weeks_sales",
+            "image"
+          ],
+          "rank": null,
+          "reported_not_reproduced": true,
+          "independent_review_status": "pending",
+          "lab_run_id": null,
+          "comparison_keys": {
+            "WAPE": "1ccec2755de61221b56ff1e923d3bb660314966961433d9d21a4779d0465d60b",
+            "MAE": "aab3c804150d4e2d3fc7c5d291e48c880a1c9b4846bb886c15c60a293494c533"
+          }
+        },
+        {
+          "id": "visuelle2022_so2_10_2",
+          "method": "Cross-Attention RNN",
+          "metrics": {
+            "WAPE": 87.39,
+            "MAE": 0.97
+          },
+          "features": [
+            "first_two_weeks_sales"
+          ],
+          "rank": null,
+          "reported_not_reproduced": true,
+          "independent_review_status": "pending",
+          "lab_run_id": null,
+          "comparison_keys": {
+            "WAPE": "e95d2b3f716e1abf4a413682757cb3f99d7a19000c2d9cc73a8c73b0eb3af0b7",
+            "MAE": "3fc37f073dcbf997de6a2f2738483001f4a7873f70f20ce0138c073568f772e0"
+          }
+        },
+        {
+          "id": "visuelle2022_so2_10_3",
+          "method": "kNN",
+          "metrics": {
+            "WAPE": 91.13,
+            "MAE": 1.01
+          },
+          "features": [
+            "first_two_weeks_sales"
+          ],
+          "rank": null,
+          "reported_not_reproduced": true,
+          "independent_review_status": "pending",
+          "lab_run_id": null,
+          "comparison_keys": {
+            "WAPE": "e95d2b3f716e1abf4a413682757cb3f99d7a19000c2d9cc73a8c73b0eb3af0b7",
+            "MAE": "3fc37f073dcbf997de6a2f2738483001f4a7873f70f20ce0138c073568f772e0"
+          }
+        },
+        {
+          "id": "visuelle2022_so2_10_4",
+          "method": "kNN + image",
+          "metrics": {
+            "WAPE": 97.97,
+            "MAE": 1.06
+          },
+          "features": [
+            "first_two_weeks_sales",
+            "image"
+          ],
+          "rank": null,
+          "reported_not_reproduced": true,
+          "independent_review_status": "pending",
+          "lab_run_id": null,
+          "comparison_keys": {
+            "WAPE": "1ccec2755de61221b56ff1e923d3bb660314966961433d9d21a4779d0465d60b",
+            "MAE": "aab3c804150d4e2d3fc7c5d291e48c880a1c9b4846bb886c15c60a293494c533"
+          }
+        },
+        {
+          "id": "visuelle2022_so2_10_5",
+          "method": "Simple exponential smoothing",
+          "metrics": {
+            "WAPE": 111.265,
+            "MAE": 1.23
+          },
+          "features": [
+            "first_two_weeks_sales"
+          ],
+          "rank": null,
+          "reported_not_reproduced": true,
+          "independent_review_status": "pending",
+          "lab_run_id": null,
+          "comparison_keys": {
+            "WAPE": "e95d2b3f716e1abf4a413682757cb3f99d7a19000c2d9cc73a8c73b0eb3af0b7",
+            "MAE": "3fc37f073dcbf997de6a2f2738483001f4a7873f70f20ce0138c073568f772e0"
+          }
+        },
+        {
+          "id": "visuelle2022_so2_10_6",
+          "method": "Last-observation naive",
+          "metrics": {
+            "WAPE": 118.176,
+            "MAE": 1.31
+          },
+          "features": [
+            "first_two_weeks_sales"
+          ],
+          "rank": null,
+          "reported_not_reproduced": true,
+          "independent_review_status": "pending",
+          "lab_run_id": null,
+          "comparison_keys": {
+            "WAPE": "e95d2b3f716e1abf4a413682757cb3f99d7a19000c2d9cc73a8c73b0eb3af0b7",
+            "MAE": "3fc37f073dcbf997de6a2f2738483001f4a7873f70f20ce0138c073568f772e0"
+          }
+        }
+      ],
+      "window": {
+        "initial_publication": "within_window",
+        "date_precision": "year_only",
+        "reviewed_version_within_window": true,
+        "new_method_in_window": true
+      }
+    },
+    {
+      "id": "R14_visuelle6",
+      "title": "Dif4FF: diffusion with graph refinement",
+      "source": {
+        "id": "R14",
+        "title": "Dif4FF: Leveraging Multimodal Diffusion Models and Graph Neural Networks for Accurate New Fashion Product Performance Forecasting",
+        "url": "https://arxiv.org/pdf/2412.05566v1",
+        "landing_url": "https://arxiv.org/abs/2412.05566",
+        "version": "arXiv:2412.05566v1; ICPR 2024",
+        "first_public_year": 2024,
+        "first_public_date": null,
+        "first_arxiv_date": "2024-12-07",
+        "reviewed_version_date": "2024-12-07",
+        "locator": "Table 1, PDF p.11; Section 4.2 repeat-run paragraph",
+        "numeric_cells_checked_at": "2026-10-11"
+      },
+      "context": {
+        "dataset": "VISUELLE",
+        "dataset_version": "Original VISUELLE as used by Dif4FF (exact artifact hash pending)",
+        "split": "5,080 training products; 497 most recent test products",
+        "horizon_weeks": 6,
+        "track": "N0",
+        "history_days": 0,
+        "target": "Weekly chain-wide product unit sales",
+        "feature_policy": "Native paper recipes have different input sets; features are shown per row",
+        "metric_aggregation": "Native published aggregation; evaluated row IDs and pooling not reproduced",
+        "label_mask": "Native paper selection; exact row mask/hash pending",
+        "feature_budget_status": "Native source input labels; exact preprocessing, embeddings and tuning not independently audited",
+        "comparability_status": "one_source_table_with_row_specific_feature_budgets"
+      },
+      "scenario_tags": {
+        "store_context": "unknown",
+        "product_location_pair": "unknown",
+        "seasonal_or_replenishable": "unknown"
+      },
+      "tag_note": "Fashion-season context is reported; this does not establish the requested seasonal-versus-replenishable or new-store test strata.",
+      "evidence_status": "paper_reported_not_reproduced",
+      "independent_review_status": "pending",
+      "benchmark_admitted": false,
+      "rank": null,
+      "numeric_ranking_authorized": false,
+      "note": "Table 1 gives 54.6/30.0; ten-repeat means are 54.8/30.2 and text also says 54.7. These are distinct summaries. Stronger POP/MuQAR comparisons are absent.",
+      "rows": [
+        {
+          "id": "R14_visuelle6_1",
+          "method": "Dif4FF (Table 1)",
+          "metrics": {
+            "WAPE": 54.6,
+            "MAE": 30.0
+          },
+          "features": [
+            "image",
+            "release_date",
+            "Google_Trends"
+          ],
+          "rank": null,
+          "reported_not_reproduced": true,
+          "independent_review_status": "pending",
+          "lab_run_id": null,
+          "comparison_keys": {
+            "WAPE": "7fd9acaef086a8d5b209d99f781f0d6d0237ef460dda66f596ce25f51f22f2c2",
+            "MAE": "e26de0c7325f5ce97b1b50dbdf1556c932d73f140fd8e3807ac6b8e1ab79afee"
+          }
+        },
+        {
+          "id": "R14_visuelle6_2",
+          "method": "GTM-Transformer (paper comparator)",
+          "metrics": {
+            "WAPE": 55.2,
+            "MAE": 30.2
+          },
+          "features": [
+            "image",
+            "release_date",
+            "metadata",
+            "Google_Trends"
+          ],
+          "rank": null,
+          "reported_not_reproduced": true,
+          "independent_review_status": "pending",
+          "lab_run_id": null,
+          "comparison_keys": {
+            "WAPE": "0c476d3e8027984abbaa9ee1cceb240e5929fc9c2c17f3ddda543af44d7bfee0",
+            "MAE": "fca97a7e6a5825b1025e869fac9083a308167f234d56b1ba4bcc84308bda6363"
+          }
+        },
+        {
+          "id": "R14_visuelle6_3",
+          "method": "Median predictor",
+          "metrics": {
+            "WAPE": 58.3,
+            "MAE": 31.8
+          },
+          "features": [
+            "historical_training_product_sales"
+          ],
+          "rank": null,
+          "reported_not_reproduced": true,
+          "independent_review_status": "pending",
+          "lab_run_id": null,
+          "comparison_keys": {
+            "WAPE": "6e87520266df3340e92aeef542f43bbd457cbb6e7303a3130047ca240aa47685",
+            "MAE": "7da8ea7a0c367626c22e6d7ded4fd9805dc2bce1f7d21d40332ae4916e42858a"
+          }
+        },
+        {
+          "id": "R14_visuelle6_4",
+          "method": "Mean predictor",
+          "metrics": {
+            "WAPE": 60.1,
+            "MAE": 32.8
+          },
+          "features": [
+            "historical_training_product_sales"
+          ],
+          "rank": null,
+          "reported_not_reproduced": true,
+          "independent_review_status": "pending",
+          "lab_run_id": null,
+          "comparison_keys": {
+            "WAPE": "6e87520266df3340e92aeef542f43bbd457cbb6e7303a3130047ca240aa47685",
+            "MAE": "7da8ea7a0c367626c22e6d7ded4fd9805dc2bce1f7d21d40332ae4916e42858a"
+          }
+        }
+      ],
+      "window": {
+        "initial_publication": "within_window",
+        "date_precision": "year_only",
+        "reviewed_version_within_window": true,
+        "new_method_in_window": true
+      },
+      "repeat_summary": {
+        "number_of_repeats": 10,
+        "mean_WAPE": 54.8,
+        "mean_MAE": 30.2,
+        "variance_WAPE": 0.08,
+        "variance_MAE": 0.04,
+        "summary_type": "paper_reported_repeat_mean_not_table_cell"
+      }
+    },
+    {
+      "id": "R15_visuelle6",
+      "title": "MDiFF: diffusion with point refinement",
+      "source": {
+        "id": "R15",
+        "title": "MDiFF: Exploiting Multimodal Score-based Diffusion Models for New Fashion Product Performance Forecasting",
+        "url": "https://arxiv.org/pdf/2412.06840v1",
+        "landing_url": "https://arxiv.org/abs/2412.06840",
+        "version": "arXiv:2412.06840v1; ECCV FashionAI workshop 2024",
+        "first_public_year": 2024,
+        "first_public_date": null,
+        "first_arxiv_date": "2024-12-07",
+        "reviewed_version_date": "2024-12-07",
+        "locator": "Sections 4.1–4.3; Table 1, PDF p.10",
+        "numeric_cells_checked_at": "2026-10-11"
+      },
+      "context": {
+        "dataset": "VISUELLE",
+        "dataset_version": "Original VISUELLE as used by MDiFF (exact artifact hash pending)",
+        "split": "5,080 training products; 497 most recent test products",
+        "horizon_weeks": 6,
+        "track": "N0",
+        "history_days": 0,
+        "target": "Weekly chain-wide product unit sales",
+        "feature_policy": "Native paper recipes have different input sets; features are shown per row",
+        "metric_aggregation": "Native published aggregation; evaluated row IDs and pooling not reproduced",
+        "label_mask": "Native paper selection; exact row mask/hash pending",
+        "feature_budget_status": "Native source input labels; exact preprocessing, embeddings and tuning not independently audited",
+        "comparability_status": "one_source_table_with_row_specific_feature_budgets"
+      },
+      "scenario_tags": {
+        "store_context": "unknown",
+        "product_location_pair": "unknown",
+        "seasonal_or_replenishable": "unknown"
+      },
+      "tag_note": "Fashion-season context is reported; this does not establish the requested seasonal-versus-replenishable or new-store test strata.",
+      "evidence_status": "paper_reported_not_reproduced",
+      "independent_review_status": "pending",
+      "benchmark_admitted": false,
+      "rank": null,
+      "numeric_ranking_authorized": false,
+      "note": "Image/date-conditioned diffusion uses fewer inputs than GTM. Related authors/data do not establish independent replication; generated paths do not prove calibrated uncertainty.",
+      "rows": [
+        {
+          "id": "R15_visuelle6_1",
+          "method": "MDiFF",
+          "metrics": {
+            "WAPE": 54.7,
+            "MAE": 30.1
+          },
+          "features": [
+            "image",
+            "release_date"
+          ],
+          "rank": null,
+          "reported_not_reproduced": true,
+          "independent_review_status": "pending",
+          "lab_run_id": null,
+          "comparison_keys": {
+            "WAPE": "afaed48ecc87bf42229423118f382c89303bad177a87d3faba9ba56613dcbe70",
+            "MAE": "60ff6d6eb09c65a12c93c1176d7e6ec2db8050242755e1184147b9f23bb950dc"
+          }
+        },
+        {
+          "id": "R15_visuelle6_2",
+          "method": "GTM-Transformer (paper comparator)",
+          "metrics": {
+            "WAPE": 55.2,
+            "MAE": 30.2
+          },
+          "features": [
+            "image",
+            "release_date",
+            "metadata",
+            "Google_Trends"
+          ],
+          "rank": null,
+          "reported_not_reproduced": true,
+          "independent_review_status": "pending",
+          "lab_run_id": null,
+          "comparison_keys": {
+            "WAPE": "7a19b6a501416694c7cd372ce6a0cd29c32cf7687256757e6993aae421729cdf",
+            "MAE": "312170bf9f937ac0fd407bd89e9c763bf52d2385a72507b3bdc9ed073db12eb8"
+          }
+        },
+        {
+          "id": "R15_visuelle6_3",
+          "method": "Cross-Attention RNN (paper comparator)",
+          "metrics": {
+            "WAPE": 59.5,
+            "MAE": 32.3
+          },
+          "features": [
+            "image",
+            "release_date",
+            "metadata"
+          ],
+          "rank": null,
+          "reported_not_reproduced": true,
+          "independent_review_status": "pending",
+          "lab_run_id": null,
+          "comparison_keys": {
+            "WAPE": "078d3dc78b610ee8cc77c2f7f8f88d2c2531428db3f43ed9565c1c1d8f980649",
+            "MAE": "2a6aaf498e43c4782189d5757ae3e74ab298d0ea0a208d243bada97fc5694003"
+          }
+        },
+        {
+          "id": "R15_visuelle6_4",
+          "method": "Attribute kNN (paper comparator)",
+          "metrics": {
+            "WAPE": 59.8,
+            "MAE": 32.7
+          },
+          "features": [
+            "metadata"
+          ],
+          "rank": null,
+          "reported_not_reproduced": true,
+          "independent_review_status": "pending",
+          "lab_run_id": null,
+          "comparison_keys": {
+            "WAPE": "60868a5917e6cc13bcff316be5548f5e1e37653ae2f1aef10533aa04f815a222",
+            "MAE": "5a625bedbee0757804a48824f36d97e80b61f75c86c97f64e2219ad7aee0deba"
+          }
+        }
+      ],
+      "window": {
+        "initial_publication": "within_window",
+        "date_precision": "year_only",
+        "reviewed_version_within_window": true,
+        "new_method_in_window": true
+      }
+    }
+  ],
+  "predecessor_groups": [
+    {
+      "id": "R09_release6",
+      "title": "GTM-Transformer: zero-history predecessor",
+      "source": {
+        "id": "R09",
+        "title": "Well Googled is Half Done: Multimodal Forecasting of New Fashion Product Sales with Image-based Google Trends",
+        "url": "https://arxiv.org/html/2109.09824v6",
+        "landing_url": "https://doi.org/10.1002/for.3104",
+        "version": "arXiv:2109.09824v6; journal 2024; first preprint 2021",
+        "first_public_year": 2021,
+        "first_public_date": "2021-09-20",
+        "first_arxiv_date": "2021-09-20",
+        "reviewed_version_date": "2024-01-14",
+        "locator": "Section 5.2; Table 1, release setup, 52-week Google Trends column",
+        "numeric_cells_checked_at": "2026-10-11"
+      },
+      "context": {
+        "dataset": "VISUELLE",
+        "dataset_version": "Original VISUELLE as reported in GTM v6 (exact artifact hash pending)",
+        "split": "5,080 training products; 497 most recent test products",
+        "horizon_weeks": 6,
+        "track": "N0",
+        "history_days": 0,
+        "target": "Weekly chain-wide product unit sales",
+        "feature_policy": "Native paper recipes vary image/text/date/Google Trends; no new item's sales are input",
+        "metric_aggregation": "Native published aggregation; evaluated row IDs and pooling not reproduced",
+        "label_mask": "Native paper selection; exact row mask/hash pending",
+        "feature_budget_status": "Native source input labels; exact preprocessing, embeddings and tuning not independently audited",
+        "comparability_status": "one_source_table_with_row_specific_feature_budgets"
+      },
+      "scenario_tags": {
+        "store_context": "unknown",
+        "product_location_pair": "unknown",
+        "seasonal_or_replenishable": "unknown"
+      },
+      "tag_note": "Fashion-season context is reported; this does not establish the requested seasonal-versus-replenishable or new-store test strata.",
+      "evidence_status": "paper_reported_not_reproduced",
+      "independent_review_status": "pending",
+      "benchmark_admitted": false,
+      "rank": null,
+      "numeric_ranking_authorized": false,
+      "note": "First appeared before the exact five-year window; revision is inside it. Fashion-IQ-enriched GTM has additional extracted tags, so its row is a separate feature budget.",
+      "rows": [
+        {
+          "id": "R09_release6_1",
+          "method": "GTM-Transformer + Fashion IQ tags",
+          "metrics": {
+            "WAPE": 54.2,
+            "MAE": 29.6
+          },
+          "features": [
+            "image",
+            "metadata",
+            "release_date",
+            "Google_Trends_52_weeks",
+            "Fashion_IQ_tags"
+          ],
+          "rank": null,
+          "reported_not_reproduced": true,
+          "independent_review_status": "pending",
+          "lab_run_id": null,
+          "comparison_keys": {
+            "WAPE": "174b587ba9711cd03317c03a4b4973ce42798daa817d4c479d63d566ed196796",
+            "MAE": "0304c1f9aa31261f7590a12563eeae5338c385c31ddad2d1237628599acec0a4"
+          }
+        },
+        {
+          "id": "R09_release6_2",
+          "method": "GTM-Transformer",
+          "metrics": {
+            "WAPE": 55.2,
+            "MAE": 30.2
+          },
+          "features": [
+            "image",
+            "metadata",
+            "release_date",
+            "Google_Trends_52_weeks"
+          ],
+          "rank": null,
+          "reported_not_reproduced": true,
+          "independent_review_status": "pending",
+          "lab_run_id": null,
+          "comparison_keys": {
+            "WAPE": "86f8f6576234c04768bb385e53860ec5c06f4a72f523775cb4b8a06bb9336955",
+            "MAE": "e08782e0cbde251448e6fd2ef6fdc54bc37531166e7a7750a12e539b24488dd3"
+          }
+        },
+        {
+          "id": "R09_release6_3",
+          "method": "Cross-Attention RNN + G",
+          "metrics": {
+            "WAPE": 59.0,
+            "MAE": 32.1
+          },
+          "features": [
+            "image",
+            "metadata",
+            "release_date",
+            "Google_Trends_52_weeks"
+          ],
+          "rank": null,
+          "reported_not_reproduced": true,
+          "independent_review_status": "pending",
+          "lab_run_id": null,
+          "comparison_keys": {
+            "WAPE": "86f8f6576234c04768bb385e53860ec5c06f4a72f523775cb4b8a06bb9336955",
+            "MAE": "e08782e0cbde251448e6fd2ef6fdc54bc37531166e7a7750a12e539b24488dd3"
+          }
+        },
+        {
+          "id": "R09_release6_4",
+          "method": "Attribute kNN",
+          "metrics": {
+            "WAPE": 59.8,
+            "MAE": 32.7
+          },
+          "features": [
+            "metadata",
+            "release_date"
+          ],
+          "rank": null,
+          "reported_not_reproduced": true,
+          "independent_review_status": "pending",
+          "lab_run_id": null,
+          "comparison_keys": {
+            "WAPE": "13411ade0e2e9e108e00c46e1d9bb774ed37edab317fa4d1d935c94730ba88dc",
+            "MAE": "986fd119ac01aa69fe8f126bfdd10508d5f5dc7947b191cf4a109b43247c45f5"
+          }
+        }
+      ],
+      "window": {
+        "initial_publication": "predecessor",
+        "date_precision": "day",
+        "reviewed_version_within_window": true,
+        "new_method_in_window": false
+      }
+    }
+  ],
+  "predecessor_lineage": [
+    {
+      "id": "R01",
+      "title": "Fashion Retail: Forecasting Demand for New Items",
+      "year": 2019,
+      "url": "https://arxiv.org/abs/1907.01960",
+      "status": "provisional_predecessor_not_admitted",
+      "auxiliary_only": false
+    },
+    {
+      "id": "R07",
+      "title": "A Siamese Neural Network Application for Sales Forecasting of New Fashion Products Using Heterogeneous Data",
+      "year": 2019,
+      "url": "https://doi.org/10.2991/ijcis.d.191122.002",
+      "status": "provisional_predecessor_not_admitted",
+      "auxiliary_only": true
+    }
+  ],
+  "papers_without_scores": [
+    {
+      "id": "censored2025",
+      "title": "Predicting demand for new products in fashion retailing using censored data",
+      "url": "https://doi.org/10.1016/j.eswa.2024.125313",
+      "status": "no_verified_numeric_table_extraction",
+      "reason": "Primary full-text access and independent review remain pending; no score is inferred."
+    }
+  ],
+  "lab_benchmark": {
+    "status": "coming_soon",
+    "executed_runs": 0,
+    "results": [],
+    "note": "A scored leaderboard needs admitted recipes, frozen data/splits/features/metrics, actual run artifacts and independent review."
+  },
+  "performance_over_time": {
+    "status": "awaiting_comparable_runs",
+    "points": [],
+    "title": "Forecasting performance over time",
+    "note": "No numeric improvement curve is drawn from unrelated paper tables.",
+    "planned_x_axis": "Evaluation release date / launch cohort; model version shown separately",
+    "planned_y_axis": "WAPE or MAE inside one frozen comparison context",
+    "protocol": "Track versions on a fixed holdout and separately track forward launch cohorts; report sample sizes, uncertainty, feature/data changes, cost and baseline on matched cohorts. Never compare different history ages as the same task."
+  },
+  "industry_context": [
+    {
+      "id": "fashion",
+      "title": "Fashion and apparel",
+      "status": "direct_task_fit_paper_evidence_pending_independent_review",
+      "source_ids": [
+        "R10",
+        "R13",
+        "R14",
+        "R15",
+        "visuelle2022",
+        "R09"
+      ]
+    },
+    {
+      "id": "consumer_goods",
+      "title": "Consumer goods",
+      "status": "transfer_target_evidence_gap",
+      "source_ids": []
+    },
+    {
+      "id": "electronics",
+      "title": "Electronics",
+      "status": "transfer_target_evidence_gap",
+      "source_ids": []
+    },
+    {
+      "id": "industrial_products",
+      "title": "Industrial products",
+      "status": "transfer_target_evidence_gap",
+      "source_ids": []
+    }
+  ],
+  "economic_evidence": {
+    "own_measured_revenue": null,
+    "note": "Error reduction is not revenue. Revenue, contribution margin, stockouts, waste and working capital require decision-level evaluation with explicit costs and attribution."
+  },
+  "input_sha256": {
+    "site/dist/assets/catalog.json": "1a3b623dce61cf8ad87b5c2181f8290ac9b9664cf54a2fafce7670bcbe498f7f"
+  },
+  "extraction_note": "Primary numeric-table checks supplement the existing provisional triage. This export does not alter canonical evidence, complete independent review, execute forecasts or activate Grok Bots.",
+  "comparison_key_note": "Keys prevent accidental pooling across sources, versions, targets, histories, masks and declared inputs. Equal keys are necessary but do not prove identical preprocessing, tuning, training budgets or independent review.",
+  "rejected_groups": [
+    {
+      "id": "R10_release6",
+      "title": "POP: release-time new-product forecast",
+      "source": {
+        "id": "R10",
+        "title": "POP: Mining POtential Performance of New Fashion Products via Webly Cross-modal Query Expansion",
+        "landing_url": "https://arxiv.org/abs/2207.11001",
+        "version": "arXiv:2207.11001; ECCV 2022"
+      },
+      "status": "Rejected: post-origin leakage cannot be ruled out (reviewer 2026-10-16)",
+      "benchmark_admitted": false,
+      "rows": [],
+      "note": "No numbers shown."
+    }
+  ]
+}

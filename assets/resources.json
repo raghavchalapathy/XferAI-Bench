@@ -1,0 +1,143 @@
+{
+  "schema_version": 1,
+  "checked_on": "2026-10-12",
+  "purpose": "Actual paper full-text and dataset access destinations, separate from publication metadata. No papers/data are mirrored.",
+  "papers": {
+    "R01": {
+      "pdf_url": "https://arxiv.org/pdf/1907.01960v1",
+      "label": "Read PDF \u2197",
+      "access_status": "pdf_response_verified",
+      "checked_at": "2026-10-12T14:15:51Z",
+      "version_note": "Pinned author manuscript PDF",
+      "download_verified": true
+    },
+    "R07": {
+      "pdf_url": "https://www.atlantis-press.com/article/125924347.pdf",
+      "label": "Read PDF \u2197",
+      "access_status": "pdf_response_verified",
+      "checked_at": "2026-10-12T14:15:51Z",
+      "version_note": "Publisher PDF",
+      "download_verified": true
+    },
+    "R09": {
+      "pdf_url": "https://arxiv.org/pdf/2109.09824v6",
+      "label": "Read PDF \u2197",
+      "access_status": "pdf_response_verified",
+      "checked_at": "2026-10-12T14:15:51Z",
+      "version_note": "Pinned author manuscript PDF",
+      "download_verified": true
+    },
+    "R10": {
+      "pdf_url": "https://arxiv.org/pdf/2207.11001v1",
+      "label": "Read PDF \u2197",
+      "access_status": "pdf_response_verified",
+      "checked_at": "2026-10-12T14:15:51Z",
+      "version_note": "Pinned author manuscript PDF",
+      "download_verified": true
+    },
+    "R13": {
+      "pdf_url": "https://arxiv.org/pdf/2212.07187v1",
+      "label": "Read PDF \u2197",
+      "access_status": "pdf_response_verified",
+      "checked_at": "2026-10-12T14:15:51Z",
+      "version_note": "Pinned author manuscript PDF",
+      "download_verified": true
+    },
+    "visuelle2022": {
+      "pdf_url": "https://arxiv.org/pdf/2204.06972v2",
+      "label": "Read PDF \u2197",
+      "access_status": "pdf_response_verified",
+      "checked_at": "2026-10-12T14:15:51Z",
+      "version_note": "Pinned author manuscript PDF",
+      "download_verified": true
+    },
+    "R14": {
+      "pdf_url": "https://arxiv.org/pdf/2412.05566v1",
+      "label": "Read PDF \u2197",
+      "access_status": "pdf_response_verified",
+      "checked_at": "2026-10-12T14:15:51Z",
+      "version_note": "Pinned author manuscript PDF",
+      "download_verified": true
+    },
+    "R15": {
+      "pdf_url": "https://arxiv.org/pdf/2412.06840v1",
+      "label": "Read PDF \u2197",
+      "access_status": "pdf_response_verified",
+      "checked_at": "2026-10-12T14:15:51Z",
+      "version_note": "Pinned author manuscript PDF",
+      "download_verified": true
+    },
+    "R08": {
+      "pdf_url": "https://dl.acm.org/doi/epdf/10.1145/3394486.3403362",
+      "label": "Publisher PDF \u2197",
+      "access_status": "publisher_route_access_not_verified",
+      "download_verified": false,
+      "access_note": "Access may vary",
+      "publication_url": "https://www.kdd.org/kdd2020/accepted-papers/view/attention-based-multi-modal-new-product-sales-time-series-forecasting.html",
+      "checked_at": "2026-10-12T14:15:51Z",
+      "browser_check": "Publisher security-verification page encountered; PDF content not inspected."
+    },
+    "censored2025": {
+      "pdf_url": "https://www.sciencedirect.com/science/article/pii/S0957417424021808/pdfft",
+      "label": "Publisher PDF \u2197",
+      "access_status": "publisher_route_access_not_verified",
+      "download_verified": false,
+      "access_note": "Access may vary",
+      "publication_url": "https://www.sciencedirect.com/science/article/pii/S0957417424021808",
+      "checked_at": "2026-10-12T14:15:51Z"
+    }
+  },
+  "news_papers": {
+    "kdd-2020-new-product-attention": "R08",
+    "censored-fashion-2025": "censored2025",
+    "dif4ff-2024": "R14",
+    "mdiff-2024": "R15",
+    "visuelle2-2022": "visuelle2022"
+  },
+  "datasets": {
+    "VISUELLE-v1": {
+      "access_url": "https://forms.gle/cVGQAmxhHf7eRJ937",
+      "direct_archive_url": null,
+      "button": "Access data \u2197",
+      "display_access": "Author form",
+      "status": "author_form_verified_archive_not_received",
+      "primary_source": "https://github.com/HumaticsLAB/GTM-Transformer#dataset",
+      "note": "Live author form offers the dataset link for research purposes; authors disclaim ownership and licensing authority. Archive version and dataset rights require review.",
+      "live_form_verified": true,
+      "live_form_checked_at": "2026-10-12T14:21:20Z",
+      "rights_status": "research_use_requested_authors_disclaim_licensing_authority"
+    },
+    "VISUELLE-2.0": {
+      "access_url": "https://forms.gle/8Sk431AsEgCot9Kv5",
+      "direct_archive_url": null,
+      "button": "Access data \u2197",
+      "display_access": "Author form",
+      "status": "author_form_verified_archive_not_received",
+      "primary_source": "https://humaticslab.github.io/forecasting/visuelle",
+      "note": "Live author form offers download-link access after completion. Delivered archive and dataset rights not verified.",
+      "live_form_verified": true,
+      "live_form_checked_at": "2026-10-12T14:21:20Z"
+    },
+    "Myntra-private-new-styles": {
+      "access_url": null,
+      "direct_archive_url": null,
+      "display_access": "Private",
+      "status": "no_public_data_access_found",
+      "primary_source": "https://arxiv.org/pdf/1907.01960v1",
+      "note": "Original paper uses company sales. No author-published data download or data-request destination found."
+    },
+    "European-bags-censored-private": {
+      "access_url": null,
+      "direct_archive_url": null,
+      "display_access": "Confidential",
+      "status": "confidential_publisher_statement",
+      "primary_source": "https://www.sciencedirect.com/science/article/pii/S0957417424021808",
+      "note": "Publisher data-availability statement says the dataset is confidential. No public download found."
+    }
+  },
+  "verification_limits": [
+    "Eight primary PDFs returned PDF content. Two publisher routes could not be retrieved; access is not promised.",
+    "Two live author forms opened and matched VISUELLE versions; no forms submitted or archives received. Dataset reuse rights remain separate.",
+    "No private dataset is substituted with synthetic data or an unrelated retail dataset."
+  ]
+}
