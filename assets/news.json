@@ -1,7 +1,7 @@
 {
   "as_of": "2026-10-19",
   "headline": "Latest recorded developments",
-  "verification_note": "A manually checked, partial collection of primary-source updates as of 19 October 2026. This is not a live feed or a completed five-year systematic search. Older records are dated archive entries, not new announcements. News inclusion does not admit a method to a benchmark.",
+  "verification_note": "A manually checked, partial collection of primary-source updates. The six records listed below were last checked on 11 October 2026 and were not re-checked for this release. This is not a live feed or a completed five-year systematic search. Older records are dated archive entries, not new announcements. News inclusion does not admit a method to a benchmark.",
   "coverage_window": {
     "start": "2021-10-19",
     "end": "2026-10-19"
@@ -257,5 +257,8 @@
       "official_url": null,
       "short_status": "Name to confirm"
     }
-  ]
+  ],
+  "records_last_checked": "2026-10-11",
+  "digest_verification_note": "The W43 weekly digest was checked against its primary sources on 19 October 2026 (Reviewer approval 6135b7cc). Its items are context only and do not change the check date of the records below.",
+  "digest_checked": "2026-10-19"
 }
