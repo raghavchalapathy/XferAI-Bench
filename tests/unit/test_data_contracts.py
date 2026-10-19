@@ -55,12 +55,12 @@ def test_identifiers_keep_leading_zeros(tiny: Dataset) -> None:
 
 
 def test_hash_mismatch_is_rejected(tiny_dir: Path, tmp_path: Path) -> None:
-    md = json.loads((tiny_dir / "metadata.json").read_text())
+    md = json.loads((tiny_dir / "metadata.json").read_text(encoding="utf-8"))
     md["dataset"]["expected_hash"] = "0" * 64
     for t in md["tables"].values():
         t["path"] = str(tiny_dir / t["path"])
     p = tmp_path / "metadata.json"
-    p.write_text(json.dumps(md))
+    p.write_text(json.dumps(md), encoding="utf-8")
     with pytest.raises(DataError, match="dataset_hash_mismatch"):
         load_from_metadata_path(p)
 
@@ -98,7 +98,7 @@ def test_column_mapping(tiny_dir: Path, tmp_path: Path) -> None:
     md["tables"]["items"] = {"path": str(tmp_path / "items.csv"), "format": "csv", "columns": {"category": "dept"}}
     md["dataset"]["expected_hash"] = None
     p = tmp_path / "metadata.json"
-    p.write_text(json.dumps(md))
+    p.write_text(json.dumps(md), encoding="utf-8")
     ds = load_from_metadata_path(p)
     assert ds["items"]["category"].notna().all()
 
@@ -153,4 +153,4 @@ def test_export_schemas(tmp_path: Path) -> None:
     paths = export_schemas(tmp_path)
     names = {p.name for p in paths}
     assert {"metadata.schema.json", "selection-policy.schema.json", "observations.schema.json"} <= names
-    json.loads((tmp_path / "metadata.schema.json").read_text())
+    json.loads((tmp_path / "metadata.schema.json").read_text(encoding="utf-8"))

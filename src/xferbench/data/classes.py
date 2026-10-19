@@ -75,7 +75,7 @@ def load_benchmark_manifest(ref: str) -> tuple[dict[str, Any], Path]:
         path = _builtin_root() / bid / ver / "BENCHMARK.json"
         if not path.exists():
             raise DataClassError(f"unknown benchmark '{ref}'; known: {list_benchmarks()}")
-    man = json.loads(path.read_text())
+    man = json.loads(path.read_text(encoding="utf-8"))
     for k in ("benchmark_id", "version", "kind", "licence", "source", "dataset_hash"):
         if k not in man:
             raise DataClassError(f"{path}: BENCHMARK.json missing '{k}'")
@@ -145,7 +145,11 @@ def git_toplevel(p: Path) -> Path | None:
         d = d.parent
     try:
         r = subprocess.run(
-            ["git", "-C", str(d), "rev-parse", "--show-toplevel"], capture_output=True, text=True, timeout=10
+            ["git", "-C", str(d), "rev-parse", "--show-toplevel"],
+            capture_output=True,
+            encoding="utf-8",
+            errors="replace",
+            timeout=10,
         )
     except (OSError, subprocess.SubprocessError):
         return None
@@ -158,7 +162,7 @@ def check_local_output(out: Path) -> None:
     if top is None:
         return
     rel = out.resolve().relative_to(top.resolve()) if out.resolve().is_relative_to(top.resolve()) else out
-    probe = str(rel).rstrip("/") + "/probe.local-check"
+    probe = rel.as_posix().rstrip("/") + "/probe.local-check"  # git pathspecs use "/" on every OS
     r = subprocess.run(["git", "-C", str(top), "check-ignore", "-q", probe], capture_output=True, timeout=10)
     if r.returncode != 0:
         raise DataClassError(
@@ -207,6 +211,6 @@ def redact_local_outputs(run_dir: Path, ids: set[str], salt: str) -> list[str]:
     for name in LOCAL_REDACTED_FILES:
         p = run_dir / name
         if p.exists():
-            p.write_text(redact_ids(p.read_text(), ids, salt))
+            p.write_text(redact_ids(p.read_text(encoding="utf-8"), ids, salt), encoding="utf-8")
             done.append(name)
     return done

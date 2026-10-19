@@ -45,10 +45,10 @@ def local_copy(tiny_dir: Path, tmp_path_factory: pytest.TempPathFactory) -> Path
             if c in df.columns:
                 df[c] = df[c].map(lambda v: None if v is None or pd.isna(v) else f"{SENT}{v}")
         df.to_parquet(p, index=False)
-    md = json.loads((dst / "metadata.json").read_text())
+    md = json.loads((dst / "metadata.json").read_text(encoding="utf-8"))
     md["dataset"]["expected_hash"] = None
     md["dataset"]["synthetic"] = False
-    (dst / "metadata.json").write_text(json.dumps(md))
+    (dst / "metadata.json").write_text(json.dumps(md), encoding="utf-8")
     return dst / "metadata.json"
 
 
@@ -135,9 +135,9 @@ def test_local_run_is_labeled_and_leaks_no_ids(local_copy: Path, tmp_path: Path)
         ["run", "--local-data", str(local_copy), "--splits", str(sp), "--stage", "validation", "--out", str(out)],
     )
     assert res.exit_code == 0, res.output
-    man = json.loads((out / "run_manifest.json").read_text())
+    man = json.loads((out / "run_manifest.json").read_text(encoding="utf-8"))
     assert man["data"]["data_class"] == "local"
-    html = (out / "report.html").read_text()
+    html = (out / "report.html").read_text(encoding="utf-8")
     assert "LOCAL DATA" in html
     for name in (
         "report.html",
@@ -152,7 +152,7 @@ def test_local_run_is_labeled_and_leaks_no_ids(local_copy: Path, tmp_path: Path)
     ):
         p = out / name
         if p.exists():
-            assert SENT not in p.read_text(), f"sentinel ID leaked into {name}"
+            assert SENT not in p.read_text(encoding="utf-8"), f"sentinel ID leaked into {name}"
 
 
 def test_compare_refuses_mixed_classes(tiny_runs: dict[str, Path], tmp_path: Path) -> None:
@@ -161,9 +161,9 @@ def test_compare_refuses_mixed_classes(tiny_runs: dict[str, Path], tmp_path: Pat
     a, b = tmp_path / "a", tmp_path / "b"
     shutil.copytree(tiny_runs["test"], a)
     shutil.copytree(tiny_runs["test"], b)
-    m = json.loads((b / "run_manifest.json").read_text())
+    m = json.loads((b / "run_manifest.json").read_text(encoding="utf-8"))
     m["data"] = {"data_class": "local"}
-    (b / "run_manifest.json").write_text(json.dumps(m))
+    (b / "run_manifest.json").write_text(json.dumps(m), encoding="utf-8")
     with pytest.raises(CompareError, match="data classes"):
         compare_runs([a, b], tmp_path / "c.html")
 
@@ -171,7 +171,7 @@ def test_compare_refuses_mixed_classes(tiny_runs: dict[str, Path], tmp_path: Pat
 def test_demo_is_labeled_benchmark(tmp_path: Path) -> None:
     res = runner.invoke(app, ["demo", "--preset", "tiny", "--out", str(tmp_path / "d")])
     assert res.exit_code == 0, res.output
-    man = json.loads((tmp_path / "d" / "test-run" / "run_manifest.json").read_text())
+    man = json.loads((tmp_path / "d" / "test-run" / "run_manifest.json").read_text(encoding="utf-8"))
     assert man["data"] == {
         "data_class": "benchmark",
         "benchmark_id": "synthetic-tiny",

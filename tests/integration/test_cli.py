@@ -76,7 +76,7 @@ def test_run_selection_directory_is_a_clear_user_error(tmp_path: Path) -> None:
 
     d = tmp_path / "sel"
     d.mkdir()
-    (d / "selection.json").write_text("{}")
+    (d / "selection.json").write_text("{}", encoding="utf-8")
     with pytest.raises(RunError, match="not a directory") as ei:
         load_selection_file(d)
     assert ei.value.exit_code == 2 and "did you mean" in str(ei.value)

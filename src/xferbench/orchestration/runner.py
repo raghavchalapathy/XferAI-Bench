@@ -80,14 +80,20 @@ def code_provenance() -> dict[str, Any]:
     here = Path(__file__).resolve().parent
     try:
         top = subprocess.run(
-            ["git", "-C", str(here), "rev-parse", "HEAD"], capture_output=True, text=True, timeout=10, check=False
+            ["git", "-C", str(here), "rev-parse", "HEAD"],
+            capture_output=True,
+            encoding="utf-8",
+            errors="replace",
+            timeout=10,
+            check=False,
         )
         if top.returncode != 0:
             return {"git_commit": None, "git_dirty": None}
         st = subprocess.run(
             ["git", "-C", str(here), "status", "--porcelain", "--untracked-files=no"],
             capture_output=True,
-            text=True,
+            encoding="utf-8",
+            errors="replace",
             timeout=30,
             check=False,
         )

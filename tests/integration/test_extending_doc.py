@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import re
+import shutil
 from pathlib import Path
 
 import pandas as pd
@@ -13,11 +14,13 @@ DOC = Path(__file__).resolve().parents[2] / "docs" / "EXTENDING.md"
 
 
 def test_extending_example_runs(tiny_runs: dict[str, Path], tmp_path: Path, monkeypatch) -> None:  # type: ignore[no-untyped-def]
-    code = re.search(r"```python\n(.*?)```", DOC.read_text(), re.S).group(1)  # type: ignore[union-attr]
+    code = re.search(r"```python\n(.*?)```", DOC.read_text(encoding="utf-8"), re.S).group(1)  # type: ignore[union-attr]
     demo = tmp_path / "xb-demo"
-    (demo / "data").mkdir(parents=True)
-    (demo / "data" / "metadata.json").symlink_to(tiny_runs["metadata"])
-    (demo / "splits.json").symlink_to(tiny_runs["splits"])
+    # copy rather than symlink: symlinks are not portable to Windows
+    shutil.copytree(tiny_runs["metadata"].parent, demo / "data")
+    if tiny_runs["metadata"].name != "metadata.json":
+        shutil.copy(tiny_runs["metadata"], demo / "data" / "metadata.json")
+    shutil.copy(tiny_runs["splits"], demo / "splits.json")
     monkeypatch.chdir(tmp_path)
     try:
         exec(compile(code, str(DOC), "exec"), {"__name__": "doc_example"})

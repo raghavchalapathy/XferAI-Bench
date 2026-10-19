@@ -16,8 +16,8 @@ def test_heading_text() -> None:
 def test_reports_carry_pending_heading(tiny_runs: dict[str, Path]) -> None:
     for stage in ("validation", "test"):
         d = tiny_runs[stage]
-        html = (d / "report.html").read_text()
-        md = (d / "summary.md").read_text()
+        html = (d / "report.html").read_text(encoding="utf-8")
+        md = (d / "summary.md").read_text(encoding="utf-8")
         assert RANKING_HEADING in html and RANKING_NOTE in html
         assert f"## {RANKING_HEADING}" in md and RANKING_NOTE in md
         assert "Top eligible methods" not in html

@@ -28,7 +28,7 @@ def _manifest(tmp_path: Path, **over: object) -> Path:
     }
     man.update(over)
     p = tmp_path / "BENCHMARK.json"
-    p.write_text(json.dumps(man))
+    p.write_text(json.dumps(man), encoding="utf-8")
     return p
 
 
@@ -96,7 +96,7 @@ def test_explicit_research_only_needs_flag(tiny_split_path: Path) -> None:
 
 
 def test_standard_run_labeled_standard(tiny_runs: dict[str, Path]) -> None:
-    man = json.loads((tiny_runs["validation"] / "run_manifest.json").read_text())
+    man = json.loads((tiny_runs["validation"] / "run_manifest.json").read_text(encoding="utf-8"))
     assert man["usage_label"] == "standard"
 
 

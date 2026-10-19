@@ -59,7 +59,9 @@ def test_registry_import_is_lazy() -> None:
         "import sys, xferbench.methods.registry as r; r.all_entries(); "
         f"print([m for m in {HEAVY!r} if m in sys.modules])"
     )
-    out = subprocess.run([sys.executable, "-c", code], capture_output=True, text=True, check=True)
+    out = subprocess.run(
+        [sys.executable, "-c", code], capture_output=True, encoding="utf-8", errors="replace", check=True
+    )
     assert out.stdout.strip() == "[]"
 
 

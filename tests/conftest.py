@@ -67,7 +67,7 @@ def tiny_runs(tiny_dir: Path, tiny_split_path: Path, tmp_path_factory: pytest.Te
     assert val.exit_code == 0
     sel = select(val.out, SelectionPolicy())
     sel_path = root / "selection.json"
-    sel_path.write_text(json.dumps(sel.model_dump(mode="json"), indent=2))
+    sel_path.write_text(json.dumps(sel.model_dump(mode="json"), indent=2), encoding="utf-8")
     test = BenchmarkRunner(RunConfig(md, tiny_split_path, "test", root / "test", selection_path=sel_path)).run()
     assert test.exit_code == 0
     return {

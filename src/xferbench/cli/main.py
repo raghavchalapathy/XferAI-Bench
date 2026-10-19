@@ -569,7 +569,7 @@ def steps_cmd(
     except RunError as exc:
         _fail(str(exc), exc.exit_code)
     _print_board(test.out)
-    summary = (test.out / "summary.md").read_text()
+    summary = (test.out / "summary.md").read_text(encoding="utf-8")
     i = summary.find("## Methods in order")
     typer.echo(summary[i:] if i >= 0 else "")
     typer.echo(f"report: {test.out / 'report.html'}")

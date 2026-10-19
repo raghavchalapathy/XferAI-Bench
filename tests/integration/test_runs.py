@@ -124,7 +124,7 @@ def test_tampered_selection_rejected(tiny_runs: dict[str, Path], tmp_path: Path)
     sel = read_json(tiny_runs["selection"])
     sel["split_hash"] = "f" * 64
     p = tmp_path / "selection.json"
-    p.write_text(json.dumps(sel))
+    p.write_text(json.dumps(sel), encoding="utf-8")
     cfg = RunConfig(tiny_runs["metadata"], tiny_runs["splits"], "test", tmp_path / "t", selection_path=p)
     with pytest.raises(RunError, match="different dataset/split"):
         BenchmarkRunner(cfg).run()
@@ -239,7 +239,7 @@ def test_external_method_and_training_boundary(
     assert all(_SpyMethod.seen["max_obs_week"])
     lb = pd.read_csv(res.out / "leaderboard.csv")
     assert "EXT.spy" in set(lb["variant_id"])
-    html = (res.out / "report.html").read_text()
+    html = (res.out / "report.html").read_text(encoding="utf-8")
     assert "<script>alert(1)</script>" not in html
     assert not re.search(r'(?:src|href)="https?://', html)
     assert "Content-Security-Policy" in html
@@ -253,7 +253,7 @@ def test_compare_runs(tiny_runs: dict[str, Path], tmp_path: Path) -> None:
 
 
 def test_report_has_both_scenarios_and_no_raw_rows(tiny_runs: dict[str, Path], tiny_dir: Path) -> None:
-    html = (tiny_runs["test"] / "report.html").read_text()
+    html = (tiny_runs["test"] / "report.html").read_text(encoding="utf-8")
     for needle in ("PAIR0-E", "PAIR0-N", "Frozen validation selection", "Edge fixtures", "Synthetic data"):
         assert needle in html
     truth = list((tiny_dir / "_synthetic_truth").glob("*"))
@@ -267,7 +267,11 @@ def test_run_manifest_records_git_commit(tiny_runs: dict[str, Path]) -> None:
     sw = read_json(tiny_runs["validation"] / "run_manifest.json")["software"]
     assert "git_commit" in sw and "git_dirty" in sw
     head = subprocess.run(
-        ["git", "-C", str(Path(__file__).parent), "rev-parse", "HEAD"], capture_output=True, text=True, check=False
+        ["git", "-C", str(Path(__file__).parent), "rev-parse", "HEAD"],
+        capture_output=True,
+        encoding="utf-8",
+        errors="replace",
+        check=False,
     )
     if head.returncode == 0:
         assert sw["git_commit"] == head.stdout.strip()
