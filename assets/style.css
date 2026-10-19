@@ -792,3 +792,11 @@ body[data-page="home"] .home-hero > .wrap { width: min(1180px, calc(100% - 56px)
 .skeleton .bar-label { height: 10px; border-radius: 6px; background: #1d1b29; }
 .skeleton .bar-fill { background: #262338; }
 .bench-status { text-transform: none; text-align: center; color: #cbb7ff; font-size: 16px; margin: 4px 0 0; }
+/* lean menu pages 2026-10-19 */
+.lean-steps .steps { list-style: none; counter-reset: s; padding: 0; margin: 0 0 24px; display: grid; gap: 16px; }
+.lean-steps .steps li { counter-increment: s; display: grid; gap: 6px; padding: 16px 18px 16px 54px; position: relative; border: 1px solid #2a2838; border-radius: 8px; background: #10111a; }
+.lean-steps .steps li::before { content: counter(s); position: absolute; left: 18px; top: 16px; width: 24px; height: 24px; border-radius: 50%; background: linear-gradient(135deg, #b59cf8, #e783bd); color: #0c0d14; font-size: 13px; display: grid; place-items: center; font-weight: 600; }
+.lean-steps .steps span { color: #a9a6bd; }
+.lean-steps pre { margin: 4px 0; padding: 12px; background: #0b0b12; border-radius: 6px; overflow-x: auto; font-size: 13px; }
+.lean-h2 { margin: 34px 0 16px; font-size: 20px; }
+.lean-card .text-link { margin-top: auto; }
