@@ -5,7 +5,7 @@
   "previous_source_commit": "2ea2b9170d5d43e271ce199e76ebe2df70f27c4d",
   "previous_release_id": "2026-10-11-readable",
   "previous_snapshot_sha256": "dff750d40ad43cc3ceff807a3d1997a6566a02aadf00056d41d77677cf171d67",
-  "current_snapshot_sha256": "90bb0c0013535ca6f4e6d8d5633c4abf70742e14e844704be7ff41b9f949da08",
+  "current_snapshot_sha256": "b55e7b7437f8c3316fe42bb2a0ec22468c95fe24c47afe858fe49e2fdfb9deec",
   "snapshot_path": "/assets/news.json",
   "predecessor_verified": true,
   "reviewed": true,
@@ -39,5 +39,6 @@
   "weekly_updates": "Grok team workflow prepared in factory; no native Grok scheduler or unattended publisher has been installed.",
   "evidence_status": "Partial curated literature; no model runs.",
   "snapshot_correction": "The 2026-10-11-readable release.json recorded current_snapshot_sha256 39d3f3b280ebc9996f5dc6c49b48a129f377d0376cb715a8b9d2436745eea264, but that hash never matched the served /assets/news.json. From gh-pages b9cdff2 through 4e7e0a4 the served file was 40d683ed336d91ebee1dc48099af6f0fd062116b7835685b961d1917954c6054; from 2ea2b91 it was dff750d40ad43cc3ceff807a3d1997a6566a02aadf00056d41d77677cf171d67. Its reviewed:true claim therefore did not hold for the served snapshot. This release records the actual served predecessor hash.",
-  "kdd_badge_note": "KDD 2020 change record carried over unchanged from 2026-10-11-readable (record sha256 c208ba8fe2299a20ae4b38166b9cc81e5a9532262bd6f84ccfa0d5385681b325). It was not added in this release."
+  "kdd_badge_note": "KDD 2020 change record carried over unchanged from 2026-10-11-readable (record sha256 c208ba8fe2299a20ae4b38166b9cc81e5a9532262bd6f84ccfa0d5385681b325). It was not added in this release.",
+  "scope_filter_20261019": "Owner directive 2026-10-19: news restricted to cold-start / zero-history time-series forecasting. Removed news items msi-kenvue-2026, censored-fashion-2025, visuelle2-2022 (archived in the canonical store). Snapshot hash changed from 90bb0c0013535ca6f4e6d8d5633c4abf70742e14e844704be7ff41b9f949da08 to b55e7b7437f8c3316fe42bb2a0ec22468c95fe24c47afe858fe49e2fdfb9deec; remaining records unchanged."
 }

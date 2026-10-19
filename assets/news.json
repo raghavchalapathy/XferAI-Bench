@@ -43,46 +43,6 @@
       "venue_track": "KDD 2020 Applied Data Science Track"
     },
     {
-      "id": "msi-kenvue-2026",
-      "title": "Kenvue presents new-product forecasting and incrementality",
-      "category": "Event",
-      "published_at": null,
-      "date_precision": "page_publication_date_unknown",
-      "event_start": "2026-09-14",
-      "event_end": "2026-09-15",
-      "discovered_at": "2026-10-11",
-      "summary": "The MSI Analytics and Forecasting 2026 agenda and conference summary describe a Kenvue/Cloverpop presentation about forecasting launches before sales history exists and estimating how much growth is incremental.",
-      "why_it_matters": "It connects launch forecasts to cannibalization and launch decisions. This is a recorded industry presentation, not a reproducible benchmark; its protocol and numerical claims need independent review.",
-      "url": "https://msi.org/2026-msi-analytics-and-forecasting-presentations-recordings-and-summaries/",
-      "source_urls": [
-        "https://msi.org/events/analytics-and-forecasting-2026/"
-      ],
-      "scope": "Prelaunch consumer-product industry report; exact-item information set and evaluation protocol unverified. Not an active method admission.",
-      "status": "recorded_event_not_benchmark_evidence",
-      "short_title": "Kenvue: forecasting product launches",
-      "short_summary": "An industry talk on launch forecasts and incremental sales.",
-      "short_status": "Industry report · not benchmark evidence"
-    },
-    {
-      "id": "censored-fashion-2025",
-      "title": "Forecast new-product demand after correcting historical stockouts",
-      "category": "Paper",
-      "published_at": "2025-01-01",
-      "date_precision": "journal_issue_date_not_first_online_date",
-      "discovered_at": "2026-10-11",
-      "summary": "A fashion-retail study reconstructs demand for past collections, then uses product attributes to forecast the next collection. It compares stockout corrections and Random Forest, neural, support-vector and similarity models.",
-      "why_it_matters": "Historical sales can understate demand when inventory runs out. The new-product task fits the zero-history question, but reconstructed demand is an estimate and the retailer data are confidential.",
-      "url": "https://www.sciencedirect.com/science/article/pii/S0957417424021808",
-      "source_urls": [
-        "https://doi.org/10.1016/j.eswa.2024.125313"
-      ],
-      "scope": "Next-collection products without own sales input; provisional direct-task fit. Exposure dates, stockout assumptions and full protocol require independent review.",
-      "status": "dated_archive_provisional_review",
-      "short_title": "New-product demand with stockouts",
-      "short_summary": "Uses past collections to forecast new products.",
-      "short_status": "Private data · review pending"
-    },
-    {
       "id": "dif4ff-2024",
       "title": "Dif4FF explores multiple sales paths for unreleased fashion items",
       "category": "Paper",
@@ -116,26 +76,6 @@
       "short_title": "MDiFF: diffusion with author code",
       "short_summary": "A new-product forecasting paper with linked code.",
       "short_status": "Code not run · review pending"
-    },
-    {
-      "id": "visuelle2-2022",
-      "title": "VISUELLE 2.0 describes a short-history launch dataset (data licence not found; not usable by XferAI)",
-      "category": "Dataset",
-      "published_at": "2022-04-14",
-      "date_precision": "benchmark_paper_first_arxiv_submission_day",
-      "last_paper_revision": "2022-11-30",
-      "discovered_at": "2026-10-11",
-      "summary": "The benchmark covers 5,355 clothing products across six seasons, with item-shop sales, inventory, prices, discounts, images and external signals. Its short-observation task starts with only a few launch weeks.",
-      "why_it_matters": "It supports evaluating an early launch prefix. Access uses the authors' request form; enforce the first retailer-wide launch and <=28-day limit, and audit permissions before use.",
-      "url": "https://humaticslab.github.io/forecasting/visuelle",
-      "source_urls": [
-        "https://arxiv.org/abs/2204.06972"
-      ],
-      "scope": "Only zero-history and <=28-calendar-day origins qualify. Later rolling windows, recommendations and known-item/new-store-only tasks are excluded.",
-      "status": "dated_archive_dataset_candidate",
-      "short_title": "VISUELLE 2.0: launch data",
-      "short_summary": "Item-store sales, inventory, prices and images.",
-      "short_status": "1–28-day launch task only · access review pending"
     }
   ],
   "applications": [

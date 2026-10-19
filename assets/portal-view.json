@@ -421,70 +421,6 @@
       "window_at_build": "in_window"
     },
     {
-      "id": "google-vertex-price-optimization-2022",
-      "title": "Price optimization notebook for apparel retail using Google Vertex AI",
-      "organization": "Google Cloud / Grid Dynamics",
-      "source_type": "industry_blog",
-      "first_public_year": 2022,
-      "first_public_date": "2022-04-06",
-      "year": 2022,
-      "date_precision": "day",
-      "date_note": "Date displayed in official Google Cloud article. Earliest family appearance not exhaustively traced.",
-      "scope_status": "direct_new_item_provisional",
-      "checked_on": "2026-10-14",
-      "summary": "Share demand patterns across products using their attributes, then explore pricing decisions.",
-      "tracks": [
-        "N0"
-      ],
-      "history_label": "Zero history capability",
-      "show_in_survey": true,
-      "paper_url": "https://cloud.google.com/blog/products/ai-machine-learning/price-optimization-using-vertex-ai-forecast",
-      "full_text_url": "https://cloud.google.com/blog/products/ai-machine-learning/price-optimization-using-vertex-ai-forecast",
-      "action_label": "Read guide ↗",
-      "pdf": null,
-      "admission_ready": false,
-      "benchmark_admitted": false,
-      "reproduction_status": "not_run",
-      "scores": null,
-      "recipe": "Attribute transfer across products",
-      "method_ids": [],
-      "datasets": [],
-      "modality_label": "Time series + metadata",
-      "modalities": [
-        "time_series",
-        "metadata"
-      ],
-      "history": {},
-      "strengths": [
-        "Runnable-reference link and explicit transfer across SKU attributes.",
-        "Connects forecasts to pricing and inventory constraints."
-      ],
-      "limitations": [
-        "Limited-history support only partly addressed by reference implementation.",
-        "No matched N0 leaderboard result or measured causal profit.",
-        "The article demonstrates synthetic data for 400 SKUs, not an evaluated real new-product cohort.",
-        "Notebook example uses 28 days of context; zero-history accuracy is not evaluated."
-      ],
-      "horizon": "User-defined; no matched public N0 comparison",
-      "version": "Official industry source",
-      "locator": "Demand Forecasting Model > Preparing the Training Data; Limitations and Caveats > Historical data availability",
-      "venue": {
-        "label": "Google Cloud / Grid Dynamics · 2022"
-      },
-      "scope_review_status": "independent_source_check_complete_admission_pending",
-      "source_review": {
-        "author": "/root/industry_refresh",
-        "reviewer": "/root",
-        "checked_on": "2026-10-14",
-        "status": "primary_source_card_checked_not_scientific_admission"
-      },
-      "business_evidence": "Profit optimization demonstration, not measured deployment uplift.",
-      "code_url": "https://colab.research.google.com/drive/1c8uSNi4WV7Aat5pUt5UyC3pNy1P7_ab1",
-      "dataset_listing_eligible": false,
-      "first_public_date_precision": "day",
-      "window_at_build": "in_window"
-    },
-    {
       "id": "amazon-geann-2023",
       "title": "GEANN: Scalable Graph Augmentations for Multi-Horizon Time Series Forecasting",
       "organization": "Amazon Science",
@@ -542,66 +478,6 @@
         "status": "primary_source_card_checked_not_scientific_admission"
       },
       "business_evidence": "Forecast accuracy study; no causal monetary impact established.",
-      "code_url": null,
-      "dataset_listing_eligible": false,
-      "first_public_date_precision": "day",
-      "window_at_build": "in_window"
-    },
-    {
-      "id": "aws-getir-2023",
-      "title": "Demand forecasting at Getir built with Amazon Forecast",
-      "organization": "AWS / Getir",
-      "source_type": "industry_blog",
-      "first_public_year": 2023,
-      "first_public_date": "2023-05-15",
-      "year": 2023,
-      "date_precision": "day",
-      "date_note": "Date on official AWS customer-authored post.",
-      "scope_status": "implementation_context",
-      "checked_on": "2026-10-14",
-      "summary": "Getir uses Amazon Forecast for daily SKU planning and discusses new-item forecasting.",
-      "tracks": [],
-      "history_label": "Launch-history limit unverified",
-      "show_in_survey": false,
-      "paper_url": "https://aws.amazon.com/blogs/machine-learning/demand-forecasting-at-getir-built-with-amazon-forecast/",
-      "full_text_url": "https://aws.amazon.com/blogs/machine-learning/demand-forecasting-at-getir-built-with-amazon-forecast/",
-      "action_label": "Read article ↗",
-      "pdf": null,
-      "admission_ready": false,
-      "benchmark_admitted": false,
-      "reproduction_status": "not_run",
-      "scores": null,
-      "recipe": "Managed demand forecasting",
-      "method_ids": [],
-      "datasets": [],
-      "modality_label": "Time series + metadata",
-      "modalities": [
-        "time_series",
-        "metadata"
-      ],
-      "history": {},
-      "strengths": [
-        "Reports an operating forecasting pipeline at grocery scale.",
-        "Describes CNN-QR choice and metadata use."
-      ],
-      "limitations": [
-        "No isolated no-history or <=28-day comparison.",
-        "System-wide commercial outcomes cannot be attributed to cold-start forecasting alone."
-      ],
-      "horizon": "Daily SKU demand",
-      "version": "Official industry source",
-      "locator": "Algorithm Selection; Solution overview; Conclusion",
-      "venue": {
-        "label": "AWS / Getir · 2023"
-      },
-      "scope_review_status": "independent_source_check_complete_admission_pending",
-      "source_review": {
-        "author": "/root/industry_refresh",
-        "reviewer": "/root",
-        "checked_on": "2026-10-14",
-        "status": "primary_source_card_checked_not_scientific_admission"
-      },
-      "business_evidence": "Vendor/customer-reported overall revenue and waste changes; no new-item attribution or measured dollar amount.",
       "code_url": null,
       "dataset_listing_eligible": false,
       "first_public_date_precision": "day",
