@@ -17,8 +17,8 @@ Two scenarios carry equal weight and are always reported separately:
 
 ## One item
 
-Item `000103` is in category **winter_care** (seasonal), product type
-`winter_care_a`. Before its validation launch it had already sold at 6 other FPGs;
+Item `000103` is in category **winter_care_a** (seasonal), product type
+`winter_care`. Before its validation launch it had already sold at 6 other FPGs;
 that same-item history elsewhere is what baselines may use. Item IDs look numeric but are strings:
 `000103` keeps its leading zeros in CSV and Parquet.
 
@@ -26,8 +26,8 @@ that same-item history elsewhere is what baselines may use. Item IDs look numeri
 
 FPG `F005` (region south) has 2231 households (H) and demographic
 shares: families 0.12, young_adults 0.15, seniors 0.51, students 0.22. Item `000103` launched there on 2023-03-20 (launch `L-VAL-0023`).
-The company propensity feature for that pair at origin is P = 0.000052 expected weekly units per
-household, so the business rule M1 = H x P = 0.12 units/week.
+The company propensity feature for that pair at origin is P = 0.000047 expected weekly units per
+household, so the business rule M1 = H x P = 0.10 units/week.
 
 ## One entirely new FPG
 
@@ -56,7 +56,7 @@ weeks report two weeks later still. A model at origin *o* may only use weeks tha
 ## Planted processes (hidden from models)
 
 * Each item has a hidden per-household rate, an activity probability (sparse weeks), a modest trend and a
-  category seasonal curve with mean one (garden, gift_sets, household, pantry, winter_care).
+  category seasonal curve with mean one (garden_a, garden_b, gift_sets_a, household_a, household_b, pantry_a, pantry_b, winter_care_a, winter_care_b).
 * Each pair has a hidden affinity driven by demographic shares x item/category loadings plus noise;
   about 6% of launched pairs are near-dead (often all-zero for 52 weeks).
 * Demand is gamma-Poisson (negative binomial, shape 1.2) with sparse national bursts.

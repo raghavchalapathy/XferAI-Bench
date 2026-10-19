@@ -53,8 +53,9 @@ Primary key: `item_id, effective_from`.
 | Column | Type | Required | Nullable | Unit | Allowed | Meaning |
 |---|---|---|---|---|---|---|
 | `item_id` | string | yes | no |  |  |  |
-| `category` | string | yes | yes |  |  | Category; null means unknown. |
-| `product_type` | string | yes | yes |  |  |  |
+| `category` | string | yes | yes |  |  | Category (seasonality level); null means unknown. |
+| `product_type` | string | yes | yes |  |  | Product type (broadest hierarchy level). |
+| `subcategory` | string | no | yes |  |  | Subcategory (finest group level of the rate fallback hierarchy). |
 | `seasonality_class` | string | no | yes |  |  | Declared business class, e.g. seasonal or replenishable. |
 | `effective_from` | date32[day] | yes | no |  |  |  |
 | `known_at` | date32[day] | yes | no |  |  |  |

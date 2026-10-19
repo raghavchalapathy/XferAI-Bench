@@ -17,12 +17,17 @@
     },
     "category": {
       "x-arrow-type": "string",
-      "description": "Category; null means unknown.",
+      "description": "Category (seasonality level); null means unknown.",
       "x-nullable": true
     },
     "product_type": {
       "x-arrow-type": "string",
-      "description": "",
+      "description": "Product type (broadest hierarchy level).",
+      "x-nullable": true
+    },
+    "subcategory": {
+      "x-arrow-type": "string",
+      "description": "Subcategory (finest group level of the rate fallback hierarchy).",
       "x-nullable": true
     },
     "seasonality_class": {

@@ -157,6 +157,9 @@
         "seasonality": {
           "$ref": "#/$defs/SeasonalitySpec"
         },
+        "hierarchy": {
+          "$ref": "#/$defs/HierarchySpec"
+        },
         "demographic_share_columns": {
           "items": {
             "type": "string"
@@ -190,6 +193,42 @@
         }
       },
       "title": "FeatureSpec",
+      "type": "object"
+    },
+    "HierarchySpec": {
+      "additionalProperties": false,
+      "description": "Shared fallback hierarchy (retail defaults). Levels are item-table columns; 'item' means the item itself.",
+      "properties": {
+        "rate_levels": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Rate Levels",
+          "type": "array"
+        },
+        "season_levels": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Season Levels",
+          "type": "array"
+        },
+        "min_rate_support_fpgs": {
+          "default": 3,
+          "description": "Donor FPGs a group level needs to supply a rate.",
+          "minimum": 1,
+          "title": "Min Rate Support Fpgs",
+          "type": "integer"
+        },
+        "min_season_support_items": {
+          "default": 2,
+          "description": "Items with donor history a seasonal level needs; sparser levels fall back.",
+          "minimum": 1,
+          "title": "Min Season Support Items",
+          "type": "integer"
+        }
+      },
+      "title": "HierarchySpec",
       "type": "object"
     },
     "HouseholdSpec": {

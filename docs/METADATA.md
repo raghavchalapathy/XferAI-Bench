@@ -27,10 +27,25 @@ each stage has complete 52-week labels.
 | `time` | timezone, `week_start` (default Monday), half-open `[start,end)` weeks, `reporting_delay_days` (default 7), `horizon_weeks` (52), origin rule `first_offer_week` |
 | `target` | `units` column, gross weekly item units, nonnegative |
 | `tables` | per logical table: `path` (relative to the metadata file), `format` (`csv` or `parquet`), `columns` mapping canonical -> source name, `extra_columns` |
-| `features` | households definition, propensity spec (or `null` to disable M1/M2), seasonality estimator settings, `demographic_share_columns` |
+| `features` | households definition, propensity spec (or `null` to disable M1/M2), seasonality estimator settings, `hierarchy` (see below), `demographic_share_columns` |
 | `donor_policy` | consistent-exposure window (52 weeks) and minimum measured fraction (0.9) |
 | `cohorts` | origin windows for `train`, `validation`, `test`; scenario selection weights; which launches are ranked; which stages may be used to fit for the test |
 | `metrics`, `resource_limits`, `rights`, `privacy` | metric definitions and zero-denominator rule; optional budgets; data owner and permitted use; network is always off |
+
+### `features.hierarchy` (retail)
+
+When an item has no history at a location group, rates and seasonal shapes are borrowed from a broader level.
+One shared component applies this to every method, using only data available at the forecast origin, and
+records the level used (`rate_level`, `season_level` in forecasts; `hierarchy_summary` in the run manifest).
+
+| Key | Default | Meaning |
+|---|---|---|
+| `rate_levels` | `["item", "subcategory", "product_type"]` | fallback order for the per-household rate |
+| `season_levels` | `["category", "product_type"]` | fallback order for the mean-one seasonal profile |
+| `min_rate_support_fpgs` | `3` | a rate level is used only if at least this many location groups support it |
+| `min_season_support_items` | `2` | a seasonal level is used only if at least this many items support it |
+
+`subcategory` is an optional `items` column; without it the rate falls back from item to product type.
 
 ## Tables
 
