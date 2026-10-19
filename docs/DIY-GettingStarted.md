@@ -7,9 +7,9 @@ file says **STOP**.
 ## Goal
 
 Benchmark cold-start forecasts on the user's own retail data, locally:
-an existing item launches at a location group (FPG) where it has never sold, and each method forecasts 52
-weekly unit sales. Results come out as a local HTML report with PAIR0-E (existing location group) and PAIR0-N
-(new location group) always scored separately.
+an existing item launches at a Forecast Pixel Group (FPG) where it has never sold, and each method forecasts 52
+weekly unit sales. Results come out as a local HTML report with PAIR0-E (existing FPG) and PAIR0-N
+(new FPG) always scored separately.
 
 Honest limits:
 - No claim is made that any method works from day zero; results are measurements on the user's data only.
@@ -64,7 +64,7 @@ Data folder:            <path>                       # e.g. /data/retail_export
 File per table:         observations=<file>, offers=<file>, items=<file>, locations=<file>, launches=<file>
                         (optional) origin_features=<file>, donors=<file>, future_covariates=<file>
 Column renames:         <canonical> = <their column>, per table   # e.g. items: item_id=sku, category=dept
-IDs:                    item id column, location-group (FPG) id column
+IDs:                    item id column, Forecast Pixel Group (FPG) id column
 Time column / frequency: weekly; week_start column; week starts on <Monday|...>; timezone <IANA name>
 Reporting delay:        days from week end until the data is available (default 7)
 Target:                 the weekly units column; gross units, nonnegative

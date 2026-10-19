@@ -1,9 +1,9 @@
 # Getting started with XferAI-Bench
 
-XferAI-Bench is a local, offline benchmark for one forecasting problem. An existing retail item launches at a location group (FPG) where it has **never sold**, and you need 52 weekly unit forecasts. Two scenarios are always scored separately:
+XferAI-Bench is a local, offline benchmark for one forecasting problem. An existing retail item launches at a Forecast Pixel Group (FPG) where it has **never sold**, and you need 52 weekly unit forecasts. Two scenarios are always scored separately:
 
-- **PAIR0-E**: the location group already sells other items.
-- **PAIR0-N**: the location group is brand new.
+- **PAIR0-E**: the FPG already sells other items.
+- **PAIR0-N**: the FPG is brand new.
 
 > **Honest status.** Scored benchmark rankings are **pending**. The built-in benchmark data is **synthetic**, so it tests that the software works, not which method is better on real data. The package is not on PyPI; you install it from a clone.
 
@@ -93,7 +93,7 @@ Copy the template (`cp -r local/template local/my-data`), set `dataset.synthetic
 | `target` | the units column (`units`), gross weekly item units, nonnegative |
 | `tables` | for each table: `path` (relative to `metadata.json`), `format` (`csv` or `parquet`), `columns` (map canonical name → your column name, only if renamed), `extra_columns` |
 | `semantics` | how missing weeks, true zeros, never-offered weeks, stockouts and partial weeks are represented. Missing is never zero. |
-| `features` | `households` definition; `propensity` (expected weekly units per household, season-neutral; set `null` if your P is a probability, which disables M1/M2); `seasonality` settings (mean one over 52 weeks); `hierarchy` (when an item has no history, rates fall back item → subcategory → product type and seasonal shapes category → product type; minimum support 3 location groups / 2 items; see `docs/METADATA.md`); `demographic_share_columns`; `item_rank_feature`; `item_affinity_prefix` |
+| `features` | `households` definition; `propensity` (expected weekly units per household, season-neutral; set `null` if your P is a probability, which disables M1/M2); `seasonality` settings (mean one over 52 weeks); `hierarchy` (when an item has no history, rates fall back item → subcategory → product type and seasonal shapes category → product type; minimum support 3 FPGs / 2 items; see `docs/METADATA.md`); `demographic_share_columns`; `item_rank_feature`; `item_affinity_prefix` |
 | `donor_policy` | which other pairs may be learned from, plus the consistent-exposure window (52 weeks) and minimum measured fraction (0.9) |
 | `cohorts` | origin date windows for `train`, `validation`, `test`; `selection_weights` (PAIR0-E 0.5, PAIR0-N 0.5); which launches are ranked; which stages may be used to fit for the test |
 | `metrics` | WMAPE = sum\|F−A\|/sum A, Bias = sum F/sum A − 1, MAE; a zero denominator is reported as undefined, never patched |

@@ -34,7 +34,7 @@ each stage has complete 52-week labels.
 
 ### `features.hierarchy` (retail)
 
-When an item has no history at a location group, rates and seasonal shapes are borrowed from a broader level.
+When an item has no history at a Forecast Pixel Group (FPG), rates and seasonal shapes are borrowed from a broader level.
 One shared component applies this to every method, using only data available at the forecast origin, and
 records the level used (`rate_level`, `season_level` in forecasts; `hierarchy_summary` in the run manifest).
 
@@ -42,7 +42,7 @@ records the level used (`rate_level`, `season_level` in forecasts; `hierarchy_su
 |---|---|---|
 | `rate_levels` | `["item", "subcategory", "product_type"]` | fallback order for the per-household rate |
 | `season_levels` | `["category", "product_type"]` | fallback order for the mean-one seasonal profile |
-| `min_rate_support_fpgs` | `3` | a rate level is used only if at least this many location groups support it |
+| `min_rate_support_fpgs` | `3` | a rate level is used only if at least this many FPGs support it |
 | `min_season_support_items` | `2` | a seasonal level is used only if at least this many items support it |
 
 `subcategory` is an optional `items` column; without it the rate falls back from item to product type.
