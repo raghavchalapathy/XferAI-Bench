@@ -754,3 +754,11 @@ td.method-cell .method-name { vertical-align: middle; }
  .dataset-evidence-controls { align-items: flex-start; gap: 18px; }
  .dataset-evidence-controls .comparison-picker, .dataset-context { flex-basis: 100%; width: 100%; }
 }
+/* lean nav: section sub-navigation */
+.site-header nav a.nav-mobile-only { display: none; }
+.subnav { border-bottom: 1px solid #24222f; background: #0e0f17; }
+.subnav .wrap { display: flex; gap: 22px; overflow-x: auto; padding-top: 10px; padding-bottom: 10px; }
+.subnav a { color: #a9a6bd; text-decoration: none; font-size: .9rem; white-space: nowrap; padding-bottom: 3px; border-bottom: 2px solid transparent; }
+.subnav a:hover { color: var(--aqua-soft); }
+.subnav a[aria-current="page"] { color: #fff; border-bottom-color: var(--aqua); }
+@media (max-width: 1000px) { .site-header nav a.nav-mobile-only { display: block; } }

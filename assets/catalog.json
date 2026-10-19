@@ -33,7 +33,7 @@
       "benchmark_admitted": false,
       "scores": null,
       "runtime": null,
-      "scope_basis": "Only the R01 attribute/covariate recipe and its origin-safe reproduction; remove unrelated M5 support.",
+      "scope_basis": "Only the R01 attribute/covariate recipe and its origin-safe reproduction.",
       "strengths": [
         "A practical tabular starting point; the paper tests demand prediction for styles before their own sales exist."
       ],
