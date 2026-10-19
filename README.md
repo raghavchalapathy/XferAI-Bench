@@ -22,6 +22,7 @@ demonstrate software behaviour only; they say nothing about real-world model sup
 ## Quickstart (macOS / Linux)
 
 New here? Follow **[docs/GETTING_STARTED.md](docs/GETTING_STARTED.md)**: install, demo, then your own data (validate, split, run, select, report).
+Using a coding assistant (Claude Code, Cursor, Copilot, ChatGPT)? Point it at **[docs/DIY-GettingStarted.md](docs/DIY-GettingStarted.md)** (also [AGENTS.md](AGENTS.md), [llms.txt](llms.txt)).
 
 Needs Python 3.11 or newer (tested on 3.11 and 3.13) and Git. From the repository root:
 

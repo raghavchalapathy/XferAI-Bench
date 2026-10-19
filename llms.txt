@@ -1,0 +1,16 @@
+# XferAI-Bench
+
+> Local, offline benchmark for cold-start retail forecasting: an existing item launching at a location group where it has never sold, 52 weekly forecasts, PAIR0-E and PAIR0-N scored separately. Built-in data is synthetic; public rankings are pending.
+
+## Docs for agents
+
+- [DIY Getting Started (run on your own data with a coding assistant)](docs/DIY-GettingStarted.md)
+- [AGENTS.md](AGENTS.md)
+
+## Docs
+
+- [Getting started](docs/GETTING_STARTED.md)
+- [Metadata reference](docs/METADATA.md)
+- [Field dictionary](schemas/FIELD_DICTIONARY.md)
+- [Data classes: benchmark vs local data](docs/DATA_CLASSES.md)
+- [User manual](docs/USER_MANUAL.md)
