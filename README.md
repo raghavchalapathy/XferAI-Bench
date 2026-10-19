@@ -5,7 +5,7 @@
 [![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-green)](LICENSE)
 
 Xfer Benchmark is a local, CPU-first Python package for testing forecasting methods on **cold item-location
-pairs**: an existing retail item launches at a fulfilment point group (FPG) where that pair has **zero own-pair
+pairs**: an existing retail item launches at a Forecast Pixel Group (FPG) where that pair has **zero own-pair
 sales history**, and each method produces 52 weekly unit forecasts, evaluated on your own completed historical
 launches.
 
