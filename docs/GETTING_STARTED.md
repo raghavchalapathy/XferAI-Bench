@@ -52,12 +52,12 @@ This runs the whole pipeline on tiny synthetic data: generate → validate → s
 
 ## 6. Bring your own data
 
-**Where to put it.** Keep your data and results **out of git**. `.gitignore` already ignores `local/`, `runs/`, `runs/local/` and `*.local.*`. We recommend:
+**Where to put it.** Keep your data and results **out of git**. `.gitignore` already ignores `local/`, `runs/`, `runs/local/`, `work/`, `xb-demo*/` and `*.local.*`. We recommend:
 
 - data in `local/my-data/` (or any folder outside the repo)
 - results in `runs/local/<run-name>/`
 
-`work/` and other folders are **not** ignored. Don't put real data there. Writing a local-data run's output to a non-ignored path inside the repo is refused (exit 2).
+Other folders in the repo are **not** ignored. Don't put real data there. Writing a local-data run's output to a non-ignored path inside the repo is refused (exit 2).
 
 **Start from a template.** Generate the tiny synthetic dataset and copy its layout:
 
