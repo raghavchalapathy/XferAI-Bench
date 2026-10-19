@@ -441,7 +441,7 @@
         const first = item.event_start || item.published_at;
         return first && surveyPeriod({first_public_date: first.length === 10 ? first : null, first_public_year: Number(first.slice(0,4))}, surveyDates()) === 'recent';
       });
-      $('home-news').replaceChildren(...ordered.slice(0, 3).map(newsCard));
+      $('home-news').replaceChildren(...ordered.slice(0, 6).map(newsCard));
     }
     if ($('news-grid')) {
       const rows = records.filter(item => state.news === 'all' || newsCategory(item) === state.news);

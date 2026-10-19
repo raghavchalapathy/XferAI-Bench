@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "pending_review",
+  "metric": "WAPE",
+  "metric_label": "WAPE %, lower is better",
+  "scope": "cold-start time-series forecasting (zero or near-zero history); no VISUELLE fashion rows",
+  "provenance": {
+    "scout_research": null,
+    "scientist_verified": "factory/inbox/scientist/coldstart_ts_wape_verified_v1.json",
+    "reviewer_review": "factory/inbox/reviewer/coldstart_ts_wape_review_v1.md",
+    "reviewed_at": null
+  },
+  "methods": [],
+  "datasets": []
+}

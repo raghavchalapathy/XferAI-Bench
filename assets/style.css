@@ -771,3 +771,22 @@ td.method-cell .method-name { vertical-align: middle; }
 .lean-table { width: 100%; border-collapse: collapse; }
 .lean-table th, .lean-table td { text-align: left; padding: 12px 10px; border-bottom: 1px solid #24222f; }
 .lean-table th { color: #a9a6bd; font-weight: 500; font-size: .85rem; }
+/* strict scope 2026-10-19: full-screen hero, reveal, benchmark bars */
+body[data-page="home"] .home-hero { min-height: calc(100vh - 72px); display: flex; align-items: center; }
+body[data-page="home"] .home-hero > .wrap { width: min(1180px, calc(100% - 56px)); }
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
+.reveal.is-visible { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
+.bench-charts { display: grid; gap: 22px; }
+.bench-card { padding: 24px; border: 1px solid #2a2838; border-radius: 10px; background: #10111a; }
+.bench-card h2 { font-size: 18px; margin: 0 0 18px; }
+.bench-card h3 { font-size: 14px; color: #a9a6bd; margin: 18px 0 10px; font-weight: 500; }
+.bench-bars { display: grid; gap: 14px; }
+.bar-row { display: grid; grid-template-columns: minmax(120px, 220px) 1fr 64px; align-items: center; gap: 14px; }
+.bar-label { color: #e6e3f5; font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bar-track { height: 12px; border-radius: 999px; background: #1d1b29; overflow: hidden; }
+.bar-fill { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, #b59cf8, #e783bd); }
+.bar-value { text-align: right; color: #cbb7ff; font-variant-numeric: tabular-nums; font-size: 14px; }
+.skeleton .bar-label { height: 10px; border-radius: 6px; background: #1d1b29; }
+.skeleton .bar-fill { background: #262338; }
+.bench-status { text-transform: none; text-align: center; color: #cbb7ff; font-size: 16px; margin: 4px 0 0; }
