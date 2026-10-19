@@ -18,6 +18,7 @@ htmlcov/
 # benchmark outputs (generate locally; never commit real data or runs)
 xb-demo*/
 runs/
+work/
 *.run/
 demo-output/
 

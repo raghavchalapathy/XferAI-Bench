@@ -5,7 +5,7 @@ xferbench keeps two classes of data apart.
 | | Benchmark data | Local data |
 |---|---|---|
 | What | Shared synthetic data (built-in generator presets, later the user-supplied synthetic sample) or public data with recorded terms | Your own data |
-| How it is loaded | `--benchmark id@version` (+ `--benchmark-data DIR`), or `xferbench demo` / `xferbench ladder --benchmark` | Only `--local-data PATH/metadata.json`. Legacy `--metadata` outside a `benchmarks/` directory is treated as local and prints a warning |
+| How it is loaded | `--benchmark id@version` (+ `--benchmark-data DIR`), or `xferbench demo` / `xferbench steps --benchmark` | Only `--local-data PATH/metadata.json`. Legacy `--metadata` outside a `benchmarks/` directory is treated as local and prints a warning |
 | Versioning | `BENCHMARK.json`: benchmark_id, version, kind (synthetic/public), licence, source, `dataset_hash`; the hash is verified before every run (mismatch: exit 2) | No manifest; the dataset hash is recorded in run outputs |
 | Git | Manifests, metadata and small previews only | Never committed. `.gitignore` covers `local/`, `runs/`, `*.local.*` |
 | Output | Any `--out`; suggested `runs/benchmark/<id>@<version>/<run>/` | `--out` outside the repository, or a gitignored path such as `runs/local/<run>/`. A non-ignored path inside a git work tree is refused (exit 2) |

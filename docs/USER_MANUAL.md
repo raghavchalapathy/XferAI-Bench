@@ -1,10 +1,10 @@
 # XferAI-Bench user manual
 
-Status (2026-10-16, commit 4b91577): the software runs locally end to end on synthetic data. **Real benchmark rankings are pending.** No rights-cleared real benchmark has been run, so synthetic results only test the interface and do not show which method is better. Every command below was checked against `xferbench <command> --help` and run on the synthetic tiny preset.
+Status (2026-10-19; public `main` updated 2026-10-18): the software runs locally end to end on synthetic data. **Real benchmark rankings are pending.** No rights-cleared real benchmark has been run, so synthetic results only test the interface and do not show which method is better. Every command below was checked against `xferbench <command> --help` and run on the synthetic tiny preset.
 
 ## 1. Install
 
-Requires Python 3.10+ (checked with 3.13). Everything runs offline: there are no network or paid calls.
+Requires Python 3.11+ (checked with 3.11 and 3.13). Everything runs offline: there are no network or paid calls.
 
 ```sh
 git clone https://github.com/raghavchalapathy/XferAI-Bench.git
@@ -16,28 +16,26 @@ python3 -m venv .venv
 .venv/bin/xferbench doctor --help     # checks a dependency profile without installing anything
 ```
 
-Note: the public GitHub `main` is currently 8 commits behind the local work this manual describes, and those commits will not be pushed until the owner approves.
-
-Optional extras: LightGBM (needed for M4.lightgbm) and the foundation-model extras (`chronos`, `timesfm`, `gluonts`, `torch`) are not part of the default install. When an extra is missing, the method is listed with the reason instead of running.
+Optional extras: LightGBM (needed for M4.lightgbm) and the foundation/neural extras (`foundation`, `timesfm`, `neural`; also `boosting`, `intermittent`; see `pyproject.toml`) are not part of the default install. When an extra is missing, the method is listed with the reason instead of running.
 
 ## 2. Quickest path
 
 ```sh
 xferbench demo --out xb-demo            # generate -> validate -> split -> validation run -> select -> test run -> report
-xferbench steps --benchmark synthetic-tiny@1.0.0 --out runs/benchmark/steps-1   # B0..M4 in order, per-scenario WMAPE/Bias
+xferbench steps --benchmark synthetic-tiny@1.1.0 --out runs/benchmark/steps-1   # B0..M4 in order, per-scenario WMAPE/Bias
 ```
 
 ## 3. The full pipeline, step by step
 
 ```sh
-xferbench synth generate --preset tiny --seed 42 --out work/data      # tiny | small | stress; --format parquet|csv|both
-xferbench validate --metadata work/data/metadata.json --out work/data_quality.json
-xferbench split    --metadata work/data/metadata.json --out work/splits
-xferbench run      --local-data work/data/metadata.json --splits work/splits --stage validation --out runs/local/val-1
+xferbench synth generate --preset tiny --seed 42 --out local/data      # tiny | small | stress; --format parquet|csv|both
+xferbench validate --metadata local/data/metadata.json --out local/data_quality.json
+xferbench split    --metadata local/data/metadata.json --out local/splits.json
+xferbench run      --local-data local/data/metadata.json --splits local/splits.json --stage validation --out runs/local/val-1
 xferbench select   --validation-run runs/local/val-1 --out runs/local/selection.json
-xferbench run      --local-data work/data/metadata.json --splits work/splits --stage test \
+xferbench run      --local-data local/data/metadata.json --splits local/splits.json --stage test \
                    --selection runs/local/selection.json --out runs/local/test-1
-xferbench report   --run runs/local/test-1 --out runs/local/report-1
+xferbench report   --run runs/local/test-1 --out runs/local/test-1-report.html
 ```
 
 Points to know:
@@ -74,7 +72,7 @@ Run specific methods with `--methods B0,B1,B2,M1,M2` (explicit list; nothing is 
 
 | | Benchmark data | Local data (yours) |
 |---|---|---|
-| Flag | `--benchmark id@version` (see `xferbench benchmarks`: currently `synthetic-tiny@1.0.0`, `synthetic-small@1.0.0`), optionally `--benchmark-data <dir>` | `--local-data path/to/metadata.json` |
+| Flag | `--benchmark id@version` (see `xferbench benchmarks`: currently `synthetic-tiny@1.1.0`, `synthetic-small@1.1.0`), optionally `--benchmark-data <dir>` | `--local-data path/to/metadata.json` |
 | Output | suggested `runs/benchmark/<id>@<version>/<run>/` | outside the repo, or a gitignored path such as `runs/local/<run>/`. A non-ignored path inside a git work tree is refused (exit 2) |
 | Label | report names the benchmark | report banner **"LOCAL DATA: results on your own data. Not a benchmark result and not shareable as a leaderboard result"**; entity IDs are salted hashes |
 
