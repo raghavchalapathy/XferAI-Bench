@@ -1,6 +1,9 @@
 # Proposal: release tag plan v0.1.0 (2026-10-19, Builder; for Reviewer and owner)
 
-Proposal only. No tag has been created or pushed and nothing is published to PyPI.
+**Status:** `v0.1.0` was tagged on `17f8ddc` on 2026-10-19 (annotated tag, 10:40 AM PT) under the owner's go-ahead
+(GitHub API: `refs/tags/v0.1.0` -> tag object `acccc5fd` -> commit `17f8ddcce94d4c692a0b346cc99d02614e70392f`).
+Nothing is published to PyPI. A GitHub Release is drafted in [docs/releases/v0.1.0.md](../releases/v0.1.0.md) and has not been created.
+The plan below is kept as the record of the gates.
 Each step that is visible outside this machine needs the owner's explicit approval.
 
 ## Scope of v0.1.0
