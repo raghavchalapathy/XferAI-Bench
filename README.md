@@ -1,41 +1,44 @@
 # Xfer Benchmark (`xfer-bench`)
 
+[![ci](https://github.com/raghavchalapathy/XferAI-Bench/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/raghavchalapathy/XferAI-Bench/actions/workflows/ci.yml)
+![Python 3.11 | 3.13](https://img.shields.io/badge/python-3.11%20%7C%203.13-blue)
+[![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-green)](LICENSE)
+
 Xfer Benchmark is a local, CPU-first Python package for testing forecasting methods on **cold item-location
-pairs**. It answers one question fairly: for an existing retail item launching at a fulfilment point group (FPG)
-where that pair has **zero own-pair sales history**, which methods give the best 52-week weekly unit forecasts
-on your own completed historical launches?
+pairs**: an existing retail item launches at a fulfilment point group (FPG) where that pair has **zero own-pair
+sales history**, and each method produces 52 weekly unit forecasts, evaluated on your own completed historical
+launches.
 
 Two scenarios are always scored and shown separately, with equal 0.5/0.5 selection weight:
 
 - **PAIR0-E**: existing item at an *established* FPG (other items already sell there).
 - **PAIR0-N**: existing item at an *entirely new* FPG (no transactions there before the origin).
 
-The package ships deterministic synthetic retail data so the whole pipeline runs offline. **Synthetic results
-demonstrate software behaviour only; they say nothing about real-world model superiority.**
-
-> Status: **Milestone A** (vertical slice). Core baselines B0, B1, B2 (+ raw-unit ablation), business rules
-> M1 and M2, the evaluator, frozen validation selection and the HTML report are implemented and tested.
-> Boosting, neural, foundation and service adapters are registered with explicit reasons but **not implemented
-> yet**; they never receive scores. See [METHOD_SUPPORT.md](METHOD_SUPPORT.md) and [PROGRESS.md](PROGRESS.md).
-> The package is not published on PyPI; install it from this checkout or a locally built wheel.
+> **Status.** No rights-cleared real benchmark has been run, so **benchmark rankings are pending**. The bundled
+> data is synthetic: it tests that the software works, not which method is better. Nothing here claims that any
+> method forecasts well from day zero. The package is not on PyPI; install it from a clone or a locally built wheel.
 
 ## Quickstart (macOS / Linux)
 
-New here? Follow **[docs/GETTING_STARTED.md](docs/GETTING_STARTED.md)**: install, demo, then your own data (validate, split, run, select, report).
-Using a coding assistant (Claude Code, Cursor, Copilot, ChatGPT)? Point it at **[docs/DIY-GettingStarted.md](docs/DIY-GettingStarted.md)** (also [AGENTS.md](AGENTS.md), [llms.txt](llms.txt)).
+- New here? Follow **[docs/GETTING_STARTED.md](docs/GETTING_STARTED.md)**: install, demo, then your own data.
+- Using a coding assistant (Claude Code, Cursor, Copilot, ChatGPT)? Point it at
+  **[docs/DIY-GettingStarted.md](docs/DIY-GettingStarted.md)** (also [AGENTS.md](AGENTS.md), [llms.txt](llms.txt)).
+  It covers offline/enterprise installs and keeps your data on your machine.
 
-Needs Python 3.11 or newer (tested on 3.11 and 3.13) and Git. From the repository root:
+Needs Python 3.11 or newer and Git:
 
 ```bash
+git clone https://github.com/raghavchalapathy/XferAI-Bench.git && cd XferAI-Bench
 python3 -m venv .venv
 .venv/bin/python -m pip install --upgrade pip
 .venv/bin/python -m pip install -e ".[dev]"
-.venv/bin/xferbench doctor --profile core
-.venv/bin/xferbench demo --preset tiny --out ./xb-demo
-open ./xb-demo/report.html        # Linux: xdg-open ./xb-demo/report.html
+.venv/bin/xferbench doctor --profile core   # -> profile 'core' satisfied
+.venv/bin/xferbench demo --out ./xb-demo     # about 20 s, no network
+open ./xb-demo/report.html                  # Linux: xdg-open ./xb-demo/report.html
 ```
 
-Windows (PowerShell; these commands are prepared for CI but have **not yet been run on Windows**):
+Windows (PowerShell). CI runs the test suite and the wheel demo on `windows-latest`; these interactive commands
+themselves are untested:
 
 ```powershell
 py -3.11 -m venv .venv
@@ -44,7 +47,7 @@ py -3.11 -m venv .venv
 start .\xb-demo\report.html
 ```
 
-The tiny demo takes about 10 seconds on a laptop CPU and makes no network calls. It writes:
+The demo writes:
 
 ```text
 xb-demo/
@@ -58,6 +61,31 @@ xb-demo/
   test-run/                test forecasts/metrics for the frozen variants only
   report.html              self-contained report for the test run
 ```
+
+## Methods
+
+From the method registry (`xferbench list-methods --all`; full table with reasons in
+[METHOD_SUPPORT.md](METHOD_SUPPORT.md)). There are no rankings here: scores exist only for runs on your data.
+
+| Method | What it is | State | Code licence | Weights | Status |
+|---|---|---|---|---|---|
+| `B0` | National flat rate x households | implemented | Apache-2.0 | none | core baseline |
+| `B1` | B0 x seasonal profile | implemented | Apache-2.0 | none | core baseline |
+| `B2` | Target households x similar-FPG per-household rate (no shrinkage) | implemented | Apache-2.0 | none | core baseline |
+| `B3` | B2 shrunk toward the national rate (extra row) | implemented | Apache-2.0 | none | core baseline |
+| `M1` | Business rule H x P | implemented | Apache-2.0 | none | core (needs a propensity feature) |
+| `M2` | Business rule H x P x S | implemented | Apache-2.0 | none | core (needs a propensity feature) |
+| `M3` | Your ramp/blend/calibration rule | config_required | Apache-2.0 | none | needs a recipe; never substituted |
+| `M4.lightgbm` | Global LightGBM (Poisson) | implemented | MIT | none | optional extra `lightgbm` |
+| `FM.chronos2` | Chronos-2 donor prior x households | experimental | Apache-2.0 | Apache-2.0 | licence-pinned; not Reviewer-recommended for PAIR0; extra `foundation` |
+| `FM.chronos_bolt` | Chronos-Bolt donor prior x households | experimental | Apache-2.0 | Apache-2.0 | same as above |
+| `FM.timesfm25` | TimesFM 2.5 donor prior x households | experimental | Apache-2.0 | Apache-2.0 | same as above; extra `timesfm` |
+| `M6.deepar_count` | GluonTS DeepAR (negative binomial) donor prior | experimental | Apache-2.0 | none | same as above; extra `neural` |
+| `FM.moirai2`, `FM.tabpfn_ts`, `FM.timesfm3` | foundation adapters | unimplemented | Apache-2.0 | non-commercial | research-only, opt-in (`--allow-research-only`); never in default profiles |
+| `EXT.pop` | POP external adapter | unimplemented | CC-BY-NC-SA-4.0 | none | rejected by the Reviewer (leakage); not admitted |
+| others (`M4.xgboost`, `M4.catboost`, `M5`-`M9`, `E1`, `REF.*`) | planned | unimplemented | various | none | registered with reasons; never scored |
+
+"Experimental" adapters are tested only with fake backends here; their real backends need optional extras.
 
 ## Step-by-step commands
 
@@ -123,6 +151,20 @@ python3 -m venv /tmp/xb-env
 - The test stage scores only variants frozen from validation; split, data and policy hashes are checked.
 - No network, telemetry or model download on import or in the default demo. Metadata is declarative; no code
   or expressions from metadata are executed.
+
+## Contributing
+
+Bug reports, onboarding problems and method proposals are welcome as GitHub issues. Before a pull request:
+
+```bash
+.venv/bin/python -m pip install -c constraints/core.txt -e ".[dev]"
+.venv/bin/ruff check src tests && .venv/bin/ruff format --check src tests
+.venv/bin/python -m mypy && .venv/bin/python -m pytest
+```
+
+Ground rules (no fake scores, no leakage, no silent substitution, no network, declarative metadata) and how to
+add a method are in [CONTRIBUTING.md](CONTRIBUTING.md) and [docs/EXTENDING.md](docs/EXTENDING.md). New methods
+need honest licence metadata and leakage tests, and go through review before they are listed as implemented.
 
 ## License
 
