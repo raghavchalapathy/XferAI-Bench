@@ -24,6 +24,9 @@ Honest limits:
    `git add -f` on them. Before any commit: `git status --porcelain` must not list anything under `local/` or `runs/`.
 3. **No telemetry.** XferAI-Bench makes no network or service calls at runtime (`privacy.runtime_network: off`);
    do not add any. Network is needed only to install packages (Step 3), or not at all with a wheelhouse (Offline install).
+   This is the default. Setting `XFERBENCH_ALLOW_WEIGHT_DOWNLOAD=1` lets the optional foundation-model adapters
+   download Hugging Face weights (read in `src/xferbench/methods/foundation.py`, `_hf_kwargs`); without it they
+   load only from the local cache. Never set it without the user's explicit approval.
 4. Do not change files under `src/` or the evaluator to make a run pass. Fix the data or `metadata.json`.
 5. Do not invent answers to STOP questions. Ask the user.
 
