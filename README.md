@@ -21,6 +21,8 @@ demonstrate software behaviour only; they say nothing about real-world model sup
 
 ## Quickstart (macOS / Linux)
 
+New here? Follow **[docs/GETTING_STARTED.md](docs/GETTING_STARTED.md)**: install, demo, then your own data (validate, split, run, select, report).
+
 Needs Python 3.11 or newer (tested on 3.11 and 3.13) and Git. From the repository root:
 
 ```bash
@@ -97,6 +99,7 @@ python3 -m venv /tmp/xb-env
 
 | Topic | File |
 |---|---|
+| Getting started, end to end with your own data | [docs/GETTING_STARTED.md](docs/GETTING_STARTED.md) |
 | Beginner quickstart and expected outputs | [docs/QUICKSTART.md](docs/QUICKSTART.md) |
 | Metadata and column mapping | [docs/METADATA.md](docs/METADATA.md) |
 | Replacing synthetic data with your own | [docs/REAL_DATA.md](docs/REAL_DATA.md) |
