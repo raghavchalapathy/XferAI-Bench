@@ -67,7 +67,7 @@ xb-demo/
 From the method registry (`xferbench list-methods --all`; full table with reasons in
 [METHOD_SUPPORT.md](METHOD_SUPPORT.md)). There are no rankings here: scores exist only for runs on your data.
 
-| Method | What it is | State | Code licence | Weights | Status |
+| Method | What it is | State | Dependency licence | Weights | Status |
 |---|---|---|---|---|---|
 | `B0` | National flat rate x households | implemented | Apache-2.0 | none | core baseline |
 | `B1` | B0 x seasonal profile | implemented | Apache-2.0 | none | core baseline |
