@@ -762,3 +762,12 @@ td.method-cell .method-name { vertical-align: middle; }
 .subnav a:hover { color: var(--aqua-soft); }
 .subnav a[aria-current="page"] { color: #fff; border-bottom-color: var(--aqua); }
 @media (max-width: 1000px) { .site-header nav a.nav-mobile-only { display: block; } }
+/* lean benchmark pages */
+.lean-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; }
+.lean-card { display: flex; flex-direction: column; gap: 8px; padding: 22px; border: 1px solid #2a2838; border-radius: 6px; text-decoration: none; color: inherit; background: #10111a; }
+.lean-card:hover { border-color: var(--aqua); }
+.lean-card span { color: #a9a6bd; }
+.lean-table-wrap { overflow-x: auto; }
+.lean-table { width: 100%; border-collapse: collapse; }
+.lean-table th, .lean-table td { text-align: left; padding: 12px 10px; border-bottom: 1px solid #24222f; }
+.lean-table th { color: #a9a6bd; font-weight: 500; font-size: .85rem; }
