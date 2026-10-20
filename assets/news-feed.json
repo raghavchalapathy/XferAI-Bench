@@ -1,13 +1,76 @@
 {
   "schema_version": 1,
   "provenance": {
-    "source": "factory/inbox/scout/news_feed_v2.json",
-    "source_sha256": "e261a936c5bda13fa20c1261cb629800776bbdabb175364d3fbc988e431a6d20",
-    "review": "factory/inbox/reviewer/news-feed-v1-review-20261019/v2/review.json",
-    "review_sha256": "ae4db24f3a135cb264f05e6c536a4c263370b909be9678c1e8a83b9f04fac207",
+    "source": "factory/inbox/scout/news_feed_v3.2.json",
+    "source_sha256": "11e2dd7536426aeed809bb09c062e1333fc69c9549cc049875a0469d7105897f",
+    "review": "factory/inbox/reviewer/daily-refresh-20261020-review/v3.2/review.json",
+    "review_sha256": "57d6cc640d93c998d959342fd4db217654afdf7cb991c6f8331246ebdb149c3c",
     "verdict": "APPROVE"
   },
   "items": [
+    {
+      "id": "arxiv-2610.26582",
+      "title": "WhatIf-Bench: Benchmarking Intervention-Aware Time Series Forecasting",
+      "date": "2026-10-19",
+      "tag": "research",
+      "summary": "WhatIf-Bench: benchmark for intervention-aware time-series forecasting with covariates.",
+      "url": "https://arxiv.org/abs/2610.26582",
+      "date_display": "2026-10-19"
+    },
+    {
+      "id": "arxiv-2610.26251",
+      "title": "Beyond Static Leaderboards: Capability-Focused Evaluation with Structural Diversity for Time Series Foundation Models",
+      "date": "2026-10-19",
+      "tag": "research",
+      "summary": "Capability-focused evaluation of time-series foundation models with structural diversity.",
+      "url": "https://arxiv.org/abs/2610.26251",
+      "date_display": "2026-10-19"
+    },
+    {
+      "id": "arxiv-2610.26379",
+      "title": "CTLite: Lightweight Irregular Multivariate Time Series Forecasting with Reusable Continuous-Time Summaries",
+      "date": "2026-10-19",
+      "tag": "research",
+      "summary": "Abstract opening: Irregular multivariate time series forecasting (IMTSF) requires capturing temporal dynamics and cross-variable dependencies from sparse, asynchronous observations.",
+      "url": "https://arxiv.org/abs/2610.26379",
+      "date_display": "2026-10-19"
+    },
+    {
+      "id": "arxiv-2610.25392",
+      "title": "Paloma: Phase-Conditioned Residual Modulation for Time Series Forecasting",
+      "date": "2026-10-18",
+      "tag": "research",
+      "summary": "Abstract opening: Explicitly modeling periodicity has proven to be an efficient approach for time series forecasting, where the residual, obtained after removing the periodic component from the time series, is typically treated as unstructured noise.",
+      "url": "https://arxiv.org/abs/2610.25392",
+      "date_display": "2026-10-18"
+    },
+    {
+      "id": "arxiv-2610.24321",
+      "title": "Morpheus-2.0: Multiscale Probabilistic Forecasting with Dual-Axis Attention",
+      "date": "2026-10-16",
+      "tag": "research",
+      "summary": "Morpheus-2.0: universal probabilistic forecaster with dual-axis attention.",
+      "url": "https://arxiv.org/abs/2610.24321",
+      "date_display": "2026-10-16"
+    },
+    {
+      "id": "arxiv-2610.23394",
+      "title": "Forecasting Voltage Time Series under Anomalies Using a WGAN Model With Lipschitz Control and Progressive Kernel Critic Strategy",
+      "date": "2026-10-16",
+      "tag": "research",
+      "summary": "Abstract opening: In time-series forecasting tasks, the use of recursive forecasting on high-dimensional data substantially increases the complexity of the prediction process.",
+      "url": "https://arxiv.org/abs/2610.23394",
+      "date_display": "2026-10-16"
+    },
+    {
+      "id": "arxiv-2610.23735",
+      "title": "LagNet: Lag-Structured Operators for Long-Term Time Series Forecasting",
+      "date": "2026-10-16",
+      "tag": "research",
+      "summary": "Abstract opening: Long-term time series forecasting maps a finite history window to an extended future horizon.",
+      "url": "https://arxiv.org/abs/2610.23735",
+      "date_display": "2026-10-16"
+    },
     {
       "id": "mistral-timestral-blog",
       "title": "Timestral: Mistral's time-series foundation models",
@@ -18,13 +81,121 @@
       "date_display": "2026-10-15"
     },
     {
+      "id": "arxiv-2610.21123",
+      "title": "DST-Net: Decomposed Spatio-Temporal Network for Time Series Forecasting",
+      "date": "2026-10-15",
+      "tag": "research",
+      "summary": "Abstract opening: Series decomposition has emerged as a widely acknowledged paradigm in deep time series forecasting models.",
+      "url": "https://arxiv.org/abs/2610.21123",
+      "date_display": "2026-10-15"
+    },
+    {
+      "id": "arxiv-2610.22358",
+      "title": "PathFM: Fast Generative Forecasting of Multivariate Trajectories",
+      "date": "2026-10-15",
+      "tag": "research",
+      "summary": "Abstract opening: Time series foundation models are becoming increasingly popular for general-purpose forecasting.",
+      "url": "https://arxiv.org/abs/2610.22358",
+      "date_display": "2026-10-15"
+    },
+    {
       "id": "hf-mistralai-timestral-209m",
       "title": "Timestral-209M (Hugging Face model page)",
       "date": "2026-10-14",
       "tag": "industry",
       "summary": "Mistral AI's 209M-parameter Timestral time-series forecasting model on Hugging Face.",
       "url": "https://huggingface.co/mistralai/Timestral-209M",
-      "date_display": "Repo created 2026-10-14 (PT)"
+      "date_display": "Repo created 2026-10-14 (UTC)"
+    },
+    {
+      "id": "hf-mistralai-timestral-family",
+      "title": "Timestral 5M / 28M / 123M checkpoints (Hugging Face)",
+      "date": "2026-10-14",
+      "tag": "industry",
+      "summary": "Mistral AI published smaller Timestral checkpoints (5M, 28M, 123M) alongside Timestral-209M.",
+      "url": "https://huggingface.co/mistralai/Timestral-123M",
+      "date_display": "Repo created 2026-10-14 (UTC)"
+    },
+    {
+      "id": "arxiv-2610.19552",
+      "title": "Test-Time Forecasting: Recurrent Depth Enables In-Context Dynamics Prediction",
+      "date": "2026-10-14",
+      "tag": "research",
+      "summary": "Abstract opening: Foundation models for dynamical systems can forecast unseen partial differential equations (PDEs), ordinary differential equations (ODEs), and time series during inference.",
+      "url": "https://arxiv.org/abs/2610.19552",
+      "date_display": "2026-10-14"
+    },
+    {
+      "id": "arxiv-2610.19603",
+      "title": "Beyond Static Positional Encoding: Bayesian Time-aware Attention for Non-Stationary Long-term Time Series Forecasting",
+      "date": "2026-10-14",
+      "tag": "research",
+      "summary": "Abstract opening: Transformers have demonstrated strong performance in long-term time series forecasting (LTSF), yet modeling non-stationary temporal dependencies remains challenging.",
+      "url": "https://arxiv.org/abs/2610.19603",
+      "date_display": "2026-10-14"
+    },
+    {
+      "id": "arxiv-2610.19725",
+      "title": "TimeRSI: Towards Self-Improved Agentic Deployment for Time-Series Foundation Models",
+      "date": "2026-10-14",
+      "tag": "research",
+      "summary": "Abstract opening: Time-series foundation models provide strong zero-shot forecast, but deployment for real-world applications still requires task-specific designs for model inputs and outputs.",
+      "url": "https://arxiv.org/abs/2610.19725",
+      "date_display": "2026-10-14"
+    },
+    {
+      "id": "arxiv-2610.19831",
+      "title": "CTIA-ODE: Continuous-Time Inter-Variable Attention for Long-Term Time Series Forecasting",
+      "date": "2026-10-14",
+      "tag": "research",
+      "summary": "Abstract opening: Although multivariate time series forecasting has broad application prospects, effectively incorporating exogenous variables remains challenging.",
+      "url": "https://arxiv.org/abs/2610.19831",
+      "date_display": "2026-10-14"
+    },
+    {
+      "id": "arxiv-2610.17794",
+      "title": "GIFT-Eval-CTX: A Benchmark For Contextual Forecasting Model Evaluation",
+      "date": "2026-10-13",
+      "tag": "research",
+      "summary": "GIFT-Eval-CTX: benchmark for contextual forecasting that uses verified forward-looking information.",
+      "url": "https://arxiv.org/abs/2610.17794",
+      "date_display": "2026-10-13"
+    },
+    {
+      "id": "gh-nixtla-conformalforecast",
+      "title": "Nixtla conformalforecast (GitHub repository)",
+      "date": "2026-10-13",
+      "tag": "industry",
+      "summary": "Nixtla repository described as \"Conformal prediction for time series forecasting\".",
+      "url": "https://github.com/Nixtla/conformalforecast",
+      "date_display": "Repo created 2026-10-13 (UTC)"
+    },
+    {
+      "id": "arxiv-2610.17864",
+      "title": "TStruct: Learning Shared Temporal Structures for Long-Term Time-Series Forecasting",
+      "date": "2026-10-13",
+      "tag": "research",
+      "summary": "Abstract opening: Long-term time series forecasting requires temporal dependency modeling that remains stable and generalizable under temporal distribution shifts.",
+      "url": "https://arxiv.org/abs/2610.17864",
+      "date_display": "2026-10-13"
+    },
+    {
+      "id": "arxiv-2610.18196",
+      "title": "Hierarchical Time Series Forecasting with Operator-Valued Kernels",
+      "date": "2026-10-13",
+      "tag": "research",
+      "summary": "Abstract opening: Hierarchical time series forecasting requires generating accurate predictions that are coherent across multiple levels of aggregation.",
+      "url": "https://arxiv.org/abs/2610.18196",
+      "date_display": "2026-10-13"
+    },
+    {
+      "id": "arxiv-2610.18621",
+      "title": "Deterministic Prediction as Global Velocity: Flow Matching for Probabilistic Time-Series Forecast",
+      "date": "2026-10-13",
+      "tag": "research",
+      "summary": "Abstract opening: Accurate uncertainty quantification is critical for many time series forecasting applications, and recent studies have increasingly adopted generative models to capture predictive uncertainty.",
+      "url": "https://arxiv.org/abs/2610.18621",
+      "date_display": "2026-10-13"
     },
     {
       "id": "hf-theforecastingcompany-t0-gamma",
@@ -33,7 +204,7 @@
       "tag": "industry",
       "summary": "The Forecasting Company's t0-gamma forecasting model on Hugging Face; benchmark scores on the card are reported by the company.",
       "url": "https://huggingface.co/theforecastingcompany/t0-gamma",
-      "date_display": "Repo created 2026-10-12 (PT)"
+      "date_display": "Repo created 2026-10-12 (UTC)"
     },
     {
       "id": "gcloud-bigquery-timesfm3",
@@ -43,6 +214,195 @@
       "summary": "Google Cloud blog on TimesFM 3.0 multivariate forecasting in BigQuery.",
       "url": "https://cloud.google.com/blog/products/data-analytics/bigquery-timesfm-3-0-with-multivariate-time-series-forecasting",
       "date_display": "2026-10-12"
+    },
+    {
+      "id": "arxiv-2610.16345",
+      "title": "ChronoScribe: Semantic-Numerical Specialization for Instruction-Driven Time Series Forecasting",
+      "date": "2026-10-12",
+      "tag": "research",
+      "summary": "Abstract opening: Recent advances in instruction-driven time series forecasting highlight a fundamental tension: systems must simultaneously master natural-language instruction following and precise numerical prediction.",
+      "url": "https://arxiv.org/abs/2610.16345",
+      "date_display": "2026-10-12"
+    },
+    {
+      "id": "arxiv-2610.16433",
+      "title": "ECHO: Correcting Time Series Foundation Model Forecasts with Historical Analogues and Errors",
+      "date": "2026-10-12",
+      "tag": "research",
+      "summary": "Abstract opening: Time Series Foundation Models (TSFMs) provide general-purpose forecasting capabilities, yet their forecasts can remain misaligned with the temporal characteristics of a target domain.",
+      "url": "https://arxiv.org/abs/2610.16433",
+      "date_display": "2026-10-12"
+    },
+    {
+      "id": "arxiv-2610.15760",
+      "title": "Hyperbolic Time Series Forecasting with Learnable Decomposition and Manifold Dynamics",
+      "date": "2026-10-11",
+      "tag": "research",
+      "summary": "Abstract opening: Multiscale structure is central to time series forecasting: temporal signals contain slowly varying trends, intermediate seasonal patterns, and high-frequency residuals.",
+      "url": "https://arxiv.org/abs/2610.15760",
+      "date_display": "2026-10-11"
+    },
+    {
+      "id": "arxiv-2610.14861",
+      "title": "World2TS: Real-World Event Context for Time-Series Forecasting",
+      "date": "2026-10-10",
+      "tag": "research",
+      "summary": "Abstract opening: Time-series forecasting plays a vital role in a wide range of real-world applications.",
+      "url": "https://arxiv.org/abs/2610.14861",
+      "date_display": "2026-10-10"
+    },
+    {
+      "id": "arxiv-2610.12883",
+      "title": "HART: Hybrid Attention-RWKV Time series Foundation Model",
+      "date": "2026-10-09",
+      "tag": "research",
+      "summary": "HART: hybrid attention-RWKV time-series foundation model for non-autoregressive multi-step forecasting.",
+      "url": "https://arxiv.org/abs/2610.12883",
+      "date_display": "2026-10-09"
+    },
+    {
+      "id": "arxiv-2610.13208",
+      "title": "How Much Computation Does Every Forecast Need? Structured Block Skipping in Two Time-Series Foundation Models",
+      "date": "2026-10-09",
+      "tag": "research",
+      "summary": "Abstract opening: Time-series foundation models use the same network depth for every input, although forecasting windows differ in structure and difficulty.",
+      "url": "https://arxiv.org/abs/2610.13208",
+      "date_display": "2026-10-09"
+    },
+    {
+      "id": "arxiv-2610.13676",
+      "title": "On the Encoding of Calendar Features in Covariate-Informed Time Series Foundation Models",
+      "date": "2026-10-09",
+      "tag": "research",
+      "summary": "Abstract opening: Time series foundation models (TSFMs) increasingly offer covariate support, with calendar information being the most common type of categorical covariate in practice, as it is available for every point in time.",
+      "url": "https://arxiv.org/abs/2610.13676",
+      "date_display": "2026-10-09"
+    },
+    {
+      "id": "arxiv-2610.14376",
+      "title": "DPAL: A Test-Time Adaptation Loss for Financial Time Series Forecasting",
+      "date": "2026-10-09",
+      "tag": "research",
+      "summary": "Abstract opening: Test-time adaptation (TTA) enables time series forecasters to update after deployment as new observations become available.",
+      "url": "https://arxiv.org/abs/2610.14376",
+      "date_display": "2026-10-09"
+    },
+    {
+      "id": "arxiv-2610.11734",
+      "title": "Timer-M1: A Multivariate Time Series Foundation Model via Learning Primitives",
+      "date": "2026-10-08",
+      "tag": "research",
+      "summary": "Timer-M1: pretrained multivariate time-series foundation model for zero-shot forecasting.",
+      "url": "https://arxiv.org/abs/2610.11734",
+      "date_display": "2026-10-08"
+    },
+    {
+      "id": "arxiv-2610.11164",
+      "title": "RideBench: A Large-Scale Exogenous-Aware Benchmark for Ride-Hailing Time Series Forecasting",
+      "date": "2026-10-08",
+      "tag": "research",
+      "summary": "Abstract opening: We release Ride-Hailing, a large-scale ride-hailing time series dataset synthesized from DiDi's marketplace data across 200 spatial areas.",
+      "url": "https://arxiv.org/abs/2610.11164",
+      "date_display": "2026-10-08"
+    },
+    {
+      "id": "arxiv-2610.11170",
+      "title": "SACQ: Structured Decoding with Memory-Conditioned Refinement for Long-Horizon Forecasting",
+      "date": "2026-10-08",
+      "tag": "research",
+      "summary": "Abstract opening: Long-term time series forecasting (LTSF) models predominantly employ patch-based encoders terminated by a flatten readout head that maps the entire encoded historical memory to all future steps through a single shared projection.",
+      "url": "https://arxiv.org/abs/2610.11170",
+      "date_display": "2026-10-08"
+    },
+    {
+      "id": "arxiv-2610.11229",
+      "title": "SteerCast: Retrieval-Based Latent Steering for Decoder-Only Time Series Forecasting",
+      "date": "2026-10-08",
+      "tag": "research",
+      "summary": "Abstract opening: Time series forecasting aims to predict future values from historical observations and auxiliary features.",
+      "url": "https://arxiv.org/abs/2610.11229",
+      "date_display": "2026-10-08"
+    },
+    {
+      "id": "arxiv-2610.11924",
+      "title": "Revisiting Identity and Spectra Dispersion in Media-Bridged Time Series Forecasting: Linking Multivariate Signals and Narrative Flows",
+      "date": "2026-10-08",
+      "tag": "research",
+      "summary": "Abstract opening: Media-bridged time series forecasting is expanding to encompass traditional \"multivariate\" and emerging \"multimodal\" (e.g., through textual assistance).",
+      "url": "https://arxiv.org/abs/2610.11924",
+      "date_display": "2026-10-08"
+    },
+    {
+      "id": "arxiv-2610.12148",
+      "title": "Large-Scale Benchmarking of Quantum Neural Network Configurations for Financial Time Series Forecasting",
+      "date": "2026-10-08",
+      "tag": "research",
+      "summary": "Abstract opening: Quantum machine learning, and quantum neural networks (QNNs) in particular, are advancing fields with growing potential.",
+      "url": "https://arxiv.org/abs/2610.12148",
+      "date_display": "2026-10-08"
+    },
+    {
+      "id": "arxiv-2610.12232",
+      "title": "Training on the Future: A Delay-Aware Audit of Test-Time Adaptation for Time-Series Forecasting",
+      "date": "2026-10-08",
+      "tag": "research",
+      "summary": "Abstract opening: Test-time adaptation (TTA) methods for time-series forecasting update a deployed model, or a small adapter around it, from incoming ground truth.",
+      "url": "https://arxiv.org/abs/2610.12232",
+      "date_display": "2026-10-08"
+    },
+    {
+      "id": "arxiv-2610.12240",
+      "title": "AdaCast: Conditional Parameter Generation for Adaptive Time Series Forecasting",
+      "date": "2026-10-08",
+      "tag": "research",
+      "summary": "Abstract opening: Time-series foundation models (TSFMs) have achieved strong forecasting performance across domains.",
+      "url": "https://arxiv.org/abs/2610.12240",
+      "date_display": "2026-10-08"
+    },
+    {
+      "id": "arxiv-2610.09994",
+      "title": "Temporal Predictive Multiplicity: Equally Accurate Time Series Models Yield Different Forecast Trajectories",
+      "date": "2026-10-07",
+      "tag": "research",
+      "summary": "Abstract opening: Models with near-identical predictive performance can yield substantially different predictions, a phenomenon known as predictive multiplicity.",
+      "url": "https://arxiv.org/abs/2610.09994",
+      "date_display": "2026-10-07"
+    },
+    {
+      "id": "arxiv-2610.10057",
+      "title": "WxFM-XL: Adapting Univariate Foundation Models to Multi-Station Weather Forecasting",
+      "date": "2026-10-07",
+      "tag": "research",
+      "summary": "Abstract opening: With the rise of univariate time series foundation models (e.g., Sundial, Timer), initial efforts have been made to extend them to multivariate settings.",
+      "url": "https://arxiv.org/abs/2610.10057",
+      "date_display": "2026-10-07"
+    },
+    {
+      "id": "arxiv-2610.10697",
+      "title": "On linearity or non-linearity in machine learning for quantum chaotic dynamics",
+      "date": "2026-10-07",
+      "tag": "research",
+      "summary": "Abstract opening: Accurately simulating chaotic quantum many-body dynamics remains a major computational challenge for classical methods, due to the rapid buildup and spatial spreading of entanglement during the evolution.",
+      "url": "https://arxiv.org/abs/2610.10697",
+      "date_display": "2026-10-07"
+    },
+    {
+      "id": "arxiv-2610.08118",
+      "title": "Attenuated in-context identification in time-series foundation models: diagnosis under counterfactual inputs and repair by synthetic forced-system fine-tuning",
+      "date": "2026-10-06",
+      "tag": "research",
+      "summary": "Abstract opening: Covariate-aware time-series foundation models (TSFMs) promise training-free what-if answers for instrumented plants: the change in output that a different future input would cause.",
+      "url": "https://arxiv.org/abs/2610.08118",
+      "date_display": "2026-10-06"
+    },
+    {
+      "id": "arxiv-2610.04547",
+      "title": "TMAML: Temporal Model-Agnostic Meta-Learning for Cold-Start Time Series Forecasting",
+      "date": "2026-10-03",
+      "tag": "research",
+      "summary": "TMAML: meta-learning method for cold-start time series forecasting (little to no history), per the abstract.",
+      "url": "https://arxiv.org/abs/2610.04547",
+      "date_display": "2026-10-03"
     },
     {
       "id": "arxiv-2610.00589",
@@ -78,7 +438,7 @@
       "tag": "industry",
       "summary": "Google Research's TimesFM 3.0 checkpoint on Hugging Face.",
       "url": "https://huggingface.co/google/timesfm-3.0-pytorch",
-      "date_display": "Repo created 2026-08-24 (PT)"
+      "date_display": "Repo created 2026-08-24 (UTC)"
     },
     {
       "id": "synthefy-nori-coldstart",
@@ -96,7 +456,7 @@
       "tag": "industry",
       "summary": "NXAI's TiRex-2 model repository on Hugging Face.",
       "url": "https://huggingface.co/NX-AI/TiRex-2",
-      "date_display": "Repo created 2026-06-16 (PT)"
+      "date_display": "Repo created 2026-06-16 (UTC)"
     },
     {
       "id": "arxiv-2605.20119",
@@ -132,7 +492,7 @@
       "tag": "industry",
       "summary": "Amazon's Chronos-2 forecasting model weights on Hugging Face.",
       "url": "https://huggingface.co/amazon/chronos-2",
-      "date_display": "Repo created 2025-10-30 (PT)"
+      "date_display": "Repo created 2025-10-30 (UTC)"
     },
     {
       "id": "arxiv-2510.15821",
@@ -168,7 +528,7 @@
       "tag": "industry",
       "summary": "NXAI's TiRex forecasting model on Hugging Face.",
       "url": "https://huggingface.co/NX-AI/TiRex",
-      "date_display": "Repo created 2025-05-26 (PT)"
+      "date_display": "Repo created 2025-05-26 (UTC)"
     },
     {
       "id": "arxiv-2505.14766",
@@ -186,7 +546,7 @@
       "tag": "industry",
       "summary": "Tsinghua THUML's 128M Sundial base model on Hugging Face.",
       "url": "https://huggingface.co/thuml/sundial-base-128m",
-      "date_display": "Repo created 2025-05-13 (PT)"
+      "date_display": "Repo created 2025-05-13 (UTC)"
     },
     {
       "id": "hf-datadog-toto-open-base-1.0",
@@ -195,7 +555,7 @@
       "tag": "industry",
       "summary": "Datadog's open-weights Toto 1.0 base model on Hugging Face.",
       "url": "https://huggingface.co/Datadog/Toto-Open-Base-1.0",
-      "date_display": "Repo created 2025-04-30 (PT)"
+      "date_display": "Repo created 2025-04-30 (UTC)"
     },
     {
       "id": "arxiv-2502.00816",
@@ -231,16 +591,16 @@
       "tag": "industry",
       "summary": "Amazon's Chronos-Bolt base model weights on Hugging Face.",
       "url": "https://huggingface.co/amazon/chronos-bolt-base",
-      "date_display": "Repo created 2024-11-25 (PT)"
+      "date_display": "Repo created 2024-11-25 (UTC)"
     },
     {
       "id": "hf-salesforce-moirai-moe-1.0-r-base",
       "title": "moirai-moe-1.0-R-base (Hugging Face model page)",
-      "date": "2024-10-31",
+      "date": "2024-11-01",
       "tag": "industry",
       "summary": "Salesforce's Moirai-MoE base model on Hugging Face (card licence cc-by-nc-4.0).",
       "url": "https://huggingface.co/Salesforce/moirai-moe-1.0-R-base",
-      "date_display": "Repo created 2024-10-31 (PT)"
+      "date_display": "Repo created 2024-11-01 (UTC)"
     },
     {
       "id": "arxiv-2410.10393",
@@ -267,7 +627,7 @@
       "tag": "industry",
       "summary": "IBM's Tiny Time Mixers r2 models on Hugging Face.",
       "url": "https://huggingface.co/ibm-granite/granite-timeseries-ttm-r2",
-      "date_display": "Repo created 2024-10-08 (PT)"
+      "date_display": "Repo created 2024-10-08 (UTC)"
     },
     {
       "id": "arxiv-2403.07815",
