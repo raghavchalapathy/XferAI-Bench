@@ -1,13 +1,67 @@
 {
   "schema_version": 1,
   "provenance": {
-    "source": "factory/inbox/scout/news_feed_v3.2.json",
-    "source_sha256": "11e2dd7536426aeed809bb09c062e1333fc69c9549cc049875a0469d7105897f",
-    "review": "factory/inbox/reviewer/daily-refresh-20261020-review/v3.2/review.json",
-    "review_sha256": "57d6cc640d93c998d959342fd4db217654afdf7cb991c6f8331246ebdb149c3c",
+    "source": "factory/inbox/scout/news_feed_v3.3.json",
+    "source_sha256": "60662421fb8ab5d2116089084189fb84f1f333f0978bb28a6f43aefb2d3e6bf2",
+    "review": "factory/inbox/reviewer/daily-refresh-20261021-review/review.json",
+    "review_sha256": "e024b97c939dcc76a803e4a23f9880cef8b5e08dca162baebd579bd6438aebc3",
     "verdict": "APPROVE"
   },
   "items": [
+    {
+      "id": "arxiv-2610.28563",
+      "title": "Asymmetric Bidirectional Predictive Dynamics in Google Search and COVID-19 Time Series: A Multi-Horizon Forecast-Error Analysis",
+      "date": "2026-10-20",
+      "tag": "research",
+      "summary": "From the abstract: We examine eight pre-specified Google Trends-COVID-19 pairs in both directions using matched LightGBM forecasts over rolling 400-day windows and horizons of 1-14 days.",
+      "url": "https://arxiv.org/abs/2610.28563",
+      "date_display": "2026-10-20"
+    },
+    {
+      "id": "arxiv-2610.28495",
+      "title": "Model- and Layer-Level Closed-Loop Forecasting with SSM-Based Spiking Neural Networks",
+      "date": "2026-10-20",
+      "tag": "research",
+      "summary": "From the abstract: We explore two closed-loop forecasting strategies, in which the network's own generated values are fed back into the network as if they were observed past values: (i) model-level and (ii) layer-level closed-loop forecasting.",
+      "url": "https://arxiv.org/abs/2610.28495",
+      "date_display": "2026-10-20"
+    },
+    {
+      "id": "arxiv-2610.28200",
+      "title": "Parameter-Efficient Adaptation of Time Series Foundation Models for Electrical Load Forecasting",
+      "date": "2026-10-20",
+      "tag": "research",
+      "summary": "From the abstract: This paper compares pretrained inference, full fine-tuning, and low-rank adaptation (LoRA) in terms of forecasting accuracy and adaptation efficiency across four electrical load aggregation levels.",
+      "url": "https://arxiv.org/abs/2610.28200",
+      "date_display": "2026-10-20"
+    },
+    {
+      "id": "arxiv-2610.27763",
+      "title": "Foundation-Style Pretraining for Scalable and Transferable Distributed PV Forecasting",
+      "date": "2026-10-20",
+      "tag": "research",
+      "summary": "From the abstract: To address this scalability gap, this paper presents a domain-specific foundation-style pretraining framework that learns a shared forecasting model from heterogeneous multi-site and multi-horizon PV data.",
+      "url": "https://arxiv.org/abs/2610.27763",
+      "date_display": "2026-10-20"
+    },
+    {
+      "id": "arxiv-2610.27468",
+      "title": "Training-Free Continual Learning for Multimodal Forecasting via Prompt Evolution",
+      "date": "2026-10-20",
+      "tag": "research",
+      "summary": "From the abstract: We argue that continual prompt evolution is a practical, training-free alternative to retraining for multimodal forecasting.",
+      "url": "https://arxiv.org/abs/2610.27468",
+      "date_display": "2026-10-20"
+    },
+    {
+      "id": "arxiv-2610.26987",
+      "title": "Dynamic Dual-Feedback Conformal Inference for Time Series Forecasting",
+      "date": "2026-10-19",
+      "tag": "research",
+      "summary": "From the abstract: In this paper, we propose Dynamic Dual-feedback Conformal Inference (DDCI), which incorporates a dual-feedback mechanism consisting of actual feedback and estimated feedback.",
+      "url": "https://arxiv.org/abs/2610.26987",
+      "date_display": "2026-10-19"
+    },
     {
       "id": "arxiv-2610.26582",
       "title": "WhatIf-Bench: Benchmarking Intervention-Aware Time Series Forecasting",
@@ -387,6 +441,15 @@
       "date_display": "2026-10-07"
     },
     {
+      "id": "arxiv-2610.07825",
+      "title": "Forecast Accuracy Is Not Trading Profit: Evolving Small Recurrent Networks for Stock Return Prediction",
+      "date": "2026-10-06",
+      "tag": "research",
+      "summary": "From the abstract: We compare linear, fixed recurrent, transformer, and mixing based architectures against recurrent networks evolved by neuroevolutionary architecture search, evaluating each on forecast accuracy and on the net return of a daily long/short strategy.",
+      "url": "https://arxiv.org/abs/2610.07825",
+      "date_display": "2026-10-06"
+    },
+    {
       "id": "arxiv-2610.08118",
       "title": "Attenuated in-context identification in time-series foundation models: diagnosis under counterfactual inputs and repair by synthetic forced-system fine-tuning",
       "date": "2026-10-06",
@@ -412,6 +475,15 @@
       "summary": "Exploratory study comparing TimesFM-3 with classical methods (e.g. ARIMA, exponential smoothing) on simulated series.",
       "url": "https://arxiv.org/abs/2610.00589",
       "date_display": "2026-09-30"
+    },
+    {
+      "id": "hf-ibm-granite-granite-timeseries-ensemble-r1",
+      "title": "Granite Timeseries Ensemble R1 (Hugging Face model page)",
+      "date": "2026-09-23",
+      "tag": "industry",
+      "summary": "From the model card: Granite Timeseries Ensemble R1 is an extensible framework for combining quantile forecasts from multiple pretrained time-series models.",
+      "url": "https://huggingface.co/ibm-granite/granite-timeseries-ensemble-r1",
+      "date_display": "Repo created 2026-09-23 (UTC)"
     },
     {
       "id": "google-timesfm3-blog",
@@ -459,6 +531,42 @@
       "date_display": "Repo created 2026-06-16 (UTC)"
     },
     {
+      "id": "arxiv-2606.16925",
+      "title": "RAID: Semantic Graph Diffusion for True Cold-Start and Cross-Lingual Forecasting",
+      "date": "2026-06-15",
+      "tag": "research",
+      "summary": "From the abstract: However, true cold-start scenarios, where a new item has no prior observations, violate this assumption. We propose RAID (Retrieval-Augmented Iterative Diffusion) a framework, which replaces history-based correlation learning with metadata-driven semantic retrieval and graph-conditioned diffusion.",
+      "url": "https://arxiv.org/abs/2606.16925",
+      "date_display": "2026-06-15"
+    },
+    {
+      "id": "arxiv-2606.09787",
+      "title": "Zero Touch Predictive Orchestration: Automating Time-Series Models for the Cloud-Edge Continuum",
+      "date": "2026-06-08",
+      "tag": "research",
+      "summary": "From the abstract: However, orchestrators face a severe \"cold start\" problem: newly discovered nodes lack the historical data required to train localized predictive models, while generalized models fail to capture unique hardware and microservice behaviors. To solve this, we propose a fully automated time-series prediction architecture driven by a novel data-mixing methodology.",
+      "url": "https://arxiv.org/abs/2606.09787",
+      "date_display": "2026-06-08"
+    },
+    {
+      "id": "arxiv-2606.07457",
+      "title": "Time series Foundation Models based on Physics-Informed Synthetic Histories for Cold-Start Photovoltaic Forecasting",
+      "date": "2026-06-05",
+      "tag": "research",
+      "summary": "From the abstract: This cold-start setting is addressed with a zero-shot pipeline that generates a synthetic production history from plant metadata and meteorological covariates, enabling time-series foundation models (TSFMs) to forecast through inference-time conditioning.",
+      "url": "https://arxiv.org/abs/2606.07457",
+      "date_display": "2026-06-05"
+    },
+    {
+      "id": "arxiv-2606.05413",
+      "title": "CausalPOI: Spatio-Temporal Graph-Based Causal Modeling for Cold-Start POI Check-in Forecasting",
+      "date": "2026-06-03",
+      "tag": "research",
+      "summary": "From the abstract: In this paper, we introduce a novel research problem -- cold-start POI check-in forecasting, which aims to predict the future check-in pattern of a newly introduced POI, by modeling its temporal evolution and functional interactions with nearby POIs in a structured urban spatial context.",
+      "url": "https://arxiv.org/abs/2606.05413",
+      "date_display": "2026-06-03"
+    },
+    {
       "id": "arxiv-2605.20119",
       "title": "Toto 2.0: Time Series Forecasting Enters the Scaling Era",
       "date": "2026-05-19",
@@ -466,6 +574,15 @@
       "summary": "Toto 2.0: five open-weights forecasting models from 4M to 2.5B parameters trained with one recipe.",
       "url": "https://arxiv.org/abs/2605.20119",
       "date_display": "2026-05-19"
+    },
+    {
+      "id": "arxiv-2605.19172",
+      "title": "Bridge: Retrieval-Augmented Spatiotemporal Modeling for Urban Delivery Demand",
+      "date": "2026-05-18",
+      "tag": "research",
+      "summary": "Abstract opening: Forecasting urban delivery demand becomes substantially more challenging when newly added service regions lack historical records.",
+      "url": "https://arxiv.org/abs/2605.19172",
+      "date_display": "2026-05-18"
     },
     {
       "id": "arxiv-2604.20370",
