@@ -1,13 +1,58 @@
 {
   "schema_version": 1,
   "provenance": {
-    "source": "factory/inbox/scout/news_feed_v3.3.json",
-    "source_sha256": "60662421fb8ab5d2116089084189fb84f1f333f0978bb28a6f43aefb2d3e6bf2",
-    "review": "factory/inbox/reviewer/daily-refresh-20261021-review/review.json",
-    "review_sha256": "e024b97c939dcc76a803e4a23f9880cef8b5e08dca162baebd579bd6438aebc3",
+    "source": "factory/inbox/scout/news_feed_v3.4.json",
+    "source_sha256": "f23dfb39bd476fef92b855147fb710400a137042b56e4ea171f01ab4aaa72872",
+    "review": "factory/inbox/reviewer/daily-refresh-20261022-review/review.json",
+    "review_sha256": "47601516b3af3b228bee3f3fac5541a70672f457c6bf37e36f820fd4c2ec78a6",
     "verdict": "APPROVE"
   },
   "items": [
+    {
+      "id": "arxiv-2610.29604",
+      "title": "Local and Global Recursive Ridge Regression for Online Residual Correction of Frozen Multivariate Forecasters under Label Delay",
+      "date": "2026-10-21",
+      "tag": "research",
+      "summary": "From the abstract: Aiming to combine a small retained state with a large error reduction, we propose DRiC (DCT Ridge Corrector), which fits a ridge regression of the leading discrete cosine transform (DCT) coefficients of the next residual block on those of the frozen forecast and of the latest input block, with sufficient statistics updated recursively.",
+      "url": "https://arxiv.org/abs/2610.29604",
+      "date_display": "2026-10-21"
+    },
+    {
+      "id": "arxiv-2610.29504",
+      "title": "Rethinking Agentic Model Orchestration for Time Series Forecasting",
+      "date": "2026-10-21",
+      "tag": "research",
+      "summary": "From the abstract: To disentangle these effects, we introduce FairAMO, a controlled evaluation protocol with frozen candidate forecasts. Experiments on GIFT-Eval show that AMO improves accuracy, but its gains are bounded by the candidate TSFMs.",
+      "url": "https://arxiv.org/abs/2610.29504",
+      "date_display": "2026-10-21"
+    },
+    {
+      "id": "arxiv-2610.29654",
+      "title": "Probabilistic Machine Learning for Short-Term Atmospheric Seeing Forecasting",
+      "date": "2026-10-21",
+      "tag": "research",
+      "summary": "From the abstract: In this work, we benchmark machine learning models for predicting atmospheric seeing up to two hours in advance, with a particular focus on probabilistic forecasting and uncertainty quantification.",
+      "url": "https://arxiv.org/abs/2610.29654",
+      "date_display": "2026-10-21"
+    },
+    {
+      "id": "arxiv-2610.28997",
+      "title": "Rethinking Time Series Tokenization from a Frequency Perspective",
+      "date": "2026-10-20",
+      "tag": "research",
+      "summary": "From the abstract: To overcome this distortion, we propose TimeFT, a nearly distortion-free frequency-based tokenizer for time series data.",
+      "url": "https://arxiv.org/abs/2610.28997",
+      "date_display": "2026-10-20"
+    },
+    {
+      "id": "arxiv-2610.28784",
+      "title": "Extreme Low-State Quantized Transformer for Electricity-Load Forecasting",
+      "date": "2026-10-20",
+      "tag": "research",
+      "summary": "From the abstract: We investigate this regime for Transformer-based electricity-load forecasting using 3-, 5-, 7-, and 16-state weight quantization across feed-forward-only and attention-plus-feed-forward quantization.",
+      "url": "https://arxiv.org/abs/2610.28784",
+      "date_display": "2026-10-20"
+    },
     {
       "id": "arxiv-2610.28563",
       "title": "Asymmetric Bidirectional Predictive Dynamics in Google Search and COVID-19 Time Series: A Multi-Horizon Forecast-Error Analysis",
@@ -466,6 +511,15 @@
       "summary": "TMAML: meta-learning method for cold-start time series forecasting (little to no history), per the abstract.",
       "url": "https://arxiv.org/abs/2610.04547",
       "date_display": "2026-10-03"
+    },
+    {
+      "id": "arxiv-2610.03662",
+      "title": "Forecasting from Counterfactual Simulator Rollouts: A Sim2Real Evaluation",
+      "date": "2026-10-02",
+      "tag": "research",
+      "summary": "Abstract opening: Deploying a new decision policy creates a cold-start problem for prediction models whose targets depend on the policy's actions: historical observations reflect earlier policies, while real observations under the new policy are not yet available.",
+      "url": "https://arxiv.org/abs/2610.03662",
+      "date_display": "2026-10-02"
     },
     {
       "id": "arxiv-2610.00589",
