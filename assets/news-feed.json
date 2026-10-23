@@ -1,13 +1,67 @@
 {
   "schema_version": 1,
   "provenance": {
-    "source": "factory/inbox/scout/news_feed_v3.4.json",
-    "source_sha256": "f23dfb39bd476fef92b855147fb710400a137042b56e4ea171f01ab4aaa72872",
-    "review": "factory/inbox/reviewer/daily-refresh-20261022-review/review.json",
-    "review_sha256": "47601516b3af3b228bee3f3fac5541a70672f457c6bf37e36f820fd4c2ec78a6",
+    "source": "factory/inbox/scout/news_feed_v3.5.json",
+    "source_sha256": "3fcd63f900468b136d5f076313d1fa1d2040b535447563486ee8fc0702648a8e",
+    "review": "factory/inbox/reviewer/daily-refresh-20261023-review/review.json",
+    "review_sha256": "3788e71d5b0bccab72f1e7e81a3ed2a9078ae45e5038da61b326c0b72474ee2b",
     "verdict": "APPROVE"
   },
   "items": [
+    {
+      "id": "arxiv-2610.31621",
+      "title": "Volatility-Corrected Prediction Intervals: Locally Adaptive Uncertainty Quantification for Probabilistic Time-Series Forecasting",
+      "date": "2026-10-22",
+      "tag": "research",
+      "summary": "From the abstract: We then propose Volatility-Corrected Prediction Intervals (VCPI), a post-hoc calibration procedure that uses the base forecaster's predictive scale as a baseline, models the volatility of standardized forecast residuals with a Generalized Autoregressive Conditional Heteroskedasticity (GARCH) model, and applies a multiplicative correction to produce locally adaptive prediction intervals.",
+      "url": "https://arxiv.org/abs/2610.31621",
+      "date_display": "2026-10-22"
+    },
+    {
+      "id": "arxiv-2610.31288",
+      "title": "DISC: Domain-Integrated Similarity Cost for Time-Series Dataset",
+      "date": "2026-10-22",
+      "tag": "research",
+      "summary": "From the abstract: We propose Domain-Integrated Similarity Cost (DISC), a learnable aggregation framework that uses calibration transfer observations to select, weight, and combine similarity metrics for different downstream tasks.",
+      "url": "https://arxiv.org/abs/2610.31288",
+      "date_display": "2026-10-22"
+    },
+    {
+      "id": "arxiv-2610.30971",
+      "title": "Zero-Shot Forecasting of In-Situ Soil Moisture and Temperature with a Time-Series Foundation Model",
+      "date": "2026-10-22",
+      "tag": "research",
+      "summary": "From the abstract: We evaluate TimesFM 1, a 500M-parameter time-series foundation model, zero-shot on 15-minute telemetry from 27 sensor stations across three land-management regimes (Control, Treatment, Scald) at a semi-arid restoration site, forecasting 5 cm and 30 cm soil moisture and enclosure temperature at seven lead times from 1 h to 168 h.",
+      "url": "https://arxiv.org/abs/2610.30971",
+      "date_display": "2026-10-22"
+    },
+    {
+      "id": "arxiv-2610.30942",
+      "title": "GateFormer: Forecast-Space Decomposition for Intra-Hour Solar Irradiance Prediction from Sky Images",
+      "date": "2026-10-22",
+      "tag": "research",
+      "summary": "From the abstract: To address this, we introduce GateFormer, a GHI-conditioned dual-decoder ViT for intra-hour global horizontal irradiance (GHI) forecasting through forecast-space decomposition.",
+      "url": "https://arxiv.org/abs/2610.30942",
+      "date_display": "2026-10-22"
+    },
+    {
+      "id": "arxiv-2610.30802",
+      "title": "Is spectral predictability enough? Testing Ω-matching for synthetic pretraining under distribution shift",
+      "date": "2026-10-22",
+      "tag": "research",
+      "summary": "From the abstract: We test this hypothesis, which we call predictability-aware pretraining, across three architectures (LSTM, PatchTST, TCN) and three seeds.",
+      "url": "https://arxiv.org/abs/2610.30802",
+      "date_display": "2026-10-22"
+    },
+    {
+      "id": "hf-h2oai-timeh2o-v1",
+      "title": "TimeH2O v1 (Hugging Face model page)",
+      "date": "2026-10-22",
+      "tag": "industry",
+      "summary": "From the model card: Time series foundation model by H2O.ai. Datasets overlapping with fev-bench, GIFT-Eval, and TIME were excluded from training.",
+      "url": "https://huggingface.co/h2oai/timeh2o-v1",
+      "date_display": "Repo created 2026-10-22 (UTC)"
+    },
     {
       "id": "arxiv-2610.29604",
       "title": "Local and Global Recursive Ridge Regression for Online Residual Correction of Frozen Multivariate Forecasters under Label Delay",
