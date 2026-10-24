@@ -32,6 +32,9 @@ jobs:
           python -m mypy
       - name: Tests
         run: python -m pytest
+      - name: Experiments smoke (synthetic, offline)
+        shell: bash
+        run: xferbench experiment --config experiments/exp02_chronos_zero_shot/config.yaml --out "$RUNNER_TEMP/exp02"
       - name: Build
         run: python -m build
       - name: Wheel install outside the checkout + tiny demo

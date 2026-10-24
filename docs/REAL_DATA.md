@@ -43,9 +43,16 @@ it first; for example with pandas:
 import pandas as pd
 
 wide = pd.read_csv("weekly_wide.csv", dtype={"sku": str, "site_group": str})
-obs = wide[["sku", "site_group", "wk", "qty", "state", "reported_on"]].rename(columns={
-    "sku": "item_id", "site_group": "fpg_id", "wk": "week_start", "qty": "units",
-    "state": "observation_state", "reported_on": "known_at"})
+obs = wide[["sku", "site_group", "wk", "qty", "state", "reported_on"]].rename(
+    columns={
+        "sku": "item_id",
+        "site_group": "fpg_id",
+        "wk": "week_start",
+        "qty": "units",
+        "state": "observation_state",
+        "reported_on": "known_at",
+    }
+)
 obs["week_end"] = (pd.to_datetime(obs["week_start"]) + pd.Timedelta(days=7)).dt.date
 obs.to_csv("mydata/observations.csv", index=False)
 # offers, items, locations and launches are built the same way from their columns

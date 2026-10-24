@@ -32,7 +32,7 @@ Notation: `H` = target FPG households at origin, `r` = season-neutral weekly uni
 | `M1` | `H x P` | Business rule; requires a declared `P` with unit `units_per_household_per_week`. |
 | `M2` | `H x P x S(w)` | `S` applied once; no anchor-week division; demographic affinity not re-applied. |
 | `M4.lightgbm` | pooled LightGBM (Poisson) | Optional extra: `pip install -e ".[lightgbm]"` (or the wider `boosting` extra), imported lazily; if absent the method is listed as `not_installed` and every other method runs. One row per (launch, horizon week); features only from the origin context: log households, log B0 level, log M1 level (if P exists), mean-one seasonal index, horizon week, ISO week, demographic shares. No own-pair lags. Trained on fit launches; labels on or after the fit cutoff are dropped. Fixed seed, single thread, 200 rounds. |
-| `M3` | - | `config_required`: the business ramp/blend/calibration rule was not specified, so **nothing is substituted**. Supply a recipe matching `xferbench.methods.custom.M3RecipeSpec`; the executing adapter is Milestone C. Requesting `--methods M3` exits with code 3. |
+| `M3` | - | `config_required`: the business ramp/blend/calibration rule was not specified, so **nothing is substituted**. Supply a recipe matching `xferbench.models.custom.M3RecipeSpec`; the executing adapter is Milestone C. Requesting `--methods M3` exits with code 3. |
 
 Each recipe uses `S` at most once, so seasonality is never double counted.
 
@@ -96,7 +96,7 @@ profile; run with `--profile foundation` / `--profile neural` or `--methods`. Mo
 
 ## Shared retail hierarchy (domain-configured)
 
-One shared component (`src/xferbench/features/hierarchy.py`) serves every method that needs a donor rate or a
+One shared component (`src/xferbench/data_preparation/feature_engineering/hierarchy.py`) serves every method that needs a donor rate or a
 seasonal profile. It is configured in the domain metadata (`FeatureSpec.hierarchy`) and only reads
 origin-scoped data through `OriginContext`.
 

@@ -24,10 +24,10 @@ core baselines, fair evaluation, frozen validation selection, HTML report, tests
 | Contracts: tables, strict metadata, splits, selection, method capabilities | `src/xferbench/contracts/`, exported to `schemas/` |
 | CSV/Parquet loading into canonical Arrow types, dataset hash | `src/xferbench/data/io.py` |
 | Retail domain plugin: validation, splits, requests, targets, profile | `src/xferbench/domains/retail/` |
-| Origin-scoped contexts with holdout exclusions | `src/xferbench/features/context.py` |
-| Donor aggregates: pair/national rates, mean-one seasonal profiles | `src/xferbench/features/aggregates.py` |
-| Baselines B0, B1, B2 (grid k x kappa), B2.raw_units, M1, M2; typed M3 hook | `src/xferbench/methods/` |
-| Versioned registry (see METHOD_SUPPORT.md for current counts) with separate implementation/execution/eligibility states | `src/xferbench/methods/registry.py`, `METHOD_SUPPORT.md` |
+| Origin-scoped contexts with holdout exclusions | `src/xferbench/data_preparation/feature_engineering/context.py` |
+| Donor aggregates: pair/national rates, mean-one seasonal profiles | `src/xferbench/data_preparation/feature_engineering/aggregates.py` |
+| Baselines B0, B1, B2 (grid k x kappa), B2.raw_units, M1, M2; typed M3 hook | `src/xferbench/models/` |
+| Versioned registry (see METHOD_SUPPORT.md for current counts) with separate implementation/execution/eligibility states | `src/xferbench/models/registry.py`, `METHOD_SUPPORT.md` |
 | Evaluator (fixed population, undefined zero-denominator metrics, coverage rule, slices) | `src/xferbench/evaluation/` |
 | Runner (preflight, 52-row contract, append-only outputs, budget/partial, exit codes) | `src/xferbench/orchestration/` |
 | Synthetic generator (presets tiny/small/stress, edge fixtures, hidden truth, data story) | `src/xferbench/synth/` |
@@ -160,7 +160,7 @@ ablation not added (kept out to avoid any anchor division in the default path).
 
 ## Session 2026-10-16 (adapters, B2/B3, TimeGPT, provenance)
 
-- Licence-pinned donor-prior composites (`src/xferbench/methods/foundation.py`): FM.chronos2, FM.chronos_bolt
+- Licence-pinned donor-prior composites (`src/xferbench/models/foundation_models/donor_prior.py`): FM.chronos2, FM.chronos_bolt
   (tiny/mini/small/base variants), FM.timesfm25, M6.deepar_count. experimental, donor_only composite: backend
   forecasts the item's origin-scoped donor rate per household, allocated by target households. Code pins from R3,
   HF weight revisions from pins.v2. Lazy imports; weights from local cache only unless

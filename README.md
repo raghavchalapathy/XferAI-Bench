@@ -134,6 +134,16 @@ python3 -m venv /tmp/xb-env
 
 `bootstrap.sh` / `bootstrap.ps1` do the same into a new local `.venv` (they refuse to overwrite an existing one).
 
+## Repository layout and experiments
+
+`configs/` (YAML per data flavour), `data/` (contents gitignored), [data_preparation/](data_preparation/README.md), [models/](models/README.md), [harness/](harness/README.md), `scripts/` (runbooks: data_prep, data_cleaning, model_train, model_eval, inference), [experiments/](experiments/README.md), `eval/`, `results/`. The code lives in `src/xferbench`.
+
+```bash
+xferbench experiment --config experiments/exp01_m5_lightgbm_analogs/config.yaml --out eval/exp01
+```
+
+Experiments use synthetic data only. **Synthetic interface test, not rankings.**
+
 ## Documentation
 
 | Topic | File |

@@ -2,7 +2,7 @@
 
 ## Adding a method
 
-A method is any object with four calls (see `xferbench.methods.base.Method`):
+A method is any object with four calls (see `xferbench.models.base.Method`):
 
 ```text
 capabilities() -> CapabilitySpec          # profiles, history needs, features, point statistic, rights
@@ -19,9 +19,9 @@ A runnable example that registers a method at runtime, without editing core code
 
 ```python
 import numpy as np
-from xferbench.methods.base import RowResult, expand, stateless_artifact
-from xferbench.methods.baselines.rates import B0NationalRate
-from xferbench.methods.registry import RegistryEntry, register_method
+from xferbench.models.base import RowResult, expand, stateless_artifact
+from xferbench.models.baselines.rates import B0NationalRate
+from xferbench.models.registry import RegistryEntry, register_method
 from xferbench.orchestration import BenchmarkRunner, RunConfig
 from pathlib import Path
 
@@ -31,8 +31,9 @@ class HalfB0:
 
     def __init__(self):
         self.base = B0NationalRate()
-        self.spec = self.base.spec.model_copy(update={"method_id": "EXT.half_b0", "display_name": "Half B0",
-                                                      "family": "example"})
+        self.spec = self.base.spec.model_copy(
+            update={"method_id": "EXT.half_b0", "display_name": "Half B0", "family": "example"}
+        )
 
     def capabilities(self):
         return self.spec
@@ -50,8 +51,15 @@ class HalfB0:
 
 
 register_method(RegistryEntry(spec=HalfB0().spec, implementation_state="experimental", factory=HalfB0))
-res = BenchmarkRunner(RunConfig(Path("xb-demo/data/metadata.json"), Path("xb-demo/splits.json"),
-                                "validation", Path("ext-run"), methods=["EXT.half_b0", "B0"])).run()
+res = BenchmarkRunner(
+    RunConfig(
+        Path("xb-demo/data/metadata.json"),
+        Path("xb-demo/splits.json"),
+        "validation",
+        Path("ext-run"),
+        methods=["EXT.half_b0", "B0"],
+    )
+).run()
 print(res.status, res.out)
 ```
 

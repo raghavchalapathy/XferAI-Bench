@@ -178,3 +178,11 @@ Exit codes: `0` ok, `1` data/split/config error, `2` bad usage, `3` requested me
 ## Like it?
 
 If XferAI-Bench is useful to you, please ⭐ star the repo on GitHub. It helps others find it. Bug reports and onboarding problems are welcome as GitHub issues; see `CONTRIBUTING.md`.
+
+## Experiments (synthetic interface tests)
+
+```bash
+xferbench experiment --config experiments/exp01_m5_lightgbm_analogs/config.yaml --out eval/exp01
+```
+
+See [experiments/README.md](../experiments/README.md). These are interface tests, not rankings.

@@ -10,8 +10,28 @@ LINK = re.compile(r"\]\(([^)#\s]+)(?:#[^)]*)?\)")
 
 
 def _docs() -> list[Path]:
-    top = [ROOT / n for n in ("README.md", "AGENTS.md", "CONTRIBUTING.md", "llms.txt")]
-    return [p for p in top if p.exists()] + sorted((ROOT / "docs").glob("*.md"))
+    top = [
+        ROOT / n
+        for n in (
+            "README.md",
+            "AGENTS.md",
+            "CONTRIBUTING.md",
+            "llms.txt",
+            "COLDSTARTHARNESS.md",
+            "MEMORY.md",
+            "DATASCIENTIST.md",
+            "AIENGINEER.md",
+        )
+    ]
+    return (
+        [p for p in top if p.exists()]
+        + sorted((ROOT / "docs").glob("*.md"))
+        + sorted(
+            p
+            for d in ("experiments", "models", "data_preparation", "harness", "eval", "results", "data")
+            for p in (ROOT / d).rglob("README.md")
+        )
+    )
 
 
 def test_relative_doc_links_resolve() -> None:

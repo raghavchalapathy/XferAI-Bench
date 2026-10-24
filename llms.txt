@@ -6,6 +6,9 @@
 
 - [DIY Getting Started (run on your own data with a coding assistant)](docs/DIY-GettingStarted.md)
 - [AGENTS.md](AGENTS.md)
+- [Cold-start harness](COLDSTARTHARNESS.md)
+- [Experiments (synthetic interface tests)](experiments/README.md)
+- [AI engineer knowledge base](AIENGINEER.md)
 
 ## Docs
 

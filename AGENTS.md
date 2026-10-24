@@ -14,3 +14,10 @@ Project rules (details: [docs/SITE_AND_HARNESS.md](docs/SITE_AND_HARNESS.md)): k
 number is either paper-reported and passed Scout research, Scientist verification and Reviewer review, or comes
 from a reproducible XferAI-Bench run; no proprietary Walmart data (public papers may be cited); explainability and
 feature traceability are goals, not shipped features.
+
+Repo layout: [configs/](configs/), `data/` (gitignored contents), [data_preparation/](data_preparation/README.md),
+[models/](models/README.md), [harness/](harness/README.md), `scripts/` runbooks, [experiments/](experiments/README.md),
+[eval/](eval/README.md), [results/](results/README.md). Code lives in `src/xferbench`. Also read
+[COLDSTARTHARNESS.md](COLDSTARTHARNESS.md), [MEMORY.md](MEMORY.md), [DATASCIENTIST.md](DATASCIENTIST.md) and
+[AIENGINEER.md](AIENGINEER.md). Experiments: `xferbench experiment --config experiments/<id>/config.yaml --out eval/<id>`
+(synthetic interface test, not rankings).
