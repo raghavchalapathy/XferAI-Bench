@@ -22,6 +22,7 @@ import json
 import posixpath
 import re
 import subprocess
+import unicodedata
 from pathlib import Path
 from typing import Any, Literal
 
@@ -167,6 +168,18 @@ class Lesson(BaseModel):
 NON_REVIEWERS = {"builder", "scout", "engineer", "lead", "owner"}
 
 
+def _norm_id(s: str) -> str:
+    """Lower-case and keep only letters and digits, so 'Reviewer_Scout ' and 'reviewer-scout' compare equal."""
+    return "".join(ch for ch in unicodedata.normalize("NFKC", s).lower() if ch.isalnum())
+
+
+def _approver_conflict(reviewer: str, author: str) -> bool:
+    """True when the approver id is, or contains, the author id or any non-Reviewer role (V2-4)."""
+    who = _norm_id(reviewer)
+    names = {r for r in NON_REVIEWERS} | ({author} if author else set())
+    return who in names or any(n in who for n in names)
+
+
 class Review(BaseModel):
     """Reviewer record. ``reviewer`` must be a Reviewer id (``reviewer`` or ``reviewer-<name>``); approvals must
     cite the review file and its sha256, which :func:`check_proposal` verifies."""
@@ -207,9 +220,10 @@ class Proposal(BaseModel):
     @classmethod
     def _no_self_approval(cls, data: Any) -> Any:
         if isinstance(data, dict) and isinstance(data.get("review"), dict):
-            who = str(data["review"].get("reviewer", "")).strip().lower()
-            if who in NON_REVIEWERS or who == str(data.get("author_role", "")).strip().lower():
-                raise ValueError(f"self-approval: reviewer {who!r} is not an independent Reviewer")
+            who = str(data["review"].get("reviewer", ""))
+            author = _norm_id(str(data.get("author_role", "")))
+            if _approver_conflict(who, author):
+                raise ValueError(f"self-approval: reviewer {who.strip()!r} is not an independent Reviewer")
         return data
 
 
