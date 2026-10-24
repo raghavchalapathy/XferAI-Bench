@@ -96,5 +96,7 @@ def test_v2_synthetic_outputs_carry_no_ranking_and_private_selection(tmp_path: P
 
     # never committed and ignored by git
     assert "_work/" in (ROOT / ".gitignore").read_text(encoding="utf-8").split()
-    tracked = subprocess.run(["git", "ls-files"], cwd=ROOT, capture_output=True, text=True, check=False).stdout
+    tracked = subprocess.run(
+        ["git", "ls-files"], cwd=ROOT, capture_output=True, text=True, encoding="utf-8", check=False
+    ).stdout
     assert not [t for t in tracked.splitlines() if t.endswith("selection.json") and t.startswith("results")]

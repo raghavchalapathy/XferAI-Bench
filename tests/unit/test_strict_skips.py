@@ -35,6 +35,7 @@ def test_session_fails_on_unexpected_skip(tmp_path: Path) -> None:
             env=env,
             capture_output=True,
             text=True,
+            encoding="utf-8",
             check=False,
         )
         assert r.returncode == 1 and "unexpected skips" in r.stdout, r.stdout
@@ -45,6 +46,7 @@ def test_session_fails_on_unexpected_skip(tmp_path: Path) -> None:
             env=env,
             capture_output=True,
             text=True,
+            encoding="utf-8",
             check=False,
         )
         assert r.returncode == 0, r.stdout
