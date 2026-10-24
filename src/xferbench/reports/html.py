@@ -72,9 +72,14 @@ def build_context(run_dir: Path) -> dict[str, Any]:
     )
 
     main = metrics["boards"].get("cold_c0", [])
-    ranked = sorted([e for e in main if e["rankable"]], key=lambda e: (e["objective"], e["variant_id"]))
+    synthetic = bool(manifest.get("synthetic"))
+    if synthetic:  # synthetic results are never ranked: alphabetical rows, no rank, no "best", no recommendation
+        ranked = sorted([e for e in main if e["rankable"]], key=lambda e: e["variant_id"])
+        fam = sorted(main, key=lambda e: e["variant_id"])
+    else:
+        ranked = sorted([e for e in main if e["rankable"]], key=lambda e: (e["objective"], e["variant_id"]))
+        fam = _best_per_family(main)
     unrankable = [e for e in main if not e["rankable"]]
-    fam = _best_per_family(main)
     labels = [e["variant_id"] for e in ranked + unrankable]
     rows = ranked + unrankable
     wmape_chart = grouped_hbar(
@@ -98,7 +103,8 @@ def build_context(run_dir: Path) -> dict[str, Any]:
                     None if (h not in sub.index or pd.isna(sub.loc[h, "WMAPE"])) else float(sub.loc[h, "WMAPE"])
                     for h in HORIZONS
                 ]
-    horizon_chart = line_chart("WMAPE by horizon bucket (best variant per family, top 4)", HORIZONS, hz_series)
+    hz_title = "first 4 variants, alphabetical" if synthetic else "best variant per family, top 4"
+    horizon_chart = line_chart(f"WMAPE by horizon bucket ({hz_title})", HORIZONS, hz_series)
     res = resources["variants"]
     pts = [
         (
@@ -124,13 +130,18 @@ def build_context(run_dir: Path) -> dict[str, Any]:
     stage_profile = [p for p in dq["profile"].get("target_zero_fractions", []) if p["stage"] == manifest["stage"]]
     sel = None
     if manifest["stage"] == "test" and manifest.get("selection"):
-        sel = manifest["selection"]
+        sel = dict(manifest["selection"])
+        if synthetic:
+            sel.pop("recommended", None)
+    if synthetic:
+        lb = lb.drop(columns=[c for c in SYNTHETIC_DROP_COLUMNS if c in lb.columns])
     return {
         "m": manifest,
+        "synthetic": synthetic,
         "metrics": metrics,
         "ranked": ranked,
         "unrankable": unrankable,
-        "ranking_heading": RANKING_HEADING,
+        "ranking_heading": SYNTHETIC_HEADING if synthetic else RANKING_HEADING,
         "ranking_note": RANKING_NOTE,
         "families": fam,
         "wmape_chart": wmape_chart,
@@ -186,6 +197,9 @@ def _progression(manifest: dict, entries: list[dict], support: list[dict]) -> di
     )
 
 
+# leaderboard.csv columns that imply an order; dropped for synthetic runs (the evaluator itself is unchanged).
+SYNTHETIC_DROP_COLUMNS = ("rank", "rankable")
+SYNTHETIC_HEADING = "Interface check: synthetic results, alphabetical by variant (not a ranking)"
 RANKING_HEADING = "Interface check: method ordering on this run (real benchmark rankings pending)"
 RANKING_NOTE = (
     "Real benchmark rankings are pending: no rights-cleared real benchmark has been run. "
@@ -230,27 +244,32 @@ def executive_summary(ctx: dict[str, Any]) -> str:
         f"Population (cold_c0 board): {m['population']['launches'].get('cold_c0', 0)} launches, "
         f"{m['population']['eligible_weeks'].get('cold_c0', 0)} eligible weeks.",
         "",
-        f"## {RANKING_HEADING}",
+        f"## {ctx['ranking_heading']}",
         "",
         f"> {RANKING_NOTE}",
         "",
-        "| Rank | Variant | WMAPE E | WMAPE N | Bias E | Bias N | Objective |",
-        "|---|---|---|---|---|---|---|",
     ]
+    syn = ctx.get("synthetic", False)
+    lines += (
+        ["| Variant | WMAPE E | WMAPE N | Bias E | Bias N | Objective |", "|---|---|---|---|---|---|"]
+        if syn
+        else ["| Rank | Variant | WMAPE E | WMAPE N | Bias E | Bias N | Objective |", "|---|---|---|---|---|---|---|"]
+    )
     for e in ctx["ranked"]:
         s = e["scenarios"]
+        first = "" if syn else f"| {e['rank']['objective']} "
         lines.append(
-            f"| {e['rank']['objective']} | {e['variant_id']} | {_p(s['PAIR0-E']['WMAPE'])} | "
+            f"{first}| {e['variant_id']} | {_p(s['PAIR0-E']['WMAPE'])} | "
             f"{_p(s['PAIR0-N']['WMAPE'])} | {_p(s['PAIR0-E']['Bias'])} | {_p(s['PAIR0-N']['Bias'])} | "
             f"{_p(e['objective'])} |"
         )
     for e in ctx["unrankable"]:
-        lines.append(f"| - | {e['variant_id']} (unrankable: {e['objective_reason']}) | | | | | |")
+        lines.append(f"{'' if syn else '| - '}| {e['variant_id']} (unrankable: {e['objective_reason']}) | | | | | |")
     lines += ["", f"Methods not executed: {len(ctx['excluded'])} registry entries (see report for reasons).", ""]
     if ctx["selection"]:
         lines += [
-            f"Frozen selection from validation run `{ctx['selection']['validation_run_id']}`; "
-            f"recommended: `{ctx['selection']['recommended']}`.",
+            f"Frozen selection from validation run `{ctx['selection']['validation_run_id']}`"
+            + ("." if syn else f"; recommended: `{ctx['selection']['recommended']}`."),
             "",
         ]
     lines += ["Limitations: " + " ".join(m["limitations"]), ""]

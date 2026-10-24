@@ -53,7 +53,10 @@ def load_selection_file(path: Path) -> Selection:
     if not p.is_file():
         raise RunError(f"--selection file not found: {p}", EXIT_USAGE)
     try:
-        return Selection.model_validate(read_json(p))
+        raw = read_json(p)
+        if isinstance(raw, dict) and set(raw) >= {"data_class", "label", "selection"}:
+            raw = raw["selection"]  # labelled private working copy (e.g. experiments' _work/selection.json)
+        return Selection.model_validate(raw)
     except (ValueError, OSError) as exc:
         raise RunError(
             f"--selection {p} is not a valid selection.json: {str(exc).splitlines()[0]}", EXIT_USAGE
@@ -385,6 +388,12 @@ class BenchmarkRunner:
             for v in variants
         }
         lb = leaderboard_frame(result, resources)
+        if dataset.metadata.dataset.synthetic:  # synthetic results are never ranked (evaluator output unchanged)
+            from xferbench.reports.html import SYNTHETIC_DROP_COLUMNS
+
+            lb = lb.drop(columns=[c for c in SYNTHETIC_DROP_COLUMNS if c in lb.columns]).sort_values(
+                ["board", "variant_id"] if "board" in lb.columns else ["variant_id"], kind="stable"
+            )
         atomic_write_csv(out / "leaderboard.csv", lb)
         atomic_write_csv(out / "slices.csv", pd.DataFrame(result["slices"]))
         fail = forecasts[forecasts["status"] != "success"]

@@ -152,7 +152,8 @@ def test_budget_stop_reports_partial(tiny_runs: dict[str, Path], tmp_path: Path)
     assert res.status == "partial" and res.exit_code == 4
     assert _manifest(res.out)["status"] == "partial"
     lb = pd.read_csv(res.out / "leaderboard.csv")
-    assert lb["rank"].isna().all() and not lb["rankable"].any()
+    # synthetic leaderboard.csv carries no rank/rankable columns (V2-1); rankability lives in metrics.json
+    assert "rank" not in lb.columns and "rankable" not in lb.columns
     metrics = read_json(res.out / "metrics.json")
     assert all(not r["rankable"] for r in metrics["boards"]["cold_c0"])
 

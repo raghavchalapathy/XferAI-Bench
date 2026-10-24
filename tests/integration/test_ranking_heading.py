@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from xferbench.reports.html import RANKING_HEADING, RANKING_NOTE
+from xferbench.reports.html import RANKING_HEADING, RANKING_NOTE, SYNTHETIC_HEADING
 
 
 def test_heading_text() -> None:
@@ -18,6 +18,8 @@ def test_reports_carry_pending_heading(tiny_runs: dict[str, Path]) -> None:
         d = tiny_runs[stage]
         html = (d / "report.html").read_text(encoding="utf-8")
         md = (d / "summary.md").read_text(encoding="utf-8")
-        assert RANKING_HEADING in html and RANKING_NOTE in html
-        assert f"## {RANKING_HEADING}" in md and RANKING_NOTE in md
+        # tiny_runs are synthetic: V2-1 swaps in the not-a-ranking heading
+        assert SYNTHETIC_HEADING in html and RANKING_NOTE in html
+        assert f"## {SYNTHETIC_HEADING}" in md and RANKING_NOTE in md
+        assert "Ranked by" not in html and ">Rank<" not in html
         assert "Top eligible methods" not in html

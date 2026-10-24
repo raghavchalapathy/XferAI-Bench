@@ -72,7 +72,7 @@ Hashes: data <code>{{ m.dataset_hash|short }}</code> split <code>{{ m.split_hash
 
 {% if selection %}
 <h2 id="selection">Frozen validation selection</h2>
-<p>Selection frozen from validation run <code>{{ selection.validation_run_id }}</code> (policy <code>{{ selection.policy_hash|short }}</code>) before the first test origin. Recommended on validation: <code>{{ selection.recommended }}</code>. Test results below do not re-select.</p>
+<p>Selection frozen from validation run <code>{{ selection.validation_run_id }}</code> (policy <code>{{ selection.policy_hash|short }}</code>) before the first test origin.{% if not synthetic %} Recommended on validation: <code>{{ selection.recommended }}</code>.{% endif %} Test results below do not re-select.</p>
 <p class="muted">Frozen variants: {% for v in selection.frozen_variants %}<code>{{ v }}</code> {% endfor %}</p>
 {% endif %}
 
@@ -93,14 +93,14 @@ Hashes: data <code>{{ m.dataset_hash|short }}</code> split <code>{{ m.split_hash
 
 <h2 id="leaderboard">{{ ranking_heading }} (cold_c0 board)</h2>
 <p class="banner">{{ ranking_note }}</p>
-<p class="muted">Ranked by the <abbr title="{{ glossary['Equal-scenario objective'] }}" tabindex="0">equal-scenario objective</abbr>; each scenario is shown separately. <abbr title="{{ glossary['WMAPE'] }}" tabindex="0">WMAPE</abbr>, <abbr title="{{ glossary['Bias'] }}" tabindex="0">Bias</abbr>, <abbr title="{{ glossary['Coverage'] }}" tabindex="0">coverage</abbr>. Units: item units per week.</p>
+<p class="muted">{% if synthetic %}Synthetic run: rows are alphabetical by variant and are not ranked. Metrics use the{% else %}Ranked by the{% endif %} <abbr title="{{ glossary['Equal-scenario objective'] }}" tabindex="0">equal-scenario objective</abbr>; each scenario is shown separately. <abbr title="{{ glossary['WMAPE'] }}" tabindex="0">WMAPE</abbr>, <abbr title="{{ glossary['Bias'] }}" tabindex="0">Bias</abbr>, <abbr title="{{ glossary['Coverage'] }}" tabindex="0">coverage</abbr>. Units: item units per week.</p>
 <div class="tw"><table>
-<thead><tr><th>Rank</th><th>Variant</th><th class="n">WMAPE E</th><th class="n">WMAPE N</th><th class="n">Bias E</th><th class="n">Bias N</th><th class="n">Objective</th><th class="n">Coverage E/N</th><th class="n"><abbr title="{{ glossary['Fallback'] }}" tabindex="0">Fallback</abbr> weeks</th><th class="n"><abbr title="Total forecast units on launches whose 52-week actual total is zero (E / N)" tabindex="0">Zero-sale units</abbr> E/N</th></tr></thead>
+<thead><tr>{% if not synthetic %}<th>Rank</th>{% endif %}<th>Variant</th><th class="n">WMAPE E</th><th class="n">WMAPE N</th><th class="n">Bias E</th><th class="n">Bias N</th><th class="n">Objective</th><th class="n">Coverage E/N</th><th class="n"><abbr title="{{ glossary['Fallback'] }}" tabindex="0">Fallback</abbr> weeks</th><th class="n"><abbr title="Total forecast units on launches whose 52-week actual total is zero (E / N)" tabindex="0">Zero-sale units</abbr> E/N</th></tr></thead>
 <tbody>
 {% for e in ranked %}{% set E = e.scenarios['PAIR0-E'] %}{% set N = e.scenarios['PAIR0-N'] %}
-<tr><td>{{ e.rank.objective }}</td><td><code>{{ e.variant_id }}</code></td><td class="n">{{ E.WMAPE|pct }}</td><td class="n">{{ N.WMAPE|pct }}</td><td class="n">{{ E.Bias|pct }}</td><td class="n">{{ N.Bias|pct }}</td><td class="n">{{ e.objective|pct }}</td><td class="n">{{ E.coverage|pct }} / {{ N.coverage|pct }}</td><td class="n">{{ E.n_fallback + N.n_fallback }}</td><td class="n">{{ E.all_zero_launch_forecast_units|num(1) }} ({{ E.n_all_zero_launches }}) / {{ N.all_zero_launch_forecast_units|num(1) }} ({{ N.n_all_zero_launches }})</td></tr>
+<tr>{% if not synthetic %}<td>{{ e.rank.objective }}</td>{% endif %}<td><code>{{ e.variant_id }}</code></td><td class="n">{{ E.WMAPE|pct }}</td><td class="n">{{ N.WMAPE|pct }}</td><td class="n">{{ E.Bias|pct }}</td><td class="n">{{ N.Bias|pct }}</td><td class="n">{{ e.objective|pct }}</td><td class="n">{{ E.coverage|pct }} / {{ N.coverage|pct }}</td><td class="n">{{ E.n_fallback + N.n_fallback }}</td><td class="n">{{ E.all_zero_launch_forecast_units|num(1) }} ({{ E.n_all_zero_launches }}) / {{ N.all_zero_launch_forecast_units|num(1) }} ({{ N.n_all_zero_launches }})</td></tr>
 {% endfor %}
-{% for e in unrankable %}<tr><td>&ndash;</td><td><code>{{ e.variant_id }}</code> <span class="pill bad">unrankable</span></td><td colspan="8">{{ e.objective_reason }}</td></tr>{% endfor %}
+{% for e in unrankable %}<tr>{% if not synthetic %}<td>&ndash;</td>{% endif %}<td><code>{{ e.variant_id }}</code> <span class="pill bad">unrankable</span></td><td colspan="8">{{ e.objective_reason }}</td></tr>{% endfor %}
 </tbody></table></div>
 <p><a download="leaderboard.csv" href="{{ lb_uri }}">Export leaderboard (CSV)</a>{% if slices_uri %} &middot; <a download="slices.csv" href="{{ slices_uri }}">Export slices (CSV)</a>{% endif %}</p>
 
@@ -115,7 +115,7 @@ Hashes: data <code>{{ m.dataset_hash|short }}</code> split <code>{{ m.split_hash
 <details><summary>Horizon slice table</summary>{% set rows = horizon %}{% include "slice_table.html.j2" %}</details>
 
 <h2 id="slices">Category, region, intermittency and availability</h2>
-<p class="muted">Best variant per family. Intermittency and availability groups are defined from realized outcomes and are diagnostic only (never used for selection). Sample counts are shown; small groups are noisy.</p>
+<p class="muted">{% if synthetic %}All variants, alphabetical (synthetic: not a ranking).{% else %}Best variant per family.{% endif %} Intermittency and availability groups are defined from realized outcomes and are diagnostic only (never used for selection). Sample counts are shown; small groups are noisy.</p>
 <details><summary>By category</summary>{% set rows = category %}{% include "slice_table.html.j2" %}</details>
 <details><summary>By region</summary>{% set rows = region %}{% include "slice_table.html.j2" %}</details>
 <details><summary>By intermittency</summary>{% set rows = intermittency %}{% include "slice_table.html.j2" %}</details>
