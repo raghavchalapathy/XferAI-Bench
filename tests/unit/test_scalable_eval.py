@@ -51,7 +51,31 @@ def _cases(fc: pd.DataFrame) -> list[pd.DataFrame]:
     holed = fc.drop(fc[fc["variant_id"] == fc["variant_id"].iloc[0]].index[:5])  # incomplete coverage
     failed = fc.copy()
     failed.loc[failed.index[:3], "status"] = "failed"
-    return [fc, holed, failed]
+    v0 = fc[fc["variant_id"] == fc["variant_id"].iloc[0]]
+    dup = pd.concat([fc, v0.iloc[:3]], ignore_index=True)  # F-1: duplicate rows only
+    masked = pd.concat([fc.drop(v0.index[3:6]), v0.iloc[:3]], ignore_index=True)  # F-1: duplicates hide missing weeks
+    return [fc, holed, failed, dup, masked]
+
+
+def test_duplicates_cannot_mask_missing_weeks(inputs: tuple) -> None:
+    fc, targets, requests, w = inputs
+    masked = _cases(fc)[-1]
+    got = finalize(*partial_sums_polars(masked, targets, requests), w)
+    ref = evaluate(masked, targets, requests, w)
+    _compare(ref, got, w)
+    v0 = fc["variant_id"].iloc[0]
+    assert any(r["objective"] is None for b in got.values() for r in b if r["variant_id"] == v0)
+
+
+def test_nan_actual_raises_like_reference(inputs: tuple) -> None:
+    fc, targets, requests, w = inputs
+    bad = targets.copy()
+    idx = bad.index[bad["measured"]][0]
+    bad.loc[idx, "actual"] = float("nan")
+    with pytest.raises(ValueError, match="finite"):
+        evaluate(fc, bad, requests, w)
+    with pytest.raises(ValueError, match="finite"):
+        finalize(*partial_sums_polars(fc, bad, requests), w)
 
 
 def test_polars_parity(inputs: tuple) -> None:
