@@ -1,0 +1,11 @@
+# Pipeline config for sample_data. Engine: polars locally; pyspark (optional extra) for complete_data on a cluster.
+flavour: sample_data
+engine: polars
+paths:
+  input: data/sample_data/input
+  output: data/sample_data/output
+  metadata: data/sample_data/metadata
+cleaning:
+  key: [item_id, fpg_id, week_start]
+  target: units
+objective: "0.5*WMAPE(PAIR0-E) + 0.5*WMAPE(PAIR0-N)"   # cold-start only; evaluator is protected

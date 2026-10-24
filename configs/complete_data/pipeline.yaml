@@ -1,0 +1,11 @@
+# Pipeline config for complete_data. Engine: polars locally; pyspark (optional extra) for complete_data on a cluster.
+flavour: complete_data
+engine: pyspark
+paths:
+  input: data/complete_data/input
+  output: data/complete_data/output
+  metadata: data/complete_data/metadata
+cleaning:
+  key: [item_id, fpg_id, week_start]
+  target: units
+objective: "0.5*WMAPE(PAIR0-E) + 0.5*WMAPE(PAIR0-N)"   # cold-start only; evaluator is protected

@@ -34,3 +34,13 @@ reference/
 local/
 *.local.*
 runs/local/
+
+# restructure 2026-10-24: data folders are never committed (README/.gitkeep only)
+/data/*/input/*
+/data/*/output/*
+/data/*/metadata/*
+!/data/*/*/.gitkeep
+/eval/*/
+!/eval/README.md
+/results/*
+!/results/README.md
