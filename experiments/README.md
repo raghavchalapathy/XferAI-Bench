@@ -1,6 +1,9 @@
 # Experiments (synthetic data only)
 
 **Synthetic interface test, not rankings.** These experiments check that the pipeline runs end to end. They do not show which method is better.
+Outputs list methods alphabetically, with no order, rank or "recommended" field. exp02 (zero-shot TSFM; chronos-t5 ruling
+pending in pins.v5) is marked `day_zero_result: false` and carries a NOT A DAY-ZERO RESULT banner; it must never
+be presented as a day-zero result.
 
 | id | paper | default path | optional |
 |---|---|---|---|

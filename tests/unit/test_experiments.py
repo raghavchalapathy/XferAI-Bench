@@ -44,3 +44,17 @@ def test_exp02_runs_offline_and_marks_chronos(tmp_path: Path) -> None:
         assert [s["method_id"] for s in res["not_run"]] == ["FM.chronos2"]
         assert res["not_run"][0]["status"] == "config_required"
     assert {r["method_id"] for r in res["test_rows"]} <= {"B0", "B2", "B3"}
+
+
+def test_exp02_is_never_day_zero_and_never_ranked(tmp_path: Path) -> None:
+    out = tmp_path / "exp02"
+    run_experiment(ROOT / "experiments/exp02_chronos_zero_shot/config.yaml", out, progress=lambda _m: None)
+    res = read_json(out / "results.json")
+    assert res["day_zero_result"] is False
+    assert res["not_day_zero"]
+    assert "recommended_on_validation" not in res
+    for f in ("leaderboard.html", "SUMMARY.md"):
+        text = (out / f).read_text(encoding="utf-8")
+        assert "NOT A DAY-ZERO RESULT" in text.upper()
+        assert "recommended on validation" not in text.lower()
+    assert all("order" not in r and "rank" not in r for r in res["test_rows"])

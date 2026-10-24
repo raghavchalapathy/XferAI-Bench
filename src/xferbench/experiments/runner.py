@@ -20,6 +20,9 @@ from xferbench.util import atomic_write_text, read_json, write_json
 LABEL = "SYNTHETIC INTERFACE TEST - not a ranking. Synthetic data only checks the software, not which method is better."
 
 
+NOT_DAY_ZERO = "NOT A DAY-ZERO RESULT."
+
+
 class ExperimentError(RuntimeError):
     pass
 
@@ -33,6 +36,7 @@ class ExperimentConfig:
     seed: int
     methods: list[str]
     optional_methods: list[str]
+    not_day_zero: str | None = None
 
     @classmethod
     def load(cls, path: Path) -> ExperimentConfig:
@@ -42,6 +46,9 @@ class ExperimentConfig:
             raise ExperimentError("public experiments run on synthetic data only (data.flavour: synthetic)")
         if not raw.get("methods"):
             raise ExperimentError(f"{path}: 'methods' must list at least one method id")
+        not_day_zero = raw.get("not_day_zero")
+        if any(m.startswith("FM.") for m in [*raw["methods"], *raw.get("optional_methods", [])]) and not not_day_zero:
+            raise ExperimentError(f"{path}: zero-shot/foundation-model experiments must set 'not_day_zero: <reason>'")
         return cls(
             id=str(raw["id"]),
             title=str(raw.get("title", raw["id"])),
@@ -50,6 +57,7 @@ class ExperimentConfig:
             seed=int(data.get("seed", 42)),
             methods=[str(m) for m in raw["methods"]],
             optional_methods=[str(m) for m in raw.get("optional_methods", [])],
+            not_day_zero=str(not_day_zero) if not_day_zero else None,
         )
 
 
@@ -73,7 +81,6 @@ def _rows(run_dir: Path) -> list[dict[str, Any]]:
         s = e["scenarios"]
         out.append(
             {
-                "order": e["rank"]["objective"],
                 "variant_id": e["variant_id"],
                 "method_id": e["method_id"],
                 "wmape_e": s["PAIR0-E"]["WMAPE"],
@@ -83,7 +90,8 @@ def _rows(run_dir: Path) -> list[dict[str, Any]]:
                 "objective": e["objective"],
             }
         )
-    return sorted(out, key=lambda r: (r["order"] is None, r["order"] or 0))
+    # synthetic: no ordering by score and no numbering (F-4); rows are listed alphabetically by variant id
+    return sorted(out, key=lambda r: str(r["variant_id"]))
 
 
 def _pct(v: float | None) -> str:
@@ -93,7 +101,7 @@ def _pct(v: float | None) -> str:
 def leaderboard_html(cfg: ExperimentConfig, rows: list[dict[str, Any]], skipped: list[dict[str, str]]) -> str:
     e = html.escape
     body = "".join(
-        f"<tr><td>{r['order'] or '-'}</td><td>{e(r['variant_id'])}</td><td>{_pct(r['wmape_e'])}</td>"
+        f"<tr><td>{e(r['variant_id'])}</td><td>{_pct(r['wmape_e'])}</td>"
         f"<td>{_pct(r['wmape_n'])}</td><td>{_pct(r['bias_e'])}</td><td>{_pct(r['bias_n'])}</td>"
         f"<td>{_pct(r['objective'])}</td></tr>"
         for r in rows
@@ -101,6 +109,7 @@ def leaderboard_html(cfg: ExperimentConfig, rows: list[dict[str, Any]], skipped:
     skip = "".join(
         f"<li><b>{e(s['method_id'])}</b>: {e(s['status'])} - {e(s['reason'])}. {e(s['remedy'])}</li>" for s in skipped
     )
+    ndz = f'<p class="label"><b>{e(NOT_DAY_ZERO)}</b> {e(cfg.not_day_zero)}</p>' if cfg.not_day_zero else ""
     papers = "".join(
         f'<li>{e(p.get("citation", ""))} <a href="{e(p.get("url", ""))}">{e(p.get("url", ""))}</a></li>'
         for p in cfg.papers
@@ -108,11 +117,11 @@ def leaderboard_html(cfg: ExperimentConfig, rows: list[dict[str, Any]], skipped:
     return f"""<!doctype html><html lang="en"><meta charset="utf-8"><title>{e(cfg.title)} - leaderboard</title>
 <style>body{{font-family:system-ui,sans-serif;max-width:60rem;margin:2rem auto;padding:0 1rem}}
 table{{border-collapse:collapse}}td,th{{border:1px solid #ccc;padding:.3rem .6rem;text-align:right}}
-td:nth-child(2),th:nth-child(2){{text-align:left}}.label{{background:#fff3cd;padding:.6rem;border:1px solid #e0c060}}</style>
-<h1>{e(cfg.title)}</h1><p class="label"><b>{e(LABEL)}</b></p>
+td:nth-child(1),th:nth-child(1){{text-align:left}}.label{{background:#fff3cd;padding:.6rem;border:1px solid #e0c060}}</style>
+<h1>{e(cfg.title)}</h1><p class="label"><b>{e(LABEL)}</b> Rows are listed alphabetically, not by score.</p>{ndz}
 <p>Test stage, board cold_c0. Objective = 0.5 x WMAPE(PAIR0-E) + 0.5 x WMAPE(PAIR0-N), from the protected evaluator.
 Data: synthetic preset <code>{e(cfg.preset)}</code>, seed {cfg.seed}.</p>
-<table><tr><th>order</th><th>variant</th><th>WMAPE E</th><th>WMAPE N</th><th>Bias E</th><th>Bias N</th><th>objective</th></tr>{body}</table>
+<table><tr><th>variant</th><th>WMAPE E</th><th>WMAPE N</th><th>Bias E</th><th>Bias N</th><th>objective</th></tr>{body}</table>
 <h2>Not run (config_required)</h2><ul>{skip or "<li>none</li>"}</ul><h2>Papers</h2><ul>{papers}</ul></html>
 """
 
@@ -200,7 +209,9 @@ def run_experiment(config_path: Path, out: Path, progress: Any = print) -> dict[
         "objective": "0.5*WMAPE(PAIR0-E) + 0.5*WMAPE(PAIR0-N)",
         "data": {"flavour": "synthetic", "preset": cfg.preset, "seed": cfg.seed, "dataset_hash": ds.content_hash},
         "split_hash": split.split_hash,
-        "recommended_on_validation": sel.recommended,
+        "day_zero_result": cfg.not_day_zero is None,
+        "not_day_zero": cfg.not_day_zero,
+        "row_order": "alphabetical by variant_id (not a ranking)",
         "test_rows": rows,
         "not_run": skipped,
         "scalable_eval_parity": parity,
@@ -208,11 +219,13 @@ def run_experiment(config_path: Path, out: Path, progress: Any = print) -> dict[
     }
     write_json(out / "results.json", results)
     atomic_write_text(out / "leaderboard.html", leaderboard_html(cfg, rows, skipped))
-    lines = [f"# {cfg.title}", "", f"**{LABEL}**", "", f"Recommended on validation: `{sel.recommended}`.", ""]
-    lines += ["| order | variant | WMAPE E | WMAPE N | objective |", "|---|---|---|---|---|"]
+    lines = [f"# {cfg.title}", "", f"**{LABEL}**", ""]
+    if cfg.not_day_zero:
+        lines += [f"**{NOT_DAY_ZERO}** {cfg.not_day_zero}", ""]
+    lines += ["Rows are listed alphabetically by variant, not by score.", ""]
+    lines += ["| variant | WMAPE E | WMAPE N | objective |", "|---|---|---|---|"]
     lines += [
-        f"| {r['order'] or '-'} | {r['variant_id']} | {_pct(r['wmape_e'])} | {_pct(r['wmape_n'])} | {_pct(r['objective'])} |"
-        for r in rows
+        f"| {r['variant_id']} | {_pct(r['wmape_e'])} | {_pct(r['wmape_n'])} | {_pct(r['objective'])} |" for r in rows
     ]
     lines += ["", "Not run (config_required): " + (", ".join(s["method_id"] for s in skipped) or "none"), ""]
     atomic_write_text(out / "SUMMARY.md", "\n".join(lines))
