@@ -106,7 +106,7 @@ line-length = 120
 target-version = "py311"
 src = ["src", "tests"]
 # Reviewer-supplied regression tests are kept byte-identical to the review folder (sha256 in tests/review/README.md)
-extend-exclude = ["tests/review/adv.py", "tests/review/test_review_harness.py"]
+extend-exclude = ["tests/review/adv.py", "tests/review/test_review_harness.py", "tests/review/test_review_harness_v2.py"]
 
 [tool.ruff.lint]
 select = ["E", "F", "W", "I", "B", "UP", "SIM", "RUF"]
