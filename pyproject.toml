@@ -29,7 +29,7 @@ dependencies = [
   "pydantic>=2.6",
   "typer>=0.16",
   "jinja2>=3.1",
-  "polars>=1.0",  # default engine for data_preparation (Rust-backed)
+  "polars>=1.3",  # min tested 1.3.0 (1.0/1.1 lack scan_csv(infer_schema=); 1.2.0 yanked); default engine for data_preparation (Rust-backed)
   "pyyaml>=6.0",  # configs/ and experiments/
 ]
 
@@ -105,6 +105,8 @@ filterwarnings = ["error::FutureWarning:xferbench", "error::RuntimeWarning:xferb
 line-length = 120
 target-version = "py311"
 src = ["src", "tests"]
+# Reviewer-supplied regression tests are kept byte-identical to the review folder (sha256 in tests/review/README.md)
+extend-exclude = ["tests/review/adv.py", "tests/review/test_review_harness.py"]
 
 [tool.ruff.lint]
 select = ["E", "F", "W", "I", "B", "UP", "SIM", "RUF"]
