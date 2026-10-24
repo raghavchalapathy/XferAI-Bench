@@ -21,6 +21,8 @@ synth_app = typer.Typer(no_args_is_help=True, help="Synthetic data.")
 metadata_app = typer.Typer(no_args_is_help=True, help="Metadata tools.")
 app.add_typer(synth_app, name="synth")
 app.add_typer(metadata_app, name="metadata")
+harness_app = typer.Typer(no_args_is_help=True, help="Self-improving harness: lessons, proposals, triggers.")
+app.add_typer(harness_app, name="harness")
 
 DOCTOR_PROFILES = {
     "core": ["numpy", "pandas", "pyarrow", "pydantic", "typer", "jinja2"],
@@ -662,6 +664,10 @@ def demo_cmd(preset: str = typer.Option("tiny"), seed: int = typer.Option(42), o
 def experiment_cmd(
     config: Path = typer.Option(..., help="experiments/<name>/config.yaml"),
     out: Path = typer.Option(..., help="Empty output directory (e.g. eval/<name>)."),
+    log_lesson: str | None = typer.Option(
+        None, "--log-lesson", help="Append a lesson to harness/lessons.jsonl; value = what changed."
+    ),
+    harness_dir: Path = typer.Option(Path("harness"), "--harness-dir"),
 ) -> None:
     """Run a config-driven synthetic experiment (interface test, not a ranking); nothing is downloaded."""
     from xferbench.experiments.runner import ExperimentError, run_experiment
@@ -672,7 +678,57 @@ def experiment_cmd(
         _fail(str(exc), 2)
     for s in res["not_run"]:
         typer.echo(f"  not run: {s['method_id']} ({s['status']}): {s['reason']}")
+    if log_lesson:
+        from xferbench.harness.core import HarnessError, append_lesson, lesson_from_experiment
+
+        try:
+            lesson = lesson_from_experiment(out, Path.cwd(), res["experiment"], log_lesson)
+            append_lesson(harness_dir, Path.cwd(), lesson)
+        except (HarnessError, ValueError) as exc:
+            _fail(f"lesson not logged: {exc}", 2)
+        typer.echo(f"lesson appended to {harness_dir / 'lessons.jsonl'}")
     typer.echo(f"done. Open {out / 'leaderboard.html'} and {out / 'report.html'}")
+
+
+@harness_app.command("triggers")
+def harness_triggers_cmd(harness_dir: Path = typer.Option(Path("harness"), "--harness-dir")) -> None:
+    """List due revisit triggers (new paper, regression, failed run, stale review). Exit 1 if any are due."""
+    from xferbench.harness.core import due_triggers
+
+    due = due_triggers(harness_dir)
+    for d in due:
+        typer.echo(f"  {d['trigger']}: {d['detail']}")
+    typer.echo(f"{len(due)} trigger(s) due")
+    if due:
+        raise typer.Exit(1)
+
+
+@harness_app.command("check")
+def harness_check_cmd(
+    proposal: Path = typer.Option(...), harness_dir: Path = typer.Option(Path("harness"), "--harness-dir")
+) -> None:
+    """Check a proposal against the guardrails without adopting it."""
+    from xferbench.harness.core import HarnessError, check_proposal, load_proposal
+
+    try:
+        check_proposal(load_proposal(proposal), Path.cwd(), harness_dir)
+    except HarnessError as exc:
+        _fail(str(exc), 2)
+    typer.echo("proposal passes guardrails and has an approved review")
+
+
+@harness_app.command("apply")
+def harness_apply_cmd(
+    proposal: Path = typer.Option(...), harness_dir: Path = typer.Option(Path("harness"), "--harness-dir")
+) -> None:
+    """Adopt an approved proposal: bump BEST_PRACTICES version and log it in CHANGELOG.md."""
+    from xferbench.harness.core import HarnessError, apply_proposal
+
+    try:
+        dest = apply_proposal(proposal, Path.cwd(), harness_dir)
+    except HarnessError as exc:
+        _fail(str(exc), 2)
+    typer.echo(f"adopted; wrote {dest}")
 
 
 def main() -> None:

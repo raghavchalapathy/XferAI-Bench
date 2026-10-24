@@ -1,0 +1,15 @@
+version: 1
+review_date: '2026-10-24'
+review_every_days: 90
+rules:
+  scope: Cold-start only. Objective 0.5*WMAPE(PAIR0-E) + 0.5*WMAPE(PAIR0-N). The evaluator is protected.
+  data_prep_shared: One pipeline for complete, sample and synthetic data. Polars + uv by default; PySpark only where size needs it.
+  pyspark_native: "PySpark: no toPandas, native functions only, no multi-step aggregations without asking the user, prefer simple steps."
+  flag_not_fix: Flag data issues (duplicate keys, negative units) rather than silently fixing them.
+  scalable_models: Scalable libraries (e.g. SynapseML LightGBM on Spark, optional extra). Local on sample/synthetic, cluster for complete, every family.
+  no_download_default: Weight-based models are adapters reported config_required offline. Default path downloads nothing.
+  rate_fallback: "Rate fallback: item -> subcategory -> product type."
+  seasonality: "Seasonality: category -> product type."
+  analogs: B2 = H x similar-FPG per-household rate; B3 = B2 shrunk toward the national rate.
+  synthetic_label: Synthetic results are interface tests, not rankings.
+  excluded_methods: POP (rejected), VISUELLE (blocked), TimeGPT (dropped), Moirai and TimesFM 3.0 (non-commercial).

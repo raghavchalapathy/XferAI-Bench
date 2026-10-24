@@ -21,3 +21,5 @@ Repo layout: [configs/](configs/), `data/` (gitignored contents), [data_preparat
 [COLDSTARTHARNESS.md](COLDSTARTHARNESS.md), [MEMORY.md](MEMORY.md), [DATASCIENTIST.md](DATASCIENTIST.md) and
 [AIENGINEER.md](AIENGINEER.md). Experiments: `xferbench experiment --config experiments/<id>/config.yaml --out eval/<id>`
 (synthetic interface test, not rankings).
+Harness loop (Builder/Scout/Reviewer): `--log-lesson` on experiment runs, `xferbench harness triggers`,
+proposals in `harness/proposals/`, adoption only via `xferbench harness apply` after an approved Reviewer record.

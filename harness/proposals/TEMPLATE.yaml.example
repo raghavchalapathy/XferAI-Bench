@@ -1,0 +1,16 @@
+id: example-proposal
+author_role: builder          # builder | scout
+summary: one line
+set_rules: {rule_id: "new or changed rule text"}
+remove_rules: []
+touches: []                   # files the change affects; src/xferbench/evaluation/ is refused
+results:                      # optional; each needs an existing run manifest + evidence
+  - run_manifest: eval/exp01/test-run/run_manifest.json
+    run_manifest_sha256: "<sha256>"
+    evidence: eval/exp01/results.json
+    data_class: synthetic
+    label: "synthetic interface test, not rankings"
+review:                       # added by the Reviewer only
+  reviewer: Reviewer
+  decision: approved          # approved | rejected | changes_requested
+  date: 2026-10-24

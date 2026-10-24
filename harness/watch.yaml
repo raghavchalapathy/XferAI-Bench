@@ -1,0 +1,8 @@
+# Revisit sources. Scout adds papers with status: new; set status: reviewed once a proposal or decision exists.
+papers:
+  - title: "M5 accuracy competition: Results, findings, and conclusions (Makridakis et al., 2022)"
+    url: https://doi.org/10.1016/j.ijforecast.2021.11.013
+    status: reviewed
+  - title: "Chronos: Learning the Language of Time Series (Ansari et al., 2024)"
+    url: https://arxiv.org/abs/2403.07815
+    status: reviewed
