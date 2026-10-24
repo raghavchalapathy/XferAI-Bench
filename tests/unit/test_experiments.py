@@ -26,7 +26,7 @@ def test_configs_exist_and_load() -> None:
 
 def test_non_synthetic_rejected(tmp_path: Path) -> None:
     p = tmp_path / "c.yaml"
-    p.write_text(yaml.safe_dump({"id": "x", "methods": ["B0"], "data": {"flavour": "complete_data"}}))
+    p.write_text(yaml.safe_dump({"id": "x", "methods": ["B0"], "data": {"flavour": "complete_data"}}), encoding="utf-8")
     with pytest.raises(ExperimentError):
         ExperimentConfig.load(p)
 

@@ -20,7 +20,7 @@ A runnable example that registers a method at runtime, without editing core code
 ```python
 import numpy as np
 from xferbench.models.base import RowResult, expand, stateless_artifact
-from xferbench.models.baselines.rates import B0NationalRate
+from xferbench.models.stats.rates import B0NationalRate
 from xferbench.models.registry import RegistryEntry, register_method
 from xferbench.orchestration import BenchmarkRunner, RunConfig
 from pathlib import Path

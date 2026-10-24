@@ -82,7 +82,7 @@ def test_exactly_one_source_and_legacy_metadata_is_local(tmp_path: Path) -> None
 def test_local_output_inside_repo_must_be_gitignored(tmp_path: Path) -> None:
     repo = _git_repo(tmp_path / "repo")
     with pytest.raises(DataClassError, match="not ignored"):
-        check_local_output(repo / "results")
+        check_local_output(repo / "shared_out")
     check_local_output(repo / "runs" / "local" / "r1")  # ignored -> allowed
     check_local_output(repo / "local" / "out")
     check_local_output(tmp_path / "outside")  # not a work tree -> allowed
@@ -90,7 +90,14 @@ def test_local_output_inside_repo_must_be_gitignored(tmp_path: Path) -> None:
 
 def test_gitignore_keeps_local_data_out_of_git(tmp_path: Path) -> None:
     repo = _git_repo(tmp_path / "repo")
-    for rel in ("local/sales.parquet", "runs/local/r/report.html", "my.local.csv", "runs/benchmark/x/report.html"):
+    for rel in (
+        "local/sales.parquet",
+        "runs/local/r/report.html",
+        "my.local.csv",
+        "runs/benchmark/x/report.html",
+        "data/complete_data/input/sales.parquet",
+        "data/sample_data/output/x.csv",
+    ):
         r = subprocess.run(["git", "-C", str(repo), "check-ignore", "-q", rel])
         assert r.returncode == 0, rel
 
