@@ -16,6 +16,7 @@ from xferbench.harness.core import (
     ResultRef,
     append_lesson,
     apply_proposal,
+    check_proposal,
     current_practices,
     due_triggers,
     load_proposal,
@@ -31,10 +32,11 @@ LBL = "synthetic interface test, not rankings"
 @pytest.fixture()
 def env(tmp_path: Path) -> tuple[Path, Path]:
     root = tmp_path / "repo"
-    ev = root / "src/xferbench/evaluation"
-    ev.mkdir(parents=True)
-    for n in ("evaluator.py", "metrics.py", "selection.py", "__init__.py"):
-        shutil.copy(ROOT / "src/xferbench/evaluation" / n, ev / n)
+    for rel in json.loads((ROOT / "harness/PROTECTED_HASHES.json").read_text(encoding="utf-8")):
+        (root / rel).parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy(ROOT / rel, root / rel)
+    (root / "reviews").mkdir()
+    (root / "reviews/review.md").write_text("Reviewer: approved\n", encoding="utf-8")
     h = root / "harness"
     (h / "proposals").mkdir(parents=True)
     for n in ("BEST_PRACTICES.v1.yaml", "CHANGELOG.md", "PROTECTED_HASHES.json", "watch.yaml"):
@@ -67,7 +69,13 @@ def _proposal(h: Path, root: Path, **kw: object) -> Path:
         "summary": "tighten rule",
         "set_rules": {"new_rule": "text"},
         "results": [_ref(root)],
-        "review": {"reviewer": "Reviewer", "decision": "approved", "date": "2026-10-24"},
+        "review": {
+            "reviewer": "reviewer",
+            "decision": "approved",
+            "date": "2026-10-24",
+            "review_file": "reviews/review.md",
+            "review_sha256": sha256_file(root / "reviews/review.md"),
+        },
     }
     d.update(kw)
     p = h / "proposals/p1.yaml"
@@ -95,7 +103,7 @@ def test_apply_approved_bumps_version_and_logs(env: tuple[Path, Path]) -> None:
         apply_proposal(h / "proposals/p1.yaml", root, h)
 
 
-@pytest.mark.parametrize("review", [None, {"reviewer": "R", "decision": "rejected", "date": "2026-10-24"}])
+@pytest.mark.parametrize("review", [None, {"reviewer": "reviewer", "decision": "rejected", "date": "2026-10-24"}])
 def test_no_adoption_without_approved_review(env: tuple[Path, Path], review: object) -> None:
     root, h = env
     with pytest.raises(HarnessError, match="Reviewer"):
@@ -166,3 +174,84 @@ def test_lesson_requires_existing_evidence(env: tuple[Path, Path]) -> None:
     bad.result.evidence = "missing.json"
     with pytest.raises(HarnessError):
         append_lesson(h, root, bad)
+
+
+# ---------------------------------------------------------------- v2 (Reviewer findings F-3 / F-4)
+@pytest.mark.parametrize("who", ["builder", "Builder", "scout", "engineer"])
+def test_self_or_non_reviewer_approval_rejected(env: tuple[Path, Path], who: str) -> None:
+    root, h = env
+    p = _proposal(h, root)
+    d = yaml.safe_load(p.read_text(encoding="utf-8"))
+    d["review"]["reviewer"] = who
+    p.write_text(yaml.safe_dump(d), encoding="utf-8")
+    with pytest.raises(HarnessError):
+        load_proposal(p)
+
+
+def test_review_file_hash_must_match(env: tuple[Path, Path]) -> None:
+    root, h = env
+    p = _proposal(h, root)
+    (root / "reviews/review.md").write_text("tampered\n", encoding="utf-8")
+    with pytest.raises(HarnessError, match="sha256 mismatch"):
+        apply_proposal(p, root, h)
+
+
+def _git(root: Path, *args: str) -> None:
+    import subprocess
+
+    env = {"GIT_AUTHOR_NAME": "t", "GIT_AUTHOR_EMAIL": "t@t", "GIT_COMMITTER_NAME": "t", "GIT_COMMITTER_EMAIL": "t@t"}
+    subprocess.run(["git", *args], cwd=root, check=True, capture_output=True, env={**__import__("os").environ, **env})
+
+
+@pytest.fixture
+def gitenv(env: tuple[Path, Path]) -> tuple[Path, Path]:
+    root, h = env
+    _git(root, "init", "-q")
+    _git(root, "add", "-A")
+    _git(root, "commit", "-qm", "base")
+    return root, h
+
+
+def test_actual_diff_into_protected_path_is_blocked(gitenv: tuple[Path, Path]) -> None:
+    root, h = gitenv
+    p = _proposal(h, root, touches=["docs/a.md"])
+    _git(root, "add", "-A")
+    _git(root, "commit", "-qm", "proposal")
+    (root / "harness/PROTECTED_HASHES.json").write_text("{}", encoding="utf-8")  # declared touches lie
+    with pytest.raises(HarnessError, match="protected"):
+        check_proposal(load_proposal(p), root, h)
+
+
+def test_undeclared_change_is_blocked(gitenv: tuple[Path, Path]) -> None:
+    root, h = gitenv
+    p = _proposal(h, root, touches=["docs/a.md"])
+    _git(root, "add", "-A")
+    _git(root, "commit", "-qm", "proposal")
+    (root / "docs").mkdir()
+    (root / "docs/a.md").write_text("ok", encoding="utf-8")
+    (root / "docs/b.md").write_text("sneaky", encoding="utf-8")
+    with pytest.raises(HarnessError, match="not declared"):
+        check_proposal(load_proposal(p), root, h)
+    (root / "docs/b.md").unlink()
+    check_proposal(load_proposal(p), root, h)
+
+
+def test_symlink_into_protected_path_is_blocked(env: tuple[Path, Path]) -> None:
+    root, h = env
+    (root / "docs").mkdir()
+    try:
+        (root / "docs/link").symlink_to(root / "src/xferbench/evaluation", target_is_directory=True)
+    except OSError:  # Windows without developer mode
+        pytest.skip("symlinks unsupported")
+    p = _proposal(h, root, touches=["docs/link/metrics.py"])
+    with pytest.raises(HarnessError, match="protected"):
+        check_proposal(load_proposal(p), root, h)
+
+
+def test_reviewer_files_unmodified() -> None:
+    pins = {
+        "tests/review/test_review_harness.py": "07252b7d650b6716ff14beb263357ca34302f44d2d5fdadd342755a9c35cea64",
+        "tests/review/adv.py": "f734c76739373b33bb5a5693f09e6c61635cc55830602799856017ff2b3a537e",
+    }
+    for rel, h in pins.items():
+        assert sha256_file(ROOT / rel) == h, rel

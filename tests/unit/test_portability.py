@@ -36,8 +36,14 @@ def test_text_io_has_explicit_encoding() -> None:
     assert bad == []
 
 
+# test_harness.py creates one symlink to prove the guard resolves links; it skips where symlinks are unsupported.
+SYMLINK_OK = {"test_harness.py"}
+
+
 def test_tests_do_not_create_symlinks() -> None:
     hits = [
-        p.name for p in _py("tests") if p.name != Path(__file__).name and "symlink_to(" in p.read_text(encoding="utf-8")
+        p.name
+        for p in _py("tests")
+        if p.name != Path(__file__).name and p.name not in SYMLINK_OK and "symlink_to(" in p.read_text(encoding="utf-8")
     ]
     assert hits == []

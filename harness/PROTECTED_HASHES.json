@@ -2,5 +2,8 @@
   "src/xferbench/evaluation/evaluator.py": "9ab49a7825f4d97cf04e758b790cf27d0562773ed4b404e3d9fdffe7699f1f8b",
   "src/xferbench/evaluation/metrics.py": "2b79ff470c6102e8b149d6f4d24e07092af5c893a149ab8a46816b4fb9d0b3f6",
   "src/xferbench/evaluation/selection.py": "8d9e52d815e54cfa22ec5c59b5c6eb0017937105095aaa53ff3647087b744599",
-  "src/xferbench/evaluation/__init__.py": "d62a9e2a0ab84ae1bcf850c1578ce41425f2a5bdd6f608620665501a73fcd802"
+  "src/xferbench/evaluation/__init__.py": "d62a9e2a0ab84ae1bcf850c1578ce41425f2a5bdd6f608620665501a73fcd802",
+  "src/xferbench/scalable_eval/__init__.py": "ef580d3fec3d17868fbc46d049d5dcf38aa4d469ecfba766cf6939783450d0ab",
+  "src/xferbench/scalable_eval/core.py": "cde2c6f5af553a51bba88ec7745c11b95d61ff381d2a74f5c389fed02786a37e",
+  "tests/unit/test_scalable_eval.py": "92ca2221a7833e9db4446a5f1142722bd3d3e3f7cfa2d91acfa8b1e60b9f2857"
 }

@@ -8,7 +8,8 @@ Files (under a harness dir, default ``harness/``):
   watch.yaml                    revisit sources: new papers, review cadence
   PROTECTED_HASHES.json         sha256 of the protected evaluator files
 
-Guardrails: proposals cannot touch the protected evaluator (path check and hash check); results need an existing
+Guardrails: proposals cannot touch the protected evaluator or its guards (normalised path check on the declared
+AND the actual git diff, plus a hash check); results need an existing
 run manifest and evidence; synthetic results can never be labelled as rankings; nothing is adopted without an
 approved Reviewer record.
 """
@@ -18,7 +19,9 @@ from __future__ import annotations
 import datetime as dt
 import hashlib
 import json
+import posixpath
 import re
+import subprocess
 from pathlib import Path
 from typing import Any, Literal
 
@@ -26,8 +29,24 @@ import yaml
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
 PROTECTED_PREFIX = "src/xferbench/evaluation/"
-RANKING_WORDS = re.compile(r"\b(rank|ranking|rankings|leader|winner|best|beats|outperform\w*|sota)\b", re.I)
-NOT_RANKING = re.compile(r"not (a )?rankings?", re.I)
+# Protected paths (directories cover everything below them). Compared after normalisation, case-insensitively.
+PROTECTED_PATHS = (
+    "src/xferbench/evaluation",
+    "src/xferbench/scalable_eval",
+    "harness/protected_hashes.json",
+    "tests/unit/test_scalable_eval.py",
+    "tests/review",
+)
+# Synthetic results may only carry one of these labels (allow-list; normalised: case, whitespace, trailing '.').
+SYNTHETIC_LABELS = frozenset(
+    {
+        "synthetic interface test - not a ranking. synthetic data only checks the software, not which method is better",
+        "synthetic interface test, not rankings",
+        "synthetic interface test, not a ranking",
+        "synthetic smoke test, not a ranking",
+        "not a ranking",
+    }
+)
 
 
 class HarnessError(RuntimeError):
@@ -38,10 +57,76 @@ def sha256_file(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def _norm_label(label: str) -> str:
+    return " ".join(label.lower().split()).rstrip(".")
+
+
 def _check_label(data_class: str, label: str) -> None:
-    claim = not NOT_RANKING.search(label) or RANKING_WORDS.search(NOT_RANKING.sub("", label))
-    if data_class == "synthetic" and claim:
-        raise ValueError("synthetic results must be labelled 'not a ranking' and make no ranking claim")
+    if data_class == "synthetic" and _norm_label(label) not in SYNTHETIC_LABELS:
+        raise ValueError(f"synthetic results must use an approved non-ranking label, one of {sorted(SYNTHETIC_LABELS)}")
+
+
+def normalise_path(path: str) -> str:
+    """Backslashes -> '/', collapse '//' and '.', resolve '..', lower-case; absolute paths keep their leading '/'."""
+    p = path.replace("\\", "/").strip()
+    absolute = p.startswith("/") or re.match(r"^[a-zA-Z]:/", p) is not None
+    p = posixpath.normpath(re.sub(r"^[a-zA-Z]:", "", p)).lower()
+    return p if absolute else p.lstrip("/")
+
+
+def protected_hit(path: str) -> str | None:
+    """Return the protected path that ``path`` touches (itself, a child, a parent dir, or an absolute path into it)."""
+    n = normalise_path(path)
+    for prot in PROTECTED_PATHS:
+        if n in ("", ".", "/"):
+            return prot  # the whole repo
+        if n == prot or n.startswith(prot + "/") or prot.startswith(n.rstrip("/") + "/"):
+            return prot
+        if n.startswith("/") and ("/" + prot + "/" in n + "/"):
+            return prot
+    return None
+
+
+def _git_touched(root: Path, base: str) -> list[str]:
+    def run(*args: str) -> list[str]:
+        out = subprocess.run(
+            ["git", *args], cwd=root, capture_output=True, text=True, encoding="utf-8", check=True
+        ).stdout
+        return [x for x in out.splitlines() if x.strip()]
+
+    return sorted(
+        set(run("diff", "--name-only", "--no-renames", base)) | set(run("ls-files", "--others", "--exclude-standard"))
+    )
+
+
+def actual_touches(root: Path, base: str | None = "HEAD") -> list[str] | None:
+    """Paths changed in the working tree vs ``base`` (plus untracked), each resolved through symlinks.
+
+    Returns None when ``root`` is not a git work tree.
+    """
+    if base is None or not (root / ".git").exists():
+        return None
+    rr = root.resolve()
+    out = []
+    for rel in _git_touched(root, base):
+        out.append(rel)
+        real = (root / rel).resolve()
+        if real.is_relative_to(rr):
+            out.append(real.relative_to(rr).as_posix())
+    return out
+
+
+def guard_paths(paths: list[str], root: Path | None = None) -> None:
+    for p in paths:
+        cand = [p]
+        if root is not None and not Path(p).is_absolute():
+            real = (root / p).resolve()
+            if real.is_relative_to(root.resolve()):
+                cand.append(real.relative_to(root.resolve()).as_posix())  # symlink into a protected path
+        for c in cand:
+            hit = protected_hit(c)
+            if hit:
+                raise ValueError(f"proposals may not touch the protected evaluator or its guards ({hit}): {p}")
 
 
 class ResultRef(BaseModel):
@@ -79,12 +164,26 @@ class Lesson(BaseModel):
     accepted: bool = False
 
 
+NON_REVIEWERS = {"builder", "scout", "engineer", "lead", "owner"}
+
+
 class Review(BaseModel):
+    """Reviewer record. ``reviewer`` must be a Reviewer id (``reviewer`` or ``reviewer-<name>``); approvals must
+    cite the review file and its sha256, which :func:`check_proposal` verifies."""
+
     model_config = ConfigDict(extra="forbid")
-    reviewer: str = Field(min_length=1)
+    reviewer: str = Field(pattern=r"^(?i:reviewer)([-_][A-Za-z0-9._-]+)?$")
     decision: Literal["approved", "rejected", "changes_requested"]
     date: dt.date
+    review_file: str | None = None
+    review_sha256: str | None = Field(default=None, pattern=r"^[0-9a-f]{64}$")
     notes: str = ""
+
+    @model_validator(mode="after")
+    def _evidence(self) -> Review:
+        if self.decision == "approved" and not (self.review_file and self.review_sha256):
+            raise ValueError("an approval must cite review_file and review_sha256")
+        return self
 
 
 class Proposal(BaseModel):
@@ -101,10 +200,17 @@ class Proposal(BaseModel):
     @field_validator("touches")
     @classmethod
     def _no_evaluator(cls, v: list[str]) -> list[str]:
-        for p in v:
-            if p.replace("\\", "/").lstrip("./").startswith(PROTECTED_PREFIX):
-                raise ValueError(f"proposals may not touch the protected evaluator: {p}")
+        guard_paths(v)
         return v
+
+    @model_validator(mode="before")
+    @classmethod
+    def _no_self_approval(cls, data: Any) -> Any:
+        if isinstance(data, dict) and isinstance(data.get("review"), dict):
+            who = str(data["review"].get("reviewer", "")).strip().lower()
+            if who in NON_REVIEWERS or who == str(data.get("author_role", "")).strip().lower():
+                raise ValueError(f"self-approval: reviewer {who!r} is not an independent Reviewer")
+        return data
 
 
 class BestPractices(BaseModel):
@@ -186,16 +292,39 @@ def load_proposal(path: Path) -> Proposal:
         raise HarnessError(f"{path.name}: {exc}") from exc
 
 
-def check_proposal(p: Proposal, root: Path, harness: Path) -> None:
+def check_proposal(p: Proposal, root: Path, harness: Path, base: str | None = "HEAD") -> None:
+    """Guardrails. ``touches`` is not trusted: in a git work tree the real diff vs ``base`` (plus untracked files,
+    resolved through symlinks) is checked against the protected paths and must be declared in ``touches``."""
     check_protected_hashes(root, harness)
+    try:
+        guard_paths(p.touches, root)
+        actual = actual_touches(root, base)
+        if actual is not None:
+            guard_paths(actual, root)
+            declared = {normalise_path(x) for x in p.touches}
+            undeclared = sorted({a for a in actual if normalise_path(a) not in declared} - {_rel(harness, root, p.id)})
+            if undeclared:
+                raise HarnessError(f"proposal {p.id}: changed files not declared in touches: {undeclared}")
+    except ValueError as exc:
+        raise HarnessError(str(exc)) from exc
     for r in p.results:
         r.verify_files(root)
     if p.review is None or p.review.decision != "approved":
         raise HarnessError(f"proposal {p.id} has no approved Reviewer record; not adopted")
+    rf = root / str(p.review.review_file)
+    if not rf.is_file() or sha256_file(rf) != p.review.review_sha256:
+        raise HarnessError(f"proposal {p.id}: Reviewer record file missing or sha256 mismatch: {p.review.review_file}")
     bp, _ = current_practices(harness)
     unknown = [r for r in p.remove_rules if r not in bp.rules]
     if unknown:
         raise HarnessError(f"proposal {p.id} removes unknown rules {unknown}")
+
+
+def _rel(harness: Path, root: Path, pid: str) -> str:
+    try:
+        return (harness / "proposals" / f"{pid}.yaml").resolve().relative_to(root.resolve()).as_posix()
+    except ValueError:
+        return ""
 
 
 def apply_proposal(path: Path, root: Path, harness: Path) -> Path:

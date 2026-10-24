@@ -16,9 +16,15 @@ Loop:
 3. Builder or Scout writes `proposals/<id>.yaml`. A Reviewer records `review: {decision: approved}`.
 4. Check, then adopt: `xferbench harness check --proposal ...` and `xferbench harness apply --proposal ...`. Adopting writes `BEST_PRACTICES.v<N+1>.yaml` and a CHANGELOG entry.
 
-Guardrails (enforced and tested in `tests/unit/test_harness.py`):
+Guardrails (tested in `tests/unit/test_harness.py` and the Reviewer's `tests/review/`). They are local checks that
+make mistakes hard; they are not a security boundary against someone with write access to the repo:
 
-- Proposals cannot touch `src/xferbench/evaluation/`; evaluator hashes are checked against `PROTECTED_HASHES.json`.
+- Protected paths: `src/xferbench/evaluation/`, `src/xferbench/scalable_eval/`, `harness/PROTECTED_HASHES.json`,
+  `tests/unit/test_scalable_eval.py` and `tests/review/`. Paths are normalised (`..`, backslashes, case,
+  symlinks) before the check. `PROTECTED_HASHES.json` pins the evaluator, scalable_eval and the parity test.
+- `touches` is checked against the real change (git diff against `HEAD` plus untracked files) when the repo is a
+  git checkout: protected or undeclared changed files are refused.
 - Results need an existing run manifest whose sha256 matches, plus existing evidence.
-- A synthetic result must say "not a ranking" and make no ranking claim.
-- Nothing is adopted without an approved Reviewer record, and nothing is adopted twice.
+- A synthetic result must carry an allow-listed label ("not a ranking") and make no ranking claim.
+- Approval needs a Reviewer id (`reviewer` or `reviewer-<name>`) different from the author, a `review_file`
+  and its `review_sha256`. Builder, Scout, Engineer and the author cannot approve. Nothing is adopted twice.
