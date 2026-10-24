@@ -91,3 +91,39 @@ def tiny_runs(tiny_dir: Path, tiny_split_path: Path, tmp_path_factory: pytest.Te
         "splits": tiny_split_path,
         "root": root,
     }
+
+
+# ---------------------------------------------------------------- V2-6: strict skips
+_SKIPPED: list[tuple[str, str]] = []
+
+
+def pytest_runtest_logreport(report: pytest.TestReport) -> None:
+    if report.skipped and not hasattr(report, "wasxfail"):
+        _SKIPPED.append((report.nodeid, str(report.longrepr)))
+
+
+def unexpected_skips(profile: str, skipped: list[str], spec: str) -> list[str]:
+    """Node ids in ``skipped`` that are not allowed for ``profile`` by the ``expected_skips.txt`` text ``spec``."""
+    import fnmatch
+
+    allowed = [
+        line.split(None, 1)[1].strip()
+        for line in spec.splitlines()
+        if line.strip() and not line.lstrip().startswith("#") and line.split(None, 1)[0] == profile
+    ]
+    return [n for n in skipped if not any(fnmatch.fnmatchcase(n, pat) for pat in allowed)]
+
+
+def pytest_sessionfinish(session: pytest.Session, exitstatus: int) -> None:
+    import os
+
+    profile = os.environ.get("XFERBENCH_STRICT_SKIPS", "").strip()
+    if not profile:
+        return
+    spec = (Path(__file__).parent / "expected_skips.txt").read_text(encoding="utf-8")
+    bad = unexpected_skips(profile, [n for n, _ in _SKIPPED], spec)
+    if bad:
+        reasons = dict(_SKIPPED)
+        msg = "\n".join(f"  {n}: {reasons[n]}" for n in bad)
+        print(f"\nXFERBENCH_STRICT_SKIPS={profile}: unexpected skips:\n{msg}")
+        session.exitstatus = pytest.ExitCode.TESTS_FAILED

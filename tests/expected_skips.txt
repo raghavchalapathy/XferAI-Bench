@@ -1,0 +1,8 @@
+# Expected pytest skips per CI profile (V2-6). With XFERBENCH_STRICT_SKIPS=<profile> set, any skip whose node id
+# is not listed for that profile fails the session. Format: <profile> <node-id fnmatch pattern>
+# Profile "core": the OS x Python matrix installs core + dev only (no Spark, no LightGBM).
+core tests/leakage/test_m4_lightgbm.py::*
+core tests/unit/test_scalable_eval.py::test_spark_local_parity
+core tests/review/test_review_adv.py::test_reviewer_adversarial_spark
+core tests/unit/test_harness.py::test_symlink_into_protected_path_is_blocked
+# Profile "spark": the spark-parity job must skip nothing (no entries).
