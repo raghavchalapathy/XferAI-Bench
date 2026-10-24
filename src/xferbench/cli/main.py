@@ -658,6 +658,23 @@ def demo_cmd(preset: str = typer.Option("tiny"), seed: int = typer.Option(42), o
     typer.echo(f"done. Open {out / 'report.html'}")
 
 
+@app.command("experiment")
+def experiment_cmd(
+    config: Path = typer.Option(..., help="experiments/<name>/config.yaml"),
+    out: Path = typer.Option(..., help="Empty output directory (e.g. eval/<name>)."),
+) -> None:
+    """Run a config-driven synthetic experiment (interface test, not a ranking); nothing is downloaded."""
+    from xferbench.experiments.runner import ExperimentError, run_experiment
+
+    try:
+        res = run_experiment(config, out, progress=typer.echo)
+    except ExperimentError as exc:
+        _fail(str(exc), 2)
+    for s in res["not_run"]:
+        typer.echo(f"  not run: {s['method_id']} ({s['status']}): {s['reason']}")
+    typer.echo(f"done. Open {out / 'leaderboard.html'} and {out / 'report.html'}")
+
+
 def main() -> None:
     app()
 
