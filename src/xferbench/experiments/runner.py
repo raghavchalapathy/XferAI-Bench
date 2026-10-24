@@ -98,6 +98,12 @@ def _pct(v: float | None) -> str:
     return "N/A" if v is None else f"{v * 100:.1f}%"
 
 
+WORK_DIR = "_work"
+SELECTION_LABEL = (
+    "synthetic interface test, not a ranking: private working file used only to freeze the test run; do not publish"
+)
+
+
 def leaderboard_html(cfg: ExperimentConfig, rows: list[dict[str, Any]], skipped: list[dict[str, str]]) -> str:
     e = html.escape
     body = "".join(
@@ -192,12 +198,21 @@ def run_experiment(config_path: Path, out: Path, progress: Any = print) -> dict[
     ).run()
     progress("[4/6] frozen selection (validation only)")
     sel = select(val.out, SelectionPolicy())
-    write_json(out / "selection.json", sel.model_dump(mode="json"))
+    work = out / WORK_DIR  # private working path: needed to freeze the test run; never published
+    sel_path = work / "selection.json"
+    write_json(
+        sel_path,
+        {
+            "data_class": "synthetic",
+            "label": SELECTION_LABEL,
+            "not_a_ranking": True,
+            "publish": False,
+            "selection": sel.model_dump(mode="json"),
+        },
+    )
     progress("[5/6] test run with the frozen selection")
     test = BenchmarkRunner(
-        RunConfig(
-            md, out / "splits.json", "test", out / "test-run", selection_path=out / "selection.json", data_label=label
-        )
+        RunConfig(md, out / "splits.json", "test", out / "test-run", selection_path=sel_path, data_label=label)
     ).run()
     progress("[6/6] report, results.json, leaderboard.html, SUMMARY.md")
     rows = _rows(test.out)

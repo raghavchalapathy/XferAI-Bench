@@ -44,3 +44,5 @@ runs/local/
 !/eval/README.md
 /results/*
 !/results/README.md
+# private working files of synthetic experiments (never published)
+_work/

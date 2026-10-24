@@ -58,3 +58,43 @@ def test_exp02_is_never_day_zero_and_never_ranked(tmp_path: Path) -> None:
         assert "NOT A DAY-ZERO RESULT" in text.upper()
         assert "recommended on validation" not in text.lower()
     assert all("order" not in r and "rank" not in r for r in res["test_rows"])
+
+
+def test_v2_synthetic_outputs_carry_no_ranking_and_private_selection(tmp_path: Path) -> None:
+    """V2-1 + V2-2: synthetic outputs have no Rank column / "Ranked by" text, selection.json is private."""
+    import json
+    import re
+    import subprocess
+    import urllib.parse
+
+    from xferbench.experiments.runner import SELECTION_LABEL, WORK_DIR
+
+    out = tmp_path / "exp02"
+    run_experiment(ROOT / "experiments/exp02_chronos_zero_shot/config.yaml", out, progress=lambda _m: None)
+
+    # V2-2: no published selection.json anywhere outside the private working dir
+    published = [p for p in out.rglob("*") if p.is_file() and WORK_DIR not in p.relative_to(out).parts]
+    assert not [p for p in published if p.name == "selection.json"], published
+    sel = json.loads((out / WORK_DIR / "selection.json").read_text(encoding="utf-8"))
+    assert sel["data_class"] == "synthetic" and sel["not_a_ranking"] is True and sel["publish"] is False
+    assert sel["label"] == SELECTION_LABEL
+
+    # V2-1: no rank column or ranking prose in what we publish
+    rank_re = re.compile(r"\bRank\b|\brank,|Ranked by", re.IGNORECASE)
+    targets = [out / "report.html", out / "SUMMARY.md", out / "leaderboard.html"]
+    targets += [p for p in published if p.name in {"report.html", "leaderboard.csv", "summary.md"}]
+    for f in targets:
+        # decode embedded CSV data-URIs too, so their headers are checked
+        text = urllib.parse.unquote(f.read_text(encoding="utf-8"))
+        assert not rank_re.search(text), f"ranking text in {f}"
+        if f.parent == out:
+            # "not reviewer-recommended" is a catalogue disclaimer, not a recommendation
+            assert not re.search(r"(?<!not reviewer-)recommended", text, re.IGNORECASE), f
+    for csv in [p for p in published if p.name == "leaderboard.csv"]:
+        header = csv.read_text(encoding="utf-8").splitlines()[0].split(",")
+        assert "rank" not in header and "rankable" not in header
+
+    # never committed and ignored by git
+    assert "_work/" in (ROOT / ".gitignore").read_text(encoding="utf-8").split()
+    tracked = subprocess.run(["git", "ls-files"], cwd=ROOT, capture_output=True, text=True, check=False).stdout
+    assert not [t for t in tracked.splitlines() if t.endswith("selection.json") and t.startswith("results")]
