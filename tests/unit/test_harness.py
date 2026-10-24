@@ -251,7 +251,32 @@ def test_symlink_into_protected_path_is_blocked(env: tuple[Path, Path]) -> None:
 def test_reviewer_files_unmodified() -> None:
     pins = {
         "tests/review/test_review_harness.py": "07252b7d650b6716ff14beb263357ca34302f44d2d5fdadd342755a9c35cea64",
+        "tests/review/test_review_harness_v2.py": "c190f9faf99cd231892663faee65966f5b38e185416057eefc4fba2b8e23b903",
+        "tests/review/test_review_adv.py": "e50daf8bb60dcb356062482067796dee189b5db3bbb87258a933717e7738bfca",
         "tests/review/adv.py": "f734c76739373b33bb5a5693f09e6c61635cc55830602799856017ff2b3a537e",
     }
     for rel, h in pins.items():
         assert sha256_file(ROOT / rel) == h, rel
+
+
+# ---------------------------------------------------------------- v3 (Reviewer finding V2-4)
+@pytest.mark.parametrize(
+    "who", ["reviewer-builder", "reviewer_scout", " Reviewer-Scout ", "Reviewer-ENGINEER", "reviewer-\uff22uilder"]
+)
+def test_approver_containing_author_or_role_rejected(env: tuple[Path, Path], who: str) -> None:
+    root, h = env
+    p = _proposal(h, root)
+    d = yaml.safe_load(p.read_text(encoding="utf-8"))
+    d["review"]["reviewer"] = who
+    p.write_text(yaml.safe_dump(d), encoding="utf-8")
+    with pytest.raises(HarnessError):
+        load_proposal(p)
+
+
+def test_approver_conflict_normalisation() -> None:
+    from xferbench.harness.core import _approver_conflict
+
+    assert _approver_conflict("reviewer-builder", "builder")
+    assert _approver_conflict("Reviewer.S-c_o-u t", "builder")  # normalised substring of a role
+    assert not _approver_conflict("reviewer", "builder")
+    assert not _approver_conflict("reviewer-alice", "scout")

@@ -18,3 +18,7 @@ xferbench experiment --config experiments/exp01_m5_lightgbm_analogs/config.yaml 
 ```
 
 Each run writes `leaderboard.html`, `report.html`, `results.json` and `SUMMARY.md`. Methods without their extras are listed as `config_required`. Nothing is downloaded.
+
+Synthetic runs carry no Rank column, no `rank`/`rankable` CSV columns and no "Ranked by" text. The frozen
+validation selection used to drive the test run is written only to the private, git-ignored `_work/selection.json`
+(labelled `data_class: synthetic`, `not_a_ranking: true`, `publish: false`); never copy `_work/` into results or the site.

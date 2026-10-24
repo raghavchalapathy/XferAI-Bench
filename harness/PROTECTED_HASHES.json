@@ -5,5 +5,9 @@
   "src/xferbench/evaluation/__init__.py": "d62a9e2a0ab84ae1bcf850c1578ce41425f2a5bdd6f608620665501a73fcd802",
   "src/xferbench/scalable_eval/__init__.py": "ef580d3fec3d17868fbc46d049d5dcf38aa4d469ecfba766cf6939783450d0ab",
   "src/xferbench/scalable_eval/core.py": "cde2c6f5af553a51bba88ec7745c11b95d61ff381d2a74f5c389fed02786a37e",
-  "tests/unit/test_scalable_eval.py": "92ca2221a7833e9db4446a5f1142722bd3d3e3f7cfa2d91acfa8b1e60b9f2857"
+  "tests/unit/test_scalable_eval.py": "92ca2221a7833e9db4446a5f1142722bd3d3e3f7cfa2d91acfa8b1e60b9f2857",
+  "tests/review/test_review_harness.py": "07252b7d650b6716ff14beb263357ca34302f44d2d5fdadd342755a9c35cea64",
+  "tests/review/test_review_harness_v2.py": "c190f9faf99cd231892663faee65966f5b38e185416057eefc4fba2b8e23b903",
+  "tests/review/adv.py": "f734c76739373b33bb5a5693f09e6c61635cc55830602799856017ff2b3a537e",
+  "tests/review/test_review_adv.py": "e50daf8bb60dcb356062482067796dee189b5db3bbb87258a933717e7738bfca"
 }

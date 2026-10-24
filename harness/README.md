@@ -28,3 +28,5 @@ make mistakes hard; they are not a security boundary against someone with write 
 - A synthetic result must carry an allow-listed label ("not a ranking") and make no ranking claim.
 - Approval needs a Reviewer id (`reviewer` or `reviewer-<name>`) different from the author, a `review_file`
   and its `review_sha256`. Builder, Scout, Engineer and the author cannot approve. Nothing is adopted twice.
+  Ids are compared after NFKC normalisation, lower-casing and dropping non-alphanumerics; an approver id that
+  equals or *contains* the author or any non-Reviewer role (e.g. `reviewer-builder`, ` Reviewer_Scout `) is rejected.
