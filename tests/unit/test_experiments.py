@@ -39,6 +39,7 @@ def test_exp02_runs_offline_and_marks_chronos(tmp_path: Path) -> None:
         assert (out / f).exists()
     assert LABEL in (out / "leaderboard.html").read_text(encoding="utf-8")
     assert read_json(out / "results.json")["label"] == LABEL
+    assert res["scalable_eval_parity"]["match"] is True
     if importlib.util.find_spec("chronos") is None:
         assert [s["method_id"] for s in res["not_run"]] == ["FM.chronos2"]
         assert res["not_run"][0]["status"] == "config_required"

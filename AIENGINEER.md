@@ -18,3 +18,6 @@ Placeholder. No content yet.
 - Dataframes: Polars (Rust-backed) by default for new code; pandas remains where existing code uses it. Use uv for environments.
 - Scale-out: PySpark (optional `distributed` extra) with native functions only, no `toPandas`. Use SynapseML LightGBM for complete data on a cluster.
 - Upgrades: pin in `constraints/core.txt`, then run ruff, mypy (including `--platform win32`) and pytest on Python 3.11 and 3.13 before changing a pin.
+
+## Scalable evaluation (REVIEWER FLAG)
+`xferbench.scalable_eval` computes WMAPE(E), WMAPE(N) and the objective (0.5*WMAPE(E)+0.5*WMAPE(N)) as partial sums: Polars lazy `group_by`, or native PySpark aggregations that collect only the small aggregates. It sits next to the protected evaluator and does not replace it. `src/xferbench/evaluation/` is unchanged and remains the reference. Parity is checked by `tests/unit/test_scalable_eval.py` (Polars always; Spark-local when `pyspark` and Java are installed) and by every experiment run (`results.json: scalable_eval_parity`). A Reviewer has to sign off before it is used for anything official.

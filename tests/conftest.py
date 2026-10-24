@@ -18,12 +18,25 @@ from xferbench.util import write_json
 def no_network() -> Iterator[None]:
     """The whole session (including shared data and run fixtures) runs with outbound connections disabled."""
 
-    def refuse(*args: object, **kwargs: object) -> None:
-        raise AssertionError("network access attempted during a test")
+    real_connect, real_create = socket.socket.connect, socket.create_connection
+    loopback = ("127.0.0.1", "localhost", "::1")  # local-only IPC (Spark-local py4j gateway); never outbound
+
+    def _host(addr: object) -> object:
+        return addr[0] if isinstance(addr, tuple) and addr else addr
+
+    def connect(self: socket.socket, addr: object) -> None:
+        if _host(addr) not in loopback:
+            raise AssertionError("network access attempted during a test")
+        real_connect(self, addr)  # type: ignore[arg-type]
+
+    def create(addr: object, *args: object, **kwargs: object) -> socket.socket:
+        if _host(addr) not in loopback:
+            raise AssertionError("network access attempted during a test")
+        return real_create(addr, *args, **kwargs)  # type: ignore[arg-type]
 
     with pytest.MonkeyPatch.context() as mp:
-        mp.setattr(socket.socket, "connect", refuse)
-        mp.setattr(socket, "create_connection", refuse)
+        mp.setattr(socket.socket, "connect", connect)
+        mp.setattr(socket, "create_connection", create)
         yield
 
 

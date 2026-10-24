@@ -117,6 +117,31 @@ Data: synthetic preset <code>{e(cfg.preset)}</code>, seed {cfg.seed}.</p>
 """
 
 
+def _scalable_parity(ds: Any, split: Any, run_dir: Path) -> dict[str, Any]:
+    """Cross-check the scalable (Polars lazy partial-sum) objective against the protected evaluator's metrics.json."""
+    import polars as pl
+
+    from xferbench.domains.registry import get_domain
+    from xferbench.scalable_eval.core import finalize, partial_sums_polars
+
+    domain = get_domain(ds.metadata.domain_plugin)
+    requests = domain.requests(ds, split, "test")
+    targets = domain.targets(ds, requests)
+    fc = pl.scan_parquet(run_dir / "forecasts.parquet")
+    got = finalize(*partial_sums_polars(fc, targets, requests), ds.metadata.cohorts.selection_weights)
+    ref = read_json(run_dir / "metrics.json")["boards"]
+    worst = 0.0
+    for board, rows in ref.items():
+        mine = {r["variant_id"]: r["objective"] for r in got.get(board, [])}
+        for r in rows:
+            a, b = r["objective"], mine.get(r["variant_id"])
+            if (a is None) != (b is None):
+                return {"engine": "polars", "match": False, "max_abs_diff": None}
+            if a is not None and b is not None:
+                worst = max(worst, abs(a - b))
+    return {"engine": "polars", "match": worst <= 1e-9, "max_abs_diff": worst}
+
+
 def run_experiment(config_path: Path, out: Path, progress: Any = print) -> dict[str, Any]:
     from xferbench.contracts.selection import SelectionPolicy
     from xferbench.data.io import load_from_metadata_path
@@ -167,6 +192,7 @@ def run_experiment(config_path: Path, out: Path, progress: Any = print) -> dict[
     ).run()
     progress("[6/6] report, results.json, leaderboard.html, SUMMARY.md")
     rows = _rows(test.out)
+    parity = _scalable_parity(ds, split, test.out)
     shutil.copyfile(test.out / "report.html", out / "report.html")
     results = {
         "experiment": cfg.id,
@@ -177,6 +203,7 @@ def run_experiment(config_path: Path, out: Path, progress: Any = print) -> dict[
         "recommended_on_validation": sel.recommended,
         "test_rows": rows,
         "not_run": skipped,
+        "scalable_eval_parity": parity,
         "papers": cfg.papers,
     }
     write_json(out / "results.json", results)
