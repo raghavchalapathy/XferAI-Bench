@@ -1,1 +1,1 @@
-"""Core cold-pair baselines and business rules."""
+"""Deprecated alias package: moved to ``xferbench.models.stats.rates``."""

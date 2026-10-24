@@ -8,7 +8,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from xferbench.methods.registry import unregister_method
+from xferbench.models.registry import unregister_method
 
 DOC = Path(__file__).resolve().parents[2] / "docs" / "EXTENDING.md"
 

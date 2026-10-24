@@ -12,15 +12,15 @@ import pytest
 
 from tests import handmade as hm
 from xferbench.data.io import Dataset
+from xferbench.data_preparation.feature_engineering.context import ContextBuilder, Exclusions
 from xferbench.domains.registry import get_domain
-from xferbench.features.context import ContextBuilder, Exclusions
-from xferbench.methods.base import TrainingContext
-from xferbench.methods.boosting import M4LightGBM, pair_features
-from xferbench.methods.registry import assess, get_entry
+from xferbench.models.base import TrainingContext
+from xferbench.models.machine_learning.lightgbm_pairs import M4LightGBM, pair_features
+from xferbench.models.registry import assess, get_entry
 
 
 def test_registry_import_does_not_import_lightgbm() -> None:
-    code = "import sys, xferbench.methods.registry as r; r.all_entries(); print('lightgbm' in sys.modules)"
+    code = "import sys, xferbench.models.registry as r; r.all_entries(); print('lightgbm' in sys.modules)"
     out = subprocess.run(
         [sys.executable, "-c", code], capture_output=True, encoding="utf-8", errors="replace", check=True
     )

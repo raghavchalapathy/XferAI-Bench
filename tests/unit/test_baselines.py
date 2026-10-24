@@ -9,10 +9,10 @@ import pandas as pd
 import pytest
 
 from tests import handmade as hm
-from xferbench.features.aggregates import national_rates, pair_rates, seasonal_profiles
-from xferbench.features.context import ContextBuilder, Exclusions
-from xferbench.methods.base import TrainingContext
-from xferbench.methods.baselines.rates import (
+from xferbench.data_preparation.feature_engineering.aggregates import national_rates, pair_rates, seasonal_profiles
+from xferbench.data_preparation.feature_engineering.context import ContextBuilder, Exclusions
+from xferbench.models.base import TrainingContext
+from xferbench.models.stats.rates import (
     B0NationalRate,
     B1NationalSeasonal,
     B2AnalogRate,
@@ -114,7 +114,7 @@ def test_b0_b1_fallback_is_visible() -> None:
     # C2 has less than one donor cycle, so the shared hierarchy falls back to product type 't'
     assert "season fallback to product_type" in out["reason"].iloc[0]
     assert set(out["season_level"]) == {"product_type"} and set(out["rate_level"]) == {"item"}
-    from xferbench.features.hierarchy import profile_for_item
+    from xferbench.data_preparation.feature_engineering.hierarchy import profile_for_item
 
     ctx = ContextBuilder(hm.build(), EXCL).at(hm.ORIGIN)
     np.testing.assert_allclose(out["point_units"], 80 * 40 / 3000 * profile_for_item(ctx, "I2").at(hm.FORECAST_WEEKS))

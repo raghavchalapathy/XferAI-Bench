@@ -7,10 +7,10 @@ import pandas as pd
 from tests import handmade as hm
 from xferbench.contracts.splits import SplitManifest
 from xferbench.data.io import Dataset
+from xferbench.data_preparation.feature_engineering.context import ContextBuilder, Exclusions
 from xferbench.domains.registry import get_domain
-from xferbench.features.context import ContextBuilder, Exclusions
-from xferbench.methods.base import TrainingContext
-from xferbench.methods.baselines.rates import B2AnalogRate
+from xferbench.models.base import TrainingContext
+from xferbench.models.stats.rates import B2AnalogRate
 
 DOMAIN = get_domain("retail")
 

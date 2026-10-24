@@ -10,7 +10,7 @@ from typer.testing import CliRunner
 
 from xferbench.cli.main import app
 from xferbench.data.classes import DataClassError, load_benchmark_manifest
-from xferbench.methods.registry import entries_for_profile, research_only_ids
+from xferbench.models.registry import entries_for_profile, research_only_ids
 from xferbench.orchestration.runner import EXIT_LICENCE, BenchmarkRunner, RunConfig, RunError
 
 runner = CliRunner()
@@ -101,7 +101,7 @@ def test_standard_run_labeled_standard(tiny_runs: dict[str, Path]) -> None:
 
 
 def test_tabpfn_points_at_pinned_2_5_and_stays_research_only() -> None:
-    from xferbench.methods.registry import get_entry
+    from xferbench.models.registry import get_entry
 
     e = get_entry("FM.tabpfn_ts")
     r = e.spec.rights

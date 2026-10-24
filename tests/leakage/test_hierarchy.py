@@ -14,11 +14,11 @@ import pytest
 
 from tests import handmade as hm
 from xferbench.data.io import Dataset
-from xferbench.features.context import ContextBuilder, Exclusions
-from xferbench.features.hierarchy import profile_for_item, rate_for_item
-from xferbench.methods.base import TrainingContext
-from xferbench.methods.baselines.rates import B0NationalRate, B1NationalSeasonal, M2SeasonalRule
-from xferbench.methods.foundation import donor_series
+from xferbench.data_preparation.feature_engineering.context import ContextBuilder, Exclusions
+from xferbench.data_preparation.feature_engineering.hierarchy import profile_for_item, rate_for_item
+from xferbench.models.base import TrainingContext
+from xferbench.models.foundation_models.donor_prior import donor_series
+from xferbench.models.stats.rates import B0NationalRate, B1NationalSeasonal, M2SeasonalRule
 from xferbench.util import read_json
 
 EXCL = Exclusions(fpgs=frozenset({"X"}))

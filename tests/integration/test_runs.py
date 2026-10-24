@@ -13,10 +13,10 @@ import pytest
 
 from xferbench.contracts.methods import ModelArtifact
 from xferbench.contracts.splits import SplitManifest
-from xferbench.features.context import OriginContext
-from xferbench.methods.base import RowResult, TrainingContext, expand, stateless_artifact
-from xferbench.methods.baselines.rates import B0NationalRate
-from xferbench.methods.registry import RegistryEntry, all_entries, register_method, unregister_method
+from xferbench.data_preparation.feature_engineering.context import OriginContext
+from xferbench.models.base import RowResult, TrainingContext, expand, stateless_artifact
+from xferbench.models.registry import RegistryEntry, all_entries, register_method, unregister_method
+from xferbench.models.stats.rates import B0NationalRate
 from xferbench.orchestration.runner import BenchmarkRunner, RunConfig, RunError
 from xferbench.reports.compare import CompareError, compare_runs
 from xferbench.util import read_json

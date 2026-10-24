@@ -16,10 +16,10 @@ import pytest
 
 from tests import handmade as hm
 from xferbench.data.io import Dataset
+from xferbench.data_preparation.feature_engineering.context import ContextBuilder, Exclusions
 from xferbench.domains.registry import get_domain
-from xferbench.features.context import ContextBuilder, Exclusions
-from xferbench.methods.base import TrainingContext
-from xferbench.methods.foundation import (
+from xferbench.models.base import TrainingContext
+from xferbench.models.foundation_models.donor_prior import (
     STATUS_LABEL,
     ChronosBackend,
     DeepARCountBackend,
@@ -33,7 +33,7 @@ from xferbench.methods.foundation import (
     _hf_kwargs,
     donor_series,
 )
-from xferbench.methods.registry import assess, get_entry
+from xferbench.models.registry import assess, get_entry
 
 IDS = ["FM.chronos2", "FM.chronos_bolt", "FM.timesfm25", "M6.deepar_count"]
 HEAVY = ["torch", "chronos", "timesfm", "gluonts"]
@@ -56,7 +56,7 @@ class FakeBackend:
 
 def test_registry_import_is_lazy() -> None:
     code = (
-        "import sys, xferbench.methods.registry as r; r.all_entries(); "
+        "import sys, xferbench.models.registry as r; r.all_entries(); "
         f"print([m for m in {HEAVY!r} if m in sys.modules])"
     )
     out = subprocess.run(

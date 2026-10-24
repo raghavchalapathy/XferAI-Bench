@@ -31,8 +31,8 @@ from xferbench.contracts.metadata import (
 )
 from xferbench.contracts.tables import TABLES
 from xferbench.data.io import Dataset, load_dataset
-from xferbench.features.aggregates import national_rates, pair_rates
-from xferbench.features.context import ContextBuilder, Exclusions
+from xferbench.data_preparation.feature_engineering.aggregates import national_rates, pair_rates
+from xferbench.data_preparation.feature_engineering.context import ContextBuilder, Exclusions
 from xferbench.synth.presets import SynthConfig
 from xferbench.util import atomic_write_csv, atomic_write_text, hash_frame, hash_obj, write_json
 

@@ -9,9 +9,9 @@ from xferbench.calendar import to_ts
 from xferbench.contracts.splits import SplitManifest
 from xferbench.data.io import Dataset
 from xferbench.data.issues import Issue
+from xferbench.data_preparation.feature_engineering.context import ContextBuilder, Exclusions
 from xferbench.domains.retail.splits import build_retail_splits, target_rows
 from xferbench.domains.retail.validation import validate_retail
-from xferbench.features.context import ContextBuilder, Exclusions
 
 MEASURED_STATES = ("observed", "observed_censored")
 

@@ -21,11 +21,11 @@ from xferbench.contracts.splits import SplitManifest
 from xferbench.contracts.tables import FORECAST_STATUSES
 from xferbench.data.io import Dataset, load_from_metadata_path
 from xferbench.data.issues import DataError
+from xferbench.data_preparation.feature_engineering.context import ContextBuilder, OriginContext
 from xferbench.domains.registry import get_domain
 from xferbench.evaluation.evaluator import evaluate, leaderboard_frame
-from xferbench.features.context import ContextBuilder, OriginContext
-from xferbench.methods.base import Method, TrainingContext, variant_id
-from xferbench.methods.registry import REGISTRY_VERSION, RegistryEntry, all_entries, assess, entries_for_profile
+from xferbench.models.base import Method, TrainingContext, variant_id
+from xferbench.models.registry import REGISTRY_VERSION, RegistryEntry, all_entries, assess, entries_for_profile
 from xferbench.orchestration.resources import hardware, max_rss_mib, measure, package_versions
 from xferbench.util import (
     atomic_write_csv,
@@ -461,7 +461,7 @@ class BenchmarkRunner:
             self._gate_research_only(chosen)
             return chosen, True
         if cfg.methods:
-            from xferbench.methods.registry import METHOD_ALIASES
+            from xferbench.models.registry import METHOD_ALIASES
 
             cfg.methods = [METHOD_ALIASES.get(m, m) for m in cfg.methods]
             known = {e.spec.method_id: e for e in all_entries()}

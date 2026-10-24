@@ -162,7 +162,7 @@ def list_methods(
     format: str = typer.Option("table", "--format", help="table | json | markdown"),
 ) -> None:
     """Show the versioned method registry with implementation, execution and eligibility states."""
-    from xferbench.methods.registry import REGISTRY_VERSION, all_entries, assess
+    from xferbench.models.registry import REGISTRY_VERSION, all_entries, assess
 
     reps = [assess(e) for e in all_entries()]
     if not all_:
@@ -506,7 +506,7 @@ def steps_cmd(
     from xferbench.data.io import load_from_metadata_path
     from xferbench.domains.registry import get_domain
     from xferbench.evaluation.selection import select
-    from xferbench.methods.registry import assess, get_entry
+    from xferbench.models.registry import assess, get_entry
     from xferbench.orchestration.runner import BenchmarkRunner, RunConfig, RunError
     from xferbench.util import write_json
 

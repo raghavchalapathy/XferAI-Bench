@@ -64,7 +64,7 @@ def test_import_has_no_side_effects() -> None:
         "import socket, sys\n"
         "def refuse(*a, **k): raise SystemExit('network on import')\n"
         "socket.socket.connect = refuse\n"
-        "import xferbench, xferbench.cli.main, xferbench.methods.registry\n"
+        "import xferbench, xferbench.cli.main, xferbench.models.registry\n"
         "heavy = [m for m in ('torch', 'lightgbm', 'xgboost', 'catboost', 'requests') if m in sys.modules]\n"
         "assert not heavy, heavy\n"
     )
