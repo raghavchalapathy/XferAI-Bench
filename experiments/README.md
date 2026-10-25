@@ -1,8 +1,8 @@
 # Experiments (synthetic data only)
 
 **Synthetic interface test, not rankings.** These experiments check that the pipeline runs end to end. They do not show which method is better.
-Outputs list methods alphabetically, with no order, rank or "recommended" field. exp02 (zero-shot TSFM; chronos-t5 ruling
-pending in pins.v5) is marked `day_zero_result: false` and carries a NOT A DAY-ZERO RESULT banner; it must never
+Outputs list methods alphabetically, with no order, rank or "recommended" field. exp02 (zero-shot TSFM; chronos-t5 weights
+licence review still pending) is marked `day_zero_result: false` and carries a NOT A DAY-ZERO RESULT banner; it must never
 be presented as a day-zero result.
 
 | id | paper | default path | optional |
@@ -16,7 +16,7 @@ Run:
 ```bash
 xferbench experiment list
 xferbench experiment run exp01_m5_lightgbm_analogs   # -> experiments/<id>/runs/<UTC timestamp>/
-xferbench experiment run-all                          # research-only entries show as "blocked"
+xferbench experiment run-all                          # with --allow-research-only, research-only entries show as "blocked"
 xferbench experiment --config experiments/exp01_m5_lightgbm_analogs/config.yaml --out eval/exp01
 # or: scripts/model_eval.sh exp01_m5_lightgbm_analogs
 ```

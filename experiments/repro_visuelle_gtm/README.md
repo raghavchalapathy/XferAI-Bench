@@ -6,7 +6,8 @@
 - **Paper:** Skenderi, Joppi, Denitto, Cristani (2021). *Well Googled is Half Done: Multimodal Forecasting of New
   Fashion Product Sales with Image-based Google Trends.* arXiv:2109.09824 <https://arxiv.org/abs/2109.09824>.
 - **Paper-reported WAPE:** 55.2 % (Table 1, GTM-Transformer [T+I+G], 6 weeks, 52-week Google Trends; arXiv v6,
-  accessed 2026-10-24). Our reproduced number is reported **separately** and is **pending** (never run here).
+  [arxiv.org/abs/2109.09824](https://arxiv.org/abs/2109.09824), accessed 2026-10-24; Scout/Scientist/Reviewer record
+  **pending Reviewer check**, none exists yet). Our reproduced number is reported **separately** and is **pending** (never run here).
 - **Models:** GTM-Transformer [T+I+G] (user-installed; not vendored, not run by us).
 - **Code:** <https://github.com/HumaticsLAB/GTM-Transformer>, MIT License (verified 2026-10-24 from `LICENSE`).
   We do **not** vendor it; you install it yourself and point `gtm.install_path` at your checkout.
