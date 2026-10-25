@@ -724,17 +724,25 @@ def experiment_new_cmd(
     typer.echo(f"created {dest}/ (config.yaml, README.md). Edit them, then: xferbench experiment run {name}")
 
 
+_ALLOW_RO_HELP = "Include research-only / licence-gated reproductions (excluded by default)."
+
+
 @experiment_app.command("list")
-def experiment_list_cmd() -> None:
+def experiment_list_cmd(
+    allow_research_only: bool = typer.Option(False, "--allow-research-only", help=_ALLOW_RO_HELP),
+) -> None:
     """List experiments with the data and models each one uses."""
     from xferbench.experiments.workspace import list_experiments
 
-    infos = list_experiments(Path.cwd())
+    infos = list_experiments(Path.cwd(), allow_research_only=allow_research_only)
     if not infos:
         typer.echo("no experiments/*/config.yaml found (run from the repository root)")
     for i in infos:
         if i.error:
             typer.echo(f"{i.id}: INVALID CONFIG - {i.error}")
+            continue
+        if i.kind == "reproduction":
+            typer.echo(f"{i.id}: RESEARCH ONLY, licence-gated reproduction | data {i.preset} (not included)")
             continue
         opt = f" | optional: {', '.join(i.optional_methods)}" if i.optional_methods else ""
         ndz = " | NOT A DAY-ZERO RESULT" if not i.day_zero else ""
@@ -746,26 +754,34 @@ def experiment_run_cmd(
     exp_id: str = typer.Argument(..., help="Experiment id (folder under experiments/)."),
     log_lesson: str | None = typer.Option(None, "--log-lesson"),
     harness_dir: Path = typer.Option(Path("harness"), "--harness-dir"),
+    allow_research_only: bool = typer.Option(False, "--allow-research-only", help=_ALLOW_RO_HELP),
 ) -> None:
     """Run one experiment into experiments/<id>/runs/<UTC timestamp>/ (git-ignored)."""
     from xferbench.experiments.runner import ExperimentError
     from xferbench.experiments.workspace import run_one
+    from xferbench.repro.visuelle import ReproError
 
     try:
-        res = run_one(exp_id, Path.cwd(), progress=typer.echo)
+        res = run_one(exp_id, Path.cwd(), progress=typer.echo, allow_research_only=allow_research_only)
     except ExperimentError as exc:
         _fail(str(exc), 2)
+    except ReproError as exc:
+        _fail(f"{exc} (report written under experiments/{exp_id}/runs/)", 3)
+    if res.get("usage_tag") == "research_only":  # pragma: no cover - needs licensed data + local GTM
+        typer.echo(f"RESEARCH ONLY report: {Path(res['_out']) / 'report.md'}")
+        return
     _after_experiment(res, Path(res["_out"]), log_lesson, harness_dir)
 
 
 @experiment_app.command("run-all")
 def experiment_run_all_cmd(
     only: list[str] = typer.Option([], "--only", help="Restrict to these ids (repeatable)."),
+    allow_research_only: bool = typer.Option(False, "--allow-research-only", help=_ALLOW_RO_HELP),
 ) -> None:
     """Run every experiment, continue past failures, print a status table (no rankings). Exit 1 if any failed."""
     from xferbench.experiments.workspace import run_all, summary_table
 
-    rows = run_all(Path.cwd(), only or None, progress=typer.echo)
+    rows = run_all(Path.cwd(), only or None, progress=typer.echo, allow_research_only=allow_research_only)
     typer.echo(summary_table(rows))
     if any(r["status"] != "ok" for r in rows):
         raise typer.Exit(1)

@@ -33,3 +33,12 @@ TimeGPT is a proprietary paid service and is never called by default.
 
 `reference/` holds the build prompt and research context supplied by the user. It is not part of the
 distributed package and is kept unchanged.
+
+## Referenced, not included: reproduction targets (research only)
+
+| Project | Licence (verified from public pages) | How it is used |
+|---|---|---|
+| GTM-Transformer, <https://github.com/HumaticsLAB/GTM-Transformer> | MIT License, "Copyright (c) 2021 HumaticsLAB" (repo `LICENSE` and GitHub licence API, accessed 2026-10-24) | **Not vendored, not installed, not run here.** `experiments/repro_visuelle_gtm` drives the user's own local install by path. |
+
+The VISUELLE dataset is **not** listed as a dependency: no licence text was found (audit 2026-10-24,
+`not_found`), so its use is blocked; nothing from it is included.

@@ -47,6 +47,20 @@ class ExperimentInfo:
     preset: str
     day_zero: bool
     error: str | None = None
+    kind: str = "synthetic"
+    usage_tag: str = "interface_test"
+
+
+def _raw(cfg_path: Path) -> dict[str, Any]:
+    try:
+        d = yaml.safe_load(cfg_path.read_text(encoding="utf-8"))
+    except yaml.YAMLError:
+        return {}
+    return d if isinstance(d, dict) else {}
+
+
+def is_research_only(raw: dict[str, Any]) -> bool:
+    return raw.get("kind") == "reproduction" or raw.get("usage_tag") == "research_only"
 
 
 def experiments_root(root: Path | None = None) -> Path:
@@ -61,10 +75,22 @@ def validate_name(name: str) -> str:
     return name
 
 
-def list_experiments(root: Path | None = None) -> list[ExperimentInfo]:
+def list_experiments(root: Path | None = None, allow_research_only: bool = False) -> list[ExperimentInfo]:
+    """Experiments in alphabetical order. Research-only / licence-gated reproductions only when opted in."""
     out = []
     for cfg_path in sorted(experiments_root(root).glob("*/config.yaml")):
         d = cfg_path.parent
+        raw = _raw(cfg_path)
+        if is_research_only(raw):
+            if allow_research_only:
+                out.append(
+                    ExperimentInfo(
+                        str(raw.get("id", d.name)), d, str(raw.get("title", "")), [], [],
+                        str((raw.get("data") or {}).get("flavour", "")), False,
+                        kind="reproduction", usage_tag="research_only",
+                    )
+                )  # fmt: skip
+            continue
         try:
             c = ExperimentConfig.load(cfg_path)
             out.append(
@@ -132,27 +158,62 @@ def run_dir_for(exp_dir: Path) -> Path:
     return d
 
 
-def run_one(exp_id: str, root: Path | None = None, progress: Callable[[str], None] = print) -> dict[str, Any]:
+class ResearchOnlyError(ExperimentError):
+    """Research-only / licence-gated experiment requested without --allow-research-only."""
+
+
+def run_one(
+    exp_id: str,
+    root: Path | None = None,
+    progress: Callable[[str], None] = print,
+    allow_research_only: bool = False,
+) -> dict[str, Any]:
     exp_dir = experiments_root(root) / exp_id
     if not (exp_dir / "config.yaml").is_file():
         raise ExperimentError(f"unknown experiment {exp_id!r}; see `xferbench experiment list`")
     out = run_dir_for(exp_dir)
+    if is_research_only(_raw(exp_dir / "config.yaml")):
+        if not allow_research_only:
+            raise ResearchOnlyError(
+                f"{exp_id} is research-only and licence-gated; pass --allow-research-only to run it"
+            )
+        from xferbench.repro.visuelle import run_reproduction
+
+        res = run_reproduction(exp_dir / "config.yaml", out)
+        res["_out"] = str(out)
+        return res
     res = run_experiment(exp_dir / "config.yaml", out, progress=progress)
     res["_out"] = str(out)
     return res
 
 
 def run_all(
-    root: Path | None = None, only: list[str] | None = None, progress: Callable[[str], None] = print
+    root: Path | None = None,
+    only: list[str] | None = None,
+    progress: Callable[[str], None] = print,
+    allow_research_only: bool = False,
 ) -> list[dict[str, Any]]:
-    """Run every experiment, continuing past failures. Returns one summary row per experiment (alphabetical)."""
+    """Run every experiment, continuing past failures. Returns one summary row per experiment (alphabetical).
+
+    Research-only / licence-gated reproductions are excluded unless ``allow_research_only``.
+    """
+    from xferbench.repro.visuelle import ReproError
+
     rows = []
-    for info in list_experiments(root):
+    for info in list_experiments(root, allow_research_only=allow_research_only):
         if only and info.id not in only:
             continue
         row: dict[str, Any] = {"experiment": info.id, "status": "ok", "ran": 0, "not_run": 0, "out": "", "detail": ""}
         if info.error:
             row.update(status="invalid_config", detail=info.error[:200])
+        elif info.kind == "reproduction":
+            try:
+                res = run_one(info.id, root, progress=progress, allow_research_only=True)
+                row.update(out=res["_out"], detail="RESEARCH ONLY")
+            except ReproError as exc:
+                row.update(status="blocked", detail=f"RESEARCH ONLY; {exc}"[:200])
+            except Exception as exc:  # noqa: BLE001
+                row.update(status="failed", detail=f"{type(exc).__name__}: {exc}"[:200])
         else:
             try:
                 res = run_one(info.id, root, progress=progress)

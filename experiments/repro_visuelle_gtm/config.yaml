@@ -1,0 +1,35 @@
+# Reproduction of a published benchmark. RESEARCH ONLY, LICENCE-GATED.
+# Excluded from `xferbench experiment list/run-all` unless --allow-research-only is given.
+id: repro_visuelle_gtm
+kind: reproduction
+usage_tag: research_only
+licence_gated: true
+title: "VISUELLE / GTM-Transformer reproduction (research only, licence-gated)"
+papers:
+  - citation: "Skenderi, Joppi, Denitto, Cristani (2021). Well Googled is Half Done: Multimodal Forecasting of New Fashion Product Sales with Image-based Google Trends. arXiv:2109.09824"
+    url: https://arxiv.org/abs/2109.09824
+data:
+  flavour: visuelle                     # adapter writes data/visuelle/{input,metadata}/ (git-ignored)
+  raw_dir: data/visuelle/input/raw      # where scripts/download_visuelle.sh extracts the user's archive
+  official_source: https://forms.gle/cVGQAmxhHf7eRJ937   # linked from the official GTM-Transformer README
+  licence_status: not_found             # licence audit 2026-10-24: no data licence text found -> BLOCKED
+gtm:
+  install_path: ""                      # YOUR local GTM-Transformer checkout (never cloned/vendored here)
+  python: ""                            # python of the venv where you installed GTM's requirements
+  ckpt_path: ""                         # your trained checkpoint
+  code_url: https://github.com/HumaticsLAB/GTM-Transformer
+  code_licence: MIT                     # verified 2026-10-24 from the repo LICENSE + GitHub API
+protocol:                               # exact protocol from the paper, Sec. 5.2 and Table 1
+  train_products: 5080
+  test_products: 497                    # "the 497 most recent products"
+  train_horizon_weeks: 12               # "all models ... trained assuming a 12-week prediction"
+  eval_horizon_weeks: 6
+  trend_len_weeks: 52                   # release setup (Table 1 left); 28 = first-order setup (right)
+  metric: "WAPE = 100 * sum|y - yhat| / sum y"
+  seed: 21                              # official forecast.py default
+  rescale: normalization_scale.npy      # official forecast.py rescales before metrics
+paper_reported:
+  wape: 55.2
+  where: "Table 1, row GTM-Transformer [T+I+G], 6 Weeks, G.Trends: 52 weeks"
+  source: https://arxiv.org/pdf/2109.09824v6
+  accessed: 2026-10-24
