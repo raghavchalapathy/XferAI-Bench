@@ -48,7 +48,9 @@ def test_both_scripts_print_the_shared_message_files_and_flags() -> None:
              "--version": "$Version", "--help": "$Help"}  # fmt: skip
     for sh_flag, ps_param in pairs.items():
         assert sh_flag in SH and ps_param in PS1, sh_flag
-    assert re.search(r'UV_VERSION="(\d+\.\d+\.\d+)"', SH).group(1) == re.search(r'\$UvVersion = "(\d+\.\d+\.\d+)"', PS1).group(1)  # type: ignore[union-attr]  # noqa: E501
+    assert re.search(r'UV_VERSION="(\d+\.\d+\.\d+)"', SH).group(1) == re.search(
+        r'\$UvVersion = "(\d+\.\d+\.\d+)"', PS1
+    ).group(1)  # type: ignore[union-attr]
     assert "Do you want to run on your own data? [y/N]" in SH and "Do you want to run on your own data? [y/N]" in PS1
 
 
@@ -57,7 +59,11 @@ def test_message_files_reference_real_files_and_commands() -> None:
         assert rel in NEXT + OWN and (ROOT / rel).is_file(), rel
     assert (ROOT / "experiments" / "exp01_synthetic_lightgbm_analogs" / "configs" / "sample.yaml").is_file()
     for d in ("data/sample_data/input", "data/complete_data/input"):
-        r = subprocess.run(["git", "check-ignore", "-q", f"{d}/x.csv"], cwd=ROOT, check=False) if shutil.which("git") else None
+        r = (
+            subprocess.run(["git", "check-ignore", "-q", f"{d}/x.csv"], cwd=ROOT, check=False)
+            if shutil.which("git")
+            else None
+        )
         assert r is None or r.returncode == 0, d
 
 
@@ -89,5 +95,5 @@ def test_printed_demo_command_runs_offline_and_makes_the_named_files(tmp_path: P
     assert r.returncode == 0, r.stdout[-2000:] + r.stderr[-2000:]
     out_rel = re.search(r"Output: (eval/\S+?)/", NEXT).group(1)  # type: ignore[union-attr]
     assert out_rel == f"eval/{exp_id}__synthetic"
-    for name in re.search(r"Open: (.*?) in that output folder", NEXT).group(1).replace(" and ", ", ").split(", "):  # type: ignore[union-attr]  # noqa: E501
+    for name in re.search(r"Open: (.*?) in that output folder", NEXT).group(1).replace(" and ", ", ").split(", "):  # type: ignore[union-attr]
         assert (tmp_path / out_rel / name).is_file(), name

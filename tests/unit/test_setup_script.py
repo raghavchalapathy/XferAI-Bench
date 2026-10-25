@@ -22,9 +22,39 @@ PS1 = ROOT / "xferAI_setup.ps1"
 NEXT = (ROOT / "setup" / "next_demo.txt").read_text(encoding="utf-8")
 OWN = (ROOT / "setup" / "own_data.txt").read_text(encoding="utf-8")
 GS = ROOT / "docs" / "GETTING_STARTED.md"
-posix_only = pytest.mark.skipif(os.name == "nt", reason="stubbed-PATH tests use symlinks; Windows runs the ps1 job")
-TOOLS = ("bash", "sh", "uname", "date", "mktemp", "cut", "tr", "tee", "rm", "cat", "cp", "mv", "dirname", "basename",
-         "mkdir", "chmod", "grep", "sed", "head", "tail", "wc", "env", "touch", "sleep", "awk", "ls", "id", "perl")
+posix_only = pytest.mark.skipif(
+    os.name == "nt", reason="stubbed-PATH tests need a POSIX shell; Windows runs the ps1 job"
+)
+TOOLS = (
+    "bash",
+    "sh",
+    "uname",
+    "date",
+    "mktemp",
+    "cut",
+    "tr",
+    "tee",
+    "rm",
+    "cat",
+    "cp",
+    "mv",
+    "dirname",
+    "basename",
+    "mkdir",
+    "chmod",
+    "grep",
+    "sed",
+    "head",
+    "tail",
+    "wc",
+    "env",
+    "touch",
+    "sleep",
+    "awk",
+    "ls",
+    "id",
+    "perl",
+)
 
 FAKE_PY = """#!/bin/sh
 # fake python 3.13: version checks, -m venv DIR, -m pip install ...
@@ -76,10 +106,10 @@ def env(tmp_path: Path):
     (repo / "uv.lock").write_text("", encoding="utf-8")
     stubs = tmp_path / "stubs"
     stubs.mkdir()
-    for t in TOOLS + ("sha256sum", "shasum"):
+    for t in (*TOOLS, "sha256sum", "shasum"):
         w = shutil.which(t)
         if w:
-            (stubs / t).symlink_to(w)
+            shutil.copy2(w, stubs / t)  # copies, not symlinks (test_portability)
     _w(stubs / "git", '#!/bin/sh\necho "git version 9.9-stub"\n')
     _w(stubs / "python3.13", FAKE_PY)
     _w(stubs / "fake-xferbench", FAKE_XB)
@@ -124,7 +154,7 @@ def test_help_version_and_usage_errors(env) -> None:
     r, _ = env("--version")
     assert r.returncode == 0 and re.match(r"xferAI_setup.sh \d+\.\d+\.\d+ \(uv 0\.\d+\.\d+\)", r.stdout)
     for bad in (["--bogus"], ["--python"], ["--quiet", "--verbose"]):
-        r, calls = env(*bad)
+        r, _calls = env(*bad)
         assert r.returncode == 2, bad
         assert "--help" in r.stderr
     assert not (env.repo / ".venv").exists()
@@ -147,7 +177,7 @@ def test_uv_path_numbered_steps_summary_and_rerun(env) -> None:
     assert "xferbench demo --preset tiny --out xb-demo" in calls
     assert NEXT.strip() in r.stdout
     assert "Not asking about your own data" in r.stdout  # stdin is not a TTY
-    r2, calls2 = env()
+    r2, _calls2 = env()
     assert r2.returncode == 0 and "reusing the existing .venv" in r2.stdout  # idempotent
     assert (env.repo / ".xferai-setup.log").is_file()
 
