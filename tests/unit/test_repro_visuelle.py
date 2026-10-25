@@ -47,12 +47,11 @@ def test_run_all_skips_repro_by_default(tmp_path: Path) -> None:
 
 def test_blocked_report_lists_reasons_and_paper_number(tmp_path: Path) -> None:
     (tmp_path / "experiments").mkdir()
-    shutil.copytree(EXP, tmp_path / "experiments" / "exp03_visuelle_gtm")
+    shutil.copytree(EXP, tmp_path / "experiments" / "exp03_visuelle_gtm", ignore=shutil.ignore_patterns("runs"))
     with pytest.raises(ReproError):
         run_one("exp03_visuelle_gtm", tmp_path, progress=lambda m: None, allow_research_only=True)
-    report = next((tmp_path / "experiments" / "exp03_visuelle_gtm" / "runs").glob("*/report.md")).read_text(
-        encoding="utf-8"
-    )
+    # reproductions default to data tier "complete" -> eval/<id>__complete/
+    report = (tmp_path / "eval" / "exp03_visuelle_gtm__complete" / "report.md").read_text(encoding="utf-8")
     assert "Paper-reported** | 55.2" in report and "PENDING" in report
     assert "licence status is 'not_found'" in report and "GTM-Transformer local install not found" in report
 
