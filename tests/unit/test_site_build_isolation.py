@@ -3,8 +3,8 @@ must never read bench run outputs: test-run/, validation-run/, _work/, run_manif
 selection.json, leaderboard.csv or eval/<run>. Those files carry evaluator rank fields and are never published.
 
 build_pages.py is not part of XferAI-Bench (it builds xferai.app from dist/assets/*.json). The real file is checked
-when XFERAI_SITE_BUILD_PAGES points at it; otherwise that one test is skipped (listed in expected_skips.txt) and
-the scanner itself is still tested on fixtures so the guard cannot rot.
+when XFERAI_SITE_BUILD_PAGES points at it; otherwise (CI) a pinned, sha256-checked fixture of its string literals is
+scanned, so the test never skips (C2). The scanner itself is also tested on small fixtures so the guard cannot rot.
 """
 
 from __future__ import annotations
@@ -69,8 +69,33 @@ def test_scanner_allows_site_assets() -> None:
     assert run_path_refs(src) == []
 
 
+FIXTURE = Path(__file__).resolve().parents[1] / "fixtures/site/build_pages_literals.json"
+FIXTURE_SHA256 = "92a0272964b3f6976982264cbe3d80723adb05f6423cd4341fe5e330c65c58b7"  # C2: pinned
+
+
+def _fixture() -> dict[str, object]:
+    import hashlib
+    import json
+
+    assert hashlib.sha256(FIXTURE.read_bytes()).hexdigest() == FIXTURE_SHA256, "fixture changed without re-pinning"
+    return dict(json.loads(FIXTURE.read_text(encoding="utf-8")))
+
+
 def test_real_build_pages_reads_no_run_paths() -> None:
+    """C2: runs in CI without skipping. With XFERAI_SITE_BUILD_PAGES set, the real file is scanned; otherwise the
+    pinned literal fixture extracted from it (tests/fixtures/site/build_pages_literals.json) is scanned."""
     p = os.environ.get("XFERAI_SITE_BUILD_PAGES")
-    if not p or not Path(p).is_file():
-        pytest.skip("XFERAI_SITE_BUILD_PAGES not set (build_pages.py lives outside this repo)")
-    assert run_path_refs(Path(p).read_text(encoding="utf-8")) == []
+    if p and Path(p).is_file():
+        assert run_path_refs(Path(p).read_text(encoding="utf-8")) == []
+        return
+    fx = _fixture()
+    strings = list(fx["literals"]) + list(fx["long_literal_path_fragments"])  # type: ignore[call-overload]
+    assert len(strings) > 100
+    hits = [s for s in strings if run_path_refs(repr(s))]
+    assert hits == []
+
+
+def test_fixture_detects_a_planted_run_path() -> None:
+    fx = _fixture()
+    planted = [*fx["literals"], "eval/exp01/test-run/metrics.json"]  # type: ignore[misc]
+    assert [s for s in planted if run_path_refs(repr(s))] == ["eval/exp01/test-run/metrics.json"]
