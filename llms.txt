@@ -14,7 +14,8 @@
 
 ## Docs
 
-- [Getting started](docs/GETTING_STARTED.md)
+- [Getting started](docs/GETTING_STARTED.md): Step 0 `bash xferAI_setup.sh --non-interactive` (Windows: `xferAI_setup.ps1 -NonInteractive`; exit 0 ok, 1 step failed, 2 usage; `--dry-run` shows the plan), Step 1 demo experiment, Step 2 your own data
+- [Setup troubleshooting](docs/SETUP.md#troubleshooting)
 - [Metadata reference](docs/METADATA.md)
 - [Field dictionary](schemas/FIELD_DICTIONARY.md)
 - [Data classes: benchmark vs local data](docs/DATA_CLASSES.md)
