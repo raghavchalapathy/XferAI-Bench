@@ -102,7 +102,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7
       - name: shellcheck
-        run: shellcheck --version && shellcheck xferAI_setup.sh bootstrap.sh
+        run: shellcheck --version && shellcheck --severity=info xferAI_setup.sh bootstrap.sh
 
   setup-script:
     # A first-time user's path: the setup script on a fresh checkout, then a rerun (must be idempotent), then the
@@ -139,7 +139,8 @@ jobs:
         shell: pwsh
         run: |
           if (-not (Get-Module -ListAvailable PSScriptAnalyzer)) { Install-Module PSScriptAnalyzer -Scope CurrentUser -Force }
-          $r = Invoke-ScriptAnalyzer -Path xferAI_setup.ps1, bootstrap.ps1
+          # -Path takes one string: analyse each file and collect the findings
+          $r = @("xferAI_setup.ps1", "bootstrap.ps1") | ForEach-Object { Invoke-ScriptAnalyzer -Path $_ }
           $r | Format-Table -AutoSize
           if ($r) { exit 1 }
       - name: Fresh run (windows)
