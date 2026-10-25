@@ -21,7 +21,7 @@ def _text(p: str) -> str:
 
 def test_no_old_ids_or_run_paths() -> None:
     files = DOCS + [
-        str(p.relative_to(ROOT))
+        p.relative_to(ROOT).as_posix()  # "/" on every OS; str() gives "\\" on Windows and broke the exemption
         for p in (ROOT / "experiments").rglob("*")
         if p.is_file() and "runs" not in p.relative_to(ROOT).parts  # local (git-ignored) run outputs
     ]
@@ -30,6 +30,16 @@ def test_no_old_ids_or_run_paths() -> None:
         if f != "experiments/README.md":  # its Naming section records the renames on purpose
             assert not [o for o in OLD if o in t], f
         assert "/runs/<" not in t, f
+
+
+def test_doc_list_uses_posix_paths_on_every_os() -> None:
+    """Windows CI run 40162698138: str(relative_to) gave experiments\\README.md, so the exemption never matched."""
+    from pathlib import PureWindowsPath
+
+    assert PureWindowsPath("experiments", "README.md").as_posix() == "experiments/README.md"
+    assert "experiments/README.md" in [
+        p.relative_to(ROOT).as_posix() for p in (ROOT / "experiments").rglob("README.md")
+    ]
 
 
 def test_getting_started_documents_tiers_and_naming() -> None:
