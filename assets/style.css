@@ -1039,3 +1039,11 @@ h3.dataset-badge { display: inline-flex; align-items: center; }
 .site-footer .brand.footer-logo { display: inline-flex; margin-bottom: 10px; color: #fff; }
 .site-footer .brand.footer-logo small { color: var(--muted); }
 .scatter .pt-sub { font-size: 9.5px; fill: var(--muted); }
+
+/* r10.1 (review H1): star pulse pause/play (WCAG 2.2.2); also paused on hover/focus */
+.chart-footnote .star-toggle { font: inherit; font-size: .95em; margin-left: .35em; padding: .1em .55em; border: 1px solid rgba(255,212,0,.55); border-radius: 999px; background: transparent; color: #FFD400; cursor: pointer; }
+.chart-footnote .star-toggle:hover { background: rgba(255,212,0,.12); }
+.chart-footnote .star-toggle:focus-visible { outline: 2px solid #FFD400; outline-offset: 2px; }
+.stars-paused .scatter .low-star, .bench-card:hover .scatter .low-star, .bench-card:focus-within .scatter .low-star, .bench-block:hover .scatter .low-star, .bench-block:focus-within .scatter .low-star { animation-play-state: paused; }
+.stars-paused .scatter .low-star { animation: none; opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .chart-footnote .star-toggle { display: none; } }
