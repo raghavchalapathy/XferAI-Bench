@@ -33,7 +33,9 @@ def find_bash() -> str | None:
         if not c or _is_wsl_stub(c) or not Path(c).is_file():
             continue
         try:
-            r = subprocess.run([c, "-c", "echo ok"], capture_output=True, text=True, timeout=30, check=False)
+            r = subprocess.run(
+                [c, "-c", "echo ok"], capture_output=True, text=True, encoding="utf-8", timeout=30, check=False
+            )
         except OSError:
             continue
         if r.returncode == 0 and r.stdout.strip() == "ok":
