@@ -7,3 +7,6 @@ core tests/review/test_review_adv.py::test_reviewer_adversarial_spark
 core tests/unit/test_harness.py::test_symlink_into_protected_path_is_blocked
 core tests/unit/test_harness.py::test_review_file_symlink_escape_rejected
 # Profile "spark": the spark-parity job must skip nothing (no entries).
+# Windows only: the stubbed-PATH xferAI_setup.sh tests need symlinks and a POSIX pty; on Windows the setup-script CI
+# job runs xferAI_setup.ps1 for real (fresh run + rerun) and PSScriptAnalyzer checks it.
+core tests/unit/test_setup_script.py::*
