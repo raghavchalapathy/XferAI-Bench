@@ -1025,3 +1025,17 @@ h3.dataset-badge { display: inline-flex; align-items: center; }
 .paper-key-label { font-size: 11px; font-weight: 600; letter-spacing: .02em; padding: 3px 10px; border-radius: 999px; color: #cdbdfb; background: linear-gradient(90deg, rgba(181,156,248,.16), rgba(231,131,189,.12) 45%, rgba(245,183,84,.10) 75%, rgba(111,211,193,.12)); border: 1px solid rgba(181,156,248,.28); cursor: help; }
 .scatter .low-star { stroke: #fff; stroke-width: 1; }
 .scatter .low-label { fill: #f2d98a; font-size: 11px; font-weight: 600; cursor: help; paint-order: stroke; stroke: #15141f; stroke-width: 3px; }
+
+/* r10 t291u: yellow pulsing star, footnote, one-time bead race, footer brand = header logo */
+.scatter .low-star { fill: #FFD400; stroke: #fff6c2; stroke-width: 1; animation: lowPulse 2.8s ease-in-out infinite; }
+.scatter .low-label { fill: #FFD400; }
+@keyframes lowPulse { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
+.chart-footnote { margin: 8px 0 0; font-size: 11px; line-height: 1.45; color: var(--muted); }
+.scatter.racer .bead { transform: translateX(var(--dx)); }
+.scatter.racer .race-stem { stroke-dashoffset: var(--len); }
+.scatter.racer.go .bead { transform: none; transition: transform 1.4s cubic-bezier(.22,.8,.3,1); }
+.scatter.racer.go .race-stem { stroke-dashoffset: 0; transition: stroke-dashoffset 1.4s cubic-bezier(.22,.8,.3,1); }
+@media (prefers-reduced-motion: reduce) { .scatter .low-star { animation: none; } .scatter.racer .bead, .scatter.racer.go .bead { transform: none; transition: none; } .scatter.racer .race-stem, .scatter.racer.go .race-stem { stroke-dashoffset: 0; transition: none; } }
+.site-footer .brand.footer-logo { display: inline-flex; margin-bottom: 10px; color: #fff; }
+.site-footer .brand.footer-logo small { color: var(--muted); }
+.scatter .pt-sub { font-size: 9.5px; fill: var(--muted); }
