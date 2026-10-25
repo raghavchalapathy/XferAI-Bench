@@ -228,7 +228,7 @@ test ! -e runs/local/selection-$RUN.json || { echo "already exists: runs/local/s
 .venv/bin/xferbench run --local-data local/my-bench/metadata.json --splits local/my-bench/splits.json \
   --stage test --selection runs/local/selection-$RUN.json --out runs/local/test-$RUN
 ```
-Expected: `frozen selection: ... wrote runs/local/selection-1.json`, then `run test-... status complete; data class local`, exit 0.
+Expected: `selected on validation: ... wrote runs/local/selection-1.json`, then `run test-... status complete; data class local`, exit 0.
 If it prints `already exists`, STOP: never reuse an older test run; increment `RUN` and redo Steps 9-11.
 
 #### Step 11. Report

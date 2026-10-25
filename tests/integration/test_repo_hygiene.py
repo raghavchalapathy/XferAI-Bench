@@ -70,7 +70,12 @@ def test_no_unignored_run_outputs_or_ranking_words(repo: tuple[Path, str]) -> No
     files = [f for f in files if f]
     assert ".gitignore" in files and any(f.startswith("my-bench/") for f in files)
     bad = [f for f in files if Path(f).name in RUN_OUTPUTS or Path(f).parts[0] in {"work", "xb-demo", "runs"}]
-    words = [f for f in files if RANKING.search((root / f).read_text(encoding="utf-8", errors="replace"))]
+    # .gitignore is the repo's own config copied in, not a run output
+    words = [
+        f
+        for f in files
+        if f != ".gitignore" and RANKING.search((root / f).read_text(encoding="utf-8", errors="replace"))
+    ]
     assert bad == [] and words == [], (bad, words)
     for d in ["work/validation-run", "work/test-run", "work/xb-steps", "xb-demo", "validation-run", "a/test-run"]:
         assert subprocess.run(["git", "check-ignore", "-q", d + "/x"], cwd=root).returncode == 0, d
@@ -79,7 +84,7 @@ def test_no_unignored_run_outputs_or_ranking_words(repo: tuple[Path, str]) -> No
 def test_cli_output_never_says_recommended(repo: tuple[Path, str]) -> None:
     _, out = repo
     assert "recommended" not in out.lower()
-    assert "frozen selection:" in out
+    assert "selected on validation:" in out
 
 
 def test_init_readme_points_outputs_to_work(repo: tuple[Path, str]) -> None:
@@ -87,3 +92,19 @@ def test_init_readme_points_outputs_to_work(repo: tuple[Path, str]) -> None:
     outs = re.findall(r"--out (\./[^\s)]+)", text)
     assert outs and all(o.startswith("./work/") or o == "./metadata.json" for o in outs), outs
 
+
+@pytest.mark.parametrize(
+    "argv",
+    [
+        "xferbench demo --out ./bad-out",
+        "xferbench steps --benchmark synthetic-tiny@1.1.0 --out ./bad-out",
+        "xferbench run --benchmark synthetic-tiny@1.1.0 --benchmark-data ./work/bd --splits ./s.json --stage validation --out ./bad-out",
+    ],
+)
+def test_every_run_mode_refuses_unignored_out(tmp_path: Path, argv: str) -> None:
+    subprocess.run(["git", "init", "-q"], cwd=tmp_path, check=True)
+    shutil.copy(ROOT / ".gitignore", tmp_path / ".gitignore")
+    r = subprocess.run([CLI, *shlex.split(argv)[1:]], cwd=tmp_path, capture_output=True, text=True, encoding="utf-8")
+    assert r.returncode == 2, (r.stdout[-1000:], r.stderr[-1000:])
+    assert "not ignored by git" in r.stderr + r.stdout
+    assert not (tmp_path / "bad-out").exists() or not any((tmp_path / "bad-out").iterdir())

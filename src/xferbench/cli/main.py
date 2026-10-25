@@ -250,21 +250,34 @@ def doctor(profile: str = typer.Option("core", help=f"One of {sorted(DOCTOR_PROF
     typer.echo(f"profile '{profile}' satisfied")
 
 
+def _check_out(out: Path) -> None:
+    """V3-1: every run mode refuses an --out inside a git work tree unless git ignores it (outside a repo is fine)."""
+    from xferbench.data.classes import DataClassError, check_local_output
+
+    try:
+        check_local_output(out)
+    except DataClassError:
+        _fail(
+            f"--out {out} is inside a git work tree and is not ignored by git; run outputs must never be "
+            "committable. Use a path under work/ or runs/local/ (gitignored) or outside the repository.",
+            2,
+        )
+
+
 def _resolve_data(
     benchmark: str | None, local_data: Path | None, metadata: Path | None, out: Path, data_dir: Path | None
 ) -> Any:
     import warnings
 
-    from xferbench.data.classes import DataClassError, check_local_output, resolve_source
+    from xferbench.data.classes import DataClassError, resolve_source
 
+    _check_out(out)  # before any data is materialised under --out
     try:
         with warnings.catch_warnings(record=True) as caught:
             warnings.simplefilter("always")
             src = resolve_source(benchmark=benchmark, local_data=local_data, metadata=metadata, data_dir=data_dir)
         for w in caught:
             typer.secho(f"warning: {w.message}", fg=typer.colors.YELLOW, err=True)
-        if src.data_class == "local":
-            check_local_output(out)
     except DataClassError as exc:
         _fail(str(exc), 2)
     return src
@@ -385,7 +398,7 @@ def select_cmd(
         typer.echo(f"  {f.method_id:<14} {'selected ' + f.variant_id if f.eligible else 'not selected: ' + f.reason}")
     for r in sel.rejected_variants:
         typer.echo(f"  rejected {r['variant_id']}: {r['reason']}")
-    typer.echo(f"frozen selection: {sel.recommended} ({sel.recommended_reason}); wrote {out}")
+    typer.echo(f"selected on validation: {sel.recommended} ({sel.recommended_reason}); wrote {out}")
 
 
 @app.command("report")
@@ -591,6 +604,7 @@ def demo_cmd(preset: str = typer.Option("tiny"), seed: int = typer.Option(42), o
 
     if out.exists() and any(out.iterdir()):
         _fail(f"{out} is not empty; choose a new --out")
+    _check_out(out)
     if preset == "stress":
         _fail("the demo does not run the stress preset; use `synth generate --preset stress` explicitly", 2)
     data = out / "data"
@@ -626,7 +640,7 @@ def demo_cmd(preset: str = typer.Option("tiny"), seed: int = typer.Option(42), o
         typer.echo("[5/7] freezing selection on validation only")
         sel = select(val.out, policy)
         write_json(out / "selection.json", sel.model_dump(mode="json"))
-        typer.echo(f"      frozen selection: {sel.recommended}")
+        typer.echo(f"      selected on validation (synthetic interface test, not a ranking): {sel.recommended}")
         typer.echo("[6/7] test run with frozen selection")
         test = BenchmarkRunner(
             RunConfig(
