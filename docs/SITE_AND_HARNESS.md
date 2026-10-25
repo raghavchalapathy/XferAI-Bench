@@ -23,4 +23,4 @@ Cold-start time-series forecasting (zero or near-zero own history). Foundation-m
   (Reviewer-approved Scout feed).
 
 ## Docs
-Lean and scannable. Start users at [DIY-GettingStarted.md](DIY-GettingStarted.md) or [GETTING_STARTED.md](GETTING_STARTED.md).
+Lean and scannable. Start users at the single guide, [GETTING_STARTED.md](../GETTING_STARTED.md) (the old `docs/DIY-GettingStarted.md` and `docs/GETTING_STARTED.md` are pointer stubs).

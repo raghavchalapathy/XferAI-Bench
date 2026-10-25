@@ -14,7 +14,7 @@ import pytest
 ROOT = Path(__file__).resolve().parents[2]
 NEXT = (ROOT / "setup" / "next_demo.txt").read_text(encoding="utf-8")
 OWN = (ROOT / "setup" / "own_data.txt").read_text(encoding="utf-8")
-GS = (ROOT / "docs" / "GETTING_STARTED.md").read_text(encoding="utf-8")
+GS = (ROOT / "GETTING_STARTED.md").read_text(encoding="utf-8")
 SH = (ROOT / "xferAI_setup.sh").read_text(encoding="utf-8")
 PS1 = (ROOT / "xferAI_setup.ps1").read_text(encoding="utf-8")
 
@@ -36,6 +36,17 @@ def test_getting_started_order_and_no_install_md() -> None:
     assert idx["## Step 0"] < idx["## Step 1"] < idx["## Step 2"]
     step0 = GS[GS.index("## Step 0") : GS.index("## Step 1")]
     assert "bash xferAI_setup.sh" in step0 and "pip" in step0 and "xferAI_setup.ps1" in step0
+    for flag in ("--dry-run", "--no-lightgbm", "--with-lightgbm", "--with-spark", "--no-install-uv", "--python",
+                 "--no-demo", "--yes-own-data", "--non-interactive", "--quiet", "--verbose"):  # fmt: skip
+        assert f"`{flag}" in step0, flag
+    assert "constraints/extras.txt" in step0
+
+
+def test_single_guide_at_root_and_old_paths_are_pointer_stubs() -> None:
+    for old in ("docs/GETTING_STARTED.md", "docs/DIY-GettingStarted.md"):
+        t = (ROOT / old).read_text(encoding="utf-8")
+        assert "(../GETTING_STARTED.md" in t and len(t.splitlines()) < 25, old
+        assert "BEGIN setup/" not in t and "```bash" not in t, old
     assert not (ROOT / "INSTALL.md").exists() and not (ROOT / "docs" / "INSTALL.md").exists()
 
 
@@ -43,7 +54,7 @@ def test_both_scripts_print_the_shared_message_files_and_flags() -> None:
     for f in ("setup/next_demo.txt", "setup/own_data.txt"):
         assert f in SH and f.replace("/", "\\") in PS1
     pairs = {"--python": "$Python", "--no-install-uv": "$NoInstallUv", "--with-lightgbm": "$WithLightgbm",
-             "--with-spark": "$WithSpark", "--no-demo": "$NoDemo", "--yes-own-data": "$YesOwnData",
+             "--no-lightgbm": "$NoLightgbm", "--minimal": "$Minimal", "--with-spark": "$WithSpark", "--no-demo": "$NoDemo", "--yes-own-data": "$YesOwnData",
              "--non-interactive": "$NonInteractive", "--dry-run": "$DryRun", "--quiet": "$Quiet",
              "--version": "$Version", "--help": "$Help"}  # fmt: skip
     for sh_flag, ps_param in pairs.items():
@@ -55,7 +66,7 @@ def test_both_scripts_print_the_shared_message_files_and_flags() -> None:
 
 
 def test_message_files_reference_real_files_and_commands() -> None:
-    for rel in ("docs/GETTING_STARTED.md", "docs/REAL_DATA.md", "schemas/FIELD_DICTIONARY.md", "experiments/README.md"):
+    for rel in ("GETTING_STARTED.md", "docs/REAL_DATA.md", "schemas/FIELD_DICTIONARY.md", "experiments/README.md"):
         assert rel in NEXT + OWN and (ROOT / rel).is_file(), rel
     assert (ROOT / "experiments" / "exp01_synthetic_lightgbm_analogs" / "configs" / "sample.yaml").is_file()
     for d in ("data/sample_data/input", "data/complete_data/input"):

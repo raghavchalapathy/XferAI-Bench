@@ -1,5 +1,5 @@
 # Data tier 'complete': the complete dataset. Deep-merged over ../config.yaml by `xferbench experiment run exp02_synthetic_chronos_zero_shot --tier complete`.
-# Point data.metadata at the metadata.json of your own data (docs/GETTING_STARTED.md Step 2).
+# Point data.metadata at the metadata.json of your own data (GETTING_STARTED.md Step 2).
 # Keep that data in data/complete_data/ (git-ignored); never commit it. Results go to eval/exp02_synthetic_chronos_zero_shot__complete/, labelled local.
 data:
   metadata: ""  # e.g. data/complete_data/metadata/metadata.json

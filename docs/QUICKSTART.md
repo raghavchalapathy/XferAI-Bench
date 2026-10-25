@@ -4,7 +4,7 @@ This walks through the complete offline demo, then each step separately so you c
 
 ## 1. Install (once)
 
-Follow [GETTING_STARTED.md Step 0](GETTING_STARTED.md#step-0-install) (`bash xferAI_setup.sh`, or the pip fallback).
+Follow [GETTING_STARTED.md Step 0](../GETTING_STARTED.md#step-0-install) (`bash xferAI_setup.sh`, or the pip fallback).
 The commands below use `.venv/bin/xferbench`, which both routes create (Windows: `.venv\Scripts\xferbench`; with uv
 you can also write `uv run xferbench`).
 

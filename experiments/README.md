@@ -29,7 +29,7 @@ xferbench experiment run exp01_synthetic_lightgbm_analogs --tier sample   # afte
 ```
 
 **Data tiers.** Every run is `synthetic`, `sample` or `complete`; the tier is printed and written to every output
-(see [Data tiers](../docs/GETTING_STARTED.md#data-tiers-synthetic-sample-complete)). The tier is a config-only switch:
+(see [Data tiers](../GETTING_STARTED.md#data-tiers-synthetic-sample-complete)). The tier is a config-only switch:
 `configs/sample.yaml` and `configs/complete.yaml` in each experiment folder point `data.metadata` at your own data.
 Runs of different tiers are never compared or summarised together (exit 2).
 

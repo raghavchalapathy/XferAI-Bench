@@ -2,7 +2,7 @@
 
 ## Using XferAI-Bench (assistants acting for a user)
 
-Follow [docs/DIY-GettingStarted.md](docs/DIY-GettingStarted.md) step by step.
+Follow [GETTING_STARTED.md](GETTING_STARTED.md) step by step (its Rules for coding assistants and STOP points apply).
 
 Rules: Python >= 3.11; everything runs offline after install by default (`XFERBENCH_ALLOW_WEIGHT_DOWNLOAD=1` enables
 Hugging Face weight downloads for optional foundation adapters: never set it without the user's approval); never upload or commit the user's data or results

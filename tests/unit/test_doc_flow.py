@@ -13,7 +13,7 @@ import pytest
 from tests._bash import BASH_EXE, find_bash, is_wsl_stub
 
 ROOT = Path(__file__).resolve().parents[2]
-DIY = ROOT / "docs" / "DIY-GettingStarted.md"
+DIY = ROOT / "GETTING_STARTED.md"  # the single guide (Guide S-01); docs/ copies are pointers
 BASH = re.compile(r"```bash\n(.*?)```", re.S)
 
 
@@ -23,16 +23,19 @@ def _section(text: str, start: str, end: str) -> str:
 
 def test_u4_01_framing_rules_and_setup_precede_part_1() -> None:
     t = DIY.read_text(encoding="utf-8")
-    p1 = t.index("## Part 1.")
-    for needle in ("written for an LLM coding assistant", "## Rules", "## Prerequisites", "### Step 3. Install"):
-        assert t.index(needle) < p1, needle
-    part2 = t[t.index("## Part 2.") :]
-    assert not re.search(r"^## (?!Part)", part2, re.M), "Part 2 subsections must be ### or deeper"
+    s1 = t.index("## Step 1.")
+    for needle in ("## Rules for coding assistants", "## Step 0. Install"):
+        assert t.index(needle) < s1, needle
+    s2 = t.index("## Step 2.")
+    assert s1 < s2
+    steps = t[t.index("### Step by step") : t.index("#### Reading results")]
+    assert not re.search(r"^#{1,3} ", steps.split("\n", 1)[1], re.M), "Steps 2.1-2.8 must be #### headings"
+    assert [f"#### Step 2.{i}." in steps for i in range(1, 9)] == [True] * 8
 
 
-def test_u4_02_steps_9_to_11_use_one_run_counter() -> None:
+def test_u4_02_steps_2_6_to_2_8_use_one_run_counter() -> None:
     t = DIY.read_text(encoding="utf-8")
-    cmds = "".join(BASH.findall(_section(t, "#### Step 9.", "#### Reading results")))
+    cmds = "".join(BASH.findall(_section(t, "#### Step 2.6.", "#### Reading results")))
     assert "RUN=1" in cmds
     assert not re.search(r"(val|test|selection)-1\b|selection\.json", cmds), "hard-coded run names"
     assert "test -d" not in cmds, "silent skip guard"
@@ -43,7 +46,7 @@ def test_u4_02_steps_9_to_11_use_one_run_counter() -> None:
 @pytest.mark.skipif(BASH_EXE is None, reason="needs a real bash (not the WSL launcher stub)")
 def test_u4_02_rerun_with_same_run_fails_loudly(tmp_path: Path) -> None:
     t = DIY.read_text(encoding="utf-8")
-    script = "".join(BASH.findall(_section(t, "#### Step 9.", "#### Step 11.")))
+    script = "".join(BASH.findall(_section(t, "#### Step 2.6.", "#### Step 2.8.")))
     stub = (
         'xb() { out=""; while [ $# -gt 0 ]; do [ "$1" = --out ] && out=$2; shift; done; '
         'case $out in *.json) mkdir -p "$(dirname "$out")"; echo {} > "$out";; *) mkdir -p "$out";; esac; }\n'
@@ -95,6 +98,6 @@ def test_doc_parsing_survives_crlf_checkout(tmp_path: Path) -> None:
     f.write_bytes(DIY.read_bytes().replace(b"\r\n", b"\n").replace(b"\n", b"\r\n"))
     t = f.read_text(encoding="utf-8")
     assert "\r" not in t
-    assert BASH.findall(_section(t, "#### Step 9.", "#### Step 11.")) == BASH.findall(
-        _section(DIY.read_text(encoding="utf-8"), "#### Step 9.", "#### Step 11.")
+    assert BASH.findall(_section(t, "#### Step 2.6.", "#### Step 2.8.")) == BASH.findall(
+        _section(DIY.read_text(encoding="utf-8"), "#### Step 2.6.", "#### Step 2.8.")
     )

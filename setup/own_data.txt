@@ -1,4 +1,4 @@
-Your own data (docs/GETTING_STARTED.md Step 2; format: docs/REAL_DATA.md and schemas/FIELD_DICTIONARY.md)
+Your own data (GETTING_STARTED.md Step 2; format: docs/REAL_DATA.md and schemas/FIELD_DICTIONARY.md)
   1. Put your CSV or Parquet files in data/sample_data/input/
      (a sample of your data; use data/complete_data/input/ for the complete dataset). These folders are git-ignored.
   2. Describe the files (interactive; it asks, never guesses):

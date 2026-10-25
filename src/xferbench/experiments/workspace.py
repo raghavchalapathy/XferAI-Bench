@@ -46,7 +46,7 @@ TEMPLATE_README = """# {id}
 """
 
 TIER_OVERLAY = """# Data tier '{tier}': {text}. Deep-merged over ../config.yaml by `xferbench experiment run {id} --tier {tier}`.
-# Point data.metadata at the metadata.json of your own data (docs/GETTING_STARTED.md Step 2).
+# Point data.metadata at the metadata.json of your own data (GETTING_STARTED.md Step 2).
 # Keep that data in data/{tier}_data/ (git-ignored); never commit it. Results go to eval/{id}__{tier}/, labelled local.
 data:
   metadata: ""  # e.g. data/{tier}_data/metadata/metadata.json

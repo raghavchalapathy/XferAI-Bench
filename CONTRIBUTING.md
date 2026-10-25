@@ -3,7 +3,7 @@
 ## Development setup
 
 ```bash
-bash xferAI_setup.sh --no-demo             # or: uv sync --locked --extra dev (pip fallback: docs/GETTING_STARTED.md Step 0)
+bash xferAI_setup.sh --no-demo             # or: uv sync --locked --extra dev (pip fallback: GETTING_STARTED.md Step 0)
 .venv/bin/python -m pytest                 # unit, integration and leakage tests (network tests excluded)
 .venv/bin/ruff check src tests
 .venv/bin/ruff format --check src tests

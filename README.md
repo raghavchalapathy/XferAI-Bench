@@ -22,7 +22,7 @@ Two scenarios are always scored and shown separately, with equal 0.5/0.5 selecti
 [News & Research](https://xferai.app/news/) · [Getting started](https://xferai.app/getting-started/) ·
 [Offers | Services](https://xferai.app/services/).
 
-**Run on your own data, locally:** [docs/DIY-GettingStarted.md](docs/DIY-GettingStarted.md).
+**Run on your own data, locally:** [GETTING_STARTED.md Step 2](GETTING_STARTED.md#step-2-run-on-your-own-data).
 
 **Scope.** Cold-start time-series forecasting (zero or near-zero own history). Foundation-model and zero-shot
 approaches (e.g. TimesFM, Chronos, Moirai) are tracked; see the method table below for what actually runs.
@@ -41,9 +41,9 @@ uv run xferbench experiment run exp01_synthetic_lightgbm_analogs   # Step 1: dem
 uv run xferbench demo --out ./xb-demo                 # the whole pipeline on tiny synthetic data, about 20 s
 ```
 
-Then follow **[docs/GETTING_STARTED.md](docs/GETTING_STARTED.md)**: Step 0 install (and the pip fallback), Step 1 the
+Then follow **[GETTING_STARTED.md](GETTING_STARTED.md)**: Step 0 install (and the pip fallback), Step 1 the
 demo experiment, Step 2 your own data. Using a coding assistant? Point it at
-[docs/DIY-GettingStarted.md](docs/DIY-GettingStarted.md), [AGENTS.md](AGENTS.md) and [llms.txt](llms.txt).
+[GETTING_STARTED.md](GETTING_STARTED.md) (the same guide; assistants follow its Rules and STOP points), [AGENTS.md](AGENTS.md) and [llms.txt](llms.txt).
 Install problems: [docs/SETUP.md](docs/SETUP.md#troubleshooting).
 
 The demo writes:
@@ -109,7 +109,7 @@ xferbench steps --local-data /path/to/my/metadata.json --out ~/xb-local-1  # you
 ```
 
 `steps` runs B0, B1, B2, B3 (extra row), M1, M2, M3 (listed as needing a recipe) and M4.lightgbm (if the `lightgbm`
-(or `boosting`) extra is installed), each adding one idea, and reports WMAPE and Bias for PAIR0-E and PAIR0-N separately.
+extra is installed; the setup script installs it by default), each adding one idea, and reports WMAPE and Bias for PAIR0-E and PAIR0-N separately.
 Generated data run with `--metadata` (as in the step-by-step block above) is labelled `local`; use
 `--benchmark synthetic-tiny@1.1.0` for the hashed benchmark class. Benchmark data and local data are kept apart; see [docs/DATA_CLASSES.md](docs/DATA_CLASSES.md).
 
@@ -138,7 +138,7 @@ xferbench experiment run-all                   # status table, no rankings; one 
 
 Every run carries a data tier, `synthetic`, `sample` or `complete`, in its manifest, metrics, `leaderboard.csv`,
 report and summaries; runs of different tiers are never compared (exit 2). See
-[Data tiers](docs/GETTING_STARTED.md#data-tiers-synthetic-sample-complete).
+[Data tiers](GETTING_STARTED.md#data-tiers-synthetic-sample-complete).
 
 Production path (library or CLI): `xferbench fit` saves a versioned artifact with a manifest; `xferbench forecast`
 scores new launches from it (exit codes: 0 ok, 1 error, 2 usage, 3 blocked, 4 partial, 5 artifact mismatch,
@@ -153,7 +153,7 @@ Experiments use synthetic data only. **Synthetic interface test, not rankings.**
 
 | Topic | File |
 |---|---|
-| Getting started, end to end with your own data | [docs/GETTING_STARTED.md](docs/GETTING_STARTED.md) |
+| Getting started, end to end with your own data | [GETTING_STARTED.md](GETTING_STARTED.md) |
 | Beginner quickstart and expected outputs | [docs/QUICKSTART.md](docs/QUICKSTART.md) |
 | Metadata and column mapping | [docs/METADATA.md](docs/METADATA.md) |
 | Replacing synthetic data with your own | [docs/REAL_DATA.md](docs/REAL_DATA.md) |

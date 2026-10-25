@@ -9,8 +9,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 OLD = ("exp01_m5_lightgbm_analogs", "exp02_chronos_zero_shot", "repro_visuelle_gtm")
 DOCS = [
-    "README.md", "AGENTS.md", "DATASCIENTIST.md", "llms.txt", "THIRD_PARTY_NOTICES.md", "docs/GETTING_STARTED.md",
-    "docs/DIY-GettingStarted.md", "experiments/README.md", "scripts/model_eval.sh", ".github/workflows/ci.yml",
+    "README.md", "AGENTS.md", "DATASCIENTIST.md", "llms.txt", "THIRD_PARTY_NOTICES.md", "GETTING_STARTED.md",
+    "experiments/README.md", "scripts/model_eval.sh", ".github/workflows/ci.yml",
     "harness/proposals/TEMPLATE.yaml.example",
 ]  # fmt: skip
 
@@ -43,7 +43,7 @@ def test_doc_list_uses_posix_paths_on_every_os() -> None:
 
 
 def test_getting_started_documents_tiers_and_naming() -> None:
-    gs = _text("docs/GETTING_STARTED.md")
+    gs = _text("GETTING_STARTED.md")
     assert "## Data tiers (synthetic, sample, complete)" in gs
     for needle in (
         "--tier sample",
@@ -60,7 +60,7 @@ def test_getting_started_documents_tiers_and_naming() -> None:
 
 
 def test_anchor_matches_heading() -> None:
-    gs = _text("docs/GETTING_STARTED.md")
+    gs = _text("GETTING_STARTED.md")
     heading = next(line[3:] for line in gs.splitlines() if line.startswith("## Data tiers"))
     anchor = re.sub(r"[^a-z0-9 -]", "", heading.lower()).replace(" ", "-")
     assert anchor == "data-tiers-synthetic-sample-complete"

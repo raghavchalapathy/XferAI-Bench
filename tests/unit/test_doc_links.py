@@ -14,6 +14,7 @@ def _docs() -> list[Path]:
         ROOT / n
         for n in (
             "README.md",
+            "GETTING_STARTED.md",
             "AGENTS.md",
             "CONTRIBUTING.md",
             "llms.txt",
@@ -45,6 +46,8 @@ def test_relative_doc_links_resolve() -> None:
     assert broken == []
 
 
-def test_agent_entry_points_link_the_diy_guide() -> None:
-    for name in ("README.md", "AGENTS.md", "llms.txt"):
-        assert "docs/DIY-GettingStarted.md" in (ROOT / name).read_text(encoding="utf-8"), name
+def test_agent_entry_points_link_the_single_guide() -> None:
+    for name in ("README.md", "AGENTS.md", "llms.txt", "DATASCIENTIST.md"):
+        t = (ROOT / name).read_text(encoding="utf-8")
+        assert "](GETTING_STARTED.md" in t, name
+        assert "](docs/DIY-GettingStarted.md" not in t and "](docs/GETTING_STARTED.md" not in t, name

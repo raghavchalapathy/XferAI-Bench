@@ -4,17 +4,17 @@
 
 ## Docs for agents
 
-- [DIY Getting Started (run on your own data with a coding assistant)](docs/DIY-GettingStarted.md)
+- [Getting started, also for coding assistants (Rules, STOP points; Step 2 runs on your own data)](GETTING_STARTED.md)
 - [AGENTS.md](AGENTS.md)
 - [Cold-start harness](COLDSTARTHARNESS.md)
 - [Experiments (synthetic interface tests)](experiments/README.md)
-- [Data tiers: synthetic, sample, complete](docs/GETTING_STARTED.md#data-tiers-synthetic-sample-complete)
+- [Data tiers: synthetic, sample, complete](GETTING_STARTED.md#data-tiers-synthetic-sample-complete)
 - [AI engineer knowledge base](AIENGINEER.md)
 - [VISUELLE/GTM reproduction (research only, results pending)](experiments/exp03_visuelle_gtm/README.md)
 
 ## Docs
 
-- [Getting started](docs/GETTING_STARTED.md): Step 0 `bash xferAI_setup.sh --non-interactive` (Windows: `xferAI_setup.ps1 -NonInteractive`; exit 0 ok, 1 step failed, 2 usage; `--dry-run` shows the plan), Step 1 demo experiment, Step 2 your own data
+- [Getting started](GETTING_STARTED.md): Step 0 `bash xferAI_setup.sh --non-interactive` (Windows: `xferAI_setup.ps1 -NonInteractive`; exit 0 ok, 1 step failed, 2 usage; `--dry-run` shows the plan), Step 1 demo experiment, Step 2 your own data
 - [Setup troubleshooting](docs/SETUP.md#troubleshooting)
 - [Metadata reference](docs/METADATA.md)
 - [Field dictionary](schemas/FIELD_DICTIONARY.md)
