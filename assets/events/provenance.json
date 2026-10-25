@@ -9,7 +9,28 @@
    "content_type": "image/jpeg",
    "bytes": 25747,
    "sha256": "4149c1d176504d40e7d9fbcd43a55f030bca762c3c7c5abd4ded3fc7dc118648",
-   "fetched_pt": "2026-10-25T12:28:40-07:00"
+   "fetched_pt": "2026-10-25T12:28:40-07:00",
+   "rights_record": {
+    "owner": "Event host on Luma (luma.com/rmp9ct32); image served by lumacdn (rights holder not individually identified; UNVERIFIED)",
+    "policy_url": null,
+    "policy_section_quoted": "no image-reuse policy checked or found (UNVERIFIED)",
+    "written_approval_required": "unknown",
+    "written_approval_evidence": null,
+    "recorded_on": "2026-10-25",
+    "permission_basis": "none (no permission sought or obtained); og:image is the share image the organiser publishes for its own official event page, shown unaltered next to a link to that page",
+    "risk_acceptance": {
+     "text": "No permission obtained. Displayed under owner request/risk acceptance t283u (2026-10-25); this is not permission. No wording implies affiliation, sponsorship or endorsement.",
+     "source_turns": [
+      {
+       "turn": "t283u",
+       "time": "2026-10-25 PDT",
+       "quote": "classify it by Americas, Asia, TransAtlantic… show some icon images in the right"
+      }
+     ],
+     "owner_identity_verified_by_reviewer": false
+    },
+    "removal_on_request": "remove within 2 business days of a request from the image or event owner (or withdrawal of the owner decision); removal goes through the guard and Reviewer and is recorded here"
+   }
   },
   {
    "id": "e02",
@@ -19,7 +40,28 @@
    "content_type": "image/png",
    "bytes": 380485,
    "sha256": "956a8f55cb5d63be7b068ac994609417ac97feb2c3fea2c4ccf58353c0631093",
-   "fetched_pt": "2026-10-25T12:28:40-07:00"
+   "fetched_pt": "2026-10-25T12:28:40-07:00",
+   "rights_record": {
+    "owner": "Event organiser (Wix-hosted official page); image served by wixstatic (rights holder not individually identified; UNVERIFIED)",
+    "policy_url": null,
+    "policy_section_quoted": "no image-reuse policy checked or found (UNVERIFIED)",
+    "written_approval_required": "unknown",
+    "written_approval_evidence": null,
+    "recorded_on": "2026-10-25",
+    "permission_basis": "none (no permission sought or obtained); og:image is the share image the organiser publishes for its own official event page, shown unaltered next to a link to that page",
+    "risk_acceptance": {
+     "text": "No permission obtained. Displayed under owner request/risk acceptance t283u (2026-10-25); this is not permission. No wording implies affiliation, sponsorship or endorsement.",
+     "source_turns": [
+      {
+       "turn": "t283u",
+       "time": "2026-10-25 PDT",
+       "quote": "classify it by Americas, Asia, TransAtlantic… show some icon images in the right"
+      }
+     ],
+     "owner_identity_verified_by_reviewer": false
+    },
+    "removal_on_request": "remove within 2 business days of a request from the image or event owner (or withdrawal of the owner decision); removal goes through the guard and Reviewer and is recorded here"
+   }
   },
   {
    "id": "e03",
@@ -29,7 +71,28 @@
    "content_type": "image/jpeg",
    "bytes": 22374,
    "sha256": "59d57425c3c94659852b9169f2759bf39720d5a53a57b2c0ef96d6c277032f4b",
-   "fetched_pt": "2026-10-25T12:28:41-07:00"
+   "fetched_pt": "2026-10-25T12:28:41-07:00",
+   "rights_record": {
+    "owner": "Event host on Luma; image served by lumacdn (rights holder not individually identified; UNVERIFIED)",
+    "policy_url": null,
+    "policy_section_quoted": "no image-reuse policy checked or found (UNVERIFIED)",
+    "written_approval_required": "unknown",
+    "written_approval_evidence": null,
+    "recorded_on": "2026-10-25",
+    "permission_basis": "none (no permission sought or obtained); og:image is the share image the organiser publishes for its own official event page, shown unaltered next to a link to that page",
+    "risk_acceptance": {
+     "text": "No permission obtained. Displayed under owner request/risk acceptance t283u (2026-10-25); this is not permission. No wording implies affiliation, sponsorship or endorsement.",
+     "source_turns": [
+      {
+       "turn": "t283u",
+       "time": "2026-10-25 PDT",
+       "quote": "classify it by Americas, Asia, TransAtlantic… show some icon images in the right"
+      }
+     ],
+     "owner_identity_verified_by_reviewer": false
+    },
+    "removal_on_request": "remove within 2 business days of a request from the image or event owner (or withdrawal of the owner decision); removal goes through the guard and Reviewer and is recorded here"
+   }
   },
   {
    "id": "e04",
@@ -39,7 +102,28 @@
    "content_type": "image/jpeg",
    "bytes": 29166,
    "sha256": "d104e2328c212a6f0731c2aa80a860b06f353de08578df556bde3b85b39c33a1",
-   "fetched_pt": "2026-10-25T12:28:41-07:00"
+   "fetched_pt": "2026-10-25T12:28:41-07:00",
+   "rights_record": {
+    "owner": "Event host on Luma; image served by lumacdn (rights holder not individually identified; UNVERIFIED)",
+    "policy_url": null,
+    "policy_section_quoted": "no image-reuse policy checked or found (UNVERIFIED)",
+    "written_approval_required": "unknown",
+    "written_approval_evidence": null,
+    "recorded_on": "2026-10-25",
+    "permission_basis": "none (no permission sought or obtained); og:image is the share image the organiser publishes for its own official event page, shown unaltered next to a link to that page",
+    "risk_acceptance": {
+     "text": "No permission obtained. Displayed under owner request/risk acceptance t283u (2026-10-25); this is not permission. No wording implies affiliation, sponsorship or endorsement.",
+     "source_turns": [
+      {
+       "turn": "t283u",
+       "time": "2026-10-25 PDT",
+       "quote": "classify it by Americas, Asia, TransAtlantic… show some icon images in the right"
+      }
+     ],
+     "owner_identity_verified_by_reviewer": false
+    },
+    "removal_on_request": "remove within 2 business days of a request from the image or event owner (or withdrawal of the owner decision); removal goes through the guard and Reviewer and is recorded here"
+   }
   },
   {
    "id": "e07",
@@ -49,7 +133,29 @@
    "content_type": "image/jpeg",
    "bytes": 20554,
    "sha256": "c27d82c6cd0449a985d62012602deb65617b882d900117d5e175263717d37264",
-   "fetched_pt": "2026-10-25T12:28:41-07:00"
+   "fetched_pt": "2026-10-25T12:28:41-07:00",
+   "rights_record": {
+    "owner": "Event host on Luma; image served by lumacdn (rights holder not individually identified; UNVERIFIED)",
+    "policy_url": null,
+    "policy_section_quoted": "no image-reuse policy checked or found (UNVERIFIED)",
+    "written_approval_required": "unknown",
+    "written_approval_evidence": null,
+    "recorded_on": "2026-10-25",
+    "permission_basis": "none (no permission sought or obtained); og:image is the share image the organiser publishes for its own official event page, shown unaltered next to a link to that page",
+    "risk_acceptance": {
+     "text": "No permission obtained. Displayed under owner request/risk acceptance t283u (2026-10-25); this is not permission. No wording implies affiliation, sponsorship or endorsement.",
+     "source_turns": [
+      {
+       "turn": "t283u",
+       "time": "2026-10-25 PDT",
+       "quote": "classify it by Americas, Asia, TransAtlantic… show some icon images in the right"
+      }
+     ],
+     "owner_identity_verified_by_reviewer": false
+    },
+    "removal_on_request": "remove within 2 business days of a request from the image or event owner (or withdrawal of the owner decision); removal goes through the guard and Reviewer and is recorded here"
+   }
   }
- ]
+ ],
+ "rights_note": "Per-image rights_record mirrors the logo-strip pattern (LSR 5''', 8'). This is not permission."
 }

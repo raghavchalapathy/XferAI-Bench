@@ -1016,3 +1016,5 @@ h3.dataset-badge { display: inline-flex; align-items: center; }
 .ev-card.has-img > :not(.ev-img) { grid-column: 1; }
 .ev-img { grid-column: 2; grid-row: 1 / span 4; width: 148px; height: 78px; object-fit: cover; border-radius: 8px; align-self: center; background: #242331; }
 @media (max-width: 560px) { .ev-card.has-img { grid-template-columns: 1fr 88px; } .ev-img { width: 88px; height: 56px; } }
+/* r8.1 N3: zero-sales legend reads "No history yet" with a hollow dot */
+[data-scn="zero"] .lg-hist i { background: transparent !important; box-shadow: inset 0 0 0 1.5px #4fd1c5; }
