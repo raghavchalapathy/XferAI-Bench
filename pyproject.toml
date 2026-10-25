@@ -88,6 +88,9 @@ include = [
   "PROGRESS.md",
   "bootstrap.sh",
   "bootstrap.ps1",
+  "xferAI_setup.sh",
+  "xferAI_setup.ps1",
+  "setup",
   "constraints",
 ]
 

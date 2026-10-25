@@ -52,3 +52,6 @@ validation-run/
 **/run_manifest.json
 # xferbench steps output (README example writes to ./work/xb-steps)
 xb-steps*/
+
+# xferAI_setup.sh log
+.xferai-setup.log

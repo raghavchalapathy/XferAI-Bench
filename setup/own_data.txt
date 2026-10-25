@@ -1,0 +1,16 @@
+Your own data (docs/GETTING_STARTED.md Step 2; format: docs/REAL_DATA.md and schemas/FIELD_DICTIONARY.md)
+  1. Put your CSV or Parquet files in data/sample_data/input/
+     (a sample of your data; use data/complete_data/input/ for the complete dataset). These folders are git-ignored.
+  2. Describe the files (interactive; it asks, never guesses):
+       uv run xferbench metadata wizard --data data/sample_data/input --out data/sample_data/metadata/metadata.json
+  3. Validate them:
+       uv run xferbench validate --metadata data/sample_data/metadata/metadata.json
+  4. Copy the demo experiment:
+       uv run xferbench experiment new exp04_mydata_lightgbm --from exp01_synthetic_lightgbm_analogs
+  5. Edit experiments/exp04_mydata_lightgbm/configs/sample.yaml so it reads:
+       data:
+         metadata: data/sample_data/metadata/metadata.json
+  6. Run it on the sample tier:
+       uv run xferbench experiment run exp04_mydata_lightgbm --tier sample
+  Results: eval/exp04_mydata_lightgbm__sample/ (labelled LOCAL DATA; never commit them).
+  Without uv, use .venv/bin/xferbench (Windows: .venv\Scripts\xferbench) instead of "uv run xferbench".
