@@ -12,3 +12,6 @@ data:
   seed: 42
 methods: [B0, B1, B2, B3, M1, M2]
 optional_methods: [M4.lightgbm]   # needs: pip install -e ".[lightgbm]" (a wheel, no weights)
+runtime:            # config-only switch; same code. backend: polars | spark; mode: local | cluster (spark only)
+  backend: polars
+  mode: local

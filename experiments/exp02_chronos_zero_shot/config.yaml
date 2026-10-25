@@ -14,3 +14,6 @@ optional_methods: [FM.chronos2]   # opt-in only: foundation extra + XFERBENCH_AL
 not_day_zero: >-
   Zero-shot time-series foundation models (Chronos) are not day-zero methods for XferAI; chronos-t5 is
   "ruling pending" in pins.v5. Never present exp02 output as a day-zero result.
+runtime:            # config-only switch; same code. backend: polars | spark; mode: local | cluster (spark only)
+  backend: polars
+  mode: local

@@ -21,6 +21,7 @@ LABEL = "SYNTHETIC INTERFACE TEST - not a ranking. Synthetic data only checks th
 
 
 NOT_DAY_ZERO = "NOT A DAY-ZERO RESULT."
+BACKENDS = {"polars", "spark"}
 
 
 class ExperimentError(RuntimeError):
@@ -37,6 +38,9 @@ class ExperimentConfig:
     methods: list[str]
     optional_methods: list[str]
     not_day_zero: str | None = None
+    backend: str = "polars"  # runtime.backend: polars | spark (config-only switch; same code)
+    mode: str = "local"  # runtime.mode: local | cluster
+    master: str = "local[2]"  # runtime.master: Spark master URL (cluster mode: e.g. yarn or spark://host:7077)
 
     @classmethod
     def load(cls, path: Path) -> ExperimentConfig:
@@ -49,7 +53,18 @@ class ExperimentConfig:
         not_day_zero = raw.get("not_day_zero")
         if any(m.startswith("FM.") for m in [*raw["methods"], *raw.get("optional_methods", [])]) and not not_day_zero:
             raise ExperimentError(f"{path}: zero-shot/foundation-model experiments must set 'not_day_zero: <reason>'")
+        rt = raw.get("runtime", {}) or {}
+        backend, mode = str(rt.get("backend", "polars")), str(rt.get("mode", "local"))
+        if backend not in BACKENDS:
+            raise ExperimentError(f"{path}: runtime.backend must be one of {sorted(BACKENDS)}, got {backend!r}")
+        if mode not in ("local", "cluster"):
+            raise ExperimentError(f"{path}: runtime.mode must be 'local' or 'cluster', got {mode!r}")
+        if mode == "cluster" and backend != "spark":
+            raise ExperimentError(f"{path}: runtime.mode 'cluster' requires runtime.backend 'spark'")
         return cls(
+            backend=backend,
+            mode=mode,
+            master=str(rt.get("master", "local[2]" if mode == "local" else "yarn")),
             id=str(raw["id"]),
             title=str(raw.get("title", raw["id"])),
             papers=list(raw.get("papers", [])),
@@ -132,18 +147,45 @@ Data: synthetic preset <code>{e(cfg.preset)}</code>, seed {cfg.seed}.</p>
 """
 
 
-def _scalable_parity(ds: Any, split: Any, run_dir: Path) -> dict[str, Any]:
-    """Cross-check the scalable (Polars lazy partial-sum) objective against the protected evaluator's metrics.json."""
+def _scalable_parity(ds: Any, split: Any, run_dir: Path, cfg: ExperimentConfig | None = None) -> dict[str, Any]:
+    """Cross-check the scalable partial-sum objective (Polars lazy or Spark, per runtime.backend) against the
+    protected evaluator's metrics.json."""
     import polars as pl
 
     from xferbench.domains.registry import get_domain
-    from xferbench.scalable_eval.core import finalize, partial_sums_polars
+    from xferbench.scalable_eval.core import finalize, partial_sums_polars, partial_sums_spark
 
+    backend = cfg.backend if cfg else "polars"
     domain = get_domain(ds.metadata.domain_plugin)
     requests = domain.requests(ds, split, "test")
     targets = domain.targets(ds, requests)
-    fc = pl.scan_parquet(run_dir / "forecasts.parquet")
-    got = finalize(*partial_sums_polars(fc, targets, requests), ds.metadata.cohorts.selection_weights)
+    w = ds.metadata.cohorts.selection_weights
+    if backend == "spark":
+        from pyspark.sql import SparkSession
+
+        assert cfg is not None
+        spark = (
+            SparkSession.builder.master(cfg.master)
+            .appName(f"xferbench-{cfg.id}")
+            .config("spark.ui.enabled", "false")
+            .config("spark.sql.session.timeZone", "UTC")
+            .getOrCreate()
+        )
+        try:
+            fc_s = spark.read.parquet(str(run_dir / "forecasts.parquet"))
+            got = finalize(
+                *partial_sums_spark(
+                    fc_s,
+                    spark.createDataFrame(targets),
+                    spark.createDataFrame(requests[["request_id", "scenario", "board"]]),
+                ),
+                w,
+            )
+        finally:
+            if cfg.mode == "local":
+                spark.stop()
+    else:
+        got = finalize(*partial_sums_polars(pl.scan_parquet(run_dir / "forecasts.parquet"), targets, requests), w)
     ref = read_json(run_dir / "metrics.json")["boards"]
     worst = 0.0
     for board, rows in ref.items():
@@ -151,10 +193,10 @@ def _scalable_parity(ds: Any, split: Any, run_dir: Path) -> dict[str, Any]:
         for r in rows:
             a, b = r["objective"], mine.get(r["variant_id"])
             if (a is None) != (b is None):
-                return {"engine": "polars", "match": False, "max_abs_diff": None}
+                return {"engine": backend, "match": False, "max_abs_diff": None}
             if a is not None and b is not None:
                 worst = max(worst, abs(a - b))
-    return {"engine": "polars", "match": worst <= 1e-9, "max_abs_diff": worst}
+    return {"engine": backend, "match": worst <= 1e-9, "max_abs_diff": worst}
 
 
 def check_output_dir(out: Path) -> None:
@@ -231,7 +273,7 @@ def run_experiment(config_path: Path, out: Path, progress: Any = print) -> dict[
     ).run()
     progress("[6/6] report, results.json, leaderboard.html, SUMMARY.md")
     rows = _rows(test.out)
-    parity = _scalable_parity(ds, split, test.out)
+    parity = _scalable_parity(ds, split, test.out, cfg)
     shutil.copyfile(test.out / "report.html", out / "report.html")
     results = {
         "experiment": cfg.id,
@@ -239,6 +281,7 @@ def run_experiment(config_path: Path, out: Path, progress: Any = print) -> dict[
         "objective": "0.5*WMAPE(PAIR0-E) + 0.5*WMAPE(PAIR0-N)",
         "data": {"flavour": "synthetic", "preset": cfg.preset, "seed": cfg.seed, "dataset_hash": ds.content_hash},
         "split_hash": split.split_hash,
+        "runtime": {"backend": cfg.backend, "mode": cfg.mode},
         "day_zero_result": cfg.not_day_zero is None,
         "not_day_zero": cfg.not_day_zero,
         "row_order": "alphabetical by variant_id (not a ranking)",
