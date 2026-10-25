@@ -101,7 +101,7 @@
     if (data.status !== 'reviewed' || !(data.methods || []).length) return pending();
     const prep = (r) => Object.assign({}, r, { d: arxiv(r), paper: paper(r) });
     const all = [...data.methods, ...(data.datasets || []).flatMap((ds) => ds.results || [])].map(prep);
-    const papers = [...new Set(all.map((r) => r.paper))]; const colorOf = (p) => PALETTE[papers.indexOf(p) % PALETTE.length];
+    const PAPER_COLOR = { 'Papadopoulos et al.': '#b59cf8', 'Skenderi et al.': '#e783bd', 'Dif4FF': '#F5B754', 'Avogaro et al.': css('--bench-teal', '#6fd3c1') }; const names = [...new Set(all.map((r) => short(r.paper)))]; const colorOf = (p) => PAPER_COLOR[short(p)] || PALETTE[(names.indexOf(short(p)) + 4) % PALETTE.length]; { const sec = document.querySelector('.bench-charts'); if (sec) { const k = el('div', 'paper-key'); k.setAttribute('role', 'note'); k.append(el('span', 'paper-key-h', 'Paper-reported:')); for (const nm of names) { const srcs = [...new Set(all.filter((r) => short(r.paper) === nm).map((r) => r.paper))]; const i = el('span', 'pk'); const s = el('i'); s.style.background = colorOf(nm); i.title = srcs.join('; '); i.append(s, document.createTextNode(nm)); k.append(i); } k.append(el('span', 'paper-key-note', 'Results as reported by these papers; not recomputed by XferAI.')); sec.prepend(k); } }
     const rows = data.methods.map(prep), dated = rows.filter((r) => r.d), undated = rows.filter((r) => !r.d);
     const host1 = $('chart-methods'); host1.className = 'scatter-host';
     host1.replaceChildren(legend([...new Set(dated.map((r) => r.paper))].map((p) => [p, colorOf(p)])), timeScatter(dated, colorOf));

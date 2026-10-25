@@ -1,0 +1,55 @@
+{
+ "note": "og:image as declared by each official event page (meta property og:image); bytes unaltered. e05/e06 (neurips.cc) declare no og:image, so none shown.",
+ "images": [
+  {
+   "id": "e01",
+   "file": "/assets/events/e01.jpg",
+   "source_page": "https://luma.com/rmp9ct32",
+   "og_image_url": "https://images.lumacdn.com/cdn-cgi/image/format=auto,fit=cover,dpr=1,anim=false,background=white,quality=75,width=800,height=420/event-social/xa/045e3550-711e-460d-a5af-6d691fd1a4f3.png",
+   "content_type": "image/jpeg",
+   "bytes": 25747,
+   "sha256": "4149c1d176504d40e7d9fbcd43a55f030bca762c3c7c5abd4ded3fc7dc118648",
+   "fetched_pt": "2026-10-25T12:28:40-07:00"
+  },
+  {
+   "id": "e02",
+   "file": "/assets/events/e02.png",
+   "source_page": "https://www.eventus-international.com/pm-europe",
+   "og_image_url": "https://static.wixstatic.com/media/4cfab3_569de5a64b7946549b1940a6062c990b%7Emv2.png/v1/fit/w_2500,h_1330,al_c/4cfab3_569de5a64b7946549b1940a6062c990b%7Emv2.png",
+   "content_type": "image/png",
+   "bytes": 380485,
+   "sha256": "956a8f55cb5d63be7b068ac994609417ac97feb2c3fea2c4ccf58353c0631093",
+   "fetched_pt": "2026-10-25T12:28:40-07:00"
+  },
+  {
+   "id": "e03",
+   "file": "/assets/events/e03.jpg",
+   "source_page": "https://luma.com/e2tqel3t",
+   "og_image_url": "https://images.lumacdn.com/cdn-cgi/image/format=auto,fit=cover,dpr=1,anim=false,background=white,quality=75,width=800,height=420/event-social/ww/1dfcf3cd-f4db-423e-9f36-4b31a120f811.png",
+   "content_type": "image/jpeg",
+   "bytes": 22374,
+   "sha256": "59d57425c3c94659852b9169f2759bf39720d5a53a57b2c0ef96d6c277032f4b",
+   "fetched_pt": "2026-10-25T12:28:41-07:00"
+  },
+  {
+   "id": "e04",
+   "file": "/assets/events/e04.jpg",
+   "source_page": "https://luma.com/1piduyba",
+   "og_image_url": "https://images.lumacdn.com/cdn-cgi/image/format=auto,fit=cover,dpr=1,anim=false,background=white,quality=75,width=800,height=420/event-social/1o/c6f3cb3e-dd66-446f-a8b2-d7a02571956f.png",
+   "content_type": "image/jpeg",
+   "bytes": 29166,
+   "sha256": "d104e2328c212a6f0731c2aa80a860b06f353de08578df556bde3b85b39c33a1",
+   "fetched_pt": "2026-10-25T12:28:41-07:00"
+  },
+  {
+   "id": "e07",
+   "file": "/assets/events/e07.jpg",
+   "source_page": "https://luma.com/0xb58ma6",
+   "og_image_url": "https://images.lumacdn.com/cdn-cgi/image/format=auto,fit=cover,dpr=1,anim=false,background=white,quality=75,width=800,height=420/event-social/bn/a3956514-3ce7-4b9d-a966-f106b351331b.png",
+   "content_type": "image/jpeg",
+   "bytes": 20554,
+   "sha256": "c27d82c6cd0449a985d62012602deb65617b882d900117d5e175263717d37264",
+   "fetched_pt": "2026-10-25T12:28:41-07:00"
+  }
+ ]
+}
