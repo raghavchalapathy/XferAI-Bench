@@ -1018,3 +1018,10 @@ h3.dataset-badge { display: inline-flex; align-items: center; }
 @media (max-width: 560px) { .ev-card.has-img { grid-template-columns: 1fr 88px; } .ev-img { width: 88px; height: 56px; } }
 /* r8.1 N3: zero-sales legend reads "No history yet" with a hollow dot */
 [data-scn="zero"] .lg-hist i { background: transparent !important; box-shadow: inset 0 0 0 1.5px #4fd1c5; }
+
+/* r9 t288u: key = names row, then shaded Paper-reported label; star marker for lowest reported */
+.paper-key { flex-direction: column; align-items: flex-start; gap: 8px; }
+.paper-key .pk-names { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px; }
+.paper-key-label { font-size: 11px; font-weight: 600; letter-spacing: .02em; padding: 3px 10px; border-radius: 999px; color: #cdbdfb; background: linear-gradient(90deg, rgba(181,156,248,.16), rgba(231,131,189,.12) 45%, rgba(245,183,84,.10) 75%, rgba(111,211,193,.12)); border: 1px solid rgba(181,156,248,.28); cursor: help; }
+.scatter .low-star { stroke: #fff; stroke-width: 1; }
+.scatter .low-label { fill: #f2d98a; font-size: 11px; font-weight: 600; cursor: help; paint-order: stroke; stroke: #15141f; stroke-width: 3px; }
