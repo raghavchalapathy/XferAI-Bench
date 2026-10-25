@@ -660,22 +660,39 @@ def demo_cmd(preset: str = typer.Option("tiny"), seed: int = typer.Option(42), o
     typer.echo(f"done. Open {out / 'report.html'}")
 
 
-@app.command("experiment")
+experiment_app = typer.Typer(
+    help="Experiment workspaces (experiments/<id>/): new, list, run, run-all. Synthetic runs are interface tests, "
+    "not rankings. Legacy form `xferbench experiment --config C --out O` still works."
+)
+app.add_typer(experiment_app, name="experiment")
+
+
+@experiment_app.callback(invoke_without_command=True)
 def experiment_cmd(
-    config: Path = typer.Option(..., help="experiments/<name>/config.yaml"),
-    out: Path = typer.Option(..., help="Empty output directory (e.g. eval/<name>)."),
+    ctx: typer.Context,
+    config: Path | None = typer.Option(None, help="(legacy) experiments/<name>/config.yaml"),
+    out: Path | None = typer.Option(None, help="(legacy) empty output directory (e.g. eval/<name>)."),
     log_lesson: str | None = typer.Option(
         None, "--log-lesson", help="Append a lesson to harness/lessons.jsonl; value = what changed."
     ),
     harness_dir: Path = typer.Option(Path("harness"), "--harness-dir"),
 ) -> None:
     """Run a config-driven synthetic experiment (interface test, not a ranking); nothing is downloaded."""
+    if ctx.invoked_subcommand is not None:
+        return
+    if config is None or out is None:
+        typer.echo(ctx.get_help())
+        raise typer.Exit(2)
     from xferbench.experiments.runner import ExperimentError, run_experiment
 
     try:
         res = run_experiment(config, out, progress=typer.echo)
     except ExperimentError as exc:
         _fail(str(exc), 2)
+    _after_experiment(res, out, log_lesson, harness_dir)
+
+
+def _after_experiment(res: dict[str, Any], out: Path, log_lesson: str | None, harness_dir: Path) -> None:
     for s in res["not_run"]:
         typer.echo(f"  not run: {s['method_id']} ({s['status']}): {s['reason']}")
     if log_lesson:
@@ -688,6 +705,124 @@ def experiment_cmd(
             _fail(f"lesson not logged: {exc}", 2)
         typer.echo(f"lesson appended to {harness_dir / 'lessons.jsonl'}")
     typer.echo(f"done. Open {out / 'leaderboard.html'} and {out / 'report.html'}")
+
+
+@experiment_app.command("new")
+def experiment_new_cmd(
+    name: str = typer.Argument(..., help="New experiment id (lowercase letters, digits, '_')."),
+    from_id: str | None = typer.Option(None, "--from", help="Copy config (and extra files) from this experiment."),
+    force: bool = typer.Option(False, "--force", help="Overwrite an existing experiment folder."),
+) -> None:
+    """Scaffold experiments/<name>/ with config.yaml and README.md."""
+    from xferbench.experiments.runner import ExperimentError
+    from xferbench.experiments.workspace import new_experiment
+
+    try:
+        dest = new_experiment(name, Path.cwd(), from_id, force)
+    except ExperimentError as exc:
+        _fail(str(exc), 2)
+    typer.echo(f"created {dest}/ (config.yaml, README.md). Edit them, then: xferbench experiment run {name}")
+
+
+@experiment_app.command("list")
+def experiment_list_cmd() -> None:
+    """List experiments with the data and models each one uses."""
+    from xferbench.experiments.workspace import list_experiments
+
+    infos = list_experiments(Path.cwd())
+    if not infos:
+        typer.echo("no experiments/*/config.yaml found (run from the repository root)")
+    for i in infos:
+        if i.error:
+            typer.echo(f"{i.id}: INVALID CONFIG - {i.error}")
+            continue
+        opt = f" | optional: {', '.join(i.optional_methods)}" if i.optional_methods else ""
+        ndz = " | NOT A DAY-ZERO RESULT" if not i.day_zero else ""
+        typer.echo(f"{i.id}: data synthetic/{i.preset} | models: {', '.join(i.methods)}{opt}{ndz}")
+
+
+@experiment_app.command("run")
+def experiment_run_cmd(
+    exp_id: str = typer.Argument(..., help="Experiment id (folder under experiments/)."),
+    log_lesson: str | None = typer.Option(None, "--log-lesson"),
+    harness_dir: Path = typer.Option(Path("harness"), "--harness-dir"),
+) -> None:
+    """Run one experiment into experiments/<id>/runs/<UTC timestamp>/ (git-ignored)."""
+    from xferbench.experiments.runner import ExperimentError
+    from xferbench.experiments.workspace import run_one
+
+    try:
+        res = run_one(exp_id, Path.cwd(), progress=typer.echo)
+    except ExperimentError as exc:
+        _fail(str(exc), 2)
+    _after_experiment(res, Path(res["_out"]), log_lesson, harness_dir)
+
+
+@experiment_app.command("run-all")
+def experiment_run_all_cmd(
+    only: list[str] = typer.Option([], "--only", help="Restrict to these ids (repeatable)."),
+) -> None:
+    """Run every experiment, continue past failures, print a status table (no rankings). Exit 1 if any failed."""
+    from xferbench.experiments.workspace import run_all, summary_table
+
+    rows = run_all(Path.cwd(), only or None, progress=typer.echo)
+    typer.echo(summary_table(rows))
+    if any(r["status"] != "ok" for r in rows):
+        raise typer.Exit(1)
+
+
+@app.command("fit")
+def fit_cmd(
+    metadata: Path = typer.Option(..., help="metadata.json of the training data."),
+    splits: Path = typer.Option(..., help="splits.json for that data."),
+    method: str = typer.Option(..., help="Method id, e.g. B3 or M4.lightgbm."),
+    out: Path = typer.Option(..., help="New, empty model directory (artifact.json + manifest.json)."),
+    selection: Path | None = typer.Option(None, help="Frozen selection.json: fit exactly the selected variant."),
+    stage: str = typer.Option("test", help="Fit on the labels available at this stage's fit cutoff."),
+    seed: int = typer.Option(42),
+    json_logs: bool = typer.Option(True, "--json-logs/--plain-logs"),
+) -> None:
+    """Fit one method variant and save a versioned artifact with a manifest (production path)."""
+    from xferbench import api
+
+    api.configure_logging(json_logs=json_logs)
+    try:
+        model = api.fit(metadata, splits, method, selection_path=selection, stage=stage, seed=seed)
+        api.save(model, out)
+    except api.ApiError as exc:
+        _fail(str(exc), exc.exit_code)
+    typer.echo(f"saved {out / 'artifact.json'} and {out / 'manifest.json'} ({model.artifact.variant_id})")
+
+
+@app.command("forecast")
+def forecast_cmd(
+    model: Path = typer.Option(..., help="Model directory written by `xferbench fit`."),
+    metadata: Path = typer.Option(..., help="metadata.json of the data holding the new launches."),
+    splits: Path = typer.Option(..., help="splits.json naming the new launches (stage below)."),
+    out: Path = typer.Option(..., help="Output parquet file for the forecasts."),
+    stage: str = typer.Option("test", help="Stage whose launches are forecast."),
+    json_logs: bool = typer.Option(True, "--json-logs/--plain-logs"),
+) -> None:
+    """Forecast new launches from a frozen artifact. No actuals needed; the evaluator is never called.
+    Exit codes: 0 ok, 1 error, 2 usage, 3 method rejected, 5 artifact mismatch, 6 input schema mismatch."""
+    from xferbench import api
+    from xferbench.util import atomic_write_parquet, write_json
+
+    api.configure_logging(json_logs=json_logs)
+    if out.exists():
+        _fail(f"{out} exists; forecasts are append-only (choose a new --out)", 2)
+    try:
+        m = api.load(model)
+        fc = api.predict(m, metadata, splits, stage)
+    except api.ApiError as exc:
+        _fail(str(exc), exc.exit_code)
+    atomic_write_parquet(out, fc)
+    write_json(
+        out.with_suffix(".manifest.json"),
+        {"model_manifest": m.manifest, "rows": len(fc), "metadata": str(metadata), "stage": stage,
+         "libraries": api.library_versions()},
+    )
+    typer.echo(f"wrote {len(fc)} forecast rows to {out}")
 
 
 @harness_app.command("triggers")
