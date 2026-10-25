@@ -10,40 +10,11 @@ from pathlib import Path
 
 import pytest
 
+from tests._bash import BASH_EXE, find_bash, is_wsl_stub
+
 ROOT = Path(__file__).resolve().parents[2]
 DIY = ROOT / "docs" / "DIY-GettingStarted.md"
 BASH = re.compile(r"```bash\n(.*?)```", re.S)
-
-
-def _is_wsl_stub(path: str) -> bool:
-    """C:\\Windows\\System32\\bash.exe (and WindowsApps\\bash.exe) is the WSL launcher, not a POSIX shell. On a runner
-    without a WSL distro it prints a UTF-16 "no installed distributions" message and exits 1 (CI run 40162698138)."""
-    p = path.replace("/", "\\").lower()
-    return "\\windows\\system32\\" in p or "\\windowsapps\\" in p
-
-
-def find_bash() -> str | None:
-    """A real bash: PATH first unless it is the WSL stub, then Git for Windows. Probed with `echo ok`."""
-    cands = [shutil.which("bash")]
-    if os.name == "nt":
-        for env in ("ProgramFiles", "ProgramW6432", "ProgramFiles(x86)"):
-            if os.environ.get(env):
-                cands += [str(Path(os.environ[env], "Git", "bin", "bash.exe"))]
-    for c in cands:
-        if not c or _is_wsl_stub(c) or not Path(c).is_file():
-            continue
-        try:
-            r = subprocess.run(
-                [c, "-c", "echo ok"], capture_output=True, text=True, encoding="utf-8", timeout=30, check=False
-            )
-        except OSError:
-            continue
-        if r.returncode == 0 and r.stdout.strip() == "ok":
-            return c
-    return None
-
-
-BASH_EXE = find_bash()
 
 
 def _section(text: str, start: str, end: str) -> str:
@@ -109,7 +80,7 @@ def test_u4_03_readme_outputs_inside_repo_are_gitignored() -> None:
     ],
 )
 def test_wsl_launcher_stub_is_not_used_as_bash(path: str, stub: bool) -> None:
-    assert _is_wsl_stub(path) is stub
+    assert is_wsl_stub(path) is stub
 
 
 def test_find_bash_skips_stub_on_path(monkeypatch: pytest.MonkeyPatch) -> None:
