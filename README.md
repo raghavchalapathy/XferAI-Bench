@@ -41,7 +41,7 @@ Needs Python 3.11 or newer and Git:
 git clone https://github.com/raghavchalapathy/XferAI-Bench.git && cd XferAI-Bench
 python3 -m venv .venv
 .venv/bin/python -m pip install --upgrade pip
-.venv/bin/python -m pip install -e ".[dev]"
+.venv/bin/python -m pip install -c constraints/core.txt -e ".[dev]"   # same pins as the DIY guide and CONTRIBUTING
 .venv/bin/xferbench doctor --profile core   # -> profile 'core' satisfied
 .venv/bin/xferbench demo --out ./xb-demo     # about 20 s, no network
 open ./xb-demo/report.html                  # Linux: xdg-open ./xb-demo/report.html
@@ -58,8 +58,8 @@ themselves are untested:
 
 ```powershell
 py -3.11 -m venv .venv
-.venv\Scripts\python -m pip install -e ".[dev]"
-.venv\Scripts\xferbench demo --preset tiny --out .\xb-demo
+.venv\Scripts\python -m pip install -c constraints/core.txt -e ".[dev]"
+.venv\Scripts\xferbench demo --out .\xb-demo
 start .\xb-demo\report.html
 ```
 
@@ -121,13 +121,14 @@ xferbench list-methods --all
 ### Methods in order, and your own data
 
 ```bash
-xferbench steps --benchmark synthetic-tiny@1.1.0 --out ./xb-steps          # shared benchmark data (hashed)
+xferbench steps --benchmark synthetic-tiny@1.1.0 --out ./work/xb-steps     # shared benchmark data (hashed)
 xferbench steps --local-data /path/to/my/metadata.json --out ~/xb-local-1  # your own data, labeled local
 ```
 
-`steps` runs B0, B1, B2, B3 (extra row), M1, M2, M3 (listed as needing a recipe) and M4.lightgbm (if the `boosting`
-extra is installed), each adding one idea, and reports WMAPE and Bias for PAIR0-E and PAIR0-N separately.
-Benchmark data and local data are kept apart; see [docs/DATA_CLASSES.md](docs/DATA_CLASSES.md).
+`steps` runs B0, B1, B2, B3 (extra row), M1, M2, M3 (listed as needing a recipe) and M4.lightgbm (if the `lightgbm`
+(or `boosting`) extra is installed), each adding one idea, and reports WMAPE and Bias for PAIR0-E and PAIR0-N separately.
+Generated data run with `--metadata` (as in the step-by-step block above) is labelled `local`; use
+`--benchmark synthetic-tiny@1.1.0` for the hashed benchmark class. Benchmark data and local data are kept apart; see [docs/DATA_CLASSES.md](docs/DATA_CLASSES.md).
 
 ## Installing from a built wheel
 
@@ -153,8 +154,10 @@ xferbench experiment run-all                   # status table, no rankings
 
 Production path (library or CLI): `xferbench fit` saves a versioned artifact with a manifest; `xferbench forecast`
 scores new launches from it (exit codes: 0 ok, 1 error, 2 usage, 3 blocked, 4 partial, 5 artifact mismatch,
-6 schema mismatch). `experiments/repro_visuelle_gtm` is research-only and licence-gated: it is skipped unless
-`--allow-research-only`, and its reproduced WAPE is **pending** (only the paper-reported 55.2 is shown, labelled as such).
+6 schema mismatch). `experiments/repro_visuelle_gtm` is research-only and licence-gated: it is excluded from
+`list`/`run-all` and refused by `run` (exit 2) unless `--allow-research-only` is passed, and its reproduced WAPE is
+**pending**. Only the paper-reported 55.2 is shown ([arXiv:2109.09824 v6](https://arxiv.org/abs/2109.09824), Table 1,
+GTM-Transformer [T+I+G], 6 weeks, 52-week Google Trends), labelled as such; its Reviewer record is pending.
 
 Experiments use synthetic data only. **Synthetic interface test, not rankings.**
 

@@ -50,3 +50,5 @@ _work/
 test-run/
 validation-run/
 **/run_manifest.json
+# xferbench steps output (README example writes to ./work/xb-steps)
+xb-steps*/
