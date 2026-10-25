@@ -80,58 +80,34 @@
       "asset_modification": "none; original downloaded bytes retained",
       "display_in_ticker": true,
       "ticker_scope": "historical_lineage",
-      "requested_display_on": "2026-10-14"
-    },
-    {
-      "id": "arxiv",
-      "name": "arXiv",
-      "image": "/assets/logos/arxiv-white.svg",
-      "source_url": "https://arxiv.org/abs/2207.11001",
-      "relationship": "Repository hosting actual reviewed paper versions; not a conference acceptance or industrial deployment.",
-      "relationship_locator": "POP arXiv source already used by catalog; repository logo identifies full-text hosting only.",
-      "paper_ids": [
-        "R10",
-        "R13",
-        "R14",
-        "R15",
-        "visuelle2022"
-      ],
-      "asset_url": "https://info.arxiv.org/assets/arxiv-logo-one-color-white.svg",
-      "asset_page_url": "https://info.arxiv.org/brand/index.html",
-      "sha256": "a2fb517a6fa919f35b48f224a417b63d3c7794f4687e7081b4bdd32136c99f2f",
-      "byte_size": 3081,
-      "content_type": "image/svg+xml",
-      "checked_on": "2026-10-14",
-      "asset_modification": "none; official original bytes retained",
-      "source_provenance": {
-        "organization": "arXiv",
-        "label": "arXiv",
-        "path": "arxiv-white.svg",
-        "asset_url": "https://info.arxiv.org/assets/arxiv-logo-one-color-white.svg",
-        "official_observed_on": "https://info.arxiv.org/brand/index.html",
-        "locator": "Brand page footer/header image referencing ../assets/arxiv-logo-one-color-white.svg",
-        "source_binding_ids": [
-          "R10",
-          "R13",
-          "R14",
-          "R15",
-          "visuelle2022"
-        ],
-        "binding_type": "Repository hosting actual reviewed paper versions; not a conference acceptance or industrial deployment.",
-        "sha256": "a2fb517a6fa919f35b48f224a417b63d3c7794f4687e7081b4bdd32136c99f2f",
-        "bytes": 3081,
-        "checked_on": "2026-10-14",
-        "modified": false,
-        "safe_svg_checks": "XML parsed; no scripts, events, embedded image/use, external hrefs or CSS URLs.",
-        "source_binding_url": "https://arxiv.org/abs/2207.11001",
-        "binding_locator": "POP arXiv source already used by catalog; repository logo identifies full-text hosting only.",
-        "usage_guidance_url": "https://info.arxiv.org/brand/brand-guidelines.html",
-        "usage_guidance_note": "Official guidance allows acknowledgement of use of arXiv API or corpus data with the original logo, preserving its visual layout. Do not imply endorsement or affiliation."
-      },
-      "display_in_ticker": true,
-      "ticker_scope": "current_sources",
-      "usage_guidance_url": "https://info.arxiv.org/brand/brand-guidelines.html",
-      "usage_note": "Official arXiv guidelines reserve logo rights and refer third parties to usage criteria. Original asset used solely to identify and link to hosted research; no partnership or permission claimed."
+      "requested_display_on": "2026-10-14",
+      "rights_record": {
+        "owner": "ACM",
+        "policy_url": "https://identitystandards.acm.org/identitystandards.pdf",
+        "policy_section_quoted": "no third-party permission terms found (ACM identity standards cover ACM's own use of its marks)",
+        "written_approval_required": "unknown",
+        "written_approval_evidence": null,
+        "recorded_on": "2026-10-25",
+        "permission_basis": "none found (no published policy / UNVERIFIED)",
+        "file_sha256": "9b1c8374b4bad685297ba4834e036de4829816a774ad41f0b6898c7f909d70d7",
+        "risk_acceptance": {
+          "text": "No published brand policy found (UNVERIFIED); no permission obtained. Displayed under owner risk acceptance t273u/t274u (2026-10-25); this is not permission.",
+          "source_turns": [
+            {
+              "turn": "t273u",
+              "time": "2026-10-25 08:15 PDT",
+              "quote": "i am telling these logos can be presnt since thse are the orgs from which scout brings in research and news"
+            },
+            {
+              "turn": "t274u",
+              "time": "2026-10-25 08:16 PDT",
+              "quote": "pls dont ask for premissionos its accetable"
+            }
+          ],
+          "owner_identity_verified_by_reviewer": false
+        },
+        "removal_on_request": "remove within 2 business days of a request from the brand owner"
+      }
     },
     {
       "id": "amazon-science",
@@ -163,7 +139,34 @@
         ],
         "checked_on": "2026-10-14"
       },
-      "asset_modification": "none; original official white asset bytes retained"
+      "asset_modification": "none; original official white asset bytes retained",
+      "rights_record": {
+        "owner": "Amazon.com, Inc.",
+        "policy_url": "https://www.amazon.com/gp/help/customer/display.html?nodeId=GNYNL3A8HPATWCH8",
+        "policy_section_quoted": "\"You may only use the specific trademarks identified by Amazon ... and only in materials that have been approved in advance, in writing, by Amazon.\"",
+        "written_approval_required": "yes",
+        "written_approval_evidence": null,
+        "recorded_on": "2026-10-25",
+        "permission_basis": "none (owner risk acceptance)",
+        "file_sha256": "8b12e2efb9c848cbdeccc8b817176ba4afab0864f93b3b8e501a6cb9534f70f8",
+        "risk_acceptance": {
+          "text": "Brand guidelines require prior written approval; none obtained. Displayed under owner risk acceptance t273u/t274u (2026-10-25); this is not permission.",
+          "source_turns": [
+            {
+              "turn": "t273u",
+              "time": "2026-10-25 08:15 PDT",
+              "quote": "i am telling these logos can be presnt since thse are the orgs from which scout brings in research and news"
+            },
+            {
+              "turn": "t274u",
+              "time": "2026-10-25 08:16 PDT",
+              "quote": "pls dont ask for premissionos its accetable"
+            }
+          ],
+          "owner_identity_verified_by_reviewer": false
+        },
+        "removal_on_request": "remove within 2 business days of a request from the brand owner"
+      }
     },
     {
       "id": "ecva",
@@ -192,7 +195,34 @@
         "height": 329
       },
       "asset_modification": "none; original downloaded bytes retained",
-      "caption": "ECCV"
+      "caption": "ECCV",
+      "rights_record": {
+        "owner": "European Computer Vision Association (ECVA)",
+        "policy_url": null,
+        "policy_section_quoted": "No published logo-use policy found (searched 2026-10-25).",
+        "written_approval_required": "unknown",
+        "written_approval_evidence": null,
+        "recorded_on": "2026-10-25",
+        "permission_basis": "none found (no published policy / UNVERIFIED)",
+        "file_sha256": "e1235f4c4f67fede5e038a41c0fd145d69cdea2c419108b7acdc158bfc458347",
+        "risk_acceptance": {
+          "text": "No published brand policy found (UNVERIFIED); no permission obtained. Displayed under owner risk acceptance t273u/t274u (2026-10-25); this is not permission.",
+          "source_turns": [
+            {
+              "turn": "t273u",
+              "time": "2026-10-25 08:15 PDT",
+              "quote": "i am telling these logos can be presnt since thse are the orgs from which scout brings in research and news"
+            },
+            {
+              "turn": "t274u",
+              "time": "2026-10-25 08:16 PDT",
+              "quote": "pls dont ask for premissionos its accetable"
+            }
+          ],
+          "owner_identity_verified_by_reviewer": false
+        },
+        "removal_on_request": "remove within 2 business days of a request from the brand owner"
+      }
     },
     {
       "id": "cvpr-workshops",
@@ -274,7 +304,34 @@
       "display_in_ticker": true,
       "ticker_scope": "current_sources",
       "caption": "Workshops",
-      "display_treatment": "CSS screen blending removes the original black canvas against the dark strip; official asset bytes and proportions stay unchanged."
+      "display_treatment": "CSS screen blending removes the original black canvas against the dark strip; official asset bytes and proportions stay unchanged.",
+      "rights_record": {
+        "owner": "Computer Vision Foundation (CVF) / CVPR",
+        "policy_url": "https://cvpr.thecvf.com/Conferences/2025/PosterPrintingInformation",
+        "policy_section_quoted": "Only logo mention found: attendees may use the CVPR logo on posters; no general third-party policy found.",
+        "written_approval_required": "unknown",
+        "written_approval_evidence": null,
+        "recorded_on": "2026-10-25",
+        "permission_basis": "none found (no published policy / UNVERIFIED)",
+        "file_sha256": "192e215a97b9ba7d6e894ed127b770fdbce2a9a3e16c718878bf1cbb7d95cdb6",
+        "risk_acceptance": {
+          "text": "No published brand policy found (UNVERIFIED); no permission obtained. Displayed under owner risk acceptance t273u/t274u (2026-10-25); this is not permission.",
+          "source_turns": [
+            {
+              "turn": "t273u",
+              "time": "2026-10-25 08:15 PDT",
+              "quote": "i am telling these logos can be presnt since thse are the orgs from which scout brings in research and news"
+            },
+            {
+              "turn": "t274u",
+              "time": "2026-10-25 08:16 PDT",
+              "quote": "pls dont ask for premissionos its accetable"
+            }
+          ],
+          "owner_identity_verified_by_reviewer": false
+        },
+        "removal_on_request": "remove within 2 business days of a request from the brand owner"
+      }
     },
     {
       "id": "university-of-verona",
@@ -300,19 +357,46 @@
         "width": 256,
         "height": 80
       },
-      "asset_modification": "none; original downloaded bytes retained"
+      "asset_modification": "none; original downloaded bytes retained",
+      "rights_record": {
+        "owner": "Università degli Studi di Verona",
+        "policy_url": "https://docs.univr.it/documenti/Documento/allegati/allegati869268.pdf",
+        "policy_section_quoted": "\"La cessione del logo dell'Università di Verona a soggetti esterni per attività di qualunque tipo è soggetta all'approvazione del Rettore.\"",
+        "written_approval_required": "yes",
+        "written_approval_evidence": null,
+        "recorded_on": "2026-10-25",
+        "permission_basis": "none (owner risk acceptance)",
+        "file_sha256": "5b02c28a62ee43e91668a986e77c4800d55b6d5be562975e6952a5f047964be8",
+        "risk_acceptance": {
+          "text": "Brand guidelines require prior written approval; none obtained. Displayed under owner risk acceptance t273u/t274u (2026-10-25); this is not permission.",
+          "source_turns": [
+            {
+              "turn": "t273u",
+              "time": "2026-10-25 08:15 PDT",
+              "quote": "i am telling these logos can be presnt since thse are the orgs from which scout brings in research and news"
+            },
+            {
+              "turn": "t274u",
+              "time": "2026-10-25 08:16 PDT",
+              "quote": "pls dont ask for premissionos its accetable"
+            }
+          ],
+          "owner_identity_verified_by_reviewer": false
+        },
+        "removal_on_request": "remove within 2 business days of a request from the brand owner"
+      }
     },
     {
       "id": "certh-iti",
       "name": "CERTH–ITI",
       "asset_url": "https://www.iti.gr/iti/wp-content/uploads/2022/04/iti_logo_en.png",
       "asset_page_url": "https://www.iti.gr/iti/en/home/",
-      "source_url": "https://arxiv.org/pdf/2212.07187v1",
-      "relationship": "Author institution for the MuQAR paper; only its VISUELLE unit-sales experiment is relevant to the active new-product forecasting catalog.",
+      "source_url": "https://arxiv.org/abs/2204.04014v2",
+      "relationship": "Author institution for the MuQAR paper (arXiv:2204.04014).",
       "paper_ids": [
         "R13"
       ],
-      "relationship_locator": "arXiv:2212.07187v1 p.1 title block lists CERTH-ITI, Thessaloniki Greece. Official ITI home page identifies ITI as a founding CERTH institute.",
+      "relationship_locator": "arXiv:2204.04014v2 p.1 title block lists CERTH-ITI, Greece (Papadopoulos, Koutlis, Papadopoulos, Kompatsiaris, \"Multimodal Quasi-AutoRegression\"). Official ITI home page identifies ITI as a founding CERTH institute.",
       "logo_variant": "Original transparent English ITI/CERTH website logo; colors unchanged.",
       "display_background": "dark",
       "image": "/assets/logos/certh-iti.png",
@@ -325,7 +409,34 @@
         "width": 450,
         "height": 60
       },
-      "asset_modification": "none; original downloaded bytes retained"
+      "asset_modification": "none; original downloaded bytes retained",
+      "rights_record": {
+        "owner": "CERTH-ITI",
+        "policy_url": null,
+        "policy_section_quoted": "No published logo-use policy found (searched 2026-10-25).",
+        "written_approval_required": "unknown",
+        "written_approval_evidence": null,
+        "recorded_on": "2026-10-25",
+        "permission_basis": "none found (no published policy / UNVERIFIED)",
+        "file_sha256": "48649f65fc18fef62a1663b9eff4d75d3a82bed36f6516b0fd743903b23ff456",
+        "risk_acceptance": {
+          "text": "No published brand policy found (UNVERIFIED); no permission obtained. Displayed under owner risk acceptance t273u/t274u (2026-10-25); this is not permission.",
+          "source_turns": [
+            {
+              "turn": "t273u",
+              "time": "2026-10-25 08:15 PDT",
+              "quote": "i am telling these logos can be presnt since thse are the orgs from which scout brings in research and news"
+            },
+            {
+              "turn": "t274u",
+              "time": "2026-10-25 08:16 PDT",
+              "quote": "pls dont ask for premissionos its accetable"
+            }
+          ],
+          "owner_identity_verified_by_reviewer": false
+        },
+        "removal_on_request": "remove within 2 business days of a request from the brand owner"
+      }
     },
     {
       "id": "qualyco",
@@ -350,7 +461,34 @@
         "width": 1536,
         "height": 1024
       },
-      "asset_modification": "none; original downloaded bytes retained"
+      "asset_modification": "none; original downloaded bytes retained",
+      "rights_record": {
+        "owner": "QUALYCO S.r.l.",
+        "policy_url": null,
+        "policy_section_quoted": "No published logo-use policy found (searched 2026-10-25).",
+        "written_approval_required": "unknown",
+        "written_approval_evidence": null,
+        "recorded_on": "2026-10-25",
+        "permission_basis": "none found (no published policy / UNVERIFIED)",
+        "file_sha256": "a13ce0c242d2697f3f035c1be2e96bb4714f8cd124aa317caec55ee2b40cfddb",
+        "risk_acceptance": {
+          "text": "No published brand policy found (UNVERIFIED); no permission obtained. Displayed under owner risk acceptance t273u/t274u (2026-10-25); this is not permission.",
+          "source_turns": [
+            {
+              "turn": "t273u",
+              "time": "2026-10-25 08:15 PDT",
+              "quote": "i am telling these logos can be presnt since thse are the orgs from which scout brings in research and news"
+            },
+            {
+              "turn": "t274u",
+              "time": "2026-10-25 08:16 PDT",
+              "quote": "pls dont ask for premissionos its accetable"
+            }
+          ],
+          "owner_identity_verified_by_reviewer": false
+        },
+        "removal_on_request": "remove within 2 business days of a request from the brand owner"
+      }
     },
     {
       "id": "aws",
@@ -416,7 +554,8 @@
         "width": "100%",
         "height": "100%"
       },
-      "asset_modification": "none; original downloaded bytes retained"
+      "asset_modification": "none; original downloaded bytes retained",
+      "display_in_ticker": false
     }
   ],
   "rejected_assets": [
