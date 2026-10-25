@@ -20,11 +20,17 @@
       "sha256": "37d41f30c165267a467c3f2a2fd4a15106de1075849539375e1330178fa9ef14"
     },
     "reviewed_at": "2026-10-19",
-    "eligible_rows": 51,
+    "eligible_rows": 52,
     "by_group": {
-      "G1": 44,
+      "G1": 45,
       "G4": 1,
       "G2": 6
+    },
+    "lead_amendment_20261024": {
+      "scientist_verification": "factory/inbox/scientist/leaderboard-dif4ff-muqar-20261024/verification.v1.1.md",
+      "sha256": "f8936c3ec3882b3379306e4dc50328433090b51fbf2aec8382fbe7a752703a25",
+      "reviewer_review_sha256": "e51e8ad04ac3f9c1f2d9be0c3a078bcfa427ce2ce4abcd7d878cc38adce2a62e",
+      "changes": "added Dif4FF 54.6; cleared row 48 group tag; added notes on rows 20, 48 and Dif4FF"
     }
   },
   "display_conditions": [
@@ -59,14 +65,15 @@
     },
     {
       "row_index": 48,
-      "method": "MuQAR w/ ConvLSTM [T+I+A] (group UNVERIFIED in layout)",
+      "method": "MuQAR w/ ConvLSTM [T+I+A]",
       "value_as_printed": "53.61",
       "value": 53.61,
       "metric": "WAPE",
       "dataset": "VISUELLE",
       "source": "arXiv:2204.04014v2 (Papadopoulos et al., MuQAR, v2 5 May 2022) https://arxiv.org/pdf/2204.04014v2",
       "source_url": "https://arxiv.org/pdf/2204.04014v2",
-      "locator": "Table 3, col 'IN:52, OUT:6' WAPE(↓)"
+      "locator": "Table 3, col 'IN:52, OUT:6' WAPE(↓)",
+      "note": "MuQAR w/ ConvLSTM: WAPE 53.61 is the input-matched value, not the paper's best overall. It uses text+image+Google-Trends attribute inputs, the same as the GTM-Transformer baseline (55.2) (arXiv:2204.04014v2 Table 3, p.11; the same value appears in arXiv:2204.04014v1 Table 3, p.8 and arXiv:2212.07187 Table 7, p.9). The paper's best overall is 52.63 (MuQAR w/ ConvLSTM+X), which also uses exogenous Google-Trends series and image captions (2204.04014v2 Table 3, p.11). Paper-reported, VISUELLE, GTM protocol (52-week trends in, 6 weeks out)."
     },
     {
       "row_index": 47,
@@ -99,7 +106,8 @@
       "dataset": "VISUELLE",
       "source": "arXiv:2109.09824v6 (Skenderi et al., 'Well Googled is Half Done', v6 14 Jan 2024) https://arxiv.org/pdf/2109.09824v6",
       "source_url": "https://arxiv.org/pdf/2109.09824v6",
-      "locator": "Table 1, col '6 Weeks, G.Trends: 52 weeks'"
+      "locator": "Table 1, col '6 Weeks, G.Trends: 52 weeks'",
+      "note": "GTM-Transformer**: WAPE 54.2 with Google Trends indexed by tags extracted automatically from Fashion IQ (arXiv:2109.09824v6 Table 1, p.11); plain GTM-Transformer = 55.2 (same table). Paper-reported."
     },
     {
       "row_index": 46,
@@ -144,6 +152,18 @@
       "source": "arXiv:2204.04014v2 (Papadopoulos et al., MuQAR, v2 5 May 2022) https://arxiv.org/pdf/2204.04014v2",
       "source_url": "https://arxiv.org/pdf/2204.04014v2",
       "locator": "Table 3, col 'IN:52, OUT:6' WAPE(↓)"
+    },
+    {
+      "row_index": 106,
+      "method": "Dif4FF (ours)",
+      "value_as_printed": "54.6",
+      "value": 54.6,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2412.05566v1 (Dif4FF) https://arxiv.org/pdf/2412.05566",
+      "source_url": "https://arxiv.org/pdf/2412.05566",
+      "locator": "Table 1 (p.11), col WAPE",
+      "note": "Dif4FF: WAPE 54.6, arXiv:2412.05566 Table 1 (p.11), a single reported run (the paper fixes seed 32, p.11); 10-run mean 54.8 (variance 0.08, p.11). The p.12 text states 54.7, which is inconsistent with Table 1. Other rows are single reported values, so the mean is not comparable to them."
     },
     {
       "row_index": 102,
@@ -484,14 +504,15 @@
         },
         {
           "row_index": 48,
-          "method": "MuQAR w/ ConvLSTM [T+I+A] (group UNVERIFIED in layout)",
+          "method": "MuQAR w/ ConvLSTM [T+I+A]",
           "value_as_printed": "53.61",
           "value": 53.61,
           "metric": "WAPE",
           "dataset": "VISUELLE",
           "source": "arXiv:2204.04014v2 (Papadopoulos et al., MuQAR, v2 5 May 2022) https://arxiv.org/pdf/2204.04014v2",
           "source_url": "https://arxiv.org/pdf/2204.04014v2",
-          "locator": "Table 3, col 'IN:52, OUT:6' WAPE(↓)"
+          "locator": "Table 3, col 'IN:52, OUT:6' WAPE(↓)",
+          "note": "MuQAR w/ ConvLSTM: WAPE 53.61 is the input-matched value, not the paper's best overall. It uses text+image+Google-Trends attribute inputs, the same as the GTM-Transformer baseline (55.2) (arXiv:2204.04014v2 Table 3, p.11; the same value appears in arXiv:2204.04014v1 Table 3, p.8 and arXiv:2212.07187 Table 7, p.9). The paper's best overall is 52.63 (MuQAR w/ ConvLSTM+X), which also uses exogenous Google-Trends series and image captions (2204.04014v2 Table 3, p.11). Paper-reported, VISUELLE, GTM protocol (52-week trends in, 6 weeks out)."
         },
         {
           "row_index": 47,
@@ -516,7 +537,7 @@
           "locator": "Table 3, col 'IN:52, OUT:6' WAPE(↓)"
         }
       ],
-      "shown": "best 5 of 38 methods (all in Chart 1)"
+      "shown": "best 5 of 39 methods (all in Chart 1)"
     },
     {
       "group": "G2",
@@ -774,7 +795,8 @@
       "dataset": "VISUELLE",
       "source": "arXiv:2109.09824v6 (Skenderi et al., 'Well Googled is Half Done', v6 14 Jan 2024) https://arxiv.org/pdf/2109.09824v6",
       "source_url": "https://arxiv.org/pdf/2109.09824v6",
-      "locator": "Table 1, col '6 Weeks, G.Trends: 52 weeks'"
+      "locator": "Table 1, col '6 Weeks, G.Trends: 52 weeks'",
+      "note": "GTM-Transformer**: WAPE 54.2 with Google Trends indexed by tags extracted automatically from Fashion IQ (arXiv:2109.09824v6 Table 1, p.11); plain GTM-Transformer = 55.2 (same table). Paper-reported."
     },
     {
       "row_index": 21,
@@ -1020,14 +1042,15 @@
     },
     {
       "row_index": 48,
-      "method": "MuQAR w/ ConvLSTM [T+I+A] (group UNVERIFIED in layout)",
+      "method": "MuQAR w/ ConvLSTM [T+I+A]",
       "value_as_printed": "53.61",
       "value": 53.61,
       "metric": "WAPE",
       "dataset": "VISUELLE",
       "source": "arXiv:2204.04014v2 (Papadopoulos et al., MuQAR, v2 5 May 2022) https://arxiv.org/pdf/2204.04014v2",
       "source_url": "https://arxiv.org/pdf/2204.04014v2",
-      "locator": "Table 3, col 'IN:52, OUT:6' WAPE(↓)"
+      "locator": "Table 3, col 'IN:52, OUT:6' WAPE(↓)",
+      "note": "MuQAR w/ ConvLSTM: WAPE 53.61 is the input-matched value, not the paper's best overall. It uses text+image+Google-Trends attribute inputs, the same as the GTM-Transformer baseline (55.2) (arXiv:2204.04014v2 Table 3, p.11; the same value appears in arXiv:2204.04014v1 Table 3, p.8 and arXiv:2212.07187 Table 7, p.9). The paper's best overall is 52.63 (MuQAR w/ ConvLSTM+X), which also uses exogenous Google-Trends series and image captions (2204.04014v2 Table 3, p.11). Paper-reported, VISUELLE, GTM protocol (52-week trends in, 6 weeks out)."
     },
     {
       "row_index": 49,
@@ -1171,6 +1194,18 @@
       "source": "arXiv:2412.06840v1 (Avogaro et al., MDiFF; v1 7 Dec 2024) https://arxiv.org/pdf/2412.06840v1",
       "source_url": "https://arxiv.org/pdf/2412.06840v1",
       "locator": "Table 2, col WAPE ↓"
+    },
+    {
+      "row_index": 106,
+      "method": "Dif4FF (ours)",
+      "value_as_printed": "54.6",
+      "value": 54.6,
+      "metric": "WAPE",
+      "dataset": "VISUELLE",
+      "source": "arXiv:2412.05566v1 (Dif4FF) https://arxiv.org/pdf/2412.05566",
+      "source_url": "https://arxiv.org/pdf/2412.05566",
+      "locator": "Table 1 (p.11), col WAPE",
+      "note": "Dif4FF: WAPE 54.6, arXiv:2412.05566 Table 1 (p.11), a single reported run (the paper fixes seed 32, p.11); 10-run mean 54.8 (variance 0.08, p.11). The p.12 text states 54.7, which is inconsistent with Table 1. Other rows are single reported values, so the mean is not comparable to them."
     }
   ]
 }
