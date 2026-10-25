@@ -47,6 +47,12 @@ python3 -m venv .venv
 open ./xb-demo/report.html                  # Linux: xdg-open ./xb-demo/report.html
 ```
 
+With [uv](https://docs.astral.sh/uv/) instead (uses the committed `uv.lock`; pip stays supported):
+
+```bash
+uv sync --extra dev && uv run xferbench doctor --profile core
+```
+
 Windows (PowerShell). CI runs the test suite and the wheel demo on `windows-latest`; these interactive commands
 themselves are untested:
 
@@ -139,8 +145,16 @@ python3 -m venv /tmp/xb-env
 `configs/` (YAML per data flavour), `data/` (contents gitignored), [data_preparation/](data_preparation/README.md), [models/](models/README.md), [harness/](harness/README.md), `scripts/` (runbooks: data_prep, data_cleaning, model_train, model_eval, inference), [experiments/](experiments/README.md), `eval/`, `results/`. The code lives in `src/xferbench`.
 
 ```bash
-xferbench experiment --config experiments/exp01_m5_lightgbm_analogs/config.yaml --out eval/exp01
+xferbench experiment list                      # data + models each experiment uses
+xferbench experiment new my_exp                # scaffold experiments/my_exp/
+xferbench experiment run exp01_m5_lightgbm_analogs
+xferbench experiment run-all                   # status table, no rankings
 ```
+
+Production path (library or CLI): `xferbench fit` saves a versioned artifact with a manifest; `xferbench forecast`
+scores new launches from it (exit codes: 0 ok, 1 error, 2 usage, 3 blocked, 4 partial, 5 artifact mismatch,
+6 schema mismatch). `experiments/repro_visuelle_gtm` is research-only and licence-gated: it is skipped unless
+`--allow-research-only`, and its reproduced WAPE is **pending** (only the paper-reported 55.2 is shown, labelled as such).
 
 Experiments use synthetic data only. **Synthetic interface test, not rankings.**
 

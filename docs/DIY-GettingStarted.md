@@ -1,4 +1,24 @@
-# DIY Getting Started: run XferAI-Bench on your own data with a coding assistant
+# DIY Getting Started with a coding assistant
+
+Two parts: **Part 1** reproduces the VISUELLE / GTM-Transformer website benchmark (licence-gated, research only).
+**Part 2** runs XferAI-Bench on your own data.
+
+## Part 1. Reproduce the VISUELLE website benchmark (licence gate)
+
+Status: **results pending**. The VISUELLE licence terms were not found, so no data is shipped or downloaded, and
+GTM-Transformer has not been run by us. The paper-reported WAPE (55.2, Skenderi et al. 2021, arXiv:2109.09824,
+Table 1) is shown only as "Paper-reported", never as ours.
+
+1. **STOP**: ask the user to obtain VISUELLE themselves from the official form linked by the GTM README and to read
+   its terms. Never download it for them.
+2. Ingest the user's own archive (needs a terminal and typing `I ACCEPT THE VISUELLE TERMS`):
+   `experiments/repro_visuelle_gtm/scripts/download_visuelle.sh --archive <path>` (data stays in git-ignored `data/visuelle/input`).
+3. **STOP**: GTM-Transformer (MIT, HumaticsLAB) is not vendored. The user installs and reviews it themselves, then
+   sets `gtm.install_path`, `gtm.python` and `gtm.ckpt_path` in `experiments/repro_visuelle_gtm/config.yaml`.
+4. Run: `xferbench experiment run repro_visuelle_gtm --allow-research-only`. If anything is missing it exits 3 and
+   `report.md` lists what is blocked.
+
+## Part 2. Run XferAI-Bench on your own data
 
 This file is written for an LLM coding assistant (Claude Code, Cursor, Copilot, ChatGPT and similar) acting
 for a user. Follow the steps in order. Every step can be re-run safely. **Stop and ask the user** wherever this
@@ -107,6 +127,7 @@ Expected: `ok 3.11.x` (or newer), exit 0. If the assert fails, delete `.venv` an
 .venv/bin/python -m pip install -c constraints/core.txt -e .
 .venv/bin/xferbench doctor --profile core
 ```
+Or with uv (uses `uv.lock`): `uv sync && uv run xferbench doctor --profile core`.
 Expected: last line `profile 'core' satisfied`, exit 0. Optional: `-e ".[lightgbm]"` adds M4.lightgbm.
 No network? Use the wheelhouse (Offline / enterprise) instead of this step.
 

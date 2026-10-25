@@ -9,6 +9,7 @@
 - [Cold-start harness](COLDSTARTHARNESS.md)
 - [Experiments (synthetic interface tests)](experiments/README.md)
 - [AI engineer knowledge base](AIENGINEER.md)
+- [VISUELLE/GTM reproduction (research only, results pending)](experiments/repro_visuelle_gtm/README.md)
 
 ## Docs
 
