@@ -1,42 +1,14 @@
 # DIY Getting Started with a coding assistant
 
-Two parts: **Part 1** reproduces the VISUELLE / GTM-Transformer website benchmark (licence-gated, research only).
-**Part 2** runs XferAI-Bench on your own data.
-
-## Part 1. Reproduce the VISUELLE website benchmark (licence gate)
-
-Status: **results pending**. The VISUELLE licence terms were not found, so no data is shipped or downloaded, and
-GTM-Transformer has not been run by us. The paper-reported WAPE (55.2, Skenderi et al. 2021, arXiv:2109.09824,
-Table 1) is shown only as "Paper-reported", never as ours.
-
-1. **STOP**: ask the user to obtain VISUELLE themselves from the official form linked by the GTM README and to read
-   its terms. Never download it for them.
-2. Ingest the user's own archive (needs a terminal and typing `I ACCEPT THE VISUELLE TERMS`):
-   `experiments/repro_visuelle_gtm/scripts/download_visuelle.sh --archive <path>` (data stays in git-ignored `data/visuelle/input`).
-3. **STOP**: GTM-Transformer (MIT, HumaticsLAB) is not vendored. The user installs and reviews it themselves, then
-   sets `gtm.install_path`, `gtm.python` and `gtm.ckpt_path` in `experiments/repro_visuelle_gtm/config.yaml`.
-4. Run: `xferbench experiment run repro_visuelle_gtm --allow-research-only`. If anything is missing it exits 3 and
-   `report.md` lists what is blocked.
-
-## Part 2. Run XferAI-Bench on your own data
-
 This file is written for an LLM coding assistant (Claude Code, Cursor, Copilot, ChatGPT and similar) acting
-for a user. Follow the steps in order. Every step can be re-run safely. **Stop and ask the user** wherever this
-file says **STOP**.
+for a user. Follow the steps in order. **Stop and ask the user** wherever this file says **STOP**. The Rules,
+Prerequisites and Setup below apply to both parts.
 
-## Goal
+Two parts: **Part 1** reproduces the VISUELLE / GTM-Transformer website benchmark (licence-gated, research only).
+**Part 2** runs XferAI-Bench on your own data (same flow as [GETTING_STARTED.md](GETTING_STARTED.md), which uses
+`local/my-data` where this guide uses `local/my-bench`).
 
-Benchmark cold-start forecasts on the user's own retail data, locally:
-an existing item launches at a Forecast Pixel Group (FPG) where it has never sold, and each method forecasts 52
-weekly unit sales. Results come out as a local HTML report with PAIR0-E (existing FPG) and PAIR0-N
-(new FPG) always scored separately.
-
-Honest limits:
-- No claim is made that any method works from day zero; results are measurements on the user's data only.
-- Built-in benchmark data is synthetic and only tests the software. Scored public rankings are pending.
-- Local-data results are private to the user. They are not benchmark or leaderboard results.
-
-## Rules (always)
+## Rules (always; apply to Part 1 and Part 2)
 
 1. **No data leaves the machine.** Never upload, paste or send the user's data, metadata values, forecasts or
    reports to any website, API, issue tracker or chat outside this machine. Show the user only aggregates.
@@ -59,7 +31,69 @@ Honest limits:
 | Disk / RAM | none special for small data | no GPU needed |
 | OS | macOS or Linux shell (commands below). Windows: use WSL, or translate `.venv/bin/` to `.venv\Scripts\` (untested) | |
 
-## Ask the user for (STOP before Step 4)
+## Setup (both parts): Steps 1-3
+
+All commands run from the repository root. `X` below means `.venv/bin/xferbench`.
+
+### Step 1. Clone (skip if already cloned)
+
+```bash
+git clone https://github.com/raghavchalapathy/XferAI-Bench.git && cd XferAI-Bench
+```
+Expected: exit 0. If the folder exists, `cd XferAI-Bench && git status` instead. Behind a proxy, see Offline / enterprise.
+
+### Step 2. Create the virtual environment
+
+```bash
+test -x .venv/bin/python || python3 -m venv .venv
+.venv/bin/python -c "import sys; assert sys.version_info >= (3, 11), sys.version; print('ok', sys.version.split()[0])"
+```
+Expected: `ok 3.11.x` (or newer), exit 0. If the assert fails, delete `.venv` and recreate it with `python3.11 -m venv .venv` (or newer).
+
+### Step 3. Install
+
+```bash
+.venv/bin/python -m pip install --upgrade pip
+.venv/bin/python -m pip install -c constraints/core.txt -e .
+.venv/bin/xferbench doctor --profile core
+```
+Or with uv (uses `uv.lock`): `uv sync && uv run xferbench doctor --profile core`.
+Expected: last line `profile 'core' satisfied`, exit 0. Optional: `-e ".[lightgbm]"` adds M4.lightgbm.
+No network? Use the wheelhouse (Offline / enterprise) instead of this step.
+
+## Part 1. Reproduce the VISUELLE website benchmark (licence gate)
+
+Needs Setup Steps 1-3 first.
+
+Status: **results pending**. The VISUELLE licence terms were not found, so no data is shipped or downloaded, and
+GTM-Transformer has not been run by us. The paper-reported WAPE 55.2 ([Skenderi et al. 2021, arXiv:2109.09824 v6](https://arxiv.org/abs/2109.09824),
+Table 1, GTM-Transformer [T+I+G], 6 weeks, 52-week Google Trends, WAPE column) is shown only as "Paper-reported",
+never as ours. Its Scout/Scientist/Reviewer record is **pending Reviewer check**; no record exists yet.
+
+1. **STOP**: ask the user to obtain VISUELLE themselves from the official form linked by the GTM README and to read
+   its terms. Never download it for them.
+2. Ingest the user's own archive (needs a terminal and typing `I ACCEPT THE VISUELLE TERMS`):
+   `experiments/repro_visuelle_gtm/scripts/download_visuelle.sh --archive <path>` (data stays in git-ignored `data/visuelle/input`).
+3. **STOP**: GTM-Transformer (MIT, HumaticsLAB) is not vendored. The user installs and reviews it themselves, then
+   sets `gtm.install_path`, `gtm.python` and `gtm.ckpt_path` in `experiments/repro_visuelle_gtm/config.yaml`.
+4. Run: `xferbench experiment run repro_visuelle_gtm --allow-research-only`. If anything is missing it exits 3 and
+   `report.md` lists what is blocked.
+
+## Part 2. Run XferAI-Bench on your own data
+
+### Goal
+
+Benchmark cold-start forecasts on the user's own retail data, locally:
+an existing item launches at a Forecast Pixel Group (FPG) where it has never sold, and each method forecasts 52
+weekly unit sales. Results come out as a local HTML report with PAIR0-E (existing FPG) and PAIR0-N
+(new FPG) always scored separately.
+
+Honest limits:
+- No claim is made that any method works from day zero; results are measurements on the user's data only.
+- Built-in benchmark data is synthetic and only tests the software. Scored public rankings are pending.
+- Local-data results are private to the user. They are not benchmark or leaderboard results.
+
+### Ask the user for (STOP before Step 4)
 
 Ask for all of these in one message, then wait:
 
@@ -101,55 +135,27 @@ Rights:                 data owner; permitted use (e.g. "internal benchmarking o
 If the user does not know the cohort windows, propose ones from the `launches.origin` date range (oldest third
 train, middle validation, newest test) and STOP for confirmation.
 
-## Steps
+### Steps 4-11
 
-All commands run from the repository root. `X` below means `.venv/bin/xferbench`.
-
-### Step 1. Clone (skip if already cloned)
-
-```bash
-git clone https://github.com/raghavchalapathy/XferAI-Bench.git && cd XferAI-Bench
-```
-Expected: exit 0. If the folder exists, `cd XferAI-Bench && git status` instead. Behind a proxy, see Offline / enterprise.
-
-### Step 2. Create the virtual environment
-
-```bash
-test -x .venv/bin/python || python3 -m venv .venv
-.venv/bin/python -c "import sys; assert sys.version_info >= (3, 11), sys.version; print('ok', sys.version.split()[0])"
-```
-Expected: `ok 3.11.x` (or newer), exit 0. If the assert fails, delete `.venv` and recreate it with `python3.11 -m venv .venv` (or newer).
-
-### Step 3. Install
-
-```bash
-.venv/bin/python -m pip install --upgrade pip
-.venv/bin/python -m pip install -c constraints/core.txt -e .
-.venv/bin/xferbench doctor --profile core
-```
-Or with uv (uses `uv.lock`): `uv sync && uv run xferbench doctor --profile core`.
-Expected: last line `profile 'core' satisfied`, exit 0. Optional: `-e ".[lightgbm]"` adds M4.lightgbm.
-No network? Use the wheelhouse (Offline / enterprise) instead of this step.
-
-### Step 4. Smoke test on synthetic data (no user data involved)
+#### Step 4. Smoke test on synthetic data (no user data involved)
 
 ```bash
 test -f local/smoke/report.html || .venv/bin/xferbench demo --out local/smoke
 ```
 Expected: ends with `done. Open local/smoke/report.html`, exit 0 (about 20 s). This only proves the install works.
 
-### Step 5. Create the project folder and copy the user's data
+#### Step 5. Create the project folder and copy the user's data
 
 ```bash
 test -f local/my-bench/metadata.json || .venv/bin/xferbench init --path local/my-bench
 mkdir -p local/my-bench/data
-cp -n <user data folder>/* local/my-bench/data/
+cp -Rn <user data folder>/. local/my-bench/data/
 ```
-Expected: `initialized local/my-bench` the first time; `local/my-bench/metadata.json` is a template.
+Expected: exit 0; `initialized local/my-bench` the first time; subfolders are copied too, so point `tables.<name>.path` at the file inside its subfolder (e.g. `data/data/sales.csv`); `local/my-bench/metadata.json` is a template.
 Copying keeps paths relative and inside the gitignored `local/`. If the data is too large to copy, leave it
 in place and use absolute paths in Step 6.
 
-### Step 6. Fill in `local/my-bench/metadata.json`
+#### Step 6. Fill in `local/my-bench/metadata.json`
 
 Edit the JSON (unknown keys are rejected; nothing in it is executed). Change only these parts, from the user's answers:
 
@@ -162,7 +168,7 @@ Edit the JSON (unknown keys are rejected; nothing in it is executed). Change onl
 | `tables.<name>.columns` | `{"<canonical name>": "<their column>"}` only for renamed columns; `{}` if names already match |
 | optional tables | delete the `tables.origin_features` / `donors` / `future_covariates` entry if the user has none |
 | `features.households.column` | canonical `households` (rename via `tables.locations.columns`) |
-| `features.propensity` | `null` unless the user confirmed a season-neutral units-per-household P; then set `feature_name` |
+| `features.propensity` | the `init` template default is **not** null (`feature_name: "propensity_rate"`): set it to `null` unless the user confirmed a season-neutral units-per-household P; then set `feature_name` |
 | `features.hierarchy` | keep the default (`rate_levels` item, subcategory, product_type; `season_levels` category, product_type; `min_rate_support_fpgs` 3; `min_season_support_items` 2). Without a `subcategory` column the rate falls back from item to product type |
 | `features.demographic_share_columns` | list of share columns, or `[]` |
 | `cohorts.stages.{train,validation,test}` | `origin_start` / `origin_end` (YYYY-MM-DD) confirmed by the user |
@@ -176,7 +182,7 @@ Example for a user whose items file is `items.csv` with columns `sku, dept, ...`
 
 Alternative for a person at a terminal (interactive, not for agents): `xferbench metadata wizard --data local/my-bench/data --out local/my-bench/metadata.json`.
 
-### Step 7. Validate (gate)
+#### Step 7. Validate (gate)
 
 ```bash
 grep -c "REPLACE" local/my-bench/metadata.json
@@ -185,11 +191,12 @@ grep -c "REPLACE" local/my-bench/metadata.json
 Expected: `grep` prints `0` (it exits 1 when there is no match, which is fine). Any other number means template
 placeholders such as `REPLACE: data owner` remain; validate does not catch them, so STOP and ask the user for the
 rights values. Then validate prints `dataset <id> <version> hash <hash>: 0 errors, 0 warnings`, exit 0.
-Nonzero exit: read the printed errors (also in `data_quality.json`). Fix `metadata.json` mapping mistakes yourself
+Warnings: show them to the user. `propensity_absent` means set `features.propensity` to `null` unless the user
+confirms a P column (M1/M2 are then skipped). Nonzero exit: read the printed errors (also in `data_quality.json`). Fix `metadata.json` mapping mistakes yourself
 and re-run. If an error is about the data itself (missing column, wrong values, gaps), **STOP**: show the user the
 error text and ask how to fix the data. Do not continue to Step 8 until validate exits 0.
 
-### Step 8. Split
+#### Step 8. Split
 
 ```bash
 .venv/bin/xferbench split --metadata local/my-bench/metadata.json --out local/my-bench/splits.json
@@ -198,41 +205,49 @@ Expected: per-stage counts and `split hash ...; N checks, 0 failed`, exit 0. Exi
 failed: STOP and show the failed checks to the user (usually the cohort windows need changing).
 If the data or metadata change later, re-run Steps 7-8.
 
-### Step 9. Validation run
+#### Step 9. Validation run
+
+One run counter names every output of Steps 9-11. Start with `RUN=1`. **After any change in Steps 5-8, increment
+`RUN` and redo Steps 9-11.** Outputs are append-only: each step refuses (exit 1, `already exists: use a new RUN`)
+instead of silently reusing an old folder.
 
 ```bash
-test -d runs/local/val-1 || .venv/bin/xferbench run --local-data local/my-bench/metadata.json \
-  --splits local/my-bench/splits.json --stage validation --out runs/local/val-1
+RUN=1
+test ! -e runs/local/val-$RUN || { echo "already exists: runs/local/val-$RUN: use a new RUN"; false; } && \
+.venv/bin/xferbench run --local-data local/my-bench/metadata.json \
+  --splits local/my-bench/splits.json --stage validation --out runs/local/val-$RUN
 ```
 Expected: a leaderboard, then `run validation-... status complete; data class local; outputs in runs/local/val-1`, exit 0.
-Run folders are append-only: to re-run, use a new `--out` (e.g. `val-2`).
 
-### Step 10. Select on validation, then score the frozen choice on test
+#### Step 10. Select on validation, then score the frozen choice on test
 
 ```bash
-.venv/bin/xferbench select --validation-run runs/local/val-1 --out runs/local/selection.json
-test -d runs/local/test-1 || .venv/bin/xferbench run --local-data local/my-bench/metadata.json \
-  --splits local/my-bench/splits.json --stage test --selection runs/local/selection.json --out runs/local/test-1
+test ! -e runs/local/selection-$RUN.json || { echo "already exists: runs/local/selection-$RUN.json: use a new RUN"; false; } && \
+.venv/bin/xferbench select --validation-run runs/local/val-$RUN --out runs/local/selection-$RUN.json && \
+{ test ! -e runs/local/test-$RUN || { echo "already exists: runs/local/test-$RUN: use a new RUN"; false; }; } && \
+.venv/bin/xferbench run --local-data local/my-bench/metadata.json --splits local/my-bench/splits.json \
+  --stage test --selection runs/local/selection-$RUN.json --out runs/local/test-$RUN
 ```
-Expected: `recommended: ... wrote runs/local/selection.json`, then `run test-... status complete; data class local`, both exit 0.
+Expected: `recommended: ... wrote runs/local/selection-1.json`, then `run test-... status complete; data class local`, exit 0.
+If it prints `already exists`, STOP: never reuse an older test run; increment `RUN` and redo Steps 9-11.
 
-### Step 11. Report
+#### Step 11. Report
 
 ```bash
-.venv/bin/xferbench report --run runs/local/test-1 --out runs/local/test-1-report.html
+.venv/bin/xferbench report --run runs/local/test-$RUN --out runs/local/test-$RUN-report.html
 git status --porcelain
 ```
 Expected: `wrote runs/local/test-1-report.html`, exit 0; `git status --porcelain` prints nothing.
-Tell the user to open `runs/local/test-1-report.html` locally. It carries a LOCAL DATA banner and hashes item/FPG IDs.
+Tell the user to open `runs/local/test-$RUN-report.html` locally. It carries a LOCAL DATA banner and hashes item/FPG IDs.
 
-### Reading results (tell the user)
+#### Reading results (tell the user)
 
 - PAIR0-E and PAIR0-N are scored separately; the overall order uses 0.5 x WMAPE(E) + 0.5 x WMAPE(N).
 - WMAPE: lower is better. Bias: above 0 over-forecasts. Zero actuals show `N/A`, never a made-up number.
 - Methods that need a missing extra, a recipe (M3) or that failed are listed with the reason.
 - Exit codes: `0` ok, `1` data/split/config error, `2` bad usage, `3` requested method rejected, `4` partial run (time budget), `130` cancelled.
 
-## Offline / enterprise
+### Offline / enterprise
 
 **Proxy and internal mirror** (Step 3 with network through a proxy):
 
@@ -260,7 +275,7 @@ wheel. Copy the repo folder including `local/wheelhouse/` to the target, then on
 Expected: `profile 'core' satisfied`. This is a normal (non-editable) install; all later steps are the same.
 No package index, network or telemetry is used after this.
 
-## Troubleshooting
+### Troubleshooting
 
 | Symptom | Fix |
 |---|---|
