@@ -5,6 +5,7 @@ title: "Exp02 - Chronos zero-shot adapter (synthetic interface test, not ranking
 papers:
   - citation: "Ansari et al. (2024). Chronos: Learning the Language of Time Series. Transactions on Machine Learning Research."
     url: "https://arxiv.org/abs/2403.07815"
+tier: synthetic  # synthetic | sample | complete; overlays in configs/<tier>.yaml
 data:
   flavour: synthetic
   preset: tiny

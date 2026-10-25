@@ -6,6 +6,7 @@ papers:
     url: "https://doi.org/10.1016/j.ijforecast.2021.11.013"
   - citation: "Ke et al. (2017). LightGBM: A Highly Efficient Gradient Boosting Decision Tree. NeurIPS 30."
     url: "https://papers.nips.cc/paper/6907-lightgbm-a-highly-efficient-gradient-boosting-decision-tree"
+tier: synthetic  # synthetic | sample | complete; overlays in configs/<tier>.yaml
 data:
   flavour: synthetic
   preset: tiny

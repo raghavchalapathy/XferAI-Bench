@@ -10,6 +10,7 @@ import pandas as pd
 from jinja2 import Environment, PackageLoader, select_autoescape
 
 from xferbench import __version__
+from xferbench.data.tiers import TIER_TEXT
 from xferbench.reports.charts import grouped_hbar, line_chart, scatter
 from xferbench.util import atomic_write_text, read_json
 
@@ -140,6 +141,7 @@ def build_context(run_dir: Path) -> dict[str, Any]:
     if synthetic:
         lb = lb.drop(columns=[c for c in SYNTHETIC_DROP_COLUMNS if c in lb.columns])
     return {
+        "tier_text": TIER_TEXT.get(manifest.get("tier", ""), "tier not recorded"),
         "m": manifest,
         "synthetic": synthetic,
         "metrics": metrics,
@@ -248,6 +250,8 @@ def executive_summary(ctx: dict[str, Any]) -> str:
         "",
         f"Dataset `{m['dataset_id']}` {m['dataset_version']} (hash {m['dataset_hash'][:12]}), split "
         f"{m['split_hash'][:12]}, status **{m['status']}**.",
+        "",
+        f"**Data tier: {m.get('tier', 'unlabeled')}** ({TIER_TEXT.get(m.get('tier', ''), 'tier not recorded')}).",
         "",
     ]
     if m.get("synthetic"):

@@ -35,11 +35,13 @@ def test_name_validation_rejects(bad: str) -> None:
 
 def test_new_scaffold_is_valid_and_standard(repo: Path) -> None:
     d = new_experiment("exp03_synthetic_mine", repo)
-    assert sorted(p.name for p in d.iterdir()) == ["README.md", "config.yaml"]
+    assert sorted(p.name for p in d.iterdir()) == ["README.md", "config.yaml", "configs"]
+    assert sorted(p.name for p in (d / "configs").iterdir()) == ["complete.yaml", "sample.yaml"]
     cfg = ExperimentConfig.load(d / "config.yaml")
     assert cfg.id == "exp03_synthetic_mine" and cfg.backend == "polars" and cfg.mode == "local"
     text = (d / "README.md").read_text(encoding="utf-8")
-    for needle in ("Paper", "Data:", "Models:", "xferbench experiment run exp03_synthetic_mine", "not a ranking"):
+    for needle in ("Paper", "Data:", "Models:", "xferbench experiment run exp03_synthetic_mine", "not a ranking",
+                   "eval/exp03_synthetic_mine__<tier>/", "Data tiers:"):  # fmt: skip
         assert needle in text
 
 
@@ -116,10 +118,12 @@ def test_run_all_continues_past_failures(repo: Path) -> None:
     assert [r["experiment"] for r in rows] == sorted(status)  # alphabetical, never by score
     ok = next(r for r in rows if r["status"] == "ok")
     out = Path(ok["out"])
-    assert out.parent.name == "runs" and (out / "leaderboard.html").exists()
+    assert out.parent.name == "eval" and out.name == "exp02_synthetic_chronos_zero_shot__synthetic"
+    assert (out / "leaderboard.html").exists() and ok["tier"] == "synthetic"
     assert not (out / "selection.json").exists() and (out / "_work/selection.json").exists()
     table = summary_table(rows)
     assert "not a ranking" in table and "rank" not in table.lower().replace("not a ranking", "")
+    assert "Data tier: synthetic" in table and "| tier |" in table
     assert "NOT A DAY-ZERO RESULT" in table
 
 
@@ -139,9 +143,13 @@ def test_runtime_config_validation(tmp_path: Path) -> None:
 
 
 def test_runs_dirs_are_gitignored() -> None:
-    p = "experiments/exp01_synthetic_lightgbm_analogs/runs/20260101T000000Z/results.json"
-    r = subprocess.run(["git", "-C", str(ROOT), "check-ignore", "-q", p], check=False)
-    assert r.returncode == 0, "experiments/<id>/runs/ must be git-ignored"
+    for p in (
+        "eval/exp01_synthetic_lightgbm_analogs__synthetic/results.json",
+        "eval/exp01_synthetic_lightgbm_analogs__sample-2/results.json",
+        "experiments/exp01_synthetic_lightgbm_analogs/runs/20260101T000000Z/results.json",
+    ):
+        r = subprocess.run(["git", "-C", str(ROOT), "check-ignore", "-q", p], check=False)
+        assert r.returncode == 0, f"{p} must be git-ignored"
 
 
 def test_every_experiment_readme_states_paper_data_models_run() -> None:

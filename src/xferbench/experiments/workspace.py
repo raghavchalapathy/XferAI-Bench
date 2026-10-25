@@ -14,7 +14,6 @@ from __future__ import annotations
 
 import re
 import shutil
-import time
 from collections.abc import Callable
 from dataclasses import dataclass
 from pathlib import Path
@@ -38,10 +37,19 @@ TEMPLATE_README = """# {id}
 **Synthetic interface test, not a ranking.** Outputs check the software, not which method is better.
 
 - **Paper(s):** {papers}
-- **Data:** synthetic preset `{preset}`, seed {seed} (`data.flavour: synthetic`). To use your own data, see
-  `DIY-GettingStarted.md` (data/<flavour>/ plus configs/<flavour>/); only config changes.
+- **Data:** synthetic preset `{preset}`, seed {seed} (`data.flavour: synthetic`), data tier `synthetic`.
+- **Data tiers:** `synthetic` (default), `sample` or `complete`. Switch with `--tier` or the `tier:` key; the
+  overlays `configs/sample.yaml` and `configs/complete.yaml` set `data.metadata` to your own data (keep it under
+  `local/`, never in git). Same experiment, same code; only the config changes.
 - **Models:** {methods}{optional}
-- **Run:** `xferbench experiment run {id}` -> `experiments/{id}/runs/<timestamp>/` (git-ignored)
+- **Run:** `xferbench experiment run {id}` -> `eval/{id}__<tier>/` (git-ignored)
+"""
+
+TIER_OVERLAY = """# Data tier '{tier}': {text}. Deep-merged over ../config.yaml by `xferbench experiment run {id} --tier {tier}`.
+# Point data.metadata at the metadata.json of your own prepared data (see docs/DIY-GettingStarted.md).
+# Keep that data under local/ (gitignored); never commit it. Results go to eval/{id}__{tier}/ and are labelled local.
+data:
+  metadata: ""  # e.g. local/my-bench/{tier}/metadata.json
 """
 
 
@@ -163,6 +171,14 @@ def new_experiment(name: str, root: Path | None = None, from_id: str | None = No
         + yaml.safe_dump(raw, sort_keys=False),
         encoding="utf-8",
     )
+    from xferbench.data.tiers import TIER_TEXT
+
+    (dest / "configs").mkdir(exist_ok=True)
+    for t in ("sample", "complete"):
+        if not (dest / "configs" / f"{t}.yaml").exists():
+            (dest / "configs" / f"{t}.yaml").write_text(
+                TIER_OVERLAY.format(tier=t, text=TIER_TEXT[t], id=name), encoding="utf-8"
+            )
     cfg = ExperimentConfig.load(dest / "config.yaml")
     papers = "; ".join(f"{p.get('citation', '')} <{p.get('url', '')}>" for p in cfg.papers) or "none"
     optional = f"; optional (extras needed): {', '.join(cfg.optional_methods)}" if cfg.optional_methods else ""
@@ -185,13 +201,14 @@ def resolve_id(exp_id: str) -> str:
     return exp_id
 
 
-def run_dir_for(exp_dir: Path) -> Path:
-    stamp = time.strftime("%Y%m%dT%H%M%SZ", time.gmtime())
-    d = exp_dir / "runs" / stamp
+def run_dir_for(root: Path | None, exp_id: str, tier: str) -> Path:
+    """Default output: eval/<exp_id>__<tier>/ (git-ignored); -2, -3, ... if that folder is already used."""
+    base = (root or Path.cwd()) / "eval"
+    d = base / f"{exp_id}__{tier}"
     n = 1
-    while d.exists():
+    while d.exists() and any(d.iterdir()):
         n += 1
-        d = exp_dir / "runs" / f"{stamp}-{n}"
+        d = base / f"{exp_id}__{tier}-{n}"
     return d
 
 
@@ -204,13 +221,22 @@ def run_one(
     root: Path | None = None,
     progress: Callable[[str], None] = print,
     allow_research_only: bool = False,
+    tier: str | None = None,
+    out: Path | None = None,
 ) -> dict[str, Any]:
+    from xferbench.experiments.runner import load_tiered
+
     exp_id = resolve_id(exp_id)
     exp_dir = experiments_root(root) / exp_id
     if not (exp_dir / "config.yaml").is_file():
         raise ExperimentError(f"unknown experiment {exp_id!r}; see `xferbench experiment list`")
-    out = run_dir_for(exp_dir)
-    if is_research_only(_raw(exp_dir / "config.yaml")):
+    research = is_research_only(_raw(exp_dir / "config.yaml"))
+    if research:
+        tier = tier or "complete"  # a reproduction runs on the full licensed dataset
+    else:
+        _, tier = load_tiered(exp_dir / "config.yaml", tier)
+    out = out or run_dir_for(root, exp_id, tier)
+    if research:
         if not allow_research_only:
             raise ResearchOnlyError(
                 f"{exp_id} is research-only and licence-gated; pass --allow-research-only to run it"
@@ -219,8 +245,9 @@ def run_one(
 
         res = run_reproduction(exp_dir / "config.yaml", out)
         res["_out"] = str(out)
+        res.setdefault("tier", tier)
         return res
-    res = run_experiment(exp_dir / "config.yaml", out, progress=progress)
+    res = run_experiment(exp_dir / "config.yaml", out, progress=progress, tier=tier)
     res["_out"] = str(out)
     return res
 
@@ -230,6 +257,7 @@ def run_all(
     only: list[str] | None = None,
     progress: Callable[[str], None] = print,
     allow_research_only: bool = False,
+    tier: str | None = None,
 ) -> list[dict[str, Any]]:
     """Run every experiment, continuing past failures. Returns one summary row per experiment (alphabetical).
 
@@ -241,21 +269,24 @@ def run_all(
     for info in list_experiments(root, allow_research_only=allow_research_only):
         if only and info.id not in only:
             continue
-        row: dict[str, Any] = {"experiment": info.id, "status": "ok", "ran": 0, "not_run": 0, "out": "", "detail": ""}
+        row: dict[str, Any] = {
+            "experiment": info.id, "tier": tier or "synthetic", "status": "ok", "ran": 0, "not_run": 0, "out": "",
+            "detail": "",
+        }  # fmt: skip
         if info.error:
             row.update(status="invalid_config", detail=info.error[:200])
         elif info.kind == "reproduction":
             try:
-                res = run_one(info.id, root, progress=progress, allow_research_only=True)
-                row.update(out=res["_out"], detail="RESEARCH ONLY")
+                res = run_one(info.id, root, progress=progress, allow_research_only=True, tier=tier)
+                row.update(out=res["_out"], detail="RESEARCH ONLY", tier=res.get("tier", row["tier"]))
             except ReproError as exc:
                 row.update(status="blocked", detail=f"RESEARCH ONLY; {exc}"[:200])
             except Exception as exc:
                 row.update(status="failed", detail=f"{type(exc).__name__}: {exc}"[:200])
         else:
             try:
-                res = run_one(info.id, root, progress=progress)
-                row.update(ran=len(res["test_rows"]), not_run=len(res["not_run"]), out=res["_out"])
+                res = run_one(info.id, root, progress=progress, tier=tier)
+                row.update(ran=len(res["test_rows"]), not_run=len(res["not_run"]), out=res["_out"], tier=res["tier"])
                 if not res["day_zero_result"]:
                     row["detail"] = "NOT A DAY-ZERO RESULT"
             except Exception as exc:
@@ -265,10 +296,18 @@ def run_all(
 
 
 def summary_table(rows: list[dict[str, Any]]) -> str:
-    head = "| experiment | status | methods run | not run | output | note |\n|---|---|---|---|---|---|"
+    """Status table for run-all. Refuses rows from different data tiers (TierMixError)."""
+    from xferbench.data.tiers import require_single_tier
+
+    tier = require_single_tier(((r["experiment"], r.get("tier")) for r in rows), "experiments")
+    head = "| experiment | tier | status | methods run | not run | output | note |\n|---|---|---|---|---|---|---|"
     body = [
-        f"| {r['experiment']} | {r['status']} | {r['ran']} | {r['not_run']} | {r['out']} | {r['detail']} |"
+        f"| {r['experiment']} | {r.get('tier')} | {r['status']} | {r['ran']} | {r['not_run']} | {r['out']} | {r['detail']} |"
         for r in rows
     ]
-    note = "Synthetic interface test, not a ranking: experiments are listed alphabetically; no scores are compared."
-    return "\n".join([note, "", head, *body])
+    note = (
+        "Synthetic interface test, not a ranking: experiments are listed alphabetically; no scores are compared."
+        if tier == "synthetic"
+        else f"Data tier {tier}, not a ranking: experiments are listed alphabetically; no scores are compared."
+    )
+    return "\n".join([note, f"Data tier: {tier}", "", head, *body])

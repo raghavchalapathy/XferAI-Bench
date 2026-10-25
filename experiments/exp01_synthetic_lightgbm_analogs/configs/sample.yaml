@@ -1,0 +1,5 @@
+# Data tier 'sample': a sample of real data (not the complete dataset). Deep-merged over ../config.yaml by `xferbench experiment run exp01_synthetic_lightgbm_analogs --tier sample`.
+# Point data.metadata at the metadata.json of your own prepared data (see docs/DIY-GettingStarted.md).
+# Keep that data under local/ (gitignored); never commit it. Results go to eval/exp01_synthetic_lightgbm_analogs__sample/ and are labelled local.
+data:
+  metadata: ""  # e.g. local/my-bench/sample/metadata.json

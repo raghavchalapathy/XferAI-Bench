@@ -21,7 +21,7 @@ th{background:#2c2d37;color:#b3b0c2}td.n{text-align:right}.bad{color:#fca5a5}.ok
 </head><body><main><h1>Run comparison</h1>
 {% if compatible %}<p class="ok">All runs share dataset, split, stage, horizon, eligible population and metric definitions: rows are directly comparable.</p>
 {% else %}<p class="bad">Runs are NOT comparable ({{ mismatches|join('; ') }}). Values are shown side by side for inspection only and are not ranked.</p>{% endif %}
-<h2>Runs</h2><div class="tw"><table><tr><th>Run</th><th>Stage</th><th>Dataset</th><th>Split</th><th>Population</th></tr>
+<p>Data tier: <b>{{ tier }}</b> (all runs).</p><h2>Runs</h2><div class="tw"><table><tr><th>Run</th><th>Stage</th><th>Dataset</th><th>Split</th><th>Population</th></tr>
 {% for r in runs %}<tr><td><code>{{ r.run_id }}</code></td><td>{{ r.stage }}</td><td><code>{{ r.dataset_hash[:12] }}</code></td><td><code>{{ r.split_hash[:12] }}</code></td><td><code>{{ r.population_hash[:12] }}</code></td></tr>{% endfor %}</table></div>
 <h2>Equal-scenario objective by variant</h2><div class="tw"><table><tr><th>Variant</th>{% for r in runs %}<th class="n">{{ r.run_id }}</th>{% endfor %}</tr>
 {% for v in variants %}<tr><td><code>{{ v }}</code></td>{% for r in runs %}<td class="n">{{ fmt(r.objectives.get(v)) }}</td>{% endfor %}</tr>{% endfor %}</table></div>
@@ -51,8 +51,10 @@ def _summary(run: Path) -> dict:
 def compare_runs(runs: list[Path], out: Path, allow_incompatible: bool = False) -> dict:
     if len(runs) < 2:
         raise CompareError("compare needs at least two run directories")
+    from xferbench.data.tiers import require_single_tier
     from xferbench.util import read_json
 
+    tier = require_single_tier((str(r), read_json(r / "run_manifest.json").get("tier")) for r in runs)
     classes = {(read_json(r / "run_manifest.json").get("data") or {}).get("data_class", "unlabeled") for r in runs}
     if len(classes) > 1:
         raise CompareError(
@@ -72,7 +74,8 @@ def compare_runs(runs: list[Path], out: Path, allow_incompatible: bool = False) 
         variants=variants,
         compatible=not mismatches,
         mismatches=mismatches,
+        tier=tier,
         fmt=lambda v: "N/A" if v is None else f"{v * 100:.1f}%",
     )
     atomic_write_text(out, html)
-    return {"compatible": not mismatches, "mismatches": mismatches}
+    return {"compatible": not mismatches, "mismatches": mismatches, "tier": tier}

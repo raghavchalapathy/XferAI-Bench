@@ -310,6 +310,11 @@ def run_cmd(
     selection: Path | None = typer.Option(None, help="Frozen selection.json (required for --stage test)."),
     max_seconds: float | None = typer.Option(None, help="Run budget; unfinished requests are marked skipped."),
     no_report: bool = typer.Option(False, "--no-report", help="Skip report.html."),
+    tier: str | None = typer.Option(
+        None,
+        "--tier",
+        help="Data tier: synthetic | sample | complete (default: synthetic data -> synthetic, else complete).",
+    ),
     allow_research_only: bool = typer.Option(
         False,
         "--allow-research-only",
@@ -337,6 +342,7 @@ def run_cmd(
         write_report=not no_report,
         data_label=src.label(),
         allow_research_only=allow_research_only,
+        tier=tier,
     )
     if allow_research_only:
         typer.secho("warning: research-only methods enabled; outputs are INTERNAL RESEARCH ONLY", fg="yellow", err=True)
@@ -345,7 +351,10 @@ def run_cmd(
     except RunError as exc:
         _fail(str(exc), exc.exit_code)
     _print_board(res.out)
-    typer.echo(f"run {res.manifest['run_id']} status {res.status}; data class {src.data_class}; outputs in {res.out}")
+    typer.echo(
+        f"run {res.manifest['run_id']} status {res.status}; data class {src.data_class}; tier {res.manifest['tier']}; "
+        f"outputs in {res.out}"
+    )
     if res.exit_code:
         raise typer.Exit(res.exit_code)
 
@@ -434,14 +443,17 @@ def compare_cmd(
     ),
 ) -> None:
     """Compare runs; refuses to rank runs with different data, split, stage, population or metrics."""
+    from xferbench.data.tiers import TierMixError
     from xferbench.reports.compare import CompareError, compare_runs
 
     _check_out(out)
     try:
         res = compare_runs(runs, out, allow_incompatible)
+    except TierMixError as exc:  # never overridable, not even with --allow-incompatible
+        _fail(str(exc), 2)
     except CompareError as exc:
         _fail(str(exc), 3)
-    typer.echo(f"wrote {out} (compatible={res['compatible']})")
+    typer.echo(f"wrote {out} (compatible={res['compatible']}; tier {res['tier']})")
 
 
 @app.command("init")
@@ -704,6 +716,11 @@ def experiment_cmd(
         None, "--log-lesson", help="Append a lesson to harness/lessons.jsonl; value = what changed."
     ),
     harness_dir: Path = typer.Option(Path("harness"), "--harness-dir"),
+    tier: str | None = typer.Option(
+        None,
+        "--tier",
+        help="Data tier: synthetic | sample | complete (default: the config's tier key, else synthetic).",
+    ),
 ) -> None:
     """Run a config-driven synthetic experiment (interface test, not a ranking); nothing is downloaded."""
     if ctx.invoked_subcommand is not None:
@@ -714,7 +731,7 @@ def experiment_cmd(
     from xferbench.experiments.runner import ExperimentError, run_experiment
 
     try:
-        res = run_experiment(config, out, progress=typer.echo)
+        res = run_experiment(config, out, progress=typer.echo, tier=tier)
     except ExperimentError as exc:
         _fail(str(exc), 2)
     _after_experiment(res, out, log_lesson, harness_dir)
@@ -732,6 +749,7 @@ def _after_experiment(res: dict[str, Any], out: Path, log_lesson: str | None, ha
         except (HarnessError, ValueError) as exc:
             _fail(f"lesson not logged: {exc}", 2)
         typer.echo(f"lesson appended to {harness_dir / 'lessons.jsonl'}")
+    typer.echo(f"data tier: {res.get('tier', 'synthetic')}")
     typer.echo(f"done. Open {out / 'leaderboard.html'} and {out / 'report.html'}")
 
 
@@ -784,18 +802,26 @@ def experiment_run_cmd(
     log_lesson: str | None = typer.Option(None, "--log-lesson"),
     harness_dir: Path = typer.Option(Path("harness"), "--harness-dir"),
     allow_research_only: bool = typer.Option(False, "--allow-research-only", help=_ALLOW_RO_HELP),
+    tier: str | None = typer.Option(
+        None,
+        "--tier",
+        help="Data tier: synthetic | sample | complete (default: the config's tier key, else synthetic).",
+    ),
+    out: Path | None = typer.Option(None, "--out", help="Output folder (default eval/<id>__<tier>/, git-ignored)."),
 ) -> None:
-    """Run one experiment into experiments/<id>/runs/<UTC timestamp>/ (git-ignored)."""
+    """Run one experiment into eval/<id>__<tier>/ (git-ignored). The tier is printed and written to every output."""
     from xferbench.experiments.runner import ExperimentError
     from xferbench.experiments.workspace import run_one
     from xferbench.repro.visuelle import ReproError
 
     try:
-        res = run_one(exp_id, Path.cwd(), progress=typer.echo, allow_research_only=allow_research_only)
+        res = run_one(
+            exp_id, Path.cwd(), progress=typer.echo, allow_research_only=allow_research_only, tier=tier, out=out
+        )
     except ExperimentError as exc:
         _fail(str(exc), 2)
     except ReproError as exc:
-        _fail(f"{exc} (report written under experiments/{exp_id}/runs/)", 3)
+        _fail(f"{exc} (report written under eval/{exp_id}__<tier>/)", 3)
     if res.get("usage_tag") == "research_only":  # pragma: no cover - needs licensed data + local GTM
         typer.echo(f"RESEARCH ONLY report: {Path(res['_out']) / 'report.md'}")
         return
@@ -806,12 +832,22 @@ def experiment_run_cmd(
 def experiment_run_all_cmd(
     only: list[str] = typer.Option([], "--only", help="Restrict to these ids (repeatable)."),
     allow_research_only: bool = typer.Option(False, "--allow-research-only", help=_ALLOW_RO_HELP),
+    tier: str | None = typer.Option(
+        None,
+        "--tier",
+        help="Data tier: synthetic | sample | complete (default: the config's tier key, else synthetic).",
+    ),
 ) -> None:
-    """Run every experiment, continue past failures, print a status table (no rankings). Exit 1 if any failed."""
+    """Run every experiment at one data tier, continue past failures, print a status table (no rankings).
+    Exit 1 if any failed; exit 2 if rows of different tiers would be mixed."""
+    from xferbench.data.tiers import TierMixError
     from xferbench.experiments.workspace import run_all, summary_table
 
-    rows = run_all(Path.cwd(), only or None, progress=typer.echo, allow_research_only=allow_research_only)
-    typer.echo(summary_table(rows))
+    rows = run_all(Path.cwd(), only or None, progress=typer.echo, allow_research_only=allow_research_only, tier=tier)
+    try:
+        typer.echo(summary_table(rows))
+    except TierMixError as exc:
+        _fail(str(exc), 2)
     if any(r["status"] != "ok" for r in rows):
         raise typer.Exit(1)
 

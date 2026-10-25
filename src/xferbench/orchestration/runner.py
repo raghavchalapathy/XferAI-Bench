@@ -126,6 +126,7 @@ class RunConfig:
     measure_memory: bool = True
     data_label: dict[str, Any] | None = None  # see xferbench.data.classes
     allow_research_only: bool = False  # opt-in for non-commercial / research-only methods
+    tier: str | None = None  # data tier: synthetic | sample | complete (default from dataset.synthetic)
 
 
 @dataclass
@@ -278,6 +279,12 @@ class BenchmarkRunner:
             dataset = load_from_metadata_path(cfg.metadata_path)
         except DataError as exc:
             raise RunError(f"data failed to load:\n{exc}") from exc
+        from xferbench.data.tiers import TierError, resolve_tier
+
+        try:
+            self.tier = resolve_tier(cfg.tier, bool(dataset.metadata.dataset.synthetic))
+        except TierError as exc:
+            raise RunError(str(exc), EXIT_USAGE) from exc
         domain = get_domain(dataset.metadata.domain_plugin)
         issues = domain.validate(dataset)
         split = load_split(cfg.splits_path)
@@ -394,6 +401,7 @@ class BenchmarkRunner:
             lb = lb.drop(columns=[c for c in SYNTHETIC_DROP_COLUMNS if c in lb.columns]).sort_values(
                 ["board", "variant_id"] if "board" in lb.columns else ["variant_id"], kind="stable"
             )
+        lb.insert(0, "tier", self.tier)
         atomic_write_csv(out / "leaderboard.csv", lb)
         atomic_write_csv(out / "slices.csv", pd.DataFrame(result["slices"]))
         fail = forecasts[forecasts["status"] != "success"]
@@ -437,6 +445,7 @@ class BenchmarkRunner:
                 "zero_denominator": dataset.metadata.metrics.zero_denominator,
                 "stage": cfg.stage,
                 "run_id": run_id,
+                "tier": self.tier,
             },
         )
         manifest = self._manifest(
@@ -657,6 +666,7 @@ class BenchmarkRunner:
             "run_schema_version": RUN_SCHEMA_VERSION,
             "data": self.cfg.data_label
             or {"data_class": "unlabeled", "benchmark_id": None, "benchmark_version": None, "benchmark_kind": None},
+            "tier": self.tier,
             "usage_label": "internal_research_only" if self.cfg.allow_research_only else "standard",
             "run_id": run_id,
             "status": status,
