@@ -114,6 +114,18 @@ def unexpected_skips(profile: str, skipped: list[str], spec: str) -> list[str]:
     return [n for n in skipped if not any(fnmatch.fnmatchcase(n, pat) for pat in allowed)]
 
 
+KNOWN_PROFILES = ("core", "spark")
+
+
+def check_profile(profile: str) -> None:
+    """Raise ValueError for a XFERBENCH_STRICT_SKIPS value that is not a known profile (e.g. "1")."""
+    if profile not in KNOWN_PROFILES:
+        raise ValueError(
+            f"XFERBENCH_STRICT_SKIPS={profile!r} is not a known profile; use one of {', '.join(KNOWN_PROFILES)}"
+            " (see tests/expected_skips.txt)"
+        )
+
+
 def pytest_sessionfinish(session: pytest.Session, exitstatus: int) -> None:
     import os
 
@@ -121,6 +133,12 @@ def pytest_sessionfinish(session: pytest.Session, exitstatus: int) -> None:
     if not profile:
         return
     spec = (Path(__file__).parent / "expected_skips.txt").read_text(encoding="utf-8")
+    try:
+        check_profile(profile)
+    except ValueError as exc:
+        print(f"\n{exc}")
+        session.exitstatus = pytest.ExitCode.USAGE_ERROR
+        return
     bad = unexpected_skips(profile, [n for n, _ in _SKIPPED], spec)
     if bad:
         reasons = dict(_SKIPPED)
