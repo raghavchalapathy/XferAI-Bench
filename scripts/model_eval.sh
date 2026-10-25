@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# Run an experiment end to end (synthetic). Usage: scripts/model_eval.sh exp01_m5_lightgbm_analogs
+# Run one experiment end to end (synthetic) into experiments/<id>/runs/<timestamp>/.
+# Usage: scripts/model_eval.sh exp01_m5_lightgbm_analogs   (or: scripts/model_eval.sh --all)
 set -euo pipefail
 E="${1:-exp01_m5_lightgbm_analogs}"
-xferbench experiment --config "experiments/$E/config.yaml" --out "eval/$E"
+if [ "$E" = "--all" ]; then xferbench experiment run-all; else xferbench experiment run "$E"; fi

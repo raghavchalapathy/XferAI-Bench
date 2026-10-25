@@ -9,7 +9,7 @@ Flow (same for all three data flavours, configured in [configs/](configs/)):
 1. `scripts/data_prep.sh`: generate or ingest data, then validate it
 2. `scripts/data_cleaning.sh`: Polars cleaning and export
 3. `scripts/model_train.sh`: validation run and frozen selection
-4. `scripts/inference.sh`: test run with the frozen selection
+4. `scripts/inference.sh`: `xferbench fit` the frozen selected variant, then `xferbench forecast` (no actuals, no evaluator)
 5. `scripts/model_eval.sh <experiment>`: experiment report and leaderboard into `eval/`
 
 Self-improvement: log every run (`--log-lesson`), then run `xferbench harness triggers`. Rule changes go only through reviewed proposals (`xferbench harness apply`). See [harness/README.md](harness/README.md).
