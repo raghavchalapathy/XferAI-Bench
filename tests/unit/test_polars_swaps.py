@@ -98,6 +98,7 @@ def test_evaluator_outputs_unchanged(runs: tuple[Path, Path], stage: str) -> Non
     pd.testing.assert_frame_equal(
         pd.read_parquet(swapped / stage / "forecasts.parquet").drop(columns=["run_id"]),
         pd.read_parquet(reference / stage / "forecasts.parquet").drop(columns=["run_id"]),
+        check_exact=True,
     )
 
 
