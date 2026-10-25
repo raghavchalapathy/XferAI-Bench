@@ -46,10 +46,10 @@ TEMPLATE_README = """# {id}
 """
 
 TIER_OVERLAY = """# Data tier '{tier}': {text}. Deep-merged over ../config.yaml by `xferbench experiment run {id} --tier {tier}`.
-# Point data.metadata at the metadata.json of your own prepared data (see docs/DIY-GettingStarted.md).
-# Keep that data under local/ (gitignored); never commit it. Results go to eval/{id}__{tier}/ and are labelled local.
+# Point data.metadata at the metadata.json of your own data (docs/GETTING_STARTED.md Step 2).
+# Keep that data in data/{tier}_data/ (git-ignored); never commit it. Results go to eval/{id}__{tier}/, labelled local.
 data:
-  metadata: ""  # e.g. local/my-bench/{tier}/metadata.json
+  metadata: ""  # e.g. data/{tier}_data/metadata/metadata.json
 """
 
 
@@ -66,6 +66,17 @@ class ExperimentInfo:
     kind: str = "synthetic"
     usage_tag: str = "interface_test"
     name_problem: str | None = None
+
+
+def _uses_own_data(exp_dir: Path) -> bool:
+    """True if a sample/complete overlay points at the user's own data (then <dataset> names that data)."""
+    for t in ("sample", "complete"):
+        f = exp_dir / "configs" / f"{t}.yaml"
+        if f.is_file():
+            over = yaml.safe_load(f.read_text(encoding="utf-8")) or {}
+            if str((over.get("data") or {}).get("metadata") or "").strip():
+                return True
+    return False
 
 
 def name_problem(folder: str, flavour: str | None) -> str | None:
@@ -121,7 +132,7 @@ def list_experiments(root: Path | None = None, allow_research_only: bool = False
             out.append(
                 ExperimentInfo(
                     c.id, d, c.title, c.methods, c.optional_methods, c.preset, c.not_day_zero is None,
-                    name_problem=name_problem(d.name, (raw.get("data") or {}).get("flavour", "synthetic")),
+                    name_problem=name_problem(d.name, None if _uses_own_data(d) else (raw.get("data") or {}).get("flavour", "synthetic")),
                 )
             )  # fmt: skip
         except (ExperimentError, KeyError, yaml.YAMLError) as exc:
@@ -175,7 +186,9 @@ def new_experiment(name: str, root: Path | None = None, from_id: str | None = No
 
     (dest / "configs").mkdir(exist_ok=True)
     for t in ("sample", "complete"):
-        if not (dest / "configs" / f"{t}.yaml").exists():
+        f = dest / "configs" / f"{t}.yaml"
+        copied = yaml.safe_load(f.read_text(encoding="utf-8")) or {} if f.exists() else {}
+        if not str((copied.get("data") or {}).get("metadata") or "").strip():  # fresh template naming this id
             (dest / "configs" / f"{t}.yaml").write_text(
                 TIER_OVERLAY.format(tier=t, text=TIER_TEXT[t], id=name), encoding="utf-8"
             )
@@ -196,7 +209,10 @@ def resolve_id(exp_id: str) -> str:
         import warnings
 
         new = DEPRECATED_ALIASES[exp_id]
-        warnings.warn(f"experiment id {exp_id!r} is deprecated; use {new!r}", DeprecationWarning, stacklevel=2)
+        # FutureWarning (not DeprecationWarning) so CLI users see it: Python shows it by default, on stderr.
+        warnings.warn(
+            f"experiment id {exp_id!r} is deprecated and will be removed; use {new!r}", FutureWarning, stacklevel=2
+        )
         return new
     return exp_id
 
@@ -252,6 +268,32 @@ def run_one(
     return res
 
 
+def planned_tiers(infos: list[ExperimentInfo], tier: str | None = None) -> dict[str, str]:
+    """The data tier each experiment would run at (same rules as run_one), checked to be a single tier.
+
+    Raises TierMixError without running anything if the selection would mix tiers. Invalid configs are skipped
+    (they are reported as invalid_config rows, not run)."""
+    from xferbench.data.tiers import require_single_tier
+    from xferbench.experiments.runner import load_tiered
+
+    plan: dict[str, str] = {}
+    for info in infos:
+        if info.error:
+            continue
+        cfg = info.path / "config.yaml"
+        if tier:
+            plan[info.id] = tier
+        elif is_research_only(_raw(cfg)):
+            plan[info.id] = "complete"
+        else:
+            try:
+                plan[info.id] = load_tiered(cfg, None)[1]
+            except Exception:  # reported by run_one as a failed row
+                continue
+    require_single_tier(plan.items(), what="run-all (nothing was run)")
+    return plan
+
+
 def run_all(
     root: Path | None = None,
     only: list[str] | None = None,
@@ -265,12 +307,12 @@ def run_all(
     """
     from xferbench.repro.visuelle import ReproError
 
+    selected = [i for i in list_experiments(root, allow_research_only=allow_research_only) if not only or i.id in only]
+    plan = planned_tiers(selected, tier)  # raises TierMixError before anything runs
     rows = []
-    for info in list_experiments(root, allow_research_only=allow_research_only):
-        if only and info.id not in only:
-            continue
+    for info in selected:
         row: dict[str, Any] = {
-            "experiment": info.id, "tier": tier or "synthetic", "status": "ok", "ran": 0, "not_run": 0, "out": "",
+            "experiment": info.id, "tier": plan.get(info.id, tier or "synthetic"), "status": "ok", "ran": 0, "not_run": 0, "out": "",
             "detail": "",
         }  # fmt: skip
         if info.error:

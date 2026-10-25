@@ -42,6 +42,21 @@ def _fail(msg: str, code: int = 1) -> NoReturn:
     raise typer.Exit(code)
 
 
+def _resolve_exp_id(exp_id: str) -> str:
+    """Map a deprecated experiment id to its new name, telling the CLI user on stderr (always visible)."""
+    from xferbench.experiments.workspace import DEPRECATED_ALIASES
+
+    new = DEPRECATED_ALIASES.get(exp_id)
+    if new is None:
+        return exp_id
+    typer.secho(
+        f"warning: experiment id {exp_id!r} is deprecated and will be removed; use {new!r}",
+        fg=typer.colors.YELLOW,
+        err=True,
+    )
+    return new
+
+
 def _version_cb(value: bool) -> None:
     if value:
         typer.echo(f"xferbench {__version__}")
@@ -763,6 +778,8 @@ def experiment_new_cmd(
     from xferbench.experiments.runner import ExperimentError
     from xferbench.experiments.workspace import new_experiment
 
+    if from_id:
+        from_id = _resolve_exp_id(from_id)
     try:
         dest = new_experiment(name, Path.cwd(), from_id, force)
     except ExperimentError as exc:
@@ -814,6 +831,7 @@ def experiment_run_cmd(
     from xferbench.experiments.workspace import run_one
     from xferbench.repro.visuelle import ReproError
 
+    exp_id = _resolve_exp_id(exp_id)
     try:
         res = run_one(
             exp_id, Path.cwd(), progress=typer.echo, allow_research_only=allow_research_only, tier=tier, out=out
@@ -843,7 +861,12 @@ def experiment_run_all_cmd(
     from xferbench.data.tiers import TierMixError
     from xferbench.experiments.workspace import run_all, summary_table
 
-    rows = run_all(Path.cwd(), only or None, progress=typer.echo, allow_research_only=allow_research_only, tier=tier)
+    try:
+        rows = run_all(
+            Path.cwd(), only or None, progress=typer.echo, allow_research_only=allow_research_only, tier=tier
+        )
+    except TierMixError as exc:
+        _fail(f"{exc} Pass --tier or --only to select one tier.", 2)
     try:
         typer.echo(summary_table(rows))
     except TierMixError as exc:

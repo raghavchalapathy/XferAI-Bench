@@ -186,5 +186,39 @@ def test_list_flags_bad_names(repo: Path, monkeypatch: pytest.MonkeyPatch) -> No
 def test_deprecated_alias_resolves_with_warning() -> None:
     from xferbench.experiments.workspace import resolve_id
 
-    with pytest.warns(DeprecationWarning, match="exp02_synthetic_chronos_zero_shot"):
+    with pytest.warns(FutureWarning, match="exp02_synthetic_chronos_zero_shot"):  # shown by default (V3-A)
         assert resolve_id("exp02_chronos_zero_shot") == "exp02_synthetic_chronos_zero_shot"
+
+
+def test_cli_deprecated_alias_warns_on_stderr(repo: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """V3-A: the CLI tells the user (stderr) that an old id is deprecated, then runs the new one."""
+    monkeypatch.chdir(repo)
+    r = CliRunner().invoke(app, ["experiment", "run", "exp01_m5_lightgbm_analogs"])
+    assert r.exit_code == 0, r.output
+    assert "deprecated" in r.stderr and "exp01_synthetic_lightgbm_analogs" in r.stderr
+    assert "is deprecated" not in r.stdout
+    assert (repo / "eval" / "exp01_synthetic_lightgbm_analogs__synthetic").is_dir()
+
+
+def test_cli_run_all_refuses_mixed_tiers_before_running(repo: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """V3-B: a selection that would mix tiers exits 2 before any experiment runs (no eval/ output at all)."""
+    # synthetic experiments default to tier synthetic, the research-only reproduction to tier complete
+    monkeypatch.chdir(repo)
+    r = CliRunner().invoke(app, ["experiment", "run-all", "--allow-research-only"])
+    assert r.exit_code == 2, r.output
+    assert "refusing to mix data tiers" in r.stderr and "nothing was run" in r.stderr
+    assert not (repo / "eval").exists() or not any((repo / "eval").iterdir())
+    assert "running" not in r.stdout.lower()
+
+
+def test_new_from_rewrites_empty_overlays_and_own_data_name(repo: Path) -> None:
+    new_experiment("exp04_mydata_lightgbm", repo, from_id="exp01_synthetic_lightgbm_analogs")
+    over = repo / "experiments" / "exp04_mydata_lightgbm" / "configs" / "sample.yaml"
+    text = over.read_text(encoding="utf-8")
+    assert "exp04_mydata_lightgbm --tier sample" in text and "exp01_" not in text
+    assert "data/sample_data/metadata/metadata.json" in text
+    info = next(i for i in list_experiments(repo) if i.id == "exp04_mydata_lightgbm")
+    assert info.name_problem  # base flavour is synthetic and no own data yet
+    over.write_text("data:\n  metadata: data/sample_data/metadata/metadata.json\n", encoding="utf-8")
+    info = next(i for i in list_experiments(repo) if i.id == "exp04_mydata_lightgbm")
+    assert not info.name_problem  # <dataset> now names the user's own data

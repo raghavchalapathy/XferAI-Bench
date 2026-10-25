@@ -1,5 +1,5 @@
 # Data tier 'sample': a sample of real data (not the complete dataset). Deep-merged over ../config.yaml by `xferbench experiment run exp02_synthetic_chronos_zero_shot --tier sample`.
-# Point data.metadata at the metadata.json of your own prepared data (see docs/DIY-GettingStarted.md).
-# Keep that data under local/ (gitignored); never commit it. Results go to eval/exp02_synthetic_chronos_zero_shot__sample/ and are labelled local.
+# Point data.metadata at the metadata.json of your own data (docs/GETTING_STARTED.md Step 2).
+# Keep that data in data/sample_data/ (git-ignored); never commit it. Results go to eval/exp02_synthetic_chronos_zero_shot__sample/, labelled local.
 data:
-  metadata: ""  # e.g. local/my-bench/sample/metadata.json
+  metadata: ""  # e.g. data/sample_data/metadata/metadata.json
