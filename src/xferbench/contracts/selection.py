@@ -51,6 +51,7 @@ class Selection(BaseModel):
     split_hash: str
     selection_cutoff: str
     families: list[SelectedVariant]
-    recommended: str | None
-    recommended_reason: str
+    # V2-1: omitted from selection.json on synthetic runs (interface test, not a ranking)
+    recommended: str | None = None
+    recommended_reason: str | None = None
     rejected_variants: list[dict]

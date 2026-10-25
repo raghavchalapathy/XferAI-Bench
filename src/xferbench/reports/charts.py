@@ -151,6 +151,7 @@ def scatter(
     *,
     width: int = 760,
     height: int = 320,
+    empty_text: str = "No rankable points",
 ) -> Markup:
     left, right, top, bottom = 70, 30, 20, 50
     plot_w, plot_h = width - left - right, height - top - bottom
@@ -160,8 +161,8 @@ def scatter(
     ]
     if not points:
         parts.append(
-            f'<text x="{width / 2}" y="{height / 2}" fill="{MUTED}" text-anchor="middle">No rankable '
-            "points</text></svg>"
+            f'<text x="{width / 2}" y="{height / 2}" fill="{MUTED}" text-anchor="middle">{escape(empty_text)}'
+            "</text></svg>"
         )
         return Markup("".join(parts))
     xs = [max(p[1], 1e-4) for p in points]

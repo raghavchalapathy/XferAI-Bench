@@ -116,7 +116,11 @@ def build_context(run_dir: Path) -> dict[str, Any]:
         if e["variant_id"] in res
     ]
     resource_chart = scatter(
-        "Equal-scenario WMAPE vs measured fit+predict time", pts, "fit + predict seconds (log)", "equal-scenario WMAPE"
+        "Equal-scenario WMAPE vs measured fit+predict time",
+        pts,
+        "fit + predict seconds (log)",
+        "equal-scenario WMAPE",
+        empty_text="No full-coverage points" if synthetic else "No rankable points",
     )
 
     def slice_table(dim: str) -> list[dict]:
@@ -142,7 +146,7 @@ def build_context(run_dir: Path) -> dict[str, Any]:
         "ranked": ranked,
         "unrankable": unrankable,
         "ranking_heading": SYNTHETIC_HEADING if synthetic else RANKING_HEADING,
-        "ranking_note": RANKING_NOTE,
+        "ranking_note": SYNTHETIC_NOTE if synthetic else RANKING_NOTE,
         "families": fam,
         "wmape_chart": wmape_chart,
         "bias_chart": bias_chart,
@@ -166,7 +170,7 @@ def build_context(run_dir: Path) -> dict[str, Any]:
         },
         "stage_profile": stage_profile,
         "selection": sel,
-        "glossary": GLOSSARY,
+        "glossary": SYNTHETIC_GLOSSARY if synthetic else GLOSSARY,
         "version": __version__,
         "lb_uri": _csv_data_uri(lb),
         "slices_uri": _csv_data_uri(slices) if len(slices) else None,
@@ -199,12 +203,23 @@ def _progression(manifest: dict, entries: list[dict], support: list[dict]) -> di
 
 # leaderboard.csv columns that imply an order; dropped for synthetic runs (the evaluator itself is unchanged).
 SYNTHETIC_DROP_COLUMNS = ("rank", "rankable")
-SYNTHETIC_HEADING = "Interface check: synthetic results, alphabetical by variant (not a ranking)"
+SYNTHETIC_HEADING = "Interface check: synthetic results, alphabetical by variant (order carries no meaning)"
 RANKING_HEADING = "Interface check: method ordering on this run (real benchmark rankings pending)"
 RANKING_NOTE = (
     "Real benchmark rankings are pending: no rights-cleared real benchmark has been run. "
     "Synthetic runs only test the interface and do not show which method is better."
 )
+# V2-1: synthetic reports never use rank / recommend vocabulary (Reviewer probe: rankable|ranked|ranking|recommended).
+SYNTHETIC_NOTE = (
+    "Synthetic data: this run only tests the interface and does not show which method is better. "
+    "Real benchmark results are pending."
+)
+SYNTHETIC_GLOSSARY = {
+    **GLOSSARY,
+    "Coverage": "Share of eligible target weeks with a valid (success or declared fallback) forecast. Variants below "
+    "100% are marked incomplete; metrics are never computed on a convenient subset.",
+}
+SYNTHETIC_BANNED = ("rankable", "ranked", "ranking", "recommended")
 
 
 def write_run_report(run_dir: Path, out: Path) -> Path:
@@ -246,7 +261,7 @@ def executive_summary(ctx: dict[str, Any]) -> str:
         "",
         f"## {ctx['ranking_heading']}",
         "",
-        f"> {RANKING_NOTE}",
+        f"> {ctx['ranking_note']}",
         "",
     ]
     syn = ctx.get("synthetic", False)
@@ -264,7 +279,10 @@ def executive_summary(ctx: dict[str, Any]) -> str:
             f"{_p(e['objective'])} |"
         )
     for e in ctx["unrankable"]:
-        lines.append(f"{'' if syn else '| - '}| {e['variant_id']} (unrankable: {e['objective_reason']}) | | | | | |")
+        lines.append(
+            f"{'' if syn else '| - '}| {e['variant_id']} ({'incomplete' if syn else 'unrankable'}: "
+            f"{e['objective_reason']}) | | | | | |"
+        )
     lines += ["", f"Methods not executed: {len(ctx['excluded'])} registry entries (see report for reasons).", ""]
     if ctx["selection"]:
         lines += [

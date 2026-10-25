@@ -1,6 +1,6 @@
 """Licence-pinned donor-prior composites: Chronos-2, Chronos-Bolt, TimesFM 2.5 and GluonTS DeepAR (count).
 
-Status: licence-pinned, not Reviewer-recommended for PAIR0. Code and HF weight revisions come from R3 pins.v2,
+Status: licence-pinned, not Reviewer-approved for PAIR0. Code and HF weight revisions come from R3 pins.v2,
 which is still pending Reviewer review.
 
 Recipe (donor_only composite, never a native C0 claim): the backend forecasts the item's *donor/national*
@@ -31,7 +31,7 @@ from xferbench.models.base import RowResult, TrainingContext, expand, stateless_
 from xferbench.models.stats.rates import _target_households
 
 VERSION = "0.1.0"
-STATUS_LABEL = "licence-pinned, not Reviewer-recommended for PAIR0"
+STATUS_LABEL = "licence-pinned, not Reviewer-approved for PAIR0"
 PINS_NOTE = "revisions from R3 pins.v2 (PROPOSAL_PENDING_R4_REVIEW)"
 MIN_CONTEXT_WEEKS = 8
 MAX_CONTEXT_WEEKS = 156

@@ -149,7 +149,7 @@ def _builtin() -> list[RegistryEntry]:
                 cls,
                 milestone="B" if cls is M6DeepARCount else "C",
                 profiles=prof,
-                reason="licence-pinned, not Reviewer-recommended for PAIR0; real backend documented-only",
+                reason="licence-pinned, not Reviewer-approved for PAIR0; real backend documented-only",
                 remedy=f"install the '{cls.spec.optional_extra}' extra and cache the pinned weights to run it",
             )
         )

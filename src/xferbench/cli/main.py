@@ -71,6 +71,7 @@ def synth_generate(
     fmts = {"parquet": ("parquet",), "csv": ("csv",), "both": ("parquet", "csv")}.get(format)
     if fmts is None:
         _fail("--format must be parquet, csv or both", 2)
+    _check_out(out)
     if out.exists() and any(out.iterdir()):
         _fail(f"{out} is not empty; choose a new --out")
     try:
@@ -105,6 +106,8 @@ def validate_cmd(
     from xferbench.domains.registry import get_domain
     from xferbench.util import write_json
 
+    if out:
+        _check_out(out)
     try:
         md = load_metadata(metadata)
     except Exception as exc:
@@ -145,6 +148,7 @@ def split_cmd(metadata: Path = typer.Option(...), out: Path = typer.Option(...))
     from xferbench.domains.registry import get_domain
     from xferbench.util import write_json
 
+    _check_out(out)
     ds = load_from_metadata_path(metadata)
     split = get_domain(ds.metadata.domain_plugin).build_splits(ds)
     write_json(out, split.model_dump(mode="json"))
@@ -251,7 +255,8 @@ def doctor(profile: str = typer.Option("core", help=f"One of {sorted(DOCTOR_PROF
 
 
 def _check_out(out: Path) -> None:
-    """V3-1: every run mode refuses an --out inside a git work tree unless git ignores it (outside a repo is fine)."""
+    """V3-1/V2-1: every command writing run output (run, steps, demo, select, report, compare, fit, forecast,
+    synth generate, split, validate --out) refuses an --out inside a git work tree unless git ignores it (outside a repo is fine)."""
     from xferbench.data.classes import DataClassError, check_local_output
 
     try:
@@ -388,17 +393,24 @@ def select_cmd(
     from xferbench.evaluation.selection import SelectionError, select
     from xferbench.util import read_json, write_json
 
+    _check_out(out)
     pol = SelectionPolicy.model_validate(read_json(policy)) if policy else SelectionPolicy()
     try:
         sel = select(validation_run, pol)
     except SelectionError as exc:
         _fail(str(exc))
-    write_json(out, sel.model_dump(mode="json"))
+    vman = validation_run / "run_manifest.json"
+    synthetic = bool(read_json(vman).get("synthetic")) if vman.exists() else False
+    # V2-1: synthetic selections never carry a recommendation field (interface test, not a ranking)
+    write_json(out, sel.model_dump(mode="json", exclude={"recommended", "recommended_reason"} if synthetic else None))
     for f in sel.families:
         typer.echo(f"  {f.method_id:<14} {'selected ' + f.variant_id if f.eligible else 'not selected: ' + f.reason}")
     for r in sel.rejected_variants:
         typer.echo(f"  rejected {r['variant_id']}: {r['reason']}")
-    typer.echo(f"selected on validation: {sel.recommended} ({sel.recommended_reason}); wrote {out}")
+    if synthetic:
+        typer.echo(f"synthetic interface test: frozen per-family variants; wrote {out}")
+    else:
+        typer.echo(f"selected on validation: {sel.recommended} ({sel.recommended_reason}); wrote {out}")
 
 
 @app.command("report")
@@ -406,6 +418,7 @@ def report_cmd(run: Path = typer.Option(...), out: Path = typer.Option(...)) -> 
     """Render the self-contained HTML report (and summary.md) for a run directory."""
     from xferbench.reports.html import write_run_report
 
+    _check_out(out)
     if not (run / "run_manifest.json").exists():
         _fail(f"{run} is not a run directory")
     write_run_report(run, out)
@@ -423,6 +436,7 @@ def compare_cmd(
     """Compare runs; refuses to rank runs with different data, split, stage, population or metrics."""
     from xferbench.reports.compare import CompareError, compare_runs
 
+    _check_out(out)
     try:
         res = compare_runs(runs, out, allow_incompatible)
     except CompareError as exc:
@@ -815,6 +829,7 @@ def fit_cmd(
     """Fit one method variant and save a versioned artifact with a manifest (production path)."""
     from xferbench import api
 
+    _check_out(out)
     api.configure_logging(json_logs=json_logs)
     try:
         model = api.fit(metadata, splits, method, selection_path=selection, stage=stage, seed=seed)
@@ -838,6 +853,7 @@ def forecast_cmd(
     from xferbench import api
     from xferbench.util import atomic_write_parquet, write_json
 
+    _check_out(out)
     api.configure_logging(json_logs=json_logs)
     if out.exists():
         _fail(f"{out} exists; forecasts are append-only (choose a new --out)", 2)

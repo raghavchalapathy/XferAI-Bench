@@ -93,7 +93,7 @@ From the method registry (`xferbench list-methods --all`; full table with reason
 | `M2` | Business rule H x P x S | implemented | Apache-2.0 | none | core (needs a propensity feature) |
 | `M3` | Your ramp/blend/calibration rule | config_required | Apache-2.0 | none | needs a recipe; never substituted |
 | `M4.lightgbm` | Global LightGBM (Poisson) | implemented | MIT | none | optional extra `lightgbm` |
-| `FM.chronos2` | Chronos-2 donor prior x households | experimental | Apache-2.0 | Apache-2.0 | licence-pinned; not Reviewer-recommended for PAIR0; extra `foundation` |
+| `FM.chronos2` | Chronos-2 donor prior x households | experimental | Apache-2.0 | Apache-2.0 | licence-pinned; not Reviewer-approved for PAIR0; extra `foundation` |
 | `FM.chronos_bolt` | Chronos-Bolt donor prior x households | experimental | Apache-2.0 | Apache-2.0 | same as above |
 | `FM.timesfm25` | TimesFM 2.5 donor prior x households | experimental | Apache-2.0 | Apache-2.0 | same as above; extra `timesfm` |
 | `M6.deepar_count` | GluonTS DeepAR (negative binomial) donor prior | experimental | Apache-2.0 | none | same as above; extra `neural` |

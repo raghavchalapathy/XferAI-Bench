@@ -93,14 +93,14 @@ Hashes: data <code>{{ m.dataset_hash|short }}</code> split <code>{{ m.split_hash
 
 <h2 id="leaderboard">{{ ranking_heading }} (cold_c0 board)</h2>
 <p class="banner">{{ ranking_note }}</p>
-<p class="muted">{% if synthetic %}Synthetic run: rows are alphabetical by variant and are not ranked. Metrics use the{% else %}Ranked by the{% endif %} <abbr title="{{ glossary['Equal-scenario objective'] }}" tabindex="0">equal-scenario objective</abbr>; each scenario is shown separately. <abbr title="{{ glossary['WMAPE'] }}" tabindex="0">WMAPE</abbr>, <abbr title="{{ glossary['Bias'] }}" tabindex="0">Bias</abbr>, <abbr title="{{ glossary['Coverage'] }}" tabindex="0">coverage</abbr>. Units: item units per week.</p>
+<p class="muted">{% if synthetic %}Synthetic run: rows are alphabetical by variant; the order carries no meaning. Metrics use the{% else %}Ranked by the{% endif %} <abbr title="{{ glossary['Equal-scenario objective'] }}" tabindex="0">equal-scenario objective</abbr>; each scenario is shown separately. <abbr title="{{ glossary['WMAPE'] }}" tabindex="0">WMAPE</abbr>, <abbr title="{{ glossary['Bias'] }}" tabindex="0">Bias</abbr>, <abbr title="{{ glossary['Coverage'] }}" tabindex="0">coverage</abbr>. Units: item units per week.</p>
 <div class="tw"><table>
 <thead><tr>{% if not synthetic %}<th>Rank</th>{% endif %}<th>Variant</th><th class="n">WMAPE E</th><th class="n">WMAPE N</th><th class="n">Bias E</th><th class="n">Bias N</th><th class="n">Objective</th><th class="n">Coverage E/N</th><th class="n"><abbr title="{{ glossary['Fallback'] }}" tabindex="0">Fallback</abbr> weeks</th><th class="n"><abbr title="Total forecast units on launches whose 52-week actual total is zero (E / N)" tabindex="0">Zero-sale units</abbr> E/N</th></tr></thead>
 <tbody>
 {% for e in ranked %}{% set E = e.scenarios['PAIR0-E'] %}{% set N = e.scenarios['PAIR0-N'] %}
 <tr>{% if not synthetic %}<td>{{ e.rank.objective }}</td>{% endif %}<td><code>{{ e.variant_id }}</code></td><td class="n">{{ E.WMAPE|pct }}</td><td class="n">{{ N.WMAPE|pct }}</td><td class="n">{{ E.Bias|pct }}</td><td class="n">{{ N.Bias|pct }}</td><td class="n">{{ e.objective|pct }}</td><td class="n">{{ E.coverage|pct }} / {{ N.coverage|pct }}</td><td class="n">{{ E.n_fallback + N.n_fallback }}</td><td class="n">{{ E.all_zero_launch_forecast_units|num(1) }} ({{ E.n_all_zero_launches }}) / {{ N.all_zero_launch_forecast_units|num(1) }} ({{ N.n_all_zero_launches }})</td></tr>
 {% endfor %}
-{% for e in unrankable %}<tr>{% if not synthetic %}<td>&ndash;</td>{% endif %}<td><code>{{ e.variant_id }}</code> <span class="pill bad">unrankable</span></td><td colspan="8">{{ e.objective_reason }}</td></tr>{% endfor %}
+{% for e in unrankable %}<tr>{% if not synthetic %}<td>&ndash;</td>{% endif %}<td><code>{{ e.variant_id }}</code> <span class="pill bad">{{ "incomplete" if synthetic else "unrankable" }}</span></td><td colspan="8">{{ e.objective_reason }}</td></tr>{% endfor %}
 </tbody></table></div>
 <p><a download="leaderboard.csv" href="{{ lb_uri }}">Export leaderboard (CSV)</a>{% if slices_uri %} &middot; <a download="slices.csv" href="{{ slices_uri }}">Export slices (CSV)</a>{% endif %}</p>
 
@@ -115,7 +115,7 @@ Hashes: data <code>{{ m.dataset_hash|short }}</code> split <code>{{ m.split_hash
 <details><summary>Horizon slice table</summary>{% set rows = horizon %}{% include "slice_table.html.j2" %}</details>
 
 <h2 id="slices">Category, region, intermittency and availability</h2>
-<p class="muted">{% if synthetic %}All variants, alphabetical (synthetic: not a ranking).{% else %}Best variant per family.{% endif %} Intermittency and availability groups are defined from realized outcomes and are diagnostic only (never used for selection). Sample counts are shown; small groups are noisy.</p>
+<p class="muted">{% if synthetic %}All variants, alphabetical (synthetic: order carries no meaning).{% else %}Best variant per family.{% endif %} Intermittency and availability groups are defined from realized outcomes and are diagnostic only (never used for selection). Sample counts are shown; small groups are noisy.</p>
 <details><summary>By category</summary>{% set rows = category %}{% include "slice_table.html.j2" %}</details>
 <details><summary>By region</summary>{% set rows = region %}{% include "slice_table.html.j2" %}</details>
 <details><summary>By intermittency</summary>{% set rows = intermittency %}{% include "slice_table.html.j2" %}</details>
@@ -135,7 +135,7 @@ Hashes: data <code>{{ m.dataset_hash|short }}</code> split <code>{{ m.split_hash
 </tbody></table></div>
 <p><a download="method_support.csv" href="{{ support_uri }}">Export method support (CSV)</a></p>
 
-<h2 id="fixtures">Edge fixtures (unranked)</h2>
+<h2 id="fixtures">Edge fixtures ({{ "separate board" if synthetic else "unranked" }})</h2>
 <p class="muted">Deliberate edge cases kept off the main board: partial launch week, heavy stockouts, missing target weeks, missing propensity, unseen category, unknown location attributes. They show visible failures and fallbacks instead of silent zeros.</p>
 {% if fixtures %}
 <div class="tw"><table><thead><tr><th>Fixture</th><th>Variant</th><th>Statuses (rows)</th><th>Reasons</th></tr></thead><tbody>
@@ -159,9 +159,9 @@ Hashes: data <code>{{ m.dataset_hash|short }}</code> split <code>{{ m.split_hash
 <h2 id="definitions">Definitions and limitations</h2>
 <ul>{% for k, v in glossary.items() %}<li><strong>{{ k }}</strong>: {{ v }}</li>{% endfor %}</ul>
 <ul>{% for l in m.limitations %}<li>{{ l }}</li>{% endfor %}
-<li>Ranked rows share dataset, request population, split, origins, horizon, target, aggregation, metrics and information budget (zero own-pair history). Warm-history, donor-only and cold-composite boards are separate.</li>
+<li>{{ "Main-board rows" if synthetic else "Ranked rows" }} share dataset, request population, split, origins, horizon, target, aggregation, metrics and information budget (zero own-pair history). Warm-history, donor-only and cold-composite boards are separate.</li>
 <li>Literature priorities and published scores are never shown as executed results here.</li>
-<li>Point statistic for every ranked recipe: expected units (mean). No quantiles are reported.</li></ul>
+<li>Point statistic for every {{ "main-board" if synthetic else "ranked" }} recipe: expected units (mean). No quantiles are reported.</li></ul>
 
 <footer>Generated locally by xferbench {{ version }}. No external assets, scripts, tracking or uploads. Software {{ m.software.packages }} on {{ m.hardware.platform }}.</footer>
 </main>

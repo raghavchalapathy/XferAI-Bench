@@ -11,7 +11,7 @@ benchmark has been run. The bundled synthetic data only tests that the software 
   national rate, extra row); business rules M1, M2; M3 as config_required (never substituted).
 - M4.lightgbm (optional `lightgbm` extra).
 - Experimental, licence-pinned donor-prior adapters FM.chronos2, FM.chronos_bolt, FM.timesfm25 and M6.deepar_count,
-  tested with fake backends only and not Reviewer-recommended for PAIR0.
+  tested with fake backends only and not Reviewer-approved for PAIR0.
 - Shared retail hierarchy: rates item -> subcategory -> product type, seasonality category -> product type;
   levels recorded per forecast and in the run manifest.
 - Origin-scoped contexts with leakage tests, chronological splits, validation-only selection, and an HTML report.

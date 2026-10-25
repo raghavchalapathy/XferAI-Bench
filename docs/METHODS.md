@@ -82,7 +82,7 @@ Code licences, model weights and services are separate rights. `FM.timesfm3`, `F
 `FM.tabpfn_ts` are `license_blocked` because their default weights are non-commercial or research-only;
 TimeGPT is deferred by the user and not listed. Nothing downloads weights or calls a service by default. See [THIRD_PARTY_NOTICES.md](../THIRD_PARTY_NOTICES.md).
 
-## Licence-pinned donor-prior composites (not Reviewer-recommended for PAIR0)
+## Licence-pinned donor-prior composites (not Reviewer-approved for PAIR0)
 
 `FM.chronos2`, `FM.chronos_bolt` (tiny/mini/small/base), `FM.timesfm25` and `M6.deepar_count` are `experimental`,
 `donor_only` composites: the backend forecasts the item's donor/national weekly rate per household from the

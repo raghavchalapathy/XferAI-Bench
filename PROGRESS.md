@@ -164,7 +164,7 @@ ablation not added (kept out to avoid any anchor division in the default path).
   (tiny/mini/small/base variants), FM.timesfm25, M6.deepar_count. experimental, donor_only composite: backend
   forecasts the item's origin-scoped donor rate per household, allocated by target households. Code pins from R3,
   HF weight revisions from pins.v2. Lazy imports; weights from local cache only unless
-  XFERBENCH_ALLOW_WEIGHT_DOWNLOAD=1; tested with fake backends only. Not Reviewer-recommended for PAIR0.
+  XFERBENCH_ALLOW_WEIGHT_DOWNLOAD=1; tested with fake backends only. Not Reviewer-approved for PAIR0.
   pytorch-forecasting / neuralforecast: no registry entry fits the C0 board (all warm_reference), so none added.
   M4.xgboost / M4.catboost: not covered by the R3 pins, left unimplemented.
 - B2 = H_target x similar-FPG per-household rate (no shrinkage); B3 = B2 shrunk toward the national rate (old

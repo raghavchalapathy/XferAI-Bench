@@ -54,7 +54,20 @@ def repo(tmp_path_factory: pytest.TempPathFactory) -> tuple[Path, str]:
     out.append(_run(repo, shlex.split("xferbench demo --out ./xb-demo")))
     out.append(_run(repo, _readme_block("### Methods in order, and your own data")[0]))
     out.append(_run(repo, shlex.split("xferbench init --path ./my-bench")))
+    # V2-1: every other writing command, with documented ./work/ outputs
+    for cmd in WRITERS:
+        out.append(_run(repo, shlex.split(cmd)))
     return repo, "\n".join(out)
+
+
+D = "--metadata ./work/data/metadata.json --splits ./work/splits.json"
+WRITERS = [
+    "xferbench validate --metadata ./work/data/metadata.json --out ./work/data_quality.json",
+    "xferbench compare --runs ./work/validation-run --runs ./work/test-run --allow-incompatible --out ./work/compare",
+    f"xferbench fit {D} --method B0 --out ./work/model",
+    f"xferbench forecast --model ./work/model {D} --out ./work/fc.parquet",
+    "xferbench synth generate --preset tiny --out ./work/data2",
+]
 
 
 def test_no_unignored_run_outputs_or_ranking_words(repo: tuple[Path, str]) -> None:
@@ -84,7 +97,7 @@ def test_no_unignored_run_outputs_or_ranking_words(repo: tuple[Path, str]) -> No
 def test_cli_output_never_says_recommended(repo: tuple[Path, str]) -> None:
     _, out = repo
     assert "recommended" not in out.lower()
-    assert "selected on validation:" in out
+    assert "selected on validation" in out
 
 
 def test_init_readme_points_outputs_to_work(repo: tuple[Path, str]) -> None:
@@ -99,6 +112,15 @@ def test_init_readme_points_outputs_to_work(repo: tuple[Path, str]) -> None:
         "xferbench demo --out ./bad-out",
         "xferbench steps --benchmark synthetic-tiny@1.1.0 --out ./bad-out",
         "xferbench run --benchmark synthetic-tiny@1.1.0 --benchmark-data ./work/bd --splits ./s.json --stage validation --out ./bad-out",
+        # V2-1: every other writing command (inputs need not exist: the check runs first)
+        "xferbench select --validation-run ./work/validation-run --out ./bad-out",
+        "xferbench report --run ./work/test-run --out ./bad-out",
+        "xferbench compare --runs ./work/a --runs ./work/b --out ./bad-out",
+        "xferbench fit --metadata ./work/m.json --splits ./work/s.json --method B0 --out ./bad-out",
+        "xferbench forecast --model ./work/model --metadata ./work/m.json --splits ./work/s.json --out ./bad-out",
+        "xferbench synth generate --preset tiny --out ./bad-out",
+        "xferbench split --metadata ./work/m.json --out ./bad-out",
+        "xferbench validate --metadata ./work/m.json --out ./bad-out",
     ],
 )
 def test_every_run_mode_refuses_unignored_out(tmp_path: Path, argv: str) -> None:
