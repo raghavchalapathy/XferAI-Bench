@@ -136,3 +136,10 @@ def test_report_labels_numbers_separately() -> None:
 def test_no_vendored_gtm_code() -> None:
     hits = [p for p in ROOT.rglob("*.py") if "GTM" in p.name or p.name == "data_multitrends.py"]
     assert not [p for p in hits if ".venv" not in p.parts]
+
+
+def test_reviewer_record_points_at_citation_check() -> None:
+    rec = PAPER["reviewer_record"]
+    assert rec.startswith("citation-checked: factory/inbox/reviewer/usability-v4-v2-review-20261024/review.md")
+    assert "fd0d8ceacf2bcf7ca500376cf51169214084c0c79cb0fa42f23aa9867df95911" in rec
+    assert "reproduction pending" in rec and PAPER["reproduction"] == "pending"

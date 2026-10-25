@@ -32,7 +32,12 @@ PAPER = {
     "table": "p.11, Table 1 (VISUELLE), row GTM-Transformer [T+I+G], column group '6 Weeks, G.Trends: 52 weeks', WAPE",
     "wape_reported": 55.2,
     "quote": "row text (p.11, Table 1; pdftotext -layout, spaces collapsed): GTM-Transformer [T+I+G] 55,2 30,2(15;36) 0,41 0,33",
-    "reviewer_record": "pending",
+    "reviewer_record": (
+        "citation-checked: factory/inbox/reviewer/usability-v4-v2-review-20261024/review.md sha256 "
+        "fd0d8ceacf2bcf7ca500376cf51169214084c0c79cb0fa42f23aa9867df95911 "
+        "(citation check only; paper-reported; reproduction pending)"
+    ),
+    "reproduction": "pending",
     "accessed": "2026-10-24",
 }
 

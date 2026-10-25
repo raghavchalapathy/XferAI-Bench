@@ -33,6 +33,7 @@ paper_reported:
   where: "p.11, Table 1, row GTM-Transformer [T+I+G]; column group '6 Weeks, G.Trends: 52 weeks', column WAPE"
   row_text: "GTM-Transformer [T+I+G] 55,2 30,2(15;36) 0,41 0,33"   # row text from the PDF (pdftotext -layout, spaces collapsed); first value = WAPE
   pdf_sha256: 8773c5ecaa26794b26cfdd9cdfcbbc6abe76fa54164ab0eb0da96cffecbc3455  # arXiv v6 PDF checked
-  reviewer_record: pending
+  reviewer_record: "citation-checked: factory/inbox/reviewer/usability-v4-v2-review-20261024/review.md sha256 fd0d8ceacf2bcf7ca500376cf51169214084c0c79cb0fa42f23aa9867df95911 (citation check only; paper-reported; reproduction pending)"
+  reproduction: pending   # GTM not run; VISUELLE not downloaded
   source: https://arxiv.org/pdf/2109.09824v6
   accessed: 2026-10-24
