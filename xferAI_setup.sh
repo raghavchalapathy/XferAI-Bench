@@ -15,7 +15,7 @@ TOTAL=7
 LOG=".xferai-setup.log"
 VENV=".venv"
 
-PYTHON_REQ=""; INSTALL_UV=1; WITH_LGBM=0; WITH_SPARK=0; DEMO=1; QUIET=0; VERBOSE=0
+PYTHON_REQ=""; INSTALL_UV=1; WITH_LGBM=1; WITH_SPARK=0; DEMO=1; QUIET=0; VERBOSE=0
 NONINTERACTIVE=0; DRY_RUN=0; YES_OWN=0; STEP=0; STEP_NAME="start"
 
 usage() {
@@ -29,7 +29,9 @@ No flags are required. Safe to run again.
 Options:
   --python VERSION|PATH  Python to use (3.11 or newer), e.g. 3.13 or /usr/bin/python3.11
   --no-install-uv        Do not install uv; use python -m venv + pip if uv is missing
-  --with-lightgbm        Also install the lightgbm extra
+  --with-lightgbm        Install the lightgbm extra (the default; runs M4.lightgbm in the demo experiment)
+  --minimal              Skip the lightgbm extra (smaller install; M4.lightgbm is then listed as not run)
+  --no-lightgbm          Same as --minimal
   --with-spark           Also install the distributed (Spark) extra
   --no-demo              Skip the offline demo
   --yes-own-data         Print the "your own data" instructions without asking
@@ -57,6 +59,7 @@ while [ $# -gt 0 ]; do
     --python=*) PYTHON_REQ="${1#--python=}"; [ -n "$PYTHON_REQ" ] || usage_error "--python needs a value" ;;
     --no-install-uv) INSTALL_UV=0 ;;
     --with-lightgbm) WITH_LGBM=1 ;;
+    --no-lightgbm|--minimal) WITH_LGBM=0 ;;
     --with-spark) WITH_SPARK=1 ;;
     --no-demo) DEMO=0 ;;
     --yes-own-data) YES_OWN=1 ;;
@@ -79,9 +82,15 @@ if [ -t 1 ] && [ -z "${NO_COLOR:-}" ] && [ "${TERM:-}" != dumb ]; then
 else G=""; R=""; Y=""; B=""; N=""; fi
 
 say() { [ "$QUIET" = 1 ] || printf '%s\n' "$*"; }
+warn() { printf '%s\n' "${Y}  warning: $*${N}" >&2; log "WARNING: $*"; }
 log() { printf '%s\n' "$*" >> "$LOG"; }
-begin() { STEP=$((STEP + 1)); STEP_NAME="$1"; log "== [$STEP/$TOTAL] $1"; }
-ok() { say "${G}[$STEP/$TOTAL] $OK${N} $STEP_NAME${1:+ - $1}"; log "ok: $STEP_NAME ${1:-}"; }
+now_ms() {  # bash 5 has EPOCHREALTIME (microseconds); bash 3.2 (macOS) falls back to whole seconds
+  if [ -n "${EPOCHREALTIME:-}" ]; then local t="${EPOCHREALTIME/[.,]/}"; echo $((10#$t / 1000)); else echo $((SECONDS * 1000)); fi
+}
+elapsed() { local d=$(($(now_ms) - T0)); printf '%d.%d s' $((d / 1000)) $((d % 1000 / 100)); }
+T0=0
+begin() { STEP=$((STEP + 1)); STEP_NAME="$1"; T0="$(now_ms)"; log "== [$STEP/$TOTAL] $1 ($(date '+%H:%M:%S'))"; }
+ok() { local e; e="$(elapsed)"; say "${G}[$STEP/$TOTAL] $OK${N} $STEP_NAME${1:+ - $1} ($e)"; log "ok: $STEP_NAME ${1:-} ($e)"; }
 fail() {  # fail "what went wrong" "one-line fix"
   printf '%s\n' "${R}[$STEP/$TOTAL] $BAD $STEP_NAME: $1${N}" >&2
   printf '%s\n' "  Fix: $2" >&2
@@ -150,9 +159,10 @@ say "Plan:"
 case "$MODE" in
   uv) say "  - use uv: uv sync --locked$(for e in $EXTRAS; do printf ' --extra %s' "$e"; done)${PYTHON_REQ:+ --python $PYTHON_REQ} into $VENV" ;;
   uv-install) say "  - install uv $UV_VERSION for your user only (from $UV_INSTALLER_URL), then uv sync --locked$(for e in $EXTRAS; do printf ' --extra %s' "$e"; done)" ;;
-  pip) say "  - no uv: python -m venv $VENV, then pip install -c constraints/core.txt -e .[$(echo "$EXTRAS" | tr -s ' ' ',')]" ;;
+  pip) say "  - no uv: python -m venv $VENV, then pip install -c constraints/core.txt -c constraints/extras.txt -e .[$(echo "$EXTRAS" | tr -s ' ' ',')]" ;;
 esac
 say "  - run: xferbench doctor --profile core"
+[ "$WITH_LGBM" = 1 ] && say "  - lightgbm extra (for M4.lightgbm): on by default; if it cannot be installed here, setup warns and continues without it (--minimal skips it)"
 [ "$DEMO" = 1 ] && say "  - run: xferbench demo --preset tiny --out xb-demo (offline, synthetic)"
 if [ "$DRY_RUN" = 1 ]; then say "Dry run: nothing was changed."; trap - ERR; exit 0; fi
 say ""
@@ -222,18 +232,37 @@ fi
 
 # ---- 5. install -----------------------------------------------------------------------------------------------
 begin "Install XferAI-Bench (extras: $EXTRAS)"
-if [ "$MODE" = uv ]; then
-  EXOPT=(); for e in $EXTRAS; do EXOPT+=(--extra "$e"); done
-  UV_PROJECT_ENVIRONMENT="$VENV" run uv sync --locked ${PYTHON_REQ:+--python "$PYTHON_REQ"} "${EXOPT[@]}" \
-    || fail "uv sync --locked failed" "if uv.lock is out of date run 'uv lock', or see the log"
-  ok "from uv.lock"
+LGBM_OK="$WITH_LGBM"; LGBM_WHY=""
+CORE_EXTRAS="$(for e in $EXTRAS; do [ "$e" = lightgbm ] || printf '%s ' "$e"; done)"; CORE_EXTRAS="${CORE_EXTRAS% }"
+# shellcheck disable=SC2317,SC2329  # called indirectly via "$INSTALL" below
+install_uv() {  # install_uv "extras ..."
+  local exopt=() e; for e in $1; do exopt+=(--extra "$e"); done
+  UV_PROJECT_ENVIRONMENT="$VENV" run uv sync --locked ${PYTHON_REQ:+--python "$PYTHON_REQ"} "${exopt[@]}"
+}
+# shellcheck disable=SC2317,SC2329  # called indirectly via "$INSTALL" below
+install_pip() {  # install_pip "extras ..."
+  run "$BIN/python" -m pip install -c constraints/core.txt -c constraints/extras.txt -e ".[$(echo "$1" | tr -s ' ' ',')]"
+}
+if [ "$MODE" = uv ]; then INSTALL=install_uv; HOW="from uv.lock"; FIXIT="if uv.lock is out of date run 'uv lock', or see the log"
 else
-  SPEC=".[$(echo "$EXTRAS" | tr -s ' ' ',')]"
+  INSTALL=install_pip; HOW="with pip and constraints/core.txt + constraints/extras.txt"; FIXIT="check your connection or PIP_INDEX_URL, or see the log"
   run "$BIN/python" -m pip install -q --upgrade pip || fail "pip could not be upgraded" "check your connection or PIP_INDEX_URL, then run this again"
-  run "$BIN/python" -m pip install -c constraints/core.txt -e "$SPEC" \
-    || fail "pip install failed" "check your connection or PIP_INDEX_URL, or see the log"
-  ok "with pip and constraints/core.txt"
 fi
+if ! "$INSTALL" "$EXTRAS"; then
+  [ "$WITH_LGBM" = 1 ] || fail "$([ "$MODE" = uv ] && echo "uv sync --locked" || echo "pip install") failed" "$FIXIT"
+  # lightgbm may have no wheel for this platform: retry without it so the core install still works
+  log "install with lightgbm failed; retrying without the lightgbm extra"
+  "$INSTALL" "$CORE_EXTRAS" || fail "$([ "$MODE" = uv ] && echo "uv sync --locked" || echo "pip install") failed" "$FIXIT"
+  LGBM_OK=0; LGBM_WHY="lightgbm could not be installed on $OS $ARCH (no usable wheel?; see $LOG)"
+fi
+if [ "$LGBM_OK" = 1 ] && ! run "$BIN/python" -c "import lightgbm"; then
+  # installed but not importable (e.g. macOS without libomp): remove it so M4.lightgbm is reported as not installed
+  LGBM_OK=0; LGBM_WHY="lightgbm was installed but does not import (macOS: brew install libomp; see $LOG)"
+  if [ "$MODE" = uv ]; then "$INSTALL" "$CORE_EXTRAS" || true; else run "$BIN/python" -m pip uninstall -y lightgbm || true; fi
+fi
+if [ "$LGBM_OK" = 1 ]; then ok "$HOW"
+elif [ "$WITH_LGBM" = 1 ]; then EXTRAS="$CORE_EXTRAS"; ok "$HOW, without lightgbm"; warn "$LGBM_WHY. Continuing without it: M4.lightgbm will be skipped."
+else ok "$HOW (lightgbm skipped: --minimal)"; fi
 
 # ---- 6. doctor ------------------------------------------------------------------------------------------------
 begin "Health check (xferbench doctor --profile core)"
@@ -245,7 +274,7 @@ begin "Offline demo (tiny synthetic data)"
 if [ "$DEMO" = 1 ]; then
   rm -rf xb-demo  # our own output folder (git-ignored); recreated on every run so re-runs stay identical
   run "$BIN/xferbench" demo --preset tiny --out xb-demo || fail "the demo failed" "see the log; run 'bash xferAI_setup.sh --no-demo' to skip it"
-  ok "open xb-demo/report.html"
+  ok "health check of the whole pipeline; open xb-demo/report.html"
 else
   ok "skipped (--no-demo)"
 fi
@@ -257,19 +286,32 @@ say ""
 say "${G}${B}Done.${N} Installed XferAI-Bench into $VENV with $MODE (extras: $EXTRAS); doctor passed."
 [ "$DEMO" = 1 ] && say "The tiny demo report is at xb-demo/report.html. Setup log: $LOG"
 say ""
-cat setup/next_demo.txt
+# pip mode: lead with the .venv command; "uv run" is the alternative (S-09)
+for_mode() {
+  if [ "$MODE" = pip ]; then
+    awk -v b="$BIN/xferbench" '
+      /same without uv: / { sub(/same without uv: [^ ]*xferbench/, "same with uv:     uv run xferbench"); print; next }
+      /Without uv, use / { print "  These commands use " b " (pip install, no uv); with uv, \"uv run xferbench\" does the same."; next }
+      { gsub(/uv run xferbench/, b); print }' "$1"
+  else cat "$1"; fi
+}
+for_mode setup/next_demo.txt
+if [ "$LGBM_OK" != 1 ]; then
+  say "  Note: M4.lightgbm will be skipped in this demo ($([ "$WITH_LGBM" = 1 ] && echo "$LGBM_WHY" || echo "--minimal")). To enable it: re-run bash xferAI_setup.sh --with-lightgbm"
+fi
 say ""
-show_own() { echo; cat setup/own_data.txt; }
+show_own() { for_mode setup/own_data.txt; }
 if [ "$YES_OWN" = 1 ]; then
-  show_own
+  echo; show_own
 elif [ "$INTERACTIVE" = 1 ]; then
   printf 'Do you want to run on your own data? [y/N] '
   ANSWER=""; read -r ANSWER || ANSWER=""
+  echo  # end the prompt line even when the answer is not echoed (piped or scripted input)
   case "$ANSWER" in
     y|Y|yes|YES|Yes) show_own ;;
-    *) echo "OK. Start with the demo above: docs/GETTING_STARTED.md Step 1, and experiments/README.md." ;;
+    *) echo "OK. Start with the demo above: GETTING_STARTED.md Step 1, and experiments/README.md." ;;
   esac
 else
-  echo "(Not asking about your own data: non-interactive. Run with --yes-own-data, or see docs/GETTING_STARTED.md Step 2.)"
+  echo "(Not asking about your own data: non-interactive. Run with --yes-own-data, or see GETTING_STARTED.md Step 2.)"
 fi
 exit 0

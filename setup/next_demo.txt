@@ -1,12 +1,14 @@
 Next: run a demo experiment (offline, synthetic data)
+  Why a second demo: xb-demo above was the setup health check; exp01 is a full experiment folder you copy for your own data.
   uv run xferbench experiment run exp01_synthetic_lightgbm_analogs
   same without uv: .venv/bin/xferbench experiment run exp01_synthetic_lightgbm_analogs
                    (Windows: .venv\Scripts\xferbench experiment run exp01_synthetic_lightgbm_analogs)
   Tier: synthetic (generated data: an interface test, not a result or a ranking)
   Output: eval/exp01_synthetic_lightgbm_analogs__synthetic/ (eval/<id>__<tier>; -2, -3, ... if it already exists)
   Data: the built-in tiny synthetic retail preset, seed 42. Models: baselines B0, B1, B2, B3 and methods M1, M2,
-        plus M4.lightgbm if you installed with --with-lightgbm.
+        plus M4.lightgbm (installed by default; skipped, with the reason and fix, if setup could not install lightgbm
+        or you used --minimal; re-run with --with-lightgbm to enable it).
   Runtime: measured on the maintainer's Linux box on 2026-10-24: 16 s (core install), 32 s (with lightgbm).
-  Open: SUMMARY.md, leaderboard.html and report.html in that output folder.
-  More: docs/GETTING_STARTED.md Step 1 (this demo), Step 2 (your own data), experiments/README.md
+  Open: SUMMARY.md, leaderboard.html and report.html in that output folder (the run prints their paths).
+  More: GETTING_STARTED.md Step 1 (this demo), Step 2 (your own data), experiments/README.md
   All experiments: uv run xferbench experiment list

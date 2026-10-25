@@ -1,0 +1,9 @@
+# GENERATED from uv.lock by scripts/export_constraints.sh -- do not edit by hand. Packages added by the
+# lightgbm and distributed extras, beyond constraints/core.txt. Use with:
+#   pip install -c constraints/core.txt -c constraints/extras.txt -e ".[dev,lightgbm]"
+lightgbm==4.7.0
+narwhals==2.27.1
+py4j==0.10.9.9
+pyspark==4.2.0
+scipy==1.17.1 ; python_full_version < '3.12'
+scipy==1.18.1 ; python_full_version >= '3.12'

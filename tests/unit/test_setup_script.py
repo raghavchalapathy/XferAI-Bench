@@ -21,7 +21,7 @@ SH = ROOT / "xferAI_setup.sh"
 PS1 = ROOT / "xferAI_setup.ps1"
 NEXT = (ROOT / "setup" / "next_demo.txt").read_text(encoding="utf-8")
 OWN = (ROOT / "setup" / "own_data.txt").read_text(encoding="utf-8")
-GS = ROOT / "docs" / "GETTING_STARTED.md"
+GS = ROOT / "GETTING_STARTED.md"
 posix_only = pytest.mark.skipif(
     os.name == "nt", reason="stubbed-PATH tests need a POSIX shell; Windows runs the ps1 job"
 )
@@ -58,7 +58,9 @@ TOOLS = (
 
 FAKE_PY = """#!/bin/sh
 # fake python 3.13: version checks, -m venv DIR, -m pip install ...
-if [ "$1" = -c ]; then case "$2" in *print*) echo 3.13.0;; *) exit 0;; esac; exit 0; fi
+if [ "$1" = -c ]; then case "$2" in *print*) echo 3.13.0;; *lightgbm*) echo "python $*" >> "$CALLS";
+  [ -n "$LGBM_IMPORT_FAIL" ] && exit 1;; *) exit 0;; esac; exit 0; fi
+case "$*" in *"pip install -c"*lightgbm*) [ -n "$PIP_LGBM_FAIL" ] && { echo "python $*" >> "$CALLS"; echo "no wheel" >&2; exit 1; };; esac
 if [ "$1" = -m ] && [ "$2" = venv ]; then
   mkdir -p "$3/bin"; echo "home = x" > "$3/pyvenv.cfg"; cp "$0" "$3/bin/python"; cp "$(dirname "$0")/fake-xferbench" "$3/bin/xferbench"
   echo "venv $3" >> "$CALLS"; exit 0; fi
@@ -68,9 +70,10 @@ FAKE_UV = """#!/bin/sh
 echo "uv $*" >> "$CALLS"
 case "$1" in
   --version) echo "uv 0.0.0-stub";;
-  venv) for a in "$@"; do d=$a; done; mkdir -p "$d/bin"; echo "home = x" > "$d/pyvenv.cfg"; cp "$STUBS/fake-xferbench" "$d/bin/xferbench";;
-  sync) [ -n "$UV_SYNC_FAIL" ] && { echo "boom" >&2; exit 1; }; d="${UV_PROJECT_ENVIRONMENT:-.venv}"; mkdir -p "$d/bin";
-        echo "home = x" > "$d/pyvenv.cfg"; cp "$STUBS/fake-xferbench" "$d/bin/xferbench";;
+  venv) for a in "$@"; do d=$a; done; mkdir -p "$d/bin"; echo "home = x" > "$d/pyvenv.cfg"; cp "$STUBS/fake-xferbench" "$d/bin/xferbench"; cp "$STUBS/python3.13" "$d/bin/python";;
+  sync) [ -n "$UV_SYNC_FAIL" ] && { echo "boom" >&2; exit 1; }
+        case "$*" in *"--extra lightgbm"*) [ -n "$UV_LGBM_FAIL" ] && { echo "no wheel for lightgbm" >&2; exit 1; };; esac; d="${UV_PROJECT_ENVIRONMENT:-.venv}"; mkdir -p "$d/bin";
+        echo "home = x" > "$d/pyvenv.cfg"; cp "$STUBS/fake-xferbench" "$d/bin/xferbench"; cp "$STUBS/python3.13" "$d/bin/python";;
 esac
 exit 0
 """
@@ -195,7 +198,11 @@ def test_pip_fallback_when_no_uv_and_no_install(env) -> None:
     r, calls = env("--no-install-uv", uv=False)
     assert r.returncode == 0, r.stderr
     assert "skipped (--no-install-uv)" in r.stdout
-    assert "venv .venv" in calls and "-m pip install -c constraints/core.txt -e .[dev]" in calls
+    assert "venv .venv" in calls
+    assert "-m pip install -c constraints/core.txt -c constraints/extras.txt -e .[dev,lightgbm]" in calls
+    nxt = r.stdout[r.stdout.index("Next:") :]
+    assert "  .venv/bin/xferbench experiment run exp01" in nxt and "same with uv:     uv run xferbench" in nxt
+    assert nxt.index(".venv/bin/xferbench") < nxt.index("uv run xferbench")  # S-09: pip mode leads with .venv
     assert "curl" not in calls
 
 
@@ -264,10 +271,70 @@ def test_own_data_prompt_on_a_tty(env, answer: str, yes: bool) -> None:
     assert "Do you want to run on your own data? [y/N]" in text
     assert ("1. Put your CSV or Parquet files" in text) is yes
     if not yes:
-        assert "docs/GETTING_STARTED.md Step 1" in text.split("[y/N]")[-1]
+        assert "GETTING_STARTED.md Step 1" in text.split("[y/N]")[-1]
+        assert "[y/N] OK." not in text
 
 
 def test_prompt_skipped_in_ci_and_non_interactive(env) -> None:
     for args, extra in ((("--non-interactive",), {}), ((), {"CI": "true"})):
         r, _ = env("--no-demo", *args, extra=extra)
         assert r.returncode == 0 and "Do you want" not in r.stdout and "Not asking" in r.stdout
+
+
+def test_lightgbm_is_installed_by_default_and_opt_out(env) -> None:
+    r, calls = env("--no-demo")
+    assert r.returncode == 0, r.stderr
+    assert "uv sync --locked --extra dev --extra lightgbm" in calls and "import lightgbm" in calls
+    assert "M4.lightgbm will be skipped" not in r.stdout
+    for flag in ("--minimal", "--no-lightgbm"):
+        if (env.repo / ".venv").exists():
+            shutil.rmtree(env.repo / ".venv")
+        r, calls = env("--no-demo", flag)
+        last = [ln for ln in calls.splitlines() if ln.startswith("uv sync")][-1]
+        assert r.returncode == 0 and "--extra lightgbm" not in last, flag
+        assert (
+            "lightgbm skipped: --minimal" in r.stdout
+            and "re-run bash xferAI_setup.sh --with-lightgbm" in r.stdout
+            and "M4.lightgbm will be skipped in this demo" in r.stdout
+        )
+
+
+@pytest.mark.parametrize(("uv", "extra"), [(True, {"UV_LGBM_FAIL": "1"}), (False, {"PIP_LGBM_FAIL": "1"})])
+def test_lightgbm_install_failure_warns_and_continues(env, uv: bool, extra: dict[str, str]) -> None:
+    args = ("--no-demo",) if uv else ("--no-demo", "--no-install-uv")
+    r, calls = env(*args, uv=uv, extra=extra)
+    assert r.returncode == 0, r.stderr
+    assert "warning: lightgbm could not be installed" in r.stderr and "M4.lightgbm will be skipped" in r.stderr
+    assert "M4.lightgbm will be skipped in this demo" in r.stdout
+    assert "without lightgbm" in r.stdout and "(extras: dev)" in r.stdout.split("Done.")[1]
+    if uv:
+        syncs = [ln for ln in calls.splitlines() if ln.startswith("uv sync")]
+        assert "--extra lightgbm" in syncs[-2] and "--extra lightgbm" not in syncs[-1]
+    else:
+        assert "-e .[dev,lightgbm]" in calls and calls.rstrip().count("pip install -c constraints/core.txt") >= 1
+    assert "WARNING: lightgbm could not be installed" in (env.repo / ".xferai-setup.log").read_text(encoding="utf-8")
+
+
+def test_lightgbm_that_does_not_import_is_removed(env) -> None:
+    r, calls = env("--no-demo", extra={"LGBM_IMPORT_FAIL": "1"})
+    assert r.returncode == 0, r.stderr
+    assert "does not import" in r.stderr and "M4.lightgbm will be skipped in this demo" in r.stdout
+    syncs = [ln for ln in calls.splitlines() if ln.startswith("uv sync")]
+    assert "--extra lightgbm" not in syncs[-1]
+
+
+def test_steps_show_elapsed_time_and_log_has_timestamps(env) -> None:
+    r, _ = env("--no-demo")
+    assert r.returncode == 0
+    for i in range(1, 8):
+        assert re.search(rf"\[{i}/7\] .*\(\d+\.\d s\)$", r.stdout, re.M), i
+    log = (env.repo / ".xferai-setup.log").read_text(encoding="utf-8")
+    assert re.search(r"^== \[1/7\] Check git \(\d\d:\d\d:\d\d\)$", log, re.M)
+    assert re.search(r"^ok: Check git .*\(\d+\.\d s\)$", log, re.M)
+
+
+def test_summary_and_prompt_details(env) -> None:
+    r, _ = env("--no-demo", "--yes-own-data")
+    assert "Why a second demo" in r.stdout
+    assert "\n\nYour own data" in r.stdout
+    assert "echo  # end the prompt line" in SH.read_text(encoding="utf-8")

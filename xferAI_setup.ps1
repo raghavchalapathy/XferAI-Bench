@@ -13,6 +13,8 @@ param(
     [string]$Python = "",
     [switch]$NoInstallUv,
     [switch]$WithLightgbm,
+    [switch]$NoLightgbm,
+    [switch]$Minimal,
     [switch]$WithSpark,
     [switch]$NoDemo,
     [switch]$YesOwnData,
@@ -44,7 +46,9 @@ Usage: powershell -ExecutionPolicy Bypass -File xferAI_setup.ps1 [options]
 Sets up XferAI-Bench in .\.venv. No options are required. Safe to run again.
   -Python VERSION|PATH  Python to use (3.11 or newer), e.g. 3.13
   -NoInstallUv          Do not install uv; use python -m venv + pip if uv is missing
-  -WithLightgbm         Also install the lightgbm extra
+  -WithLightgbm         Install the lightgbm extra (the default; runs M4.lightgbm in the demo experiment)
+  -Minimal              Skip the lightgbm extra (smaller install; M4.lightgbm is then listed as not run)
+  -NoLightgbm           Same as -Minimal
   -WithSpark            Also install the distributed (Spark) extra
   -NoDemo               Skip the offline demo
   -YesOwnData           Print the "your own data" instructions without asking
@@ -75,10 +79,16 @@ $useColor = (-not $env:NO_COLOR) -and (-not [Console]::IsOutputRedirected)
 
 function Write-Say([string]$Text) { if (-not $Quiet) { Write-Output $Text } }
 function Add-SetupLog([string]$Text) { Add-Content -Path $Log -Value $Text -Encoding utf8 }
-function Show-StepStart([string]$Name) { $script:Step++; $script:StepName = $Name; Add-SetupLog "== [$($script:Step)/$Total] $Name" }
+$script:Clock = [System.Diagnostics.Stopwatch]::StartNew()
+function Show-StepStart([string]$Name) {
+    $script:Step++; $script:StepName = $Name; $script:Clock.Restart()
+    Add-SetupLog "== [$($script:Step)/$Total] $Name ($(Get-Date -Format 'HH:mm:ss'))"
+}
+function Write-Warn([string]$Text) { [Console]::Error.WriteLine("  warning: $Text"); Add-SetupLog "WARNING: $Text" }
 function Write-Ok([string]$Detail = "") {
     $d = if ($Detail) { " - $Detail" } else { "" }
-    $line = "[$($script:Step)/$Total] $OkMark $($script:StepName)$d"
+    $secs = [string]::Format([System.Globalization.CultureInfo]::InvariantCulture, "{0:0.0} s", $script:Clock.Elapsed.TotalSeconds)
+    $line = "[$($script:Step)/$Total] $OkMark $($script:StepName)$d ($secs)"
     if ($Quiet) { return }
     if ($useColor) { Write-Output "$([char]27)[32m$line$([char]27)[0m" } else { Write-Output $line }
     Add-SetupLog "ok: $line"
@@ -127,7 +137,8 @@ function Find-Python {
 $py = Find-Python
 $haveUv = [bool](Get-Command uv -ErrorAction SilentlyContinue)
 $mode = if ($haveUv) { "uv" } elseif (-not $NoInstallUv) { "uv-install" } else { "pip" }
-$extras = @("dev"); if ($WithLightgbm) { $extras += "lightgbm" }; if ($WithSpark) { $extras += "distributed" }
+$withLgbm = -not ($NoLightgbm -or $Minimal) -or $WithLightgbm
+$extras = @("dev"); if ($withLgbm) { $extras += "lightgbm" }; if ($WithSpark) { $extras += "distributed" }
 $interactive = -not ($NonInteractive -or $env:CI -or [Console]::IsInputRedirected)
 $pyText = if ($py) { "$($py[2]) ($($py[0]))" } else { "not found" }
 $uvText = if ($haveUv) { "$(uv --version)" } else { "not found" }
@@ -141,9 +152,10 @@ $exArgs = @(); foreach ($e in $extras) { $exArgs += @("--extra", $e) }
 switch ($mode) {
     "uv" { Write-Say "  - use uv: uv sync --locked $($exArgs -join ' ') into $Venv" }
     "uv-install" { Write-Say "  - install uv $UvVersion for your user only (from $UvInstallerUrl), then uv sync --locked $($exArgs -join ' ')" }
-    "pip" { Write-Say "  - no uv: python -m venv $Venv, then pip install -c constraints/core.txt -e .[$($extras -join ',')]" }
+    "pip" { Write-Say "  - no uv: python -m venv $Venv, then pip install -c constraints/core.txt -c constraints/extras.txt -e .[$($extras -join ',')]" }
 }
 Write-Say "  - run: xferbench doctor --profile core"
+if ($withLgbm) { Write-Say "  - lightgbm extra (for M4.lightgbm): on by default; if it cannot be installed here, setup warns and continues without it (-Minimal skips it)" }
 if (-not $NoDemo) { Write-Say "  - run: xferbench demo --preset tiny --out xb-demo (offline, synthetic)" }
 if ($DryRun) { Write-Say "Dry run: nothing was changed."; exit 0 }
 Write-Say ""
@@ -204,17 +216,36 @@ elseif ($mode -eq "uv") {
 }
 
 Show-StepStart "Install XferAI-Bench (extras: $($extras -join ' '))"
-if ($mode -eq "uv") {
-    $env:UV_PROJECT_ENVIRONMENT = $Venv
-    $a = @("sync", "--locked") + $exArgs; if ($Python) { $a += @("--python", $Python) }
-    if (-not (Invoke-Logged "uv" $a)) { Write-Fail "uv sync --locked failed" "if uv.lock is out of date run 'uv lock', or see the log" }
-    Write-Ok "from uv.lock"
-} else {
-    $vpy = Join-Path $bin "python"
-    if (-not (Invoke-Logged $vpy @("-m", "pip", "install", "-q", "--upgrade", "pip"))) { Write-Fail "pip could not be upgraded" "check your connection or PIP_INDEX_URL" }
-    if (-not (Invoke-Logged $vpy @("-m", "pip", "install", "-c", "constraints/core.txt", "-e", ".[$($extras -join ',')]"))) { Write-Fail "pip install failed" "check your connection or PIP_INDEX_URL, or see the log" }
-    Write-Ok "with pip and constraints/core.txt"
+$lgbmOk = $withLgbm; $lgbmWhy = ""
+$coreExtras = @($extras | Where-Object { $_ -ne "lightgbm" })
+$vpy = Join-Path $bin "python"
+function Install-ExtraSet([string[]]$Ex) {
+    if ($mode -eq "uv") {
+        $env:UV_PROJECT_ENVIRONMENT = $Venv
+        $a = @("sync", "--locked"); foreach ($e in $Ex) { $a += @("--extra", $e) }; if ($Python) { $a += @("--python", $Python) }
+        return (Invoke-Logged "uv" $a)
+    }
+    return (Invoke-Logged $vpy @("-m", "pip", "install", "-c", "constraints/core.txt", "-c", "constraints/extras.txt", "-e", ".[$($Ex -join ',')]"))
 }
+if ($mode -eq "uv") { $how = "from uv.lock"; $what = "uv sync --locked failed"; $fixIt = "if uv.lock is out of date run 'uv lock', or see the log" }
+else {
+    $how = "with pip and constraints/core.txt + constraints/extras.txt"; $what = "pip install failed"; $fixIt = "check your connection or PIP_INDEX_URL, or see the log"
+    if (-not (Invoke-Logged $vpy @("-m", "pip", "install", "-q", "--upgrade", "pip"))) { Write-Fail "pip could not be upgraded" "check your connection or PIP_INDEX_URL" }
+}
+if (-not (Install-ExtraSet $extras)) {
+    if (-not $withLgbm) { Write-Fail $what $fixIt }
+    # lightgbm may have no wheel for this platform: retry without it so the core install still works
+    Add-SetupLog "install with lightgbm failed; retrying without the lightgbm extra"
+    if (-not (Install-ExtraSet $coreExtras)) { Write-Fail $what $fixIt }
+    $lgbmOk = $false; $lgbmWhy = "lightgbm could not be installed on $os $arch (no usable wheel?; see $Log)"
+}
+if ($lgbmOk -and -not (Invoke-Logged $vpy @("-c", "import lightgbm"))) {
+    $lgbmOk = $false; $lgbmWhy = "lightgbm was installed but does not import (see $Log)"
+    if ($mode -eq "uv") { $null = Install-ExtraSet $coreExtras } else { $null = Invoke-Logged $vpy @("-m", "pip", "uninstall", "-y", "lightgbm") }
+}
+if ($lgbmOk) { Write-Ok $how }
+elseif ($withLgbm) { $extras = $coreExtras; Write-Ok "$how, without lightgbm"; Write-Warn "$lgbmWhy. Continuing without it: M4.lightgbm will be skipped." }
+else { Write-Ok "$how (lightgbm skipped: -Minimal)" }
 
 $xb = Join-Path $bin "xferbench"
 Show-StepStart "Health check (xferbench doctor --profile core)"
@@ -225,7 +256,7 @@ Show-StepStart "Offline demo (tiny synthetic data)"
 if (-not $NoDemo) {
     if (Test-Path xb-demo) { Remove-Item -Recurse -Force xb-demo }
     if (-not (Invoke-Logged $xb @("demo", "--preset", "tiny", "--out", "xb-demo"))) { Write-Fail "the demo failed" "see the log; run with -NoDemo to skip it" }
-    Write-Ok "open $(Join-Path xb-demo report.html)"
+    Write-Ok "health check of the whole pipeline; open $(Join-Path xb-demo report.html)"
 } else { Write-Ok "skipped (-NoDemo)" }
 
 if ($Quiet) { Write-Output "XferAI-Bench is ready in $Venv ($mode, extras: $($extras -join ' '))."; exit 0 }
@@ -233,14 +264,30 @@ Write-Output ""
 Write-Output "Done. Installed XferAI-Bench into $Venv with $mode (extras: $($extras -join ' ')); doctor passed."
 if (-not $NoDemo) { Write-Output "The tiny demo report is at $(Join-Path xb-demo report.html). Setup log: $Log" }
 Write-Output ""
-Get-Content -Encoding utf8 setup\next_demo.txt | Write-Output
+# pip mode: lead with the .venv command; "uv run" is the alternative (S-09)
+function Get-ForMode([string]$Path) {
+    $lines = Get-Content -Encoding utf8 $Path
+    if ($mode -ne "pip") { return $lines }
+    $xbCmd = Join-Path $bin "xferbench"
+    foreach ($l in $lines) {
+        if ($l -match 'same without uv: ') { $l -replace 'same without uv: \S*xferbench', 'same with uv:     uv run xferbench' }
+        elseif ($l -match 'Without uv, use ') { "  These commands use $xbCmd (pip install, no uv); with uv, ""uv run xferbench"" does the same." }
+        else { $l.Replace("uv run xferbench", $xbCmd) }
+    }
+}
+Get-ForMode setup\next_demo.txt | Write-Output
+if (-not $lgbmOk) {
+    $why = if ($withLgbm) { $lgbmWhy } else { "-Minimal" }
+    Write-Output "  Note: M4.lightgbm will be skipped in this demo ($why). To enable it: re-run .\xferAI_setup.ps1 -WithLightgbm"
+}
 Write-Output ""
-if ($YesOwnData) { Write-Output ""; Get-Content -Encoding utf8 setup\own_data.txt | Write-Output }
+if ($YesOwnData) { Write-Output ""; Get-ForMode setup\own_data.txt | Write-Output }
 elseif ($interactive) {
     $answer = Read-Host "Do you want to run on your own data? [y/N]"
-    if ($answer -match '^(y|yes)$') { Write-Output ""; Get-Content -Encoding utf8 setup\own_data.txt | Write-Output }
-    else { Write-Output "OK. Start with the demo above: docs/GETTING_STARTED.md Step 1, and experiments/README.md." }
+    Write-Output ""
+    if ($answer -match '^(y|yes)$') { Get-ForMode setup\own_data.txt | Write-Output }
+    else { Write-Output "OK. Start with the demo above: GETTING_STARTED.md Step 1, and experiments/README.md." }
 } else {
-    Write-Output "(Not asking about your own data: non-interactive. Run with -YesOwnData, or see docs/GETTING_STARTED.md Step 2.)"
+    Write-Output "(Not asking about your own data: non-interactive. Run with -YesOwnData, or see GETTING_STARTED.md Step 2.)"
 }
 exit 0
