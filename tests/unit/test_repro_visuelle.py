@@ -11,6 +11,7 @@ import polars as pl
 import pytest
 from typer.testing import CliRunner
 
+from tests._bash import BASH_EXE
 from xferbench.cli.main import app
 from xferbench.experiments.workspace import ResearchOnlyError, list_experiments, run_all, run_one
 from xferbench.repro.visuelle import PAPER, GtmWrapper, ReproError, adapt_visuelle, report_markdown, wape
@@ -68,11 +69,11 @@ def test_cli_list_hides_and_run_requires_flag() -> None:
         os.chdir(cwd)
 
 
-@pytest.mark.skipif(shutil.which("bash") is None or os.name == "nt", reason="bash script")
+@pytest.mark.skipif(BASH_EXE is None, reason="needs a real bash (not the WSL launcher stub)")
 def test_download_refuses_without_acceptance_and_writes_nothing() -> None:
     before = _tracked_and_untracked()
     p = subprocess.run(
-        ["bash", str(SCRIPT), "--archive", "/nonexistent.zip"], cwd=ROOT, input="I ACCEPT THE VISUELLE TERMS\n",
+        [BASH_EXE, SCRIPT.as_posix(), "--archive", "/nonexistent.zip"], cwd=ROOT, input="I ACCEPT THE VISUELLE TERMS\n",
         capture_output=True, text=True, encoding="utf-8", check=False,
     )  # fmt: skip
     assert p.returncode == 3 and "interactive" in p.stderr
@@ -80,11 +81,11 @@ def test_download_refuses_without_acceptance_and_writes_nothing() -> None:
     assert not (ROOT / "data" / "visuelle" / "input" / "raw").exists()
 
 
-@pytest.mark.skipif(shutil.which("bash") is None or os.name == "nt", reason="bash script")
+@pytest.mark.skipif(BASH_EXE is None, reason="needs a real bash (not the WSL launcher stub)")
 @pytest.mark.parametrize("dest", ["src/xferbench", "data/visuelle/metadata", "data/../src", "experiments"])
 def test_download_refuses_tracked_destinations(dest: str) -> None:
     p = subprocess.run(
-        ["bash", str(SCRIPT), "--dest", dest], cwd=ROOT, capture_output=True, text=True, encoding="utf-8",
+        [BASH_EXE, SCRIPT.as_posix(), "--dest", dest], cwd=ROOT, capture_output=True, text=True, encoding="utf-8",
         check=False, stdin=subprocess.DEVNULL,
     )  # fmt: skip
     assert p.returncode == 4
