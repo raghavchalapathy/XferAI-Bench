@@ -1,6 +1,6 @@
 # Reproduction of a published benchmark. RESEARCH ONLY, LICENCE-GATED.
 # Excluded from `xferbench experiment list/run-all` unless --allow-research-only is given.
-id: repro_visuelle_gtm
+id: exp03_visuelle_gtm
 kind: reproduction
 usage_tag: research_only
 licence_gated: true

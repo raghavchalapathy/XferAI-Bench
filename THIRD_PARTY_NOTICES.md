@@ -38,7 +38,7 @@ distributed package and is kept unchanged.
 
 | Project | Licence (verified from public pages) | How it is used |
 |---|---|---|
-| GTM-Transformer, <https://github.com/HumaticsLAB/GTM-Transformer> | MIT License, "Copyright (c) 2021 HumaticsLAB" (repo `LICENSE` and GitHub licence API, accessed 2026-10-24) | **Not vendored, not installed, not run here.** `experiments/repro_visuelle_gtm` drives the user's own local install by path. |
+| GTM-Transformer, <https://github.com/HumaticsLAB/GTM-Transformer> | MIT License, "Copyright (c) 2021 HumaticsLAB" (repo `LICENSE` and GitHub licence API, accessed 2026-10-24) | **Not vendored, not installed, not run here.** `experiments/exp03_visuelle_gtm` drives the user's own local install by path. |
 
 The VISUELLE dataset is **not** listed as a dependency: no licence text was found (audit 2026-10-24,
 `not_found`), so its use is blocked; nothing from it is included.

@@ -147,14 +147,14 @@ python3 -m venv /tmp/xb-env
 
 ```bash
 xferbench experiment list                      # data + models each experiment uses
-xferbench experiment new my_exp                # scaffold experiments/my_exp/
-xferbench experiment run exp01_m5_lightgbm_analogs
+xferbench experiment new exp04_synthetic_mine  # scaffold experiments/exp04_synthetic_mine/ (name: exp<NN>_<dataset>_<method>)
+xferbench experiment run exp01_synthetic_lightgbm_analogs
 xferbench experiment run-all                   # status table, no rankings
 ```
 
 Production path (library or CLI): `xferbench fit` saves a versioned artifact with a manifest; `xferbench forecast`
 scores new launches from it (exit codes: 0 ok, 1 error, 2 usage, 3 blocked, 4 partial, 5 artifact mismatch,
-6 schema mismatch). `experiments/repro_visuelle_gtm` is research-only and licence-gated: it is excluded from
+6 schema mismatch). `experiments/exp03_visuelle_gtm` is research-only and licence-gated: it is excluded from
 `list`/`run-all` and refused by `run` (exit 2) unless `--allow-research-only` is passed, and its reproduced WAPE is
 **pending**. Only the paper-reported 55.2 is shown ([arXiv:2109.09824 v6](https://arxiv.org/abs/2109.09824), Table 1,
 GTM-Transformer [T+I+G], 6 weeks, 52-week Google Trends), labelled as such; its Reviewer record is pending.

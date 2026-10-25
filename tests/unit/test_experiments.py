@@ -39,7 +39,9 @@ def test_non_synthetic_rejected(tmp_path: Path) -> None:
 @pytest.mark.slow
 def test_exp02_runs_offline_and_marks_chronos(tmp_path: Path) -> None:
     out = tmp_path / "exp02"
-    res = run_experiment(ROOT / "experiments/exp02_chronos_zero_shot/config.yaml", out, progress=lambda _m: None)
+    res = run_experiment(
+        ROOT / "experiments/exp02_synthetic_chronos_zero_shot/config.yaml", out, progress=lambda _m: None
+    )
     for f in ("leaderboard.html", "report.html", "results.json", "SUMMARY.md"):
         assert (out / f).exists()
     assert LABEL in (out / "leaderboard.html").read_text(encoding="utf-8")
@@ -53,7 +55,7 @@ def test_exp02_runs_offline_and_marks_chronos(tmp_path: Path) -> None:
 
 def test_exp02_is_never_day_zero_and_never_ranked(tmp_path: Path) -> None:
     out = tmp_path / "exp02"
-    run_experiment(ROOT / "experiments/exp02_chronos_zero_shot/config.yaml", out, progress=lambda _m: None)
+    run_experiment(ROOT / "experiments/exp02_synthetic_chronos_zero_shot/config.yaml", out, progress=lambda _m: None)
     res = read_json(out / "results.json")
     assert res["day_zero_result"] is False
     assert res["not_day_zero"]
@@ -75,7 +77,7 @@ def test_v2_synthetic_outputs_carry_no_ranking_and_private_selection(tmp_path: P
     from xferbench.experiments.runner import SELECTION_LABEL, WORK_DIR
 
     out = tmp_path / "exp02"
-    run_experiment(ROOT / "experiments/exp02_chronos_zero_shot/config.yaml", out, progress=lambda _m: None)
+    run_experiment(ROOT / "experiments/exp02_synthetic_chronos_zero_shot/config.yaml", out, progress=lambda _m: None)
 
     # V2-2: no published selection.json anywhere outside the private working dir
     published = [p for p in out.rglob("*") if p.is_file() and WORK_DIR not in p.relative_to(out).parts]
@@ -142,7 +144,9 @@ def test_v3_experiment_refuses_non_ignored_in_repo_out(tmp_path: Path) -> None:
     repo = _temp_repo(tmp_path)
     with pytest.raises(ExperimentError, match="not ignored by git"):
         run_experiment(
-            ROOT / "experiments/exp02_chronos_zero_shot/config.yaml", repo / "published/exp02", progress=lambda _m: None
+            ROOT / "experiments/exp02_synthetic_chronos_zero_shot/config.yaml",
+            repo / "published/exp02",
+            progress=lambda _m: None,
         )
     assert not (repo / "published/exp02/test-run").exists()
 
@@ -155,7 +159,7 @@ def test_v3_experiment_in_temp_repo_leaves_no_ranking_committable(tmp_path: Path
 
     repo = _temp_repo(tmp_path)
     out = repo / "eval/exp02"
-    run_experiment(ROOT / "experiments/exp02_chronos_zero_shot/config.yaml", out, progress=lambda _m: None)
+    run_experiment(ROOT / "experiments/exp02_synthetic_chronos_zero_shot/config.yaml", out, progress=lambda _m: None)
     private = [
         out / "test-run/metrics.json",
         out / "test-run/run_manifest.json",

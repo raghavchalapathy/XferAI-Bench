@@ -766,15 +766,16 @@ def experiment_list_cmd(
     if not infos:
         typer.echo("no experiments/*/config.yaml found (run from the repository root)")
     for i in infos:
+        flag = f" | NAME: {i.name_problem}" if i.name_problem else ""
         if i.error:
-            typer.echo(f"{i.id}: INVALID CONFIG - {i.error}")
+            typer.echo(f"{i.id}: INVALID CONFIG - {i.error}{flag}")
             continue
         if i.kind == "reproduction":
-            typer.echo(f"{i.id}: RESEARCH ONLY, licence-gated reproduction | data {i.preset} (not included)")
+            typer.echo(f"{i.id}: RESEARCH ONLY, licence-gated reproduction | data {i.preset} (not included){flag}")
             continue
         opt = f" | optional: {', '.join(i.optional_methods)}" if i.optional_methods else ""
         ndz = " | NOT A DAY-ZERO RESULT" if not i.day_zero else ""
-        typer.echo(f"{i.id}: data synthetic/{i.preset} | models: {', '.join(i.methods)}{opt}{ndz}")
+        typer.echo(f"{i.id}: data synthetic/{i.preset} | models: {', '.join(i.methods)}{opt}{ndz}{flag}")
 
 
 @experiment_app.command("run")

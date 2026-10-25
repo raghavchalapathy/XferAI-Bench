@@ -182,7 +182,7 @@ If XferAI-Bench is useful to you, please ⭐ star the repo on GitHub. It helps o
 ## Experiments (synthetic interface tests)
 
 ```bash
-xferbench experiment --config experiments/exp01_m5_lightgbm_analogs/config.yaml --out eval/exp01
+xferbench experiment --config experiments/exp01_synthetic_lightgbm_analogs/config.yaml --out eval/exp01
 ```
 
 See [experiments/README.md](../experiments/README.md). These are interface tests, not rankings.

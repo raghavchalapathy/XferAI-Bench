@@ -24,7 +24,15 @@ import yaml
 
 from xferbench.experiments.runner import ExperimentConfig, ExperimentError, run_experiment
 
-NAME_RE = re.compile(r"^[a-z][a-z0-9_]{2,63}$")
+# Owner naming rule (2026-10-24): exp<NN>_<dataset>_<method>, lowercase [a-z0-9_]; dataset = data.flavour.
+NAME_RE = re.compile(r"^exp[0-9]{2}_[a-z0-9]+_[a-z0-9_]*[a-z0-9]$")
+NAME_RULE = "exp<NN>_<dataset>_<method> (lowercase letters, digits and '_'; e.g. exp04_synthetic_lightgbm)"
+# Renamed 2026-10-24; old ids still resolve with a deprecation warning.
+DEPRECATED_ALIASES = {
+    "exp01_m5_lightgbm_analogs": "exp01_synthetic_lightgbm_analogs",
+    "exp02_chronos_zero_shot": "exp02_synthetic_chronos_zero_shot",
+    "repro_visuelle_gtm": "exp03_visuelle_gtm",
+}
 TEMPLATE_README = """# {id}
 
 **Synthetic interface test, not a ranking.** Outputs check the software, not which method is better.
@@ -49,6 +57,16 @@ class ExperimentInfo:
     error: str | None = None
     kind: str = "synthetic"
     usage_tag: str = "interface_test"
+    name_problem: str | None = None
+
+
+def name_problem(folder: str, flavour: str | None) -> str | None:
+    """Why a folder name breaks the naming rule (None if it follows it). Used to flag entries in `list`."""
+    if len(folder) > 64 or not NAME_RE.fullmatch(folder):
+        return f"name does not follow {NAME_RULE}"
+    if flavour and folder.split("_")[1] != flavour:
+        return f"dataset part {folder.split('_')[1]!r} does not match data.flavour {flavour!r}"
+    return None
 
 
 def _raw(cfg_path: Path) -> dict[str, Any]:
@@ -68,10 +86,8 @@ def experiments_root(root: Path | None = None) -> Path:
 
 
 def validate_name(name: str) -> str:
-    if not NAME_RE.fullmatch(name):
-        raise ExperimentError(
-            f"invalid experiment name {name!r}: use 3-64 chars, lowercase letters, digits and '_', starting with a letter"
-        )
+    if len(name) > 64 or not NAME_RE.fullmatch(name):
+        raise ExperimentError(f"invalid experiment name {name!r}: use {NAME_RULE}, at most 64 characters")
     return name
 
 
@@ -88,21 +104,31 @@ def list_experiments(root: Path | None = None, allow_research_only: bool = False
                         str(raw.get("id", d.name)), d, str(raw.get("title", "")), [], [],
                         str((raw.get("data") or {}).get("flavour", "")), False,
                         kind="reproduction", usage_tag="research_only",
+                        name_problem=name_problem(d.name, (raw.get("data") or {}).get("flavour")),
                     )
                 )  # fmt: skip
             continue
         try:
             c = ExperimentConfig.load(cfg_path)
             out.append(
-                ExperimentInfo(c.id, d, c.title, c.methods, c.optional_methods, c.preset, c.not_day_zero is None)
-            )
+                ExperimentInfo(
+                    c.id, d, c.title, c.methods, c.optional_methods, c.preset, c.not_day_zero is None,
+                    name_problem=name_problem(d.name, (raw.get("data") or {}).get("flavour", "synthetic")),
+                )
+            )  # fmt: skip
         except (ExperimentError, KeyError, yaml.YAMLError) as exc:
-            out.append(ExperimentInfo(d.name, d, "", [], [], "", False, error=str(exc)))
+            out.append(
+                ExperimentInfo(
+                    d.name, d, "", [], [], "", False, error=str(exc), name_problem=name_problem(d.name, None)
+                )
+            )
     return out
 
 
 def new_experiment(name: str, root: Path | None = None, from_id: str | None = None, force: bool = False) -> Path:
     validate_name(name)
+    if from_id is not None:
+        from_id = resolve_id(from_id)
     base = experiments_root(root)
     dest = base / name
     if dest.exists() and not force:
@@ -149,6 +175,16 @@ def new_experiment(name: str, root: Path | None = None, from_id: str | None = No
     return dest
 
 
+def resolve_id(exp_id: str) -> str:
+    if exp_id in DEPRECATED_ALIASES:
+        import warnings
+
+        new = DEPRECATED_ALIASES[exp_id]
+        warnings.warn(f"experiment id {exp_id!r} is deprecated; use {new!r}", DeprecationWarning, stacklevel=2)
+        return new
+    return exp_id
+
+
 def run_dir_for(exp_dir: Path) -> Path:
     stamp = time.strftime("%Y%m%dT%H%M%SZ", time.gmtime())
     d = exp_dir / "runs" / stamp
@@ -169,6 +205,7 @@ def run_one(
     progress: Callable[[str], None] = print,
     allow_research_only: bool = False,
 ) -> dict[str, Any]:
+    exp_id = resolve_id(exp_id)
     exp_dir = experiments_root(root) / exp_id
     if not (exp_dir / "config.yaml").is_file():
         raise ExperimentError(f"unknown experiment {exp_id!r}; see `xferbench experiment list`")

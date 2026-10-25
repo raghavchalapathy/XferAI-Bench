@@ -16,7 +16,7 @@ from xferbench.experiments.workspace import ResearchOnlyError, list_experiments,
 from xferbench.repro.visuelle import PAPER, GtmWrapper, ReproError, adapt_visuelle, report_markdown, wape
 
 ROOT = Path(__file__).resolve().parents[2]
-EXP = ROOT / "experiments" / "repro_visuelle_gtm"
+EXP = ROOT / "experiments" / "exp03_visuelle_gtm"
 SCRIPT = EXP / "scripts" / "download_visuelle.sh"
 FIXTURE = ROOT / "tests" / "fixtures" / "visuelle_synthetic"
 
@@ -30,27 +30,27 @@ def _tracked_and_untracked() -> str:
 
 def test_repro_excluded_by_default() -> None:
     ids = [i.id for i in list_experiments(ROOT)]
-    assert "repro_visuelle_gtm" not in ids
-    assert "repro_visuelle_gtm" in [i.id for i in list_experiments(ROOT, allow_research_only=True)]
+    assert "exp03_visuelle_gtm" not in ids
+    assert "exp03_visuelle_gtm" in [i.id for i in list_experiments(ROOT, allow_research_only=True)]
 
 
 def test_run_all_skips_repro_by_default(tmp_path: Path) -> None:
     (tmp_path / "experiments").mkdir()
-    shutil.copytree(EXP, tmp_path / "experiments" / "repro_visuelle_gtm")
+    shutil.copytree(EXP, tmp_path / "experiments" / "exp03_visuelle_gtm")
     assert run_all(tmp_path, progress=lambda m: None) == []
     rows = run_all(tmp_path, progress=lambda m: None, allow_research_only=True)
     assert [r["status"] for r in rows] == ["blocked"]
     assert "RESEARCH ONLY" in rows[0]["detail"]
     with pytest.raises(ResearchOnlyError):
-        run_one("repro_visuelle_gtm", tmp_path, progress=lambda m: None)
+        run_one("exp03_visuelle_gtm", tmp_path, progress=lambda m: None)
 
 
 def test_blocked_report_lists_reasons_and_paper_number(tmp_path: Path) -> None:
     (tmp_path / "experiments").mkdir()
-    shutil.copytree(EXP, tmp_path / "experiments" / "repro_visuelle_gtm")
+    shutil.copytree(EXP, tmp_path / "experiments" / "exp03_visuelle_gtm")
     with pytest.raises(ReproError):
-        run_one("repro_visuelle_gtm", tmp_path, progress=lambda m: None, allow_research_only=True)
-    report = next((tmp_path / "experiments" / "repro_visuelle_gtm" / "runs").glob("*/report.md")).read_text(
+        run_one("exp03_visuelle_gtm", tmp_path, progress=lambda m: None, allow_research_only=True)
+    report = next((tmp_path / "experiments" / "exp03_visuelle_gtm" / "runs").glob("*/report.md")).read_text(
         encoding="utf-8"
     )
     assert "Paper-reported** | 55.2" in report and "PENDING" in report
@@ -62,9 +62,9 @@ def test_cli_list_hides_and_run_requires_flag() -> None:
     cwd = os.getcwd()
     os.chdir(ROOT)
     try:
-        assert "repro_visuelle_gtm" not in r.invoke(app, ["experiment", "list"]).output
+        assert "exp03_visuelle_gtm" not in r.invoke(app, ["experiment", "list"]).output
         assert "RESEARCH ONLY" in r.invoke(app, ["experiment", "list", "--allow-research-only"]).output
-        assert r.invoke(app, ["experiment", "run", "repro_visuelle_gtm"]).exit_code == 2
+        assert r.invoke(app, ["experiment", "run", "exp03_visuelle_gtm"]).exit_code == 2
     finally:
         os.chdir(cwd)
 

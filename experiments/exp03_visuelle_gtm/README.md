@@ -1,4 +1,4 @@
-# repro_visuelle_gtm: VISUELLE / GTM-Transformer reproduction
+# exp03_visuelle_gtm: VISUELLE / GTM-Transformer reproduction
 
 **RESEARCH ONLY. LICENCE-GATED. Excluded by default** (`xferbench experiment list` / `run-all` skip it unless
 `--allow-research-only`). No data, weights or third-party code are included in this repository.
@@ -21,10 +21,10 @@ Google Trends window 52 weeks; WAPE = 100·Σ|y−ŷ|/Σy after the official res
 
 ## How to run (on your machine, after accepting the terms)
 1. Request VISUELLE through the official form and save the archive locally.
-2. `bash experiments/repro_visuelle_gtm/scripts/download_visuelle.sh --archive /path/to/visuelle.zip`
+2. `bash experiments/exp03_visuelle_gtm/scripts/download_visuelle.sh --archive /path/to/visuelle.zip`
    (interactive acceptance; extracts into git-ignored `data/visuelle/input/raw/`).
 3. Install GTM-Transformer yourself per its README; set `gtm.install_path`, `gtm.python`, `gtm.ckpt_path`.
-4. `xferbench experiment run repro_visuelle_gtm --allow-research-only` → `runs/<timestamp>/report.md`
+4. `xferbench experiment run exp03_visuelle_gtm --allow-research-only` → `runs/<timestamp>/report.md`
    with the paper-reported and the reproduced WAPE side by side.
 
 ## What is blocked and why

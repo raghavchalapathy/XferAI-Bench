@@ -1,6 +1,6 @@
 # Experiment 2: Chronos zero-shot donor prior. FM.chronos2 needs the 'foundation' extra AND model weights;
 # offline it is reported as config_required and only the no-download baselines run.
-id: exp02_chronos_zero_shot
+id: exp02_synthetic_chronos_zero_shot
 title: "Exp02 - Chronos zero-shot adapter (synthetic interface test, not rankings)"
 papers:
   - citation: "Ansari et al. (2024). Chronos: Learning the Language of Time Series. Transactions on Machine Learning Research."

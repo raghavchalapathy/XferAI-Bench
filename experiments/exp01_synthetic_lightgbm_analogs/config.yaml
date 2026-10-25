@@ -1,5 +1,5 @@
 # Experiment 1: M5-style global LightGBM + hierarchical analogs. Default path: no downloads.
-id: exp01_m5_lightgbm_analogs
+id: exp01_synthetic_lightgbm_analogs
 title: "Exp01 - M5-style global LightGBM + analogs (synthetic interface test, not rankings)"
 papers:
   - citation: "Makridakis, Spiliotis & Assimakopoulos (2022). M5 accuracy competition: Results, findings, and conclusions. International Journal of Forecasting 38(4):1346-1364."

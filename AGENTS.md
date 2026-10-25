@@ -9,7 +9,7 @@ Hugging Face weight downloads for optional foundation adapters: never set it wit
 (`local/`, `runs/local/` are gitignored); no telemetry; stop and ask the user where the guide says STOP.
 
 Experiments: `xferbench experiment list|new|run|run-all` (synthetic interface test, not rankings). Research-only
-experiments (`repro_visuelle_gtm`) need `--allow-research-only` and the user's own licence acceptance; never
+experiments (`exp03_visuelle_gtm`) need `--allow-research-only` and the user's own licence acceptance; never
 download VISUELLE or install GTM for the user.
 
 ## Contributing to this repo (project agents)

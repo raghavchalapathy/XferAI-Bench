@@ -73,10 +73,10 @@ never as ours. Its Scout/Scientist/Reviewer record is **pending Reviewer check**
 1. **STOP**: ask the user to obtain VISUELLE themselves from the official form linked by the GTM README and to read
    its terms. Never download it for them.
 2. Ingest the user's own archive (needs a terminal and typing `I ACCEPT THE VISUELLE TERMS`):
-   `experiments/repro_visuelle_gtm/scripts/download_visuelle.sh --archive <path>` (data stays in git-ignored `data/visuelle/input`).
+   `experiments/exp03_visuelle_gtm/scripts/download_visuelle.sh --archive <path>` (data stays in git-ignored `data/visuelle/input`).
 3. **STOP**: GTM-Transformer (MIT, HumaticsLAB) is not vendored. The user installs and reviews it themselves, then
-   sets `gtm.install_path`, `gtm.python` and `gtm.ckpt_path` in `experiments/repro_visuelle_gtm/config.yaml`.
-4. Run: `xferbench experiment run repro_visuelle_gtm --allow-research-only`. If anything is missing it exits 3 and
+   sets `gtm.install_path`, `gtm.python` and `gtm.ckpt_path` in `experiments/exp03_visuelle_gtm/config.yaml`.
+4. Run: `xferbench experiment run exp03_visuelle_gtm --allow-research-only`. If anything is missing it exits 3 and
    `report.md` lists what is blocked.
 
 ## Part 2. Run XferAI-Bench on your own data
