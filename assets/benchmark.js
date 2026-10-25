@@ -1,26 +1,91 @@
-// Renders /assets/benchmark.json. Numbers are shown ONLY when status === "reviewed".
-// Values are displayed exactly as printed by each paper (value_as_printed); "value" is used only for bar length/sort.
+// Renders /assets/benchmark.json as SVG scatter charts. Numbers are shown ONLY when status === "reviewed".
+// Values are displayed exactly as printed by each paper (value_as_printed); numeric "value" is used only for position.
+// X = first-submission month encoded in each row's cited arXiv identifier (YYMM); rows without one are left out and listed.
 (async () => {
   const $ = (id) => document.getElementById(id);
+  const MOB = window.matchMedia('(max-width: 760px)').matches;
+  const NS = 'http://www.w3.org/2000/svg';
   const el = (t, c, txt) => { const n = document.createElement(t); if (c) n.className = c; if (txt != null) n.textContent = txt; return n; };
-  function skeleton() { const w = el('div', 'bench-bars skeleton'); for (let i = 0; i < 4; i++) { const r = el('div', 'bar-row'); r.innerHTML = '<span class="bar-label"></span><span class="bar-track"><span class="bar-fill" style="width:' + (80 - i * 14) + '%"></span></span><span class="bar-value"></span>'; w.append(r); } return w; }
-  const pending = () => { $('bench-status').hidden = false; for (const id of ['chart-methods', 'chart-datasets']) $(id).replaceChildren(skeleton()); };
-  function bars(rows) {
-    const w = el('div', 'bench-bars'); const max = Math.max(...rows.map((r) => r.value), 1);
-    for (const r of rows) {
-      const tip = `${r.method} — ${r.metric} ${r.value_as_printed} (as printed). ${r.source}; ${r.locator}`;
-      const row = el(r.source_url ? 'a' : 'div', 'bar-row'); row.title = tip; if (r.source_url) { row.href = r.source_url; row.target = '_blank'; row.rel = 'noopener'; }
-      const t = el('span', 'bar-track'); const f = el('span', 'bar-fill'); f.style.width = (100 * r.value / max).toFixed(1) + '%'; t.append(f);
-      row.append(el('span', 'bar-label', r.method), t, el('span', 'bar-value', r.value_as_printed)); w.append(row);
+  const sv = (t, a, txt) => { const n = document.createElementNS(NS, t); for (const k in a) n.setAttribute(k, a[k]); if (txt != null) n.textContent = txt; return n; };
+  const css = (v, f) => (getComputedStyle(document.documentElement).getPropertyValue(v).trim() || f);
+  const PALETTE = ['#b59cf8', '#e783bd', '#F5B754', css('--bench-teal', '#6fd3c1'), '#999be8', '#dd82bc'];
+  const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const clean = (m) => m.replace(/\s*\(ours\)/gi, '').trim();
+  const arxiv = (r) => { const m = /arXiv:(\d{2})(\d{2})\.\d{4,5}/.exec(r.source || ''); return m ? { y: 2000 + +m[1], m: +m[2], id: /arXiv:(\d{4}\.\d{4,5})/.exec(r.source)[1] } : null; };
+  const paper = (r) => { const m = /\(([^,;)]+)/.exec(r.source || ''); const a = /arXiv:(\d{4}\.\d{4,5})/.exec(r.source || ''); const n = m ? m[1].trim() : 'source'; return a ? `${n} (arXiv ${a[1]})` : n; };
+  const pending = () => { $('bench-status').hidden = false; for (const id of ['chart-methods', 'chart-datasets']) $(id).replaceChildren(el('div', 'scatter-skeleton')); };
+  function link(node, r) { if (!r.source_url) return node; const a = sv('a', { href: r.source_url, target: '_blank', rel: 'noopener' }); a.append(node); return a; }
+  const tip = (r) => { const a = /arXiv:(\d{4}\.\d{4,5})/.exec(r.source || ''); const note = r.row_index === 0 && a ? ` (as reported in ${a[1]}; plotted at that paper's date)` : ''; return `${clean(r.method)}${note}: ${r.metric} ${r.value_as_printed} (as printed). ${r.source}; ${r.locator}`; };
+
+  function legend(groups) { const l = el('div', 'scatter-legend'); for (const [k, c] of groups) { const i = el('span', 'lg'); const s = el('i'); s.style.background = c; i.append(s, document.createTextNode(k)); l.append(i); } return l; }
+
+  // Time scatter: x = arXiv month, y = WAPE (inverted: lower WAPE is higher on chart).
+  function timeScatter(rows, colorOf) {
+    const W = MOB ? 420 : 860, H = MOB ? 460 : 440, m = { l: 56, r: 24, t: 20, b: 44 };
+    const t = (r) => r.d.y + (r.d.m - 1) / 12;
+    const ts = rows.map(t), vs = rows.map((r) => r.value);
+    const x0 = Math.floor(Math.min(...ts)) - (MOB ? 1.2 : 0.75), x1 = Math.ceil(Math.max(...ts)) + 0.25;
+    const y0 = Math.floor(Math.min(...vs) - 1), y1 = Math.ceil(Math.max(...vs) + 1);
+    const X = (v) => m.l + (v - x0) / (x1 - x0) * (W - m.l - m.r), Y = (v) => m.t + (v - y0) / (y1 - y0) * (H - m.t - m.b);
+    const s = sv('svg', { viewBox: `0 0 ${W} ${H}`, class: 'scatter', role: 'img', 'aria-label': 'WAPE by publication month, lower is better' });
+    // grid + axes
+    for (let v = Math.ceil(y0); v <= y1; v += (y1 - y0 > 12 ? 2 : 1)) { s.append(sv('line', { x1: m.l, x2: W - m.r, y1: Y(v), y2: Y(v), class: 'grid' }), sv('text', { x: m.l - 8, y: Y(v) + 4, class: 'tick', 'text-anchor': 'end' }, v)); }
+    for (let y = Math.ceil(x0); y <= x1; y++) s.append(sv('line', { x1: X(y), x2: X(y), y1: m.t, y2: H - m.b, class: 'grid' }), sv('text', { x: X(y), y: H - m.b + 18, class: 'tick', 'text-anchor': 'middle' }, y));
+    s.append(sv('text', { x: (m.l + W - m.r) / 2, y: H - 6, class: 'axis-title', 'text-anchor': 'middle' }, 'First arXiv submission (month from arXiv id)'));
+    s.append(sv('text', { x: 14, y: (m.t + H - m.b) / 2, class: 'axis-title', 'text-anchor': 'middle', transform: `rotate(-90 14 ${(m.t + H - m.b) / 2})` }, 'WAPE (%), lower is better ↑'));
+    // dodge points that share a month so they stay visible (visual offset only)
+    const byMonth = {}; rows.forEach((r) => (byMonth[t(r)] = byMonth[t(r)] || []).push(r));
+    const px = new Map();
+    for (const k in byMonth) { const g = byMonth[k].sort((a, b) => a.value - b.value); g.forEach((r, i) => { const col = i % 4; px.set(r, X(+k) + (col - 1.5) * (MOB ? 6 : 9)); }); }
+    // Pareto: best WAPE so far over time (step line)
+    const months = Object.keys(byMonth).map(Number).sort((a, b) => a - b); let best = Infinity; const front = [];
+    for (const k of months) { const b = Math.min(...byMonth[k].map((r) => r.value)); if (b < best) { best = b; front.push(byMonth[k].find((r) => r.value === b)); } }
+    let d = ''; front.forEach((r, i) => { d += (i ? `H${X(t(r))}V${Y(r.value)}` : `M${X(t(r))} ${Y(r.value)}`); }); d += `H${W - m.r}`;
+    s.append(sv('path', { d, class: 'pareto' }));
+    const last = front[front.length - 1]; s.append(sv('text', { x: W - m.r - 4, y: Y(last.value) - 8, class: 'pareto-label', 'text-anchor': 'end' }, 'lowest reported to date, across papers; setups differ'));
+    // points
+    const labelled = new Set(front); const bestPer = {}; rows.forEach((r) => { const p = r.paper; if (!bestPer[p] || r.value < bestPer[p].value) bestPer[p] = r; }); Object.values(bestPer).forEach((r) => labelled.add(r));
+    const used = [];
+    for (const r of [...rows].sort((a, b) => a.value - b.value)) {
+      const g = sv('g', { class: 'pt' }); g.append(sv('title', {}, tip(r)));
+      g.append(sv('circle', { cx: px.get(r), cy: Y(r.value), r: labelled.has(r) ? 6 : 4.5, fill: colorOf(r.paper) }));
+      if (labelled.has(r)) { const first = t(r) === Math.min(...ts); const right = !first && px.get(r) < (m.l + W) / 2; let ly = Y(r.value) + 4; for (const u of used) if (Math.abs(u.y - ly) < 15 && Math.abs(u.x - px.get(r)) < 200) ly = u.y + 16; used.push({ x: px.get(r), y: ly }); g.append(sv('text', { x: px.get(r) + (right ? 12 : -12) + (/^MuQAR/.test(r.method) ? 5 : 0), y: ly, class: 'pt-label', 'text-anchor': right ? 'start' : 'end' }, `${clean(r.method).split(' [')[0]} · ${r.value_as_printed}`)); }
+      s.append(link(g, r));
     }
-    return w;
+    return s;
   }
+
+  // Dataset strip: x = WAPE (lower is better, left), one row per method.
+  function strip(rows, colorOf) {
+    const W = MOB ? 420 : 860, rowH = 26, m = { l: 16, r: 70, t: 8, b: 30 }, H = m.t + m.b + rowH * rows.length;
+    const vs = rows.map((r) => r.value), lo = Math.floor(Math.min(...vs) - 1), hi = Math.ceil(Math.max(...vs) + 1);
+    const L = MOB ? 200 : 330, X = (v) => L + (v - lo) / (hi - lo || 1) * (W - L - m.r);
+    const s = sv('svg', { viewBox: `0 0 ${W} ${H}`, class: 'scatter strip', role: 'img', 'aria-label': 'WAPE per method, lower is better' });
+    const step = Math.max(1, Math.ceil((hi - lo) / 8));
+    for (let v = lo; v <= hi; v += step) s.append(sv('line', { x1: X(v), x2: X(v), y1: m.t, y2: H - m.b, class: 'grid' }), sv('text', { x: X(v), y: H - m.b + 16, class: 'tick', 'text-anchor': 'middle' }, v));
+    s.append(sv('text', { x: W - m.r, y: H - 2, class: 'axis-title', 'text-anchor': 'end' }, '← lower WAPE is better'));
+    [...rows].sort((a, b) => a.value - b.value).forEach((r, i) => {
+      const y = m.t + rowH * i + rowH / 2, g = sv('g', { class: 'pt' }); g.append(sv('title', {}, tip(r)));
+      g.append(sv('text', { x: m.l, y: y + 4, class: 'pt-label' }, clean(r.method)), sv('line', { x1: X(lo), x2: X(r.value), y1: y, y2: y, class: 'stem' }), sv('circle', { cx: X(r.value), cy: y, r: 5.5, fill: colorOf(r.paper) }), sv('text', { x: X(r.value) + 10, y: y + 4, class: 'pt-value' }, r.value_as_printed));
+      s.append(link(g, r));
+    });
+    return s;
+  }
+
   try {
-    const d = await (await fetch('/assets/benchmark.json', { cache: 'no-cache' })).json();
-    if (d.status !== 'reviewed' || !(d.methods || []).length) return pending();
-    document.querySelectorAll('.bench-label').forEach((n) => { n.textContent = d.chart_label; n.hidden = false; });
-    $('chart-methods').replaceChildren(el('p', 'bench-sub', 'VISUELLE · GTM protocol · lower is better'), bars(d.methods));
+    const data = await (await fetch('/assets/benchmark.json', { cache: 'no-cache' })).json();
+    if (data.status !== 'reviewed' || !(data.methods || []).length) return pending();
+    document.querySelectorAll('.bench-label').forEach((n) => { n.textContent = data.chart_label; n.hidden = false; });
+    const prep = (r) => Object.assign({}, r, { d: arxiv(r), paper: paper(r) });
+    const all = [...data.methods, ...(data.datasets || []).flatMap((ds) => ds.results || [])].map(prep);
+    const papers = [...new Set(all.map((r) => r.paper))]; const colorOf = (p) => PALETTE[papers.indexOf(p) % PALETTE.length];
+    const rows = data.methods.map(prep), dated = rows.filter((r) => r.d), undated = rows.filter((r) => !r.d);
+    const host1 = $('chart-methods'); host1.className = 'scatter-host';
+    host1.replaceChildren(el('p', 'bench-sub', 'VISUELLE · GTM protocol · WAPE by publication date · lower is better'), legend([...new Set(dated.map((r) => r.paper))].map((p) => [p, colorOf(p)])), timeScatter(dated, colorOf));
+    if (undated.length) host1.append(el('p', 'fine-print', 'Not plotted (no date in cited source): ' + undated.map((r) => clean(r.method)).join(', ')));
+    const card = host1.closest('.bench-card'); if (card) card.querySelectorAll('.chart-note, .bench-label').forEach((n) => n.remove());
+    host1.append(el('p', 'fine-print chart-note', 'Paper-reported WAPE, not XferAI results; retrospective backtests · lower is better · same-month points offset for legibility · dotted line: lowest reported to date, across papers; setups differ.'));
     const host = $('chart-datasets'); host.replaceChildren();
-    for (const ds of d.datasets || []) { const b = el('div', 'bench-block'); b.append(el('h3', '', ds.dataset), el('p', 'bench-sub', ds.note + (ds.shown ? ' · ' + ds.shown : '')), bars(ds.results || [])); host.append(b); }
-  } catch (e) { pending(); }
+    for (const ds of data.datasets || []) { const rs = (ds.results || []).map(prep); const b = el('div', 'bench-block'); b.append(el('h3', '', ds.dataset), el('p', 'bench-sub', ds.note + (ds.shown ? ' · ' + ds.shown : '')), legend([...new Set(rs.map((r) => r.paper))].map((p) => [p, colorOf(p)])), strip(rs, colorOf)); host.append(b); }
+  } catch (e) { console.error(e); pending(); }
 })();

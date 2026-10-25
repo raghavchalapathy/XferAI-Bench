@@ -898,3 +898,23 @@ h1 { letter-spacing: -0.8px; }
 .footer-social svg { width: 18px; height: 18px; fill: currentColor; }
 @media (max-width: 900px) { .ms-steps, .tiers { grid-template-columns: 1fr; } .ms-steps::before { display: none; } .footer-grid { grid-template-columns: 1fr; } .tier-value { min-height: 0; } .compact-hero h1 { font-size: 28px; } }
 @media (prefers-reduced-motion: reduce) { .reveal-up { opacity: 1; transform: none; transition: none; } .ms-steps::before { transform: none; transition: none; } .ms-spark, .ms-step:hover .ms-icon svg { animation: none; } .button:hover { transform: none; } }
+/* benchmark scatter 2026-10-24 */
+:root { --bench-teal: #6fd3c1; }
+.scatter-host { display: block; }
+.scatter { width: 100%; height: auto; display: block; font-family: var(--font); overflow: visible; }
+.scatter .grid { stroke: #24222f; stroke-width: 1; }
+.scatter .tick { fill: #8f8ca6; font-size: 12px; }
+.scatter .axis-title { fill: #a9a6bd; font-size: 12px; }
+.scatter .pareto-label { fill: #e783bd; font-size: 12px; font-style: italic; }
+.scatter .pareto { fill: none; stroke: #e783bd; stroke-width: 1.6; stroke-dasharray: 3 4; }
+.scatter .pt circle { stroke: #10111a; stroke-width: 1.5; transition: r .15s; }
+.scatter .pt-label { fill: #e6e3f5; font-size: 12px; paint-order: stroke; stroke: #10111a; stroke-width: 4px; stroke-linejoin: round; }
+.scatter .pt-value { fill: #cbb7ff; font-size: 12px; font-variant-numeric: tabular-nums; }
+.scatter .stem { stroke: #262338; stroke-width: 2; }
+.scatter a:hover .pt-label, .scatter a:focus .pt-label { fill: var(--aqua-soft); }
+.scatter a:hover circle { stroke: #e7e5f1; }
+.scatter-legend { display: flex; flex-wrap: wrap; gap: 8px 18px; margin: 0 0 10px; font-size: 13px; color: #bbb9cf; }
+.scatter-legend .lg { display: inline-flex; align-items: center; gap: 7px; }
+.scatter-legend i { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+.scatter-skeleton { height: 260px; border-radius: 10px; background: #1d1b29; }
+@media (max-width: 760px) { .scatter .pt-label, .scatter .tick, .scatter .axis-title, .scatter .pt-value, .scatter .pareto-label { font-size: 11px; } .bench-card { padding: 16px; } }
