@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import numpy as np
 import pandas as pd
+import polars as pl
 
 from xferbench.calendar import to_ts
 from xferbench.contracts.splits import SplitManifest
@@ -14,6 +15,25 @@ from xferbench.domains.retail.splits import build_retail_splits, target_rows
 from xferbench.domains.retail.validation import validate_retail
 
 MEASURED_STATES = ("observed", "observed_censored")
+
+
+def _as_of_attr(req: pd.DataFrame, versions: pd.DataFrame, key: str, attr: str) -> list[str]:
+    """Latest ``attr`` per request among versions with known_at and effective_from <= origin ('unknown' if none)."""
+    r = pl.from_pandas(req[[key, "origin"]].reset_index(drop=True)).with_row_index("_r")
+    v = pl.from_pandas(versions[[key, "known_at", "effective_from", attr]].reset_index(drop=True)).with_row_index(
+        "_v"
+    )
+    r = r.with_columns(pl.col(key).cast(pl.Utf8))
+    v = v.with_columns(pl.col(key).cast(pl.Utf8), pl.col(attr).cast(pl.Utf8))
+    last = (
+        r.join(v, on=key, how="inner")
+        .filter((pl.col("known_at") <= pl.col("origin")) & (pl.col("effective_from") <= pl.col("origin")))
+        .sort(["_r", "effective_from", "_v"])
+        .group_by("_r", maintain_order=True)
+        .agg(pl.col(attr).last())
+    )
+    out = r.select("_r").join(last, on="_r", how="left").sort("_r")
+    return out[attr].fill_null("unknown").to_list()
 
 
 class RetailDomain:
@@ -94,6 +114,20 @@ class RetailDomain:
         return self._attach_slices(dataset, df)
 
     def _attach_slices(self, dataset: Dataset, req: pd.DataFrame) -> pd.DataFrame:
+        """Attach the as-of (known_at/effective_from <= origin) category and region of every request.
+
+        Polars (Rust) join + group-by; replaces a per-request pandas filter loop (O(requests x rows)).
+        Parity with :meth:`_attach_slices_reference` is tested in tests/unit/test_polars_swaps.py.
+        """
+        if req.empty:
+            return req.assign(category=pd.Series(dtype=object), region=pd.Series(dtype=object))
+        return req.assign(
+            category=_as_of_attr(req, dataset["items"], "item_id", "category"),
+            region=_as_of_attr(req, dataset["locations"], "fpg_id", "region"),
+        )
+
+    def _attach_slices_reference(self, dataset: Dataset, req: pd.DataFrame) -> pd.DataFrame:
+        """Original pandas loop, kept only as the parity reference for the Polars version."""
         if req.empty:
             return req.assign(category=pd.Series(dtype=object), region=pd.Series(dtype=object))
         cats, regs = [], []
