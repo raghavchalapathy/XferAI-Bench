@@ -51,7 +51,9 @@ while [ $# -gt 0 ]; do
   case "$1" in
     -h|--help) usage; exit 0 ;;
     --version) echo "xferAI_setup.sh $SETUP_VERSION (uv $UV_VERSION)"; exit 0 ;;
-    --python) [ $# -ge 2 ] && [ -n "$2" ] || usage_error "--python needs a value, e.g. --python 3.13"; PYTHON_REQ="$2"; shift ;;
+    --python)
+      if [ $# -lt 2 ] || [ -z "$2" ]; then usage_error "--python needs a value, e.g. --python 3.13"; fi
+      PYTHON_REQ="$2"; shift ;;
     --python=*) PYTHON_REQ="${1#--python=}"; [ -n "$PYTHON_REQ" ] || usage_error "--python needs a value" ;;
     --no-install-uv) INSTALL_UV=0 ;;
     --with-lightgbm) WITH_LGBM=1 ;;
@@ -88,7 +90,8 @@ fail() {  # fail "what went wrong" "one-line fix"
   trap - ERR
   exit 1
 }
-# shellcheck disable=SC2329  # called by the ERR trap
+# Called only by the ERR trap below, so shellcheck sees it as unused (SC2329, newer) or unreachable (SC2317, 0.9.x).
+# shellcheck disable=SC2317,SC2329
 on_err() {
   local rc=$? line=$1
   printf '%s\n' "${R}[$STEP/$TOTAL] $BAD $STEP_NAME: unexpected error (exit $rc, line $line)${N}" >&2
@@ -108,7 +111,7 @@ sha256_of() {
   else return 1; fi
 }
 
-[ -f pyproject.toml ] && [ -f uv.lock ] || usage_error "run this from the XferAI-Bench folder (pyproject.toml and uv.lock not found here)"
+if [ ! -f pyproject.toml ] || [ ! -f uv.lock ]; then usage_error "run this from the XferAI-Bench folder (pyproject.toml and uv.lock not found here)"; fi
 : > "$LOG"
 log "xferAI_setup.sh $SETUP_VERSION started $(date '+%Y-%m-%d %H:%M:%S %z')"
 
