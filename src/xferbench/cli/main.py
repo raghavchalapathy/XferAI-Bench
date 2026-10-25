@@ -385,7 +385,7 @@ def select_cmd(
         typer.echo(f"  {f.method_id:<14} {'selected ' + f.variant_id if f.eligible else 'not selected: ' + f.reason}")
     for r in sel.rejected_variants:
         typer.echo(f"  rejected {r['variant_id']}: {r['reason']}")
-    typer.echo(f"recommended: {sel.recommended} ({sel.recommended_reason}); wrote {out}")
+    typer.echo(f"frozen selection: {sel.recommended} ({sel.recommended_reason}); wrote {out}")
 
 
 @app.command("report")
@@ -434,16 +434,16 @@ def init_cmd(domain: str = typer.Option("retail"), path: Path = typer.Option(...
     atomic_write_text(
         path / "README.txt",
         (
-            "Xfer Benchmark project\n\n"
+            "Xfer Benchmark project\n\nOutputs go under ./work/ (gitignored); never commit them.\n\n"
             "1. Put your CSV/Parquet tables in ./data (or run: xferbench metadata wizard --data ./data --out ./metadata.json)\n"
             "2. Edit metadata.json: paths, column mappings, time semantics, cohorts, rights.\n"
             "3. xferbench validate --metadata ./metadata.json\n"
-            "4. xferbench split --metadata ./metadata.json --out ./splits.json\n"
-            "5. xferbench run --metadata ./metadata.json --splits ./splits.json --profile core --stage validation "
-            "--out ./validation-run\n"
-            "6. xferbench select --validation-run ./validation-run --policy ./selection-policy.json --out ./selection.json\n"
-            "7. xferbench run --metadata ./metadata.json --splits ./splits.json --stage test --selection ./selection.json "
-            "--out ./test-run\n"
+            "4. xferbench split --metadata ./metadata.json --out ./work/splits.json\n"
+            "5. xferbench run --metadata ./metadata.json --splits ./work/splits.json --profile core --stage validation "
+            "--out ./work/validation-run\n"
+            "6. xferbench select --validation-run ./work/validation-run --policy ./selection-policy.json --out ./work/selection.json\n"
+            "7. xferbench run --metadata ./metadata.json --splits ./work/splits.json --stage test --selection ./work/selection.json "
+            "--out ./work/test-run\n"
         ),
     )
     typer.echo(f"initialized {path}")
@@ -626,7 +626,7 @@ def demo_cmd(preset: str = typer.Option("tiny"), seed: int = typer.Option(42), o
         typer.echo("[5/7] freezing selection on validation only")
         sel = select(val.out, policy)
         write_json(out / "selection.json", sel.model_dump(mode="json"))
-        typer.echo(f"      recommended: {sel.recommended}")
+        typer.echo(f"      frozen selection: {sel.recommended}")
         typer.echo("[6/7] test run with frozen selection")
         test = BenchmarkRunner(
             RunConfig(

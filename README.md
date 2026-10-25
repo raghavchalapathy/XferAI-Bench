@@ -199,6 +199,10 @@ Bug reports, onboarding problems and method proposals are welcome as GitHub issu
 .venv/bin/python -m mypy && .venv/bin/python -m pytest
 ```
 
+A core-only install skips the Spark and LightGBM tests listed in `tests/expected_skips.txt`. Use
+`XFERBENCH_STRICT_SKIPS=core .venv/bin/python -m pytest` so any other skip fails the run (profiles: `core`, `spark`;
+any other value is rejected).
+
 Ground rules (no fake scores, no leakage, no silent substitution, no network, declarative metadata) and how to
 add a method are in [CONTRIBUTING.md](CONTRIBUTING.md) and [docs/EXTENDING.md](docs/EXTENDING.md). New methods
 need honest licence metadata and leakage tests, and go through review before they are listed as implemented.
