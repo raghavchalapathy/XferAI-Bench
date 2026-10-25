@@ -46,10 +46,14 @@ def test_u4_02_rerun_with_same_run_fails_loudly(tmp_path: Path) -> None:
         'case $out in *.json) mkdir -p "$(dirname "$out")"; echo {} > "$out";; *) mkdir -p "$out";; esac; }\n'
     )
     script = stub + "set -e\n" + script.replace(".venv/bin/xferbench", "xb")
-    first = subprocess.run(["bash", "-c", script], cwd=tmp_path, capture_output=True, text=True, check=False)
+    first = subprocess.run(
+        ["bash", "-c", script], cwd=tmp_path, capture_output=True, text=True, encoding="utf-8", check=False
+    )
     assert first.returncode == 0, first.stderr
     assert (tmp_path / "runs/local/test-1").is_dir()
-    second = subprocess.run(["bash", "-c", script], cwd=tmp_path, capture_output=True, text=True, check=False)
+    second = subprocess.run(
+        ["bash", "-c", script], cwd=tmp_path, capture_output=True, text=True, encoding="utf-8", check=False
+    )
     assert second.returncode != 0 and "already exists" in second.stdout
 
 
