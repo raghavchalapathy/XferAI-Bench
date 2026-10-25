@@ -1,4 +1,4 @@
-# PROPOSAL ONLY, awaiting Reviewer. Not adopted; do not run `harness apply` without an approved review block.
+# Adopted by Lead via `xferbench harness apply` after Reviewer approval (usability-v4-v2 and -v3 reviews).
 id: polars-asof-parity-20261024
 author_role: builder
 summary: Any pandas-to-Polars swap keeps the old code as a reference and ships a parity test plus a benchmark.
@@ -27,3 +27,10 @@ results:
   evidence: harness/evidence/polars-asof-parity-20261024/regression.log
   data_class: synthetic
   label: synthetic interface test, not rankings
+review:
+  reviewer: reviewer
+  decision: approved
+  date: 2026-10-24
+  review_file: factory/inbox/reviewer/usability-v4-v2-review-20261024/review.md
+  review_sha256: "fd0d8ceacf2bcf7ca500376cf51169214084c0c79cb0fa42f23aa9867df95911"
+  notes: "APPROVED FOR ADOPTION on its 5 declared files (v2 review, sha256 fd0d8ceacf2bcf7ca500376cf51169214084c0c79cb0fa42f23aa9867df95911). Re-confirmed in factory/inbox/reviewer/usability-v4-v3-review-20261024/review.md (sha256 e9d53dc0bd1a76ef7d2b4b51adc00b8939540bcf8099afa9b5dff35288ebbdfa): the 5 files show an empty diff a883517..4a9cc62. Applied by Lead after merge to main 3fefa9c."
