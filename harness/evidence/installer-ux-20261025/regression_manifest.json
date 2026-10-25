@@ -1,0 +1,52 @@
+{
+  "proposal": "installer-ux-20261025",
+  "data_class": "synthetic",
+  "label": "synthetic interface test, not rankings",
+  "base": {
+    "code": "usability-v4.1 24ac8aeccaf9d20634516f88951901458ebf52ce (on origin/main 3a7f7cc)",
+    "rules": "harness/BEST_PRACTICES.v2.yaml (main 3a7f7cc)",
+    "target": "BEST_PRACTICES.v3"
+  },
+  "regression_tree": {
+    "path": "/tmp/hv2-reg",
+    "commit": "882cd34e2f4eec7222367021fdcdce69310905d8",
+    "note": "throwaway local clone; one local commit adds the proposal (run_manifest_sha256 all-zero placeholder) and tests/harness_proposal/; never pushed; venv via uv sync --locked --extra dev --extra lightgbm"
+  },
+  "runs": [
+    {
+      "name": "full suite",
+      "command": "XB_REPO=. XB_HARNESS=harness XB_PROPOSAL_DIR=/tmp/hv2 timeout 1800 .venv/bin/python -m pytest -p no:cacheprovider -q -rs",
+      "exit_code": 0,
+      "summary": "443 passed, 2 skipped, 1 deselected in 524.17s (0:08:44)",
+      "log": "regression_full_suite.log",
+      "log_sha256": "618c5201c3b414027b38979abab4a26903c6884c768c12250e2d7eca83e141c8"
+    },
+    {
+      "name": "rule tests + review + harness",
+      "command": "timeout 300 .venv/bin/python -m pytest -q -rs tests/harness_proposal tests/review tests/unit/test_harness.py",
+      "exit_code": 0,
+      "summary": "106 passed, 1 skipped, 1 deselected in 1.91s",
+      "log": "regression_rule_tests.log",
+      "log_sha256": "3efa513b186a1f3a340e6c3101924469eca73252c72345f3f9da2eaf4e776a5b"
+    },
+    {
+      "name": "positive (repo=git archive 24ac8ae)",
+      "command": "XB_REPO=/tmp/hv2-repo pytest -q tests/test_installer_rules.py",
+      "exit_code": 0,
+      "summary": "29 passed in 0.35s",
+      "log": "positive_usability-v4.1_24ac8ae.log",
+      "log_sha256": "b48c460ee8758817df884f9e0d8cea99fa9029c46bdf9a63399e6b2f41cafe79"
+    },
+    {
+      "name": "negative (mutated copy; nonzero expected)",
+      "command": "XB_REPO=/tmp/hv2-neg pytest -q tests/test_installer_rules.py",
+      "exit_code": 1,
+      "summary": "5 failed, 24 passed in 0.13s",
+      "log": "negative_mutated.log",
+      "log_sha256": "1051bb270dc6609c4058dac8e8fb303733502e3bfa2fbdc3b3007e951b333de0"
+    }
+  ],
+  "skips": [
+    "pyspark not installed in the regression venv: tests/review/test_review_adv.py:43, tests/unit/test_scalable_eval.py:90 (Spark parity covered separately in v4.1 logs: pytest-spark-py3.13.log)"
+  ]
+}

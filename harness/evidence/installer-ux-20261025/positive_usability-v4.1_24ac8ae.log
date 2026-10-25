@@ -1,0 +1,4 @@
+POSITIVE: repo = git archive usability-v4.1 24ac8ae; harness = its own harness/ (v2 from main 3a7f7cc); run_manifest_sha256 = all-zero placeholder
+.............................                                            [100%]
+29 passed in 0.35s
+rc=0

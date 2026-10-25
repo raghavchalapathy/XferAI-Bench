@@ -1,0 +1,7 @@
+929ae387d015158c26a24d6f00215d7b00db602d
++ xferbench harness check --proposal harness/proposals/installer-ux-20261025.yaml
+proposal installer-ux-20261025 has no approved Reviewer record; not adopted
+CHECK_EXIT=2
++ schema + current-practices load
+proposal valid: installer-ux-20261025 rules: ['installer_checks', 'installer_env', 'installer_safety', 'installer_ux'] current: v2 clash with v2: []
+SCHEMA_EXIT=0

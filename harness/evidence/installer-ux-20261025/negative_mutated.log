@@ -1,0 +1,8 @@
+NEGATIVE: copy of the positive repo mutated: ci.yml --severity=info removed; install.sh sha in xferAI_setup.sh changed; --minimal renamed --tiny; harness/BEST_PRACTICES.v2.yaml removed (current=v1, no polars rule)
+FAILED tests/test_installer_rules.py::test_proposal_schema_and_no_clash_with_current_practices
+FAILED tests/test_installer_rules.py::test_v3_diff_matches_what_apply_would_write
+FAILED tests/test_installer_rules.py::test_uv_installer_pinned_and_observed_hash
+FAILED tests/test_installer_rules.py::test_every_help_flag_is_exercised_by_setup_tests
+FAILED tests/test_installer_rules.py::test_ci_shellcheck_info_on_both_scripts
+5 failed, 24 passed in 0.13s
+rc=1 (nonzero expected)
