@@ -29,9 +29,10 @@ PAPER = {
     "Multimodal Forecasting of New Fashion Product Sales with Image-based Google Trends. arXiv:2109.09824 (v6); "
     "journal version linked from arXiv: doi:10.1002/for.3104",
     "url": "https://arxiv.org/abs/2109.09824",
-    "table": "Table 1 (VISUELLE, 6-week horizon), row GTM-Transformer [T+I+G], 52-week trends",
+    "table": "p.11, Table 1 (VISUELLE), row GTM-Transformer [T+I+G], column group '6 Weeks, G.Trends: 52 weeks', WAPE",
     "wape_reported": 55.2,
-    "quote": "GTM-Transformer [T+I+G] 55,2 (Table 1, '6 Weeks, G.Trends: 52 weeks', WAPE column)",
+    "quote": "row text (p.11, Table 1; pdftotext -layout, spaces collapsed): GTM-Transformer [T+I+G] 55,2 30,2(15;36) 0,41 0,33",
+    "reviewer_record": "pending",
     "accessed": "2026-10-24",
 }
 
