@@ -109,7 +109,9 @@ def env(tmp_path: Path):
     for t in (*TOOLS, "sha256sum", "shasum"):
         w = shutil.which(t)
         if w:
-            shutil.copy2(w, stubs / t)  # copies, not symlinks (test_portability)
+            # tiny wrapper that execs the real tool: no symlink (test_portability) and no copy of a system binary
+            # (macOS refuses copystat/xattrs on /bin tools: PermissionError in shutil.copy2)
+            _w(stubs / t, f'#!/bin/sh\nexec "{w}" "$@"\n')
     _w(stubs / "git", '#!/bin/sh\necho "git version 9.9-stub"\n')
     _w(stubs / "python3.13", FAKE_PY)
     _w(stubs / "fake-xferbench", FAKE_XB)
