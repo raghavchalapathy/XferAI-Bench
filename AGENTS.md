@@ -16,8 +16,8 @@ download VISUELLE or install GTM for the user.
 
 ## Contributing to this repo (project agents)
 
-Developing XferAI-Bench itself: install with `python -m pip install -c constraints/core.txt -e ".[dev]"` (or
-`uv sync --extra dev`), then run `ruff check src tests`, `ruff format --check src tests`, `python -m mypy`,
+Developing XferAI-Bench itself: install with `bash xferAI_setup.sh --non-interactive` (or `uv sync --locked --extra
+dev`; pip fallback `python -m pip install -c constraints/core.txt -e ".[dev]"`), then run `ruff check src tests`, `ruff format --check src tests`, `python -m mypy`,
 `python -m pytest`. See CONTRIBUTING.md.
 
 Project rules (details: [docs/SITE_AND_HARNESS.md](docs/SITE_AND_HARNESS.md)): keep docs lean; every benchmark

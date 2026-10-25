@@ -4,12 +4,9 @@ This walks through the complete offline demo, then each step separately so you c
 
 ## 1. Install (once)
 
-```bash
-cd /path/to/xferAI-bench
-python3 -m venv .venv                     # project-local; never touches your global Python
-.venv/bin/python -m pip install -e ".[dev]"
-.venv/bin/xferbench doctor --profile core # checks numpy, pandas, pyarrow, pydantic, typer, jinja2
-```
+Follow [GETTING_STARTED.md Step 0](GETTING_STARTED.md#step-0-install) (`bash xferAI_setup.sh`, or the pip fallback).
+The commands below use `.venv/bin/xferbench`, which both routes create (Windows: `.venv\Scripts\xferbench`; with uv
+you can also write `uv run xferbench`).
 
 Expected `doctor` ending: `profile 'core' satisfied`.
 

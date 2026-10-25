@@ -42,23 +42,22 @@ git clone https://github.com/raghavchalapathy/XferAI-Bench.git && cd XferAI-Benc
 ```
 Expected: exit 0. If the folder exists, `cd XferAI-Bench && git status` instead. Behind a proxy, see Offline / enterprise.
 
-### Step 2. Create the virtual environment
+### Step 2. Check the plan
 
 ```bash
-test -x .venv/bin/python || python3 -m venv .venv
-.venv/bin/python -c "import sys; assert sys.version_info >= (3, 11), sys.version; print('ok', sys.version.split()[0])"
+bash xferAI_setup.sh --dry-run --non-interactive
 ```
-Expected: `ok 3.11.x` (or newer), exit 0. If the assert fails, delete `.venv` and recreate it with `python3.11 -m venv .venv` (or newer).
+Expected: a `Plan:` list and `Dry run: nothing was changed.`, exit 0. It needs Python 3.11+ (pass `--python python3.11`
+if `python3` is older). Show the plan to the user before Step 3.
 
 ### Step 3. Install
 
 ```bash
-.venv/bin/python -m pip install --upgrade pip
-.venv/bin/python -m pip install -c constraints/core.txt -e .
-.venv/bin/xferbench doctor --profile core
+bash xferAI_setup.sh --non-interactive
 ```
-Or with uv (uses `uv.lock`): `uv sync && uv run xferbench doctor --profile core`.
-Expected: last line `profile 'core' satisfied`, exit 0. Optional: `-e ".[lightgbm]"` adds M4.lightgbm.
+Expected: `[1/7]` ... `[7/7]` all ok and exit 0; it creates `.venv`, so `.venv/bin/xferbench` exists afterwards (uv or
+pip; see [GETTING_STARTED Step 0](GETTING_STARTED.md#step-0-install) for flags, the manual uv and pip commands, and
+the exit codes). On failure, read the `Fix:` line and `.xferai-setup.log`. Optional: `--with-lightgbm` adds M4.lightgbm.
 No network? Use the wheelhouse (Offline / enterprise) instead of this step.
 
 ## Part 1. Reproduce the VISUELLE website benchmark (licence gate)
@@ -292,6 +291,6 @@ No package index, network or telemetry is used after this.
 | Exit 2 writing results | `--out` is inside the repo but not gitignored; use `runs/local/...` |
 | "the test stage requires --selection" | Do Step 9 and the `select` part of Step 10 first |
 | Exit 3 with `--methods M3` | M3 needs a recipe nobody has supplied; drop it |
-| A method shows "missing extra" | Optional; e.g. `pip install -e ".[lightgbm]"` |
+| A method shows "missing extra" | Optional; rerun `bash xferAI_setup.sh --non-interactive --with-lightgbm` |
 
 More detail: [`GETTING_STARTED.md`](GETTING_STARTED.md), [`METADATA.md`](METADATA.md), [`DATA_CLASSES.md`](DATA_CLASSES.md).

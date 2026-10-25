@@ -1,5 +1,8 @@
 # Setup, compatibility and troubleshooting
 
+To install, follow [GETTING_STARTED.md Step 0](GETTING_STARTED.md#step-0-install) (`bash xferAI_setup.sh`, or the pip
+fallback there). This page is reference material: requirements, extras, the tested matrix and troubleshooting.
+
 ## Requirements
 
 - Python **3.11 or newer** and Git. CPU only; no GPU, CUDA, service account or model download is needed.
@@ -12,11 +15,16 @@ project-local `.venv`.
 
 ## Install options
 
-| Goal | Command (macOS/Linux) |
-|---|---|
-| Develop from this checkout | `python3 -m venv .venv && .venv/bin/python -m pip install -e ".[dev]"` |
-| Same, scripted | `bash bootstrap.sh` (refuses to touch an existing `.venv`) |
-| Install a built wheel | `python3 -m venv /path/env && /path/env/bin/python -m pip install dist/xfer_bench-0.1.0-py3-none-any.whl` |
+All install routes (setup script, uv, pip with `-c constraints/core.txt`, Windows) are in
+[GETTING_STARTED.md Step 0](GETTING_STARTED.md#step-0-install). `bootstrap.sh` / `bootstrap.ps1` are thin wrappers
+around `xferAI_setup.sh` / `xferAI_setup.ps1`. To install a built wheel, see the README section "Installing from a
+built wheel". The package is not on PyPI.
+
+**Proxies and private indexes.** The setup script and uv honour `HTTPS_PROXY`, `HTTP_PROXY`, `NO_PROXY`, the `UV_*`
+variables (e.g. `UV_INDEX_URL`, `UV_CACHE_DIR`) and, for the pip route, `PIP_INDEX_URL`. With no network at all, use
+the wheelhouse in [DIY-GettingStarted.md](DIY-GettingStarted.md) (Offline / enterprise).
+
+thon -m pip install dist/xfer_bench-0.1.0-py3-none-any.whl` |
 | Reproduce the tested pins | add `-c constraints/core.txt` to the pip command |
 
 Windows uses `.venv\Scripts\python` and `bootstrap.ps1`. The package is not on PyPI.
@@ -75,6 +83,7 @@ Run directories are append-only.
 
 | Symptom | Fix |
 |---|---|
+| Setup script step fails | read its `Fix:` line and `.xferai-setup.log`; `bash xferAI_setup.sh --verbose` shows every command |
 | `requires a different Python: 3.10...` | create the venv with Python 3.11+ (`python3.11 -m venv .venv`) |
 | `TypeError: Parameter.make_metavar() missing ... 'ctx'` | Typer older than 0.16 with Click 8.2+; `pip install "typer>=0.16"` |
 | `output directory ... is not empty; runs are append-only` | choose a new `--out` |

@@ -3,8 +3,7 @@
 ## Development setup
 
 ```bash
-python3 -m venv .venv                      # Python 3.11+
-.venv/bin/python -m pip install -e ".[dev]"
+bash xferAI_setup.sh --no-demo             # or: uv sync --locked --extra dev (pip fallback: docs/GETTING_STARTED.md Step 0)
 .venv/bin/python -m pytest                 # unit, integration and leakage tests (network tests excluded)
 .venv/bin/ruff check src tests
 .venv/bin/ruff format --check src tests
@@ -49,7 +48,7 @@ implementation state, and a regenerated `METHOD_SUPPORT.md`:
 ## Releases
 
 1. Update `src/xferbench/_version.py` and `PROGRESS.md`.
-2. Run the full checks above and `bash bootstrap.sh` from a fresh clone.
+2. Run the full checks above and `bash xferAI_setup.sh` from a fresh clone.
 3. `python -m build` and install the wheel into a clean environment outside the checkout; run
    `xferbench demo --out <tmp>`.
 4. Tag the commit. v0.1.0 is published as a GitHub Release. Publishing to PyPI requires an explicit decision by

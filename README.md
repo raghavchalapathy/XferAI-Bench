@@ -28,40 +28,23 @@ Two scenarios are always scored and shown separately, with equal 0.5/0.5 selecti
 approaches (e.g. TimesFM, Chronos, Moirai) are tracked; see the method table below for what actually runs.
 Licence: Apache-2.0 ([LICENSE](LICENSE)). Contributor and site rules: [docs/SITE_AND_HARNESS.md](docs/SITE_AND_HARNESS.md).
 
-## Quickstart (macOS / Linux)
+## Quickstart
 
-- New here? Follow **[docs/GETTING_STARTED.md](docs/GETTING_STARTED.md)**: install, demo, then your own data.
-- Using a coding assistant (Claude Code, Cursor, Copilot, ChatGPT)? Point it at
-  **[docs/DIY-GettingStarted.md](docs/DIY-GettingStarted.md)** (also [AGENTS.md](AGENTS.md), [llms.txt](llms.txt)).
-  It covers offline/enterprise installs and keeps your data on your machine.
-
-Needs Python 3.11 or newer and Git:
+Needs Git and Python 3.11 or newer. One command installs everything (with [uv](https://docs.astral.sh/uv/) and the
+committed `uv.lock`; it installs a pinned uv for your user if needed, or falls back to pip with `--no-install-uv`),
+runs a health check and a tiny offline demo, then prints what to run next:
 
 ```bash
 git clone https://github.com/raghavchalapathy/XferAI-Bench.git && cd XferAI-Bench
-python3 -m venv .venv
-.venv/bin/python -m pip install --upgrade pip
-.venv/bin/python -m pip install -c constraints/core.txt -e ".[dev]"   # same pins as the DIY guide and CONTRIBUTING
-.venv/bin/xferbench doctor --profile core   # -> profile 'core' satisfied
-.venv/bin/xferbench demo --out ./xb-demo     # about 20 s, no network
-open ./xb-demo/report.html                  # Linux: xdg-open ./xb-demo/report.html
+bash xferAI_setup.sh                                  # Windows: powershell -ExecutionPolicy Bypass -File .\xferAI_setup.ps1
+uv run xferbench experiment run exp01_synthetic_lightgbm_analogs   # Step 1: demo experiment, offline
+uv run xferbench demo --out ./xb-demo                 # the whole pipeline on tiny synthetic data, about 20 s
 ```
 
-With [uv](https://docs.astral.sh/uv/) instead (uses the committed `uv.lock`; pip stays supported):
-
-```bash
-uv sync --extra dev && uv run xferbench doctor --profile core
-```
-
-Windows (PowerShell). CI runs the test suite and the wheel demo on `windows-latest`; these interactive commands
-themselves are untested:
-
-```powershell
-py -3.11 -m venv .venv
-.venv\Scripts\python -m pip install -c constraints/core.txt -e ".[dev]"
-.venv\Scripts\xferbench demo --out .\xb-demo
-start .\xb-demo\report.html
-```
+Then follow **[docs/GETTING_STARTED.md](docs/GETTING_STARTED.md)**: Step 0 install (and the pip fallback), Step 1 the
+demo experiment, Step 2 your own data. Using a coding assistant? Point it at
+[docs/DIY-GettingStarted.md](docs/DIY-GettingStarted.md), [AGENTS.md](AGENTS.md) and [llms.txt](llms.txt).
+Install problems: [docs/SETUP.md](docs/SETUP.md#troubleshooting).
 
 The demo writes:
 
@@ -139,7 +122,7 @@ python3 -m venv /tmp/xb-env
 /tmp/xb-env/bin/xferbench demo --out /tmp/xb-wheel-demo
 ```
 
-`bootstrap.sh` / `bootstrap.ps1` do the same into a new local `.venv` (they refuse to overwrite an existing one).
+`bootstrap.sh` / `bootstrap.ps1` are kept as thin wrappers that run `xferAI_setup.sh` / `xferAI_setup.ps1` with the same flags.
 
 ## Repository layout and experiments
 
