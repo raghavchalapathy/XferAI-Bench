@@ -38,7 +38,7 @@ def _readme_block(heading: str) -> list[list[str]]:
 
 
 def _run(repo: Path, argv: list[str]) -> str:
-    r = subprocess.run([CLI, *argv[1:]], cwd=repo, capture_output=True, text=True, timeout=600)
+    r = subprocess.run([CLI, *argv[1:]], cwd=repo, capture_output=True, text=True, encoding="utf-8", timeout=600)
     assert r.returncode == 0, (argv, r.stdout[-2000:], r.stderr[-2000:])
     return r.stdout + r.stderr
 
@@ -60,7 +60,12 @@ def repo(tmp_path_factory: pytest.TempPathFactory) -> tuple[Path, str]:
 def test_no_unignored_run_outputs_or_ranking_words(repo: tuple[Path, str]) -> None:
     root, _ = repo
     files = subprocess.run(
-        ["git", "ls-files", "-o", "--exclude-standard", "-z"], cwd=root, check=True, capture_output=True, text=True
+        ["git", "ls-files", "-o", "--exclude-standard", "-z"],
+        cwd=root,
+        check=True,
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
     ).stdout.split("\0")
     files = [f for f in files if f]
     assert ".gitignore" in files and any(f.startswith("my-bench/") for f in files)
