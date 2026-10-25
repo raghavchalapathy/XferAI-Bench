@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import importlib.util
+import subprocess
 from pathlib import Path
 
 import pytest
@@ -100,3 +101,92 @@ def test_v2_synthetic_outputs_carry_no_ranking_and_private_selection(tmp_path: P
         ["git", "ls-files"], cwd=ROOT, capture_output=True, text=True, encoding="utf-8", check=False
     ).stdout
     assert not [t for t in tracked.splitlines() if t.endswith("selection.json") and t.startswith("results")]
+
+
+def _git(root: Path, *args: str) -> subprocess.CompletedProcess[str]:
+    return subprocess.run(["git", "-C", str(root), *args], capture_output=True, encoding="utf-8", check=False)
+
+
+def _temp_repo(tmp_path: Path) -> Path:
+    import shutil
+
+    repo = tmp_path / "repo"
+    repo.mkdir()
+    assert _git(repo, "init", "-q").returncode == 0
+    shutil.copy(ROOT / ".gitignore", repo / ".gitignore")
+    return repo
+
+
+@pytest.mark.parametrize(
+    "rel",
+    [
+        "experiments/exp01/test-run/metrics.json",
+        "exp01-probe/test-run/metrics.json",
+        "a/b/c/validation-run/metrics.json",
+        "x/run_manifest.json",
+        "deep/er/_work/selection.json",
+    ],
+)
+def test_v3_run_outputs_ignored_at_any_depth(tmp_path: Path, rel: str) -> None:
+    """V3-1(1): the repo .gitignore ignores private run outputs wherever --out points."""
+    repo = _temp_repo(tmp_path)
+    assert _git(repo, "check-ignore", "-q", rel).returncode == 0, rel
+
+
+def test_v3_experiment_refuses_non_ignored_in_repo_out(tmp_path: Path) -> None:
+    """V3-1(1): run_experiment refuses an --out inside a git work tree that git does not ignore."""
+    repo = _temp_repo(tmp_path)
+    with pytest.raises(ExperimentError, match="not ignored by git"):
+        run_experiment(
+            ROOT / "experiments/exp02_chronos_zero_shot/config.yaml", repo / "published/exp02", progress=lambda _m: None
+        )
+    assert not (repo / "published/exp02/test-run").exists()
+
+
+def test_v3_experiment_in_temp_repo_leaves_no_ranking_committable(tmp_path: Path) -> None:
+    """V3-1(2): run exp02 with --out inside a temp git repo (README path eval/<id>), then assert the private files
+    are ignored and every non-ignored file is free of rank / recommended / best terms."""
+    import re
+    import urllib.parse
+
+    repo = _temp_repo(tmp_path)
+    out = repo / "eval/exp02"
+    run_experiment(ROOT / "experiments/exp02_chronos_zero_shot/config.yaml", out, progress=lambda _m: None)
+    private = [
+        out / "test-run/metrics.json",
+        out / "test-run/run_manifest.json",
+        out / "validation-run/metrics.json",
+        out / "validation-run/run_manifest.json",
+        out / "_work/selection.json",
+    ]
+    for f in private:
+        assert f.is_file(), f
+        assert _git(repo, "check-ignore", "-q", str(f.relative_to(repo).as_posix())).returncode == 0, f
+    # the same private files must also be ignored when the parent dir is not (any-depth patterns)
+    for f in private:
+        alt = "not-ignored-dir/" + f.relative_to(out).as_posix()
+        assert _git(repo, "check-ignore", "-q", alt).returncode == 0, alt
+    listed = _git(repo, "ls-files", "--others", "--exclude-standard", "-z").stdout.split("\0")
+    committable = [repo / p for p in listed if p and p != ".gitignore"]  # .gitignore is the copied fixture
+    # eval/ is ignored as a whole, so also scan the top-level published outputs (what a user would share)
+    published = [f for f in out.iterdir() if f.is_file()]
+    assert published, "expected top-level outputs (report.html, SUMMARY.md, ...)"
+    committable += published
+    # method-ranking terms: rank/rankable fields or columns, "Ranked by", a recommendation, "best"; the
+    # labelled disclaimers ("not a ranking", "not Reviewer-recommended") and splits.json's per-launch
+    # "ranked" eligibility flag (a data property, not a method ranking) are allowed.
+    bad = re.compile(
+        r"\brank(able)?\b|ranked by|<th>\s*rank|\brecommended\b|\"recommended|\bbest\b|\"best", re.IGNORECASE
+    )
+    disclaimer = re.compile(r"not\W+reviewer\W+recommended", re.IGNORECASE)
+    hits = []
+    for f in committable:
+        txt = disclaimer.sub("", urllib.parse.unquote(f.read_text(encoding="utf-8", errors="replace")))
+        hits += [f"{f.relative_to(repo)}: {m.group(0)}" for m in bad.finditer(txt)]
+    assert hits == [], hits
+    # V3-1(4): synthetic manifests carry no recommendation
+    import json
+
+    for m in (out / "test-run/run_manifest.json", out / "validation-run/run_manifest.json"):
+        sel = json.loads(m.read_text(encoding="utf-8")).get("selection") or {}
+        assert "recommended" not in sel, m

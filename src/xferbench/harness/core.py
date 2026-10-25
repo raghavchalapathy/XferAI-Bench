@@ -306,6 +306,27 @@ def load_proposal(path: Path) -> Proposal:
         raise HarnessError(f"{path.name}: {exc}") from exc
 
 
+REVIEW_DIR = "factory/inbox/reviewer"
+
+
+def review_file_path(root: Path, review_file: str) -> Path:
+    """V3-2: a Reviewer record must sit under factory/inbox/reviewer/ (no '..', no absolute path, no symlink escape)."""
+    raw = review_file.replace("\\", "/")
+    norm = posixpath.normpath(raw)
+    if (
+        raw.startswith("/")
+        or re.match(r"^[A-Za-z]:", raw)
+        or norm.startswith("..")
+        or not norm.startswith(REVIEW_DIR + "/")
+    ):
+        raise HarnessError(f"review_file {review_file!r} must be a relative path under {REVIEW_DIR}/")
+    rf = root / norm
+    base = (root / REVIEW_DIR).resolve()
+    if not rf.resolve().is_relative_to(base):
+        raise HarnessError(f"review_file {review_file!r} resolves outside {REVIEW_DIR}/")
+    return rf
+
+
 def check_proposal(p: Proposal, root: Path, harness: Path, base: str | None = "HEAD") -> None:
     """Guardrails. ``touches`` is not trusted: in a git work tree the real diff vs ``base`` (plus untracked files,
     resolved through symlinks) is checked against the protected paths and must be declared in ``touches``."""
@@ -325,7 +346,7 @@ def check_proposal(p: Proposal, root: Path, harness: Path, base: str | None = "H
         r.verify_files(root)
     if p.review is None or p.review.decision != "approved":
         raise HarnessError(f"proposal {p.id} has no approved Reviewer record; not adopted")
-    rf = root / str(p.review.review_file)
+    rf = review_file_path(root, str(p.review.review_file))
     if not rf.is_file() or sha256_file(rf) != p.review.review_sha256:
         raise HarnessError(f"proposal {p.id}: Reviewer record file missing or sha256 mismatch: {p.review.review_file}")
     bp, _ = current_practices(harness)

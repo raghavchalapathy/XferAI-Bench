@@ -691,7 +691,8 @@ class BenchmarkRunner:
             else {
                 "validation_run_id": selection.validation_run_id,
                 "policy_hash": selection.policy_hash,
-                "recommended": selection.recommended,
+                # V3-1: synthetic runs never carry a recommendation (not a ranking)
+                **({} if md.dataset.synthetic else {"recommended": selection.recommended}),
                 "frozen_variants": [f.variant_id for f in selection.families if f.eligible],
             },
             "selection_cutoff": split.selection_cutoff,

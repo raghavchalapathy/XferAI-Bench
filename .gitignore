@@ -46,3 +46,7 @@ runs/local/
 !/results/README.md
 # private working files of synthetic experiments (never published)
 _work/
+# V3-1 (2026-10-24): intermediate run outputs carry evaluator rank fields; never commit them at any depth
+test-run/
+validation-run/
+**/run_manifest.json

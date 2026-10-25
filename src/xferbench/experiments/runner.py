@@ -157,6 +157,20 @@ def _scalable_parity(ds: Any, split: Any, run_dir: Path) -> dict[str, Any]:
     return {"engine": "polars", "match": worst <= 1e-9, "max_abs_diff": worst}
 
 
+def check_output_dir(out: Path) -> None:
+    """V3-1: refuse an --out inside a git work tree unless git ignores it (outside any repo is fine)."""
+    from xferbench.data.classes import DataClassError, check_local_output
+
+    try:
+        check_local_output(out)
+    except DataClassError as e:
+        raise ExperimentError(
+            f"--out {out} is inside a git work tree and is not ignored by git; experiment outputs "
+            "(test-run/, validation-run/, run_manifest.json) must never be committable. "
+            "Use eval/<id> (gitignored) or a path outside the repository."
+        ) from e
+
+
 def run_experiment(config_path: Path, out: Path, progress: Any = print) -> dict[str, Any]:
     from xferbench.contracts.selection import SelectionPolicy
     from xferbench.data.io import load_from_metadata_path
@@ -169,6 +183,7 @@ def run_experiment(config_path: Path, out: Path, progress: Any = print) -> dict[
     cfg = ExperimentConfig.load(config_path)
     if out.exists() and any(out.iterdir()):
         raise ExperimentError(f"{out} is not empty; choose a new --out")
+    check_output_dir(out)
     runnable, skipped = _availability(cfg.methods + cfg.optional_methods)
     if not runnable:
         raise ExperimentError("no runnable method; install the extras listed in the config")

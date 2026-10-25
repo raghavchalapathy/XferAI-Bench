@@ -5,4 +5,6 @@ core tests/leakage/test_m4_lightgbm.py::*
 core tests/unit/test_scalable_eval.py::test_spark_local_parity
 core tests/review/test_review_adv.py::test_reviewer_adversarial_spark
 core tests/unit/test_harness.py::test_symlink_into_protected_path_is_blocked
+core tests/unit/test_harness.py::test_review_file_symlink_escape_rejected
+core tests/unit/test_site_build_isolation.py::test_real_build_pages_reads_no_run_paths
 # Profile "spark": the spark-parity job must skip nothing (no entries).

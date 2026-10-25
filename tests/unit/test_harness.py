@@ -35,8 +35,8 @@ def env(tmp_path: Path) -> tuple[Path, Path]:
     for rel in json.loads((ROOT / "harness/PROTECTED_HASHES.json").read_text(encoding="utf-8")):
         (root / rel).parent.mkdir(parents=True, exist_ok=True)
         shutil.copy(ROOT / rel, root / rel)
-    (root / "reviews").mkdir()
-    (root / "reviews/review.md").write_text("Reviewer: approved\n", encoding="utf-8")
+    (root / "factory/inbox/reviewer").mkdir(parents=True)
+    (root / "factory/inbox/reviewer/review.md").write_text("Reviewer: approved\n", encoding="utf-8")
     h = root / "harness"
     (h / "proposals").mkdir(parents=True)
     for n in ("BEST_PRACTICES.v1.yaml", "CHANGELOG.md", "PROTECTED_HASHES.json", "watch.yaml"):
@@ -73,8 +73,8 @@ def _proposal(h: Path, root: Path, **kw: object) -> Path:
             "reviewer": "reviewer",
             "decision": "approved",
             "date": "2026-10-24",
-            "review_file": "reviews/review.md",
-            "review_sha256": sha256_file(root / "reviews/review.md"),
+            "review_file": "factory/inbox/reviewer/review.md",
+            "review_sha256": sha256_file(root / "factory/inbox/reviewer/review.md"),
         },
     }
     d.update(kw)
@@ -191,7 +191,7 @@ def test_self_or_non_reviewer_approval_rejected(env: tuple[Path, Path], who: str
 def test_review_file_hash_must_match(env: tuple[Path, Path]) -> None:
     root, h = env
     p = _proposal(h, root)
-    (root / "reviews/review.md").write_text("tampered\n", encoding="utf-8")
+    (root / "factory/inbox/reviewer/review.md").write_text("tampered\n", encoding="utf-8")
     with pytest.raises(HarnessError, match="sha256 mismatch"):
         apply_proposal(p, root, h)
 
@@ -280,3 +280,42 @@ def test_approver_conflict_normalisation() -> None:
     assert _approver_conflict("Reviewer.S-c_o-u t", "builder")  # normalised substring of a role
     assert not _approver_conflict("reviewer", "builder")
     assert not _approver_conflict("reviewer-alice", "scout")
+
+
+@pytest.mark.parametrize(
+    "rf",
+    [
+        "reviews/review.md",
+        "/abs/factory/inbox/reviewer/review.md",
+        "factory/inbox/reviewer/../../../review.md",
+        "factory/inbox/reviewerX/review.md",
+        "factory/inbox/builder/review.md",
+        "C:/factory/inbox/reviewer/review.md",
+    ],
+)
+def test_review_file_must_sit_under_reviewer_inbox(env: tuple[Path, Path], rf: str) -> None:
+    """V3-2: the Reviewer record must live under factory/inbox/reviewer/."""
+    root, h = env
+    (root / "reviews").mkdir(exist_ok=True)
+    (root / "reviews/review.md").write_text("Reviewer: approved\n", encoding="utf-8")
+    d = yaml.safe_load(_proposal(h, root).read_text(encoding="utf-8"))
+    d["review"]["review_file"] = rf
+    (h / "proposals/p1.yaml").write_text(yaml.safe_dump(d), encoding="utf-8")
+    with pytest.raises(HarnessError, match="factory/inbox/reviewer"):
+        apply_proposal(h / "proposals/p1.yaml", root, h)
+
+
+def test_review_file_symlink_escape_rejected(env: tuple[Path, Path]) -> None:
+    root, h = env
+    (root / "outside.md").write_text("Reviewer: approved\n", encoding="utf-8")
+    link = root / "factory/inbox/reviewer/link.md"
+    try:
+        link.symlink_to(root / "outside.md")
+    except OSError:
+        pytest.skip("symlinks unavailable")
+    d = yaml.safe_load(_proposal(h, root).read_text(encoding="utf-8"))
+    d["review"]["review_file"] = "factory/inbox/reviewer/link.md"
+    d["review"]["review_sha256"] = sha256_file(root / "outside.md")
+    (h / "proposals/p1.yaml").write_text(yaml.safe_dump(d), encoding="utf-8")
+    with pytest.raises(HarnessError, match="outside"):
+        apply_proposal(h / "proposals/p1.yaml", root, h)
