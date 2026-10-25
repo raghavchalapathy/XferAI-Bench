@@ -1,0 +1,33 @@
+# Adopted by Lead via `xferbench harness apply` after Reviewer approval (harness-installer-v2-review-20261025), with main at 24ac8ae (condition C-1).
+id: installer-ux-20261025
+author_role: builder
+summary: First-run installer scripts (xferAI_setup.sh/.ps1) follow one safety and UX bar; every clause below is checked by tests/test_installer_rules.py (static checks of the scripts, the setup tests and ci.yml).
+set_rules:
+  installer_safety: "Installer scripts never use sudo, support --dry-run, and use set -Eeuo pipefail with an ERR trap (PowerShell: $ErrorActionPreference = 'Stop'). The uv installer is pinned to a version (0.13.5 today) and run only if its sha256 matches the value recorded in the script; that value is one we computed ourselves and is labelled observed. The installer is told not to edit shell profiles (UV_NO_MODIFY_PATH=1)."
+  installer_ux: "Installer output uses an [ok] ASCII fallback, a Fix: hint on failure and exit 2 for bad usage; each step line reports its measured elapsed time. Scripts honour NO_COLOR and offer --help, --version, --quiet, --verbose and --non-interactive; the own-data prompt only appears on a TTY."
+  installer_env: "Installers do not hard-code --index-url or --proxy, so HTTP(S)_PROXY, NO_PROXY, UV_* and PIP_INDEX_URL apply; a pip fallback (--no-install-uv) exists."
+  installer_checks: "Every flag in xferAI_setup.sh --help is exercised in tests/unit/test_setup_script.py, which also has a pty prompt test and stubbed (no network) uv-missing, checksum-mismatch, pip-fallback and lightgbm-failure tests. ci.yml runs shellcheck --severity=info on xferAI_setup.sh and bootstrap.sh, runs PSScriptAnalyzer per file and fails on any finding, runs a fresh run and a rerun of the setup script on ubuntu, macos and windows, and pins every action to a commit SHA. Windows behaviour is claimed only from Windows CI."
+remove_rules: []
+touches:
+  - xferAI_setup.sh
+  - xferAI_setup.ps1
+  - bootstrap.sh
+  - bootstrap.ps1
+  - setup/next_demo.txt
+  - setup/own_data.txt
+  - tests/unit/test_setup_script.py
+  - tests/unit/test_setup_docs_sync.py
+  - .github/workflows/ci.yml
+results:
+  - run_manifest: harness/evidence/installer-ux-20261025/regression_manifest.json
+    run_manifest_sha256: 'feb0b8d7836a9d9ed7bf6b63e0bbb0a51d4deb9dea04fb13050f9f0ed7be1dea'
+    evidence: harness/evidence/installer-ux-20261025/
+    data_class: synthetic
+    label: synthetic interface test, not rankings
+review:
+  reviewer: reviewer
+  decision: approved
+  date: 2026-10-25
+  review_file: factory/inbox/reviewer/harness-installer-v2-review-20261025/review.md
+  review_sha256: "488955164c6a9416f5033c7a53f813b7915c12e48006640ccb5cd9934a40adca"
+  notes: "APPROVE (conditional C-1: adopt with/after usability-v4.1 24ac8ae on main). Condition met: origin/main = 24ac8ae (fast-forwarded after usability-v4-1-review-20261025). Applied by Lead."
