@@ -148,9 +148,14 @@ python3 -m venv /tmp/xb-env
 ```bash
 xferbench experiment list                      # data + models each experiment uses
 xferbench experiment new exp04_synthetic_mine  # scaffold experiments/exp04_synthetic_mine/ (name: exp<NN>_<dataset>_<method>)
-xferbench experiment run exp01_synthetic_lightgbm_analogs
-xferbench experiment run-all                   # status table, no rankings
+xferbench experiment run exp01_synthetic_lightgbm_analogs   # -> eval/exp01_synthetic_lightgbm_analogs__synthetic/
+xferbench experiment run exp01_synthetic_lightgbm_analogs --tier sample   # same experiment, your sample (configs/sample.yaml)
+xferbench experiment run-all                   # status table, no rankings; one data tier per table
 ```
+
+Every run carries a data tier, `synthetic`, `sample` or `complete`, in its manifest, metrics, `leaderboard.csv`,
+report and summaries; runs of different tiers are never compared (exit 2). See
+[Data tiers](docs/GETTING_STARTED.md#data-tiers-synthetic-sample-complete).
 
 Production path (library or CLI): `xferbench fit` saves a versioned artifact with a manifest; `xferbench forecast`
 scores new launches from it (exit codes: 0 ok, 1 error, 2 usage, 3 blocked, 4 partial, 5 artifact mismatch,

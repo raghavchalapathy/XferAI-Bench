@@ -24,7 +24,7 @@ Google Trends window 52 weeks; WAPE = 100·Σ|y−ŷ|/Σy after the official res
 2. `bash experiments/exp03_visuelle_gtm/scripts/download_visuelle.sh --archive /path/to/visuelle.zip`
    (interactive acceptance; extracts into git-ignored `data/visuelle/input/raw/`).
 3. Install GTM-Transformer yourself per its README; set `gtm.install_path`, `gtm.python`, `gtm.ckpt_path`.
-4. `xferbench experiment run exp03_visuelle_gtm --allow-research-only` → `runs/<timestamp>/report.md`
+4. `xferbench experiment run exp03_visuelle_gtm --allow-research-only` → `eval/exp03_visuelle_gtm__complete/report.md`
    with the paper-reported and the reproduced WAPE side by side.
 
 ## What is blocked and why

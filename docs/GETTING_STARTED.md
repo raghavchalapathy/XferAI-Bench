@@ -182,7 +182,31 @@ If XferAI-Bench is useful to you, please ⭐ star the repo on GitHub. It helps o
 ## Experiments (synthetic interface tests)
 
 ```bash
-xferbench experiment --config experiments/exp01_synthetic_lightgbm_analogs/config.yaml --out eval/exp01
+xferbench experiment run exp01_synthetic_lightgbm_analogs     # -> eval/exp01_synthetic_lightgbm_analogs__synthetic/
 ```
+
+Experiment folders are named `exp<NN>_<dataset>_<method>` (for example `exp04_synthetic_b3`); `xferbench experiment
+new` refuses other names.
+
+## Data tiers (synthetic, sample, complete)
+
+Every run states which data it used, and the tier is written to `run_manifest.json`, `metrics.json`,
+`leaderboard.csv` (a `tier` column on every row), `report.html`, `summary.md` and, for experiments, `results.json`
+(every row), `leaderboard.html` and `SUMMARY.md`:
+
+| tier | meaning |
+|---|---|
+| `synthetic` | generated data; an interface test only, never a result |
+| `sample` | a sample of your own data, not the complete dataset |
+| `complete` | your complete dataset |
+
+Switching tier changes only config, not code or the experiment: `xferbench experiment run <id> --tier sample` reads
+`experiments/<id>/configs/sample.yaml` (deep-merged over `config.yaml`; set `data.metadata` there to your own
+`local/.../metadata.json`), or set `tier:` in `config.yaml`. Outputs go to `eval/<id>__<tier>/` (git-ignored; `-2`,
+`-3`, ... if already used). Sample and complete runs are labelled local and keep the LOCAL DATA banner. For
+`xferbench run`, `--tier` defaults to `synthetic` for generated data and `complete` otherwise; pass `--tier sample`
+when you run on a subset. `xferbench compare` and `xferbench experiment run-all` refuse to mix tiers (exit 2, also
+with `--allow-incompatible`).
+
 
 See [experiments/README.md](../experiments/README.md). These are interface tests, not rankings.

@@ -5,9 +5,9 @@ set_rules: {rule_id: "new or changed rule text"}
 remove_rules: []
 touches: []                   # every changed file; checked against the real git diff; protected paths are refused
 results:                      # optional; each needs an existing run manifest + evidence
-  - run_manifest: eval/exp01/test-run/run_manifest.json
+  - run_manifest: eval/exp01_synthetic_lightgbm_analogs__synthetic/test-run/run_manifest.json
     run_manifest_sha256: "<sha256>"
-    evidence: eval/exp01/results.json
+    evidence: eval/exp01_synthetic_lightgbm_analogs__synthetic/results.json
     data_class: synthetic
     label: "synthetic interface test, not rankings"   # allow-listed labels only
 review:                       # added by the Reviewer only (never the author)

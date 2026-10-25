@@ -9,5 +9,5 @@
 - **Models:** B0, B1, B2, B3 (hierarchical analogs/baselines), M1, M2. Optional: `M4.lightgbm` (global LightGBM)
   with `pip install -e ".[lightgbm]"` or `uv sync --extra lightgbm`; without it, it is listed as `config_required`.
 - **Runtime:** `runtime.backend: polars` (default) or `spark` (needs the `distributed` extra + Java).
-- **Run:** `xferbench experiment run exp01_synthetic_lightgbm_analogs` -> `experiments/exp01_synthetic_lightgbm_analogs/runs/<UTC timestamp>/`
+- **Run:** `xferbench experiment run exp01_synthetic_lightgbm_analogs` -> `eval/exp01_synthetic_lightgbm_analogs__synthetic/` (data tier `synthetic`; `--tier sample|complete` uses `configs/<tier>.yaml`)
   (`leaderboard.html`, `report.html`, `results.json`, `SUMMARY.md`; git-ignored).

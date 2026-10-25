@@ -141,7 +141,7 @@ def report_markdown(reproduced: float | None, cfg: dict[str, Any], blocked: list
         "| quantity | WAPE (%) | source |",
         "|---|---|---|",
         f"| **Paper-reported** | {PAPER['wape_reported']} | {PAPER['table']}; {PAPER['url']} (accessed {PAPER['accessed']}) |",
-        f"| **Reproduced by us** | {rep} | experiments/{cfg.get('id', 'exp03_visuelle_gtm')}/runs/<timestamp>/ |",
+        f"| **Reproduced by us** | {rep} | eval/{cfg.get('id', 'exp03_visuelle_gtm')}__complete/ |",
         "",
         "The two numbers are labelled separately; the reproduced number is never substituted by the paper number.",
         "",

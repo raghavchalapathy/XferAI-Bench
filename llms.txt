@@ -8,6 +8,7 @@
 - [AGENTS.md](AGENTS.md)
 - [Cold-start harness](COLDSTARTHARNESS.md)
 - [Experiments (synthetic interface tests)](experiments/README.md)
+- [Data tiers: synthetic, sample, complete](docs/GETTING_STARTED.md#data-tiers-synthetic-sample-complete)
 - [AI engineer knowledge base](AIENGINEER.md)
 - [VISUELLE/GTM reproduction (research only, results pending)](experiments/exp03_visuelle_gtm/README.md)
 

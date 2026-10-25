@@ -8,7 +8,9 @@ Rules: Python >= 3.11; everything runs offline after install by default (`XFERBE
 Hugging Face weight downloads for optional foundation adapters: never set it without the user's approval); never upload or commit the user's data or results
 (`local/`, `runs/local/` are gitignored); no telemetry; stop and ask the user where the guide says STOP.
 
-Experiments: `xferbench experiment list|new|run|run-all` (synthetic interface test, not rankings). Research-only
+Experiments: `xferbench experiment list|new|run|run-all` (synthetic interface test, not rankings). Folder names:
+`exp<NN>_<dataset>_<method>`. Every run has a data tier (`synthetic|sample|complete`, `--tier` or `configs/<tier>.yaml`);
+outputs go to `eval/<id>__<tier>/`; never mix tiers in one comparison. Research-only
 experiments (`exp03_visuelle_gtm`) need `--allow-research-only` and the user's own licence acceptance; never
 download VISUELLE or install GTM for the user.
 

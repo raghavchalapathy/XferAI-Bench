@@ -21,11 +21,17 @@ Run:
 
 ```bash
 xferbench experiment list
-xferbench experiment run exp01_synthetic_lightgbm_analogs   # -> experiments/<id>/runs/<UTC timestamp>/
+xferbench experiment run exp01_synthetic_lightgbm_analogs   # -> eval/exp01_synthetic_lightgbm_analogs__synthetic/
 xferbench experiment run-all                          # with --allow-research-only, research-only entries show as "blocked"
-xferbench experiment --config experiments/exp01_synthetic_lightgbm_analogs/config.yaml --out eval/exp01
+xferbench experiment --config experiments/exp01_synthetic_lightgbm_analogs/config.yaml --out eval/exp01_synthetic_lightgbm_analogs__synthetic
+xferbench experiment run exp01_synthetic_lightgbm_analogs --tier sample   # after setting data.metadata in configs/sample.yaml
 # or: scripts/model_eval.sh exp01_synthetic_lightgbm_analogs
 ```
+
+**Data tiers.** Every run is `synthetic`, `sample` or `complete`; the tier is printed and written to every output
+(see [Data tiers](../docs/GETTING_STARTED.md#data-tiers-synthetic-sample-complete)). The tier is a config-only switch:
+`configs/sample.yaml` and `configs/complete.yaml` in each experiment folder point `data.metadata` at your own data.
+Runs of different tiers are never compared or summarised together (exit 2).
 
 Each run writes `leaderboard.html`, `report.html`, `results.json` and `SUMMARY.md`. Methods without their extras are listed as `config_required`. Nothing is downloaded.
 

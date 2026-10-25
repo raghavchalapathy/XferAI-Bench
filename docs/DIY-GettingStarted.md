@@ -217,7 +217,7 @@ test ! -e runs/local/val-$RUN || { echo "already exists: runs/local/val-$RUN: us
 .venv/bin/xferbench run --local-data local/my-bench/metadata.json \
   --splits local/my-bench/splits.json --stage validation --out runs/local/val-$RUN
 ```
-Expected: a leaderboard, then `run validation-... status complete; data class local; outputs in runs/local/val-1`, exit 0.
+Expected: a leaderboard, then `run validation-... status complete; data class local; tier complete; outputs in runs/local/val-1` (add `--tier sample` to `run` if your data is only a sample), exit 0.
 
 #### Step 10. Select on validation, then score the frozen choice on test
 
