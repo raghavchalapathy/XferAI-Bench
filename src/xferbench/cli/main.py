@@ -835,8 +835,13 @@ def forecast_cmd(
     atomic_write_parquet(out, fc)
     write_json(
         out.with_suffix(".manifest.json"),
-        {"model_manifest": m.manifest, "rows": len(fc), "metadata": str(metadata), "stage": stage,
-         "libraries": api.library_versions()},
+        {
+            "model_manifest": m.manifest,
+            "rows": len(fc),
+            "metadata": str(metadata),
+            "stage": stage,
+            "libraries": api.library_versions(),
+        },
     )
     typer.echo(f"wrote {len(fc)} forecast rows to {out}")
 

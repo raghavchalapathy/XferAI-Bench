@@ -13,7 +13,11 @@ from xferbench.experiments.runner import LABEL, ExperimentConfig, ExperimentErro
 from xferbench.util import read_json
 
 ROOT = Path(__file__).resolve().parents[2]
-CONFIGS = sorted((ROOT / "experiments").glob("*/config.yaml"))
+CONFIGS = [  # public synthetic experiments; research-only reproductions are covered by test_repro_visuelle.py
+    c
+    for c in sorted((ROOT / "experiments").glob("*/config.yaml"))
+    if (yaml.safe_load(c.read_text(encoding="utf-8")) or {}).get("usage_tag") != "research_only"
+]
 
 
 def test_configs_exist_and_load() -> None:

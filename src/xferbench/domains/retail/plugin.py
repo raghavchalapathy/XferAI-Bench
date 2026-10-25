@@ -20,9 +20,7 @@ MEASURED_STATES = ("observed", "observed_censored")
 def _as_of_attr(req: pd.DataFrame, versions: pd.DataFrame, key: str, attr: str) -> list[str]:
     """Latest ``attr`` per request among versions with known_at and effective_from <= origin ('unknown' if none)."""
     r = pl.from_pandas(req[[key, "origin"]].reset_index(drop=True)).with_row_index("_r")
-    v = pl.from_pandas(versions[[key, "known_at", "effective_from", attr]].reset_index(drop=True)).with_row_index(
-        "_v"
-    )
+    v = pl.from_pandas(versions[[key, "known_at", "effective_from", attr]].reset_index(drop=True)).with_row_index("_v")
     r = r.with_columns(pl.col(key).cast(pl.Utf8))
     v = v.with_columns(pl.col(key).cast(pl.Utf8), pl.col(attr).cast(pl.Utf8))
     last = (

@@ -132,7 +132,8 @@ def new_experiment(name: str, root: Path | None = None, from_id: str | None = No
                 continue
             (shutil.copytree if f.is_dir() else shutil.copy2)(f, dest / f.name)
     (dest / "config.yaml").write_text(
-        f"# Scaffolded by `xferbench experiment new {name}" + (f" --from {from_id}`\n" if from_id else "`\n")
+        f"# Scaffolded by `xferbench experiment new {name}"
+        + (f" --from {from_id}`\n" if from_id else "`\n")
         + yaml.safe_dump(raw, sort_keys=False),
         encoding="utf-8",
     )
@@ -212,7 +213,7 @@ def run_all(
                 row.update(out=res["_out"], detail="RESEARCH ONLY")
             except ReproError as exc:
                 row.update(status="blocked", detail=f"RESEARCH ONLY; {exc}"[:200])
-            except Exception as exc:  # noqa: BLE001
+            except Exception as exc:
                 row.update(status="failed", detail=f"{type(exc).__name__}: {exc}"[:200])
         else:
             try:
@@ -220,7 +221,7 @@ def run_all(
                 row.update(ran=len(res["test_rows"]), not_run=len(res["not_run"]), out=res["_out"])
                 if not res["day_zero_result"]:
                     row["detail"] = "NOT A DAY-ZERO RESULT"
-            except Exception as exc:  # noqa: BLE001 - run-all must continue past any failure
+            except Exception as exc:
                 row.update(status="failed", detail=f"{type(exc).__name__}: {exc}"[:200])
         rows.append(row)
     return rows
@@ -229,7 +230,8 @@ def run_all(
 def summary_table(rows: list[dict[str, Any]]) -> str:
     head = "| experiment | status | methods run | not run | output | note |\n|---|---|---|---|---|---|"
     body = [
-        f"| {r['experiment']} | {r['status']} | {r['ran']} | {r['not_run']} | {r['out']} | {r['detail']} |" for r in rows
+        f"| {r['experiment']} | {r['status']} | {r['ran']} | {r['not_run']} | {r['out']} | {r['detail']} |"
+        for r in rows
     ]
     note = "Synthetic interface test, not a ranking: experiments are listed alphabetically; no scores are compared."
     return "\n".join([note, "", head, *body])

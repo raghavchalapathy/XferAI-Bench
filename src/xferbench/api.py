@@ -119,7 +119,7 @@ def _load_inputs(metadata_path: Path, splits_path: Path) -> tuple[Any, Any, Any]
         raise ApiError("input validation failed:\n" + "\n".join(str(e) for e in errors[:20]), EXIT_SCHEMA)
     try:
         split = load_split(Path(splits_path))
-    except Exception as exc:  # noqa: BLE001 - surfaced as a usage error with the cause
+    except Exception as exc:
         raise ApiError(f"splits failed to load: {exc}", EXIT_USAGE) from exc
     return ds, domain, split
 
@@ -168,7 +168,7 @@ def fit(
     ds, domain, split = _load_inputs(metadata_path, splits_path)
     if split.dataset_hash != ds.content_hash:
         raise ApiError("splits.json was built for different data; rebuild splits", EXIT_USAGE)
-    entry, method, cfg, grid = _method_and_config(method_id, config, selection_path)
+    entry, method, cfg, _grid = _method_and_config(method_id, config, selection_path)
     runner = BenchmarkRunner(RunConfig(Path(metadata_path), Path(splits_path), stage, Path("."), methods=[method_id]))  # type: ignore[arg-type]
     training = runner._training_context(ds, split, domain)
     _event("fit.start", method_id=entry.spec.method_id, n_launches=training.n_launches, seed=seed)
@@ -275,13 +275,24 @@ def predict(model: FittedModel, metadata_path: Path, splits_path: Path, stage: s
 
 
 def evaluate(
-    metadata_path: Path, splits_path: Path, out: Path, *, stage: str = "test", selection_path: Path | None = None,
+    metadata_path: Path,
+    splits_path: Path,
+    out: Path,
+    *,
+    stage: str = "test",
+    selection_path: Path | None = None,
     methods: list[str] | None = None,
 ) -> Any:
     """Score with the protected evaluator (needs actuals). Thin wrapper over ``BenchmarkRunner``."""
     from xferbench.orchestration.runner import BenchmarkRunner, RunConfig
 
     return BenchmarkRunner(
-        RunConfig(Path(metadata_path), Path(splits_path), stage, Path(out), methods=methods,  # type: ignore[arg-type]
-                  selection_path=selection_path)
+        RunConfig(
+            Path(metadata_path),
+            Path(splits_path),
+            stage,  # type: ignore[arg-type]
+            Path(out),
+            methods=methods,  # type: ignore[arg-type]
+            selection_path=selection_path,
+        )
     ).run()

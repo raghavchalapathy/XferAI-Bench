@@ -32,8 +32,16 @@ def test_fit_save_forecast_matches_benchmark(demo: Path, tmp_path: Path) -> None
     m = _fit(demo)
     api.save(m, tmp_path / "model")
     man = json.loads((tmp_path / "model/manifest.json").read_text(encoding="utf-8"))
-    for k in ("method_id", "method_version", "config_hash", "code", "data_schema_hash", "seed", "libraries",
-              "artifact_sha256"):
+    for k in (
+        "method_id",
+        "method_version",
+        "config_hash",
+        "code",
+        "data_schema_hash",
+        "seed",
+        "libraries",
+        "artifact_sha256",
+    ):
         assert k in man
     assert set(man["code"]) == {"git_commit", "git_dirty"}
     fc = api.predict(api.load(tmp_path / "model"), demo / "data/metadata.json", demo / "splits.json")
@@ -109,12 +117,17 @@ def test_save_refuses_overwrite(demo: Path, tmp_path: Path) -> None:
 def test_cli_fit_forecast_exit_codes(demo: Path, tmp_path: Path) -> None:
     r = CliRunner()
     base = ["--metadata", str(demo / "data/metadata.json"), "--splits", str(demo / "splits.json")]
-    res = r.invoke(app, ["fit", *base, "--method", "B3", "--selection", str(demo / "selection.json"),
-                         "--out", str(tmp_path / "m")])
+    res = r.invoke(
+        app, ["fit", *base, "--method", "B3", "--selection", str(demo / "selection.json"), "--out", str(tmp_path / "m")]
+    )
     assert res.exit_code == 0, res.output
     res = r.invoke(app, ["forecast", "--model", str(tmp_path / "m"), *base, "--out", str(tmp_path / "f.parquet")])
     assert res.exit_code == 0, res.output
     assert (tmp_path / "f.manifest.json").exists()
     assert r.invoke(app, ["fit", *base, "--method", "NOPE", "--out", str(tmp_path / "x")]).exit_code == 3
-    assert r.invoke(app, ["forecast", "--model", str(tmp_path / "nope"), *base,
-                          "--out", str(tmp_path / "g.parquet")]).exit_code == 2
+    assert (
+        r.invoke(
+            app, ["forecast", "--model", str(tmp_path / "nope"), *base, "--out", str(tmp_path / "g.parquet")]
+        ).exit_code
+        == 2
+    )

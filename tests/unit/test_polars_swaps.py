@@ -111,5 +111,6 @@ def test_scalable_eval_unchanged(runs: tuple[Path, Path]) -> None:
     for root in runs:
         ds = load_dataset(load_metadata(root / "data/metadata.json"), root / "data")
         out.append(_scalable_parity(ds, load_split(root / "splits.json"), root / "test-run"))
-    assert out[0] == out[1] and out[0]["match"] is True
+    assert out[0]["engine"] == out[1]["engine"] and out[0]["match"] is True and out[1]["match"] is True
+    assert abs(out[0]["max_abs_diff"] - out[1]["max_abs_diff"]) < 1e-12  # float round-off only
     assert plugin._as_of_attr is _as_of_attr

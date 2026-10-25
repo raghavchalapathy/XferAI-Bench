@@ -50,7 +50,9 @@ def test_blocked_report_lists_reasons_and_paper_number(tmp_path: Path) -> None:
     shutil.copytree(EXP, tmp_path / "experiments" / "repro_visuelle_gtm")
     with pytest.raises(ReproError):
         run_one("repro_visuelle_gtm", tmp_path, progress=lambda m: None, allow_research_only=True)
-    report = next((tmp_path / "experiments" / "repro_visuelle_gtm" / "runs").glob("*/report.md")).read_text()
+    report = next((tmp_path / "experiments" / "repro_visuelle_gtm" / "runs").glob("*/report.md")).read_text(
+        encoding="utf-8"
+    )
     assert "Paper-reported** | 55.2" in report and "PENDING" in report
     assert "licence status is 'not_found'" in report and "GTM-Transformer local install not found" in report
 
@@ -108,8 +110,8 @@ def test_adapter_on_synthetic_fixture(tmp_path: Path) -> None:
 
 
 def test_adapter_rejects_wrong_shape(tmp_path: Path) -> None:
-    (tmp_path / "train.csv").write_text("a,b\n1,2\n")
-    (tmp_path / "test.csv").write_text("a,b\n1,2\n")
+    (tmp_path / "train.csv").write_text("a,b\n1,2\n", encoding="utf-8")
+    (tmp_path / "test.csv").write_text("a,b\n1,2\n", encoding="utf-8")
     with pytest.raises(ReproError, match="missing VISUELLE columns"):
         adapt_visuelle(tmp_path, tmp_path / "out")
 
@@ -118,7 +120,7 @@ def test_gtm_wrapper_needs_local_install(tmp_path: Path) -> None:
     with pytest.raises(ReproError):
         GtmWrapper(tmp_path / "nope").check()
     for f in ("forecast.py", "train.py", "LICENSE"):
-        (tmp_path / f).write_text("")
+        (tmp_path / f).write_text("", encoding="utf-8")
     w = GtmWrapper(tmp_path, "python")
     w.check()
     cmd = w.forecast_command(Path("d"), Path("c.pth"))
