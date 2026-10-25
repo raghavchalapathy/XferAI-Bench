@@ -1,0 +1,12 @@
+# PROPOSAL ONLY, awaiting Reviewer. Not adopted; do not run `harness apply` without an approved review block.
+id: polars-asof-parity-20261024
+author_role: builder
+summary: Any pandas-to-Polars swap keeps the old code as a reference and ships a parity test plus a benchmark.
+set_rules:
+  polars_swap_parity: "A Polars replacement for existing pandas code keeps the original as *_reference, adds a parity test covering evaluator and scalable_eval outputs, and a benchmark script reporting the median of repeats with machine specs. Protected evaluator and util.hash_frame are never swapped."
+remove_rules: []
+touches:
+  - src/xferbench/domains/retail/plugin.py
+  - tests/unit/test_polars_swaps.py
+  - scripts/bench_polars_swaps.py
+results: []
