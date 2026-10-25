@@ -24,7 +24,7 @@ OWN = (ROOT / "setup" / "own_data.txt").read_text(encoding="utf-8")
 GS = ROOT / "docs" / "GETTING_STARTED.md"
 posix_only = pytest.mark.skipif(os.name == "nt", reason="stubbed-PATH tests use symlinks; Windows runs the ps1 job")
 TOOLS = ("bash", "sh", "uname", "date", "mktemp", "cut", "tr", "tee", "rm", "cat", "cp", "mv", "dirname", "basename",
-         "mkdir", "chmod", "grep", "sed", "head", "tail", "wc", "env", "touch", "sleep", "awk", "ls", "id")
+         "mkdir", "chmod", "grep", "sed", "head", "tail", "wc", "env", "touch", "sleep", "awk", "ls", "id", "perl")
 
 FAKE_PY = """#!/bin/sh
 # fake python 3.13: version checks, -m venv DIR, -m pip install ...

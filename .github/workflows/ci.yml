@@ -76,3 +76,100 @@ jobs:
         env:
           XFERBENCH_STRICT_SKIPS: spark
         run: python -m pytest -q tests/unit/test_scalable_eval.py tests/review/test_review_adv.py -rs
+
+  uv:
+    # The default install route: uv with the committed lock (uv sync --locked fails if uv.lock is stale).
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7
+      - uses: astral-sh/setup-uv@07a047e608db84b3d8c06cd9a7c7dcc9c355c18e  # v10.3.2
+        with:
+          python-version: "3.13"
+      - name: uv sync --locked (core + dev)
+        run: uv sync --locked --extra dev
+      - name: Lint and type-check
+        run: |
+          uv run ruff check src tests
+          uv run ruff format --check src tests
+          uv run python -m mypy
+      - name: Core tests, strict skips
+        env:
+          XFERBENCH_STRICT_SKIPS: core
+        run: uv run python -m pytest -rs
+
+  script-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7
+      - name: shellcheck
+        run: shellcheck --version && shellcheck xferAI_setup.sh bootstrap.sh
+
+  setup-script:
+    # A first-time user's path: the setup script on a fresh checkout, then a rerun (must be idempotent), then the
+    # demo command it prints. Unix runs xferAI_setup.sh; Windows runs xferAI_setup.ps1 and PSScriptAnalyzer.
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0  # v7
+        with:
+          python-version: "3.11"
+      - name: Where are bash and uv (diagnostic)
+        shell: pwsh
+        run: |
+          Get-Command bash -All -ErrorAction SilentlyContinue | Format-Table Source
+          Get-Command uv -All -ErrorAction SilentlyContinue | Format-Table Source
+          git --exec-path
+      - name: Fresh run (unix)
+        if: runner.os != 'Windows'
+        run: bash xferAI_setup.sh --non-interactive
+      - name: Rerun (unix)
+        if: runner.os != 'Windows'
+        run: bash xferAI_setup.sh --non-interactive --no-demo
+      - name: Printed next command (unix)
+        if: runner.os != 'Windows'
+        run: |
+          .venv/bin/xferbench experiment run exp01_synthetic_lightgbm_analogs
+          test -f eval/exp01_synthetic_lightgbm_analogs__synthetic/report.html
+      - name: PSScriptAnalyzer
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          if (-not (Get-Module -ListAvailable PSScriptAnalyzer)) { Install-Module PSScriptAnalyzer -Scope CurrentUser -Force }
+          $r = Invoke-ScriptAnalyzer -Path xferAI_setup.ps1, bootstrap.ps1
+          $r | Format-Table -AutoSize
+          if ($r) { exit 1 }
+      - name: Fresh run (windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: ./xferAI_setup.ps1 -NonInteractive
+      - name: Rerun (windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: ./xferAI_setup.ps1 -NonInteractive -NoDemo
+      - name: Printed next command (windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          .venv\Scripts\xferbench experiment run exp01_synthetic_lightgbm_analogs
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          if (-not (Test-Path eval\exp01_synthetic_lightgbm_analogs__synthetic\report.html)) { exit 1 }
+
+  setup-script-pip:
+    # The pip fallback: uv hidden, --no-install-uv.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0  # v7
+        with:
+          python-version: "3.13"
+      - name: Fresh run and rerun with pip
+        run: |
+          for d in $(command -v -a uv | xargs -r -n1 dirname); do PATH="$(echo "$PATH" | tr ':' '\n' | grep -vx "$d" | paste -sd:)"; done
+          if command -v uv; then echo "uv still on PATH"; exit 1; fi
+          bash xferAI_setup.sh --non-interactive --no-install-uv
+          bash xferAI_setup.sh --non-interactive --no-install-uv --no-demo
+          grep -q "pip" .xferai-setup.log
