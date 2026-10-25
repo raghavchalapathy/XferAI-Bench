@@ -14,10 +14,34 @@
   const arxiv = (r) => { const m = /arXiv:(\d{2})(\d{2})\.\d{4,5}/.exec(r.source || ''); return m ? { y: 2000 + +m[1], m: +m[2], id: /arXiv:(\d{4}\.\d{4,5})/.exec(r.source)[1] } : null; };
   const paper = (r) => { const m = /\(([^,;)]+)/.exec(r.source || ''); const a = /arXiv:(\d{4}\.\d{4,5})/.exec(r.source || ''); const n = m ? m[1].trim() : 'source'; return a ? `${n} (arXiv ${a[1]})` : n; };
   const pending = () => { $('bench-status').hidden = false; for (const id of ['chart-methods', 'chart-datasets']) $(id).replaceChildren(el('div', 'scatter-skeleton')); };
-  function link(node, r) { if (!r.source_url) return node; const a = sv('a', { href: r.source_url, target: '_blank', rel: 'noopener' }); a.append(node); return a; }
-  const tip = (r) => { const a = /arXiv:(\d{4}\.\d{4,5})/.exec(r.source || ''); const note = r.row_index === 0 && a ? ` (as reported in ${a[1]}; plotted at that paper's date)` : ''; return `${clean(r.method)}${note}: ${r.metric} ${r.value_as_printed} (as printed). ${r.source}; ${r.locator}`; };
+  // 2026-10-25 owner t268u: minimal visible labels; details (arXiv id, venue, protocol, locator, notes, source link) in a tooltip
+  // that opens on hover, keyboard focus (Enter/Space) and tap; the source link inside stays clickable. Esc or outside tap closes.
+  const short = (p) => p.replace(/\s*\(arXiv [^)]*\)/, '');
+  const TIP = el('div', 'bt-tip'); TIP.hidden = true; TIP.setAttribute('role', 'tooltip'); TIP.id = 'bt-tip'; document.body.append(TIP);
+  let tipOwner = null, hideT = 0;
+  function place(anchor) { const b = anchor.getBoundingClientRect(); const w = TIP.offsetWidth, h = TIP.offsetHeight; let x = b.left + b.width / 2 - w / 2 + scrollX, y = b.top + scrollY - h - 10; if (y < scrollY + 4) y = b.bottom + scrollY + 10; x = Math.max(scrollX + 8, Math.min(x, scrollX + document.documentElement.clientWidth - w - 8)); TIP.style.left = x + 'px'; TIP.style.top = y + 'px'; }
+  function show(anchor, build) { clearTimeout(hideT); TIP.replaceChildren(...build()); TIP.hidden = false; tipOwner = anchor; anchor.setAttribute('aria-describedby', 'bt-tip'); place(anchor); }
+  function hide() { TIP.hidden = true; if (tipOwner) tipOwner.removeAttribute('aria-describedby'); tipOwner = null; }
+  const later = () => { hideT = setTimeout(hide, 250); };
+  TIP.addEventListener('pointerenter', () => clearTimeout(hideT)); TIP.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse') later(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && tipOwner) { const o = tipOwner; hide(); o.focus?.(); } });
+  document.addEventListener('pointerdown', (e) => { if (tipOwner && !TIP.contains(e.target) && !tipOwner.contains(e.target)) hide(); });
+  window.addEventListener('resize', () => tipOwner && place(tipOwner));
+  function tipify(node, build, label) {
+    node.setAttribute('tabindex', '0'); node.setAttribute('role', 'button'); if (label) node.setAttribute('aria-label', label);
+    node.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') show(node, build); });
+    node.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse') later(); });
+    node.addEventListener('focus', () => show(node, build)); node.addEventListener('blur', (e) => { if (!TIP.contains(e.relatedTarget)) later(); });
+    node.addEventListener('click', (e) => { e.preventDefault(); show(node, build); });
+    node.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); tipOwner === node ? hide() : show(node, build); } });
+    return node;
+  }
+  TIP.addEventListener('focusout', (e) => { if (!TIP.contains(e.relatedTarget) && e.relatedTarget !== tipOwner) later(); });
+  function pointTip(r, protocol) { return () => { const out = [el('strong', '', clean(r.method)), el('span', 'bt-wape', `${r.metric} ${r.value_as_printed} (as printed)`)]; const a = /arXiv:(\d{4}\.\d{4,5})/.exec(r.source || ''); if (r.row_index === 0 && a) out.push(el('span', 'bt-meta', `As reported in ${a[1]}; plotted at that paper's date.`)); out.push(el('span', 'bt-meta', (r.source || '').replace(/\s*https?:\S+/, ''))); if (protocol) out.push(el('span', 'bt-meta', protocol)); if (r.locator) out.push(el('span', 'bt-meta', r.locator)); if (r.note) out.push(el('span', 'bt-meta', r.note)); if (r.source_url) { const l = el('a', 'text-link', 'Source ↗'); l.href = r.source_url; l.target = '_blank'; l.rel = 'noopener'; out.push(l); } return out; }; }
+  function info(texts) { const b = el('button', 'bt-info', 'i'); b.type = 'button'; tipify(b, () => texts.filter(Boolean).map((t) => el('span', 'bt-meta', t)), 'Chart details'); return b; }
+  function link(node, r, protocol) { node.classList.add('bt-pt'); return tipify(node, pointTip(r, protocol), `${clean(r.method)}, ${r.metric} ${r.value_as_printed}. Details`); }
 
-  function legend(groups) { const l = el('div', 'scatter-legend'); for (const [k, c] of groups) { const i = el('span', 'lg'); const s = el('i'); s.style.background = c; i.append(s, document.createTextNode(k)); l.append(i); } return l; }
+  function legend(groups) { const l = el('div', 'scatter-legend'); for (const [k, c] of groups) { const i = el('span', 'lg'); const s = el('i'); s.style.background = c; i.append(s, document.createTextNode(short(k))); l.append(i); } return l; }
 
   // Time scatter: x = arXiv month, y = WAPE (inverted: lower WAPE is higher on chart).
   function timeScatter(rows, colorOf) {
@@ -47,16 +71,16 @@
     const labelled = new Set(front); const bestPer = {}; rows.forEach((r) => { const p = r.paper; if (!bestPer[p] || r.value < bestPer[p].value) bestPer[p] = r; }); Object.values(bestPer).forEach((r) => labelled.add(r));
     const used = [];
     for (const r of [...rows].sort((a, b) => a.value - b.value)) {
-      const g = sv('g', { class: 'pt' }); g.append(sv('title', {}, tip(r)));
+      const g = sv('g', { class: 'pt' });
       g.append(sv('circle', { cx: px.get(r), cy: Y(r.value), r: labelled.has(r) ? 6 : 4.5, fill: colorOf(r.paper) }));
-      if (labelled.has(r)) { const first = t(r) === Math.min(...ts); const right = !first && px.get(r) < (m.l + W) / 2; let ly = Y(r.value) + 4; for (const u of used) if (Math.abs(u.y - ly) < 15 && Math.abs(u.x - px.get(r)) < 200) ly = u.y + 16; used.push({ x: px.get(r), y: ly }); g.append(sv('text', { x: px.get(r) + (right ? 12 : -12) + (/^MuQAR/.test(r.method) ? 5 : 0), y: ly, class: 'pt-label', 'text-anchor': right ? 'start' : 'end' }, `${clean(r.method).split(' [')[0]} · ${r.value_as_printed}`)); }
-      s.append(link(g, r));
+      if (labelled.has(r)) { const first = t(r) === Math.min(...ts); const right = !first && px.get(r) < (m.l + W) / 2; let ly = Y(r.value) + 4; for (const u of used) if (Math.abs(u.y - ly) < 15 && Math.abs(u.x - px.get(r)) < 200) ly = u.y + 16; used.push({ x: px.get(r), y: ly }); g.append(sv('text', { x: px.get(r) + (right ? 12 : -12) + (/^MuQAR/.test(r.method) ? 5 : 0), y: ly, class: 'pt-label', 'text-anchor': right ? 'start' : 'end' }, clean(r.method).split(' [')[0])); }
+      s.append(link(g, r, 'VISUELLE · GTM protocol'));
     }
     return s;
   }
 
   // Dataset strip: x = WAPE (lower is better, left), one row per method.
-  function strip(rows, colorOf) {
+  function strip(rows, colorOf, protocol) {
     const W = MOB ? 420 : 860, rowH = 26, m = { l: 16, r: 70, t: 8, b: 30 }, H = m.t + m.b + rowH * rows.length;
     const vs = rows.map((r) => r.value), lo = Math.floor(Math.min(...vs) - 1), hi = Math.ceil(Math.max(...vs) + 1);
     const L = MOB ? 200 : 330, X = (v) => L + (v - lo) / (hi - lo || 1) * (W - L - m.r);
@@ -65,9 +89,9 @@
     for (let v = lo; v <= hi; v += step) s.append(sv('line', { x1: X(v), x2: X(v), y1: m.t, y2: H - m.b, class: 'grid' }), sv('text', { x: X(v), y: H - m.b + 16, class: 'tick', 'text-anchor': 'middle' }, v));
     s.append(sv('text', { x: W - m.r, y: H - 2, class: 'axis-title', 'text-anchor': 'end' }, '← lower WAPE is better'));
     [...rows].sort((a, b) => a.value - b.value).forEach((r, i) => {
-      const y = m.t + rowH * i + rowH / 2, g = sv('g', { class: 'pt' }); g.append(sv('title', {}, tip(r)));
+      const y = m.t + rowH * i + rowH / 2, g = sv('g', { class: 'pt' });
       g.append(sv('text', { x: m.l, y: y + 4, class: 'pt-label' }, clean(r.method)), sv('line', { x1: X(lo), x2: X(r.value), y1: y, y2: y, class: 'stem' }), sv('circle', { cx: X(r.value), cy: y, r: 5.5, fill: colorOf(r.paper) }), sv('text', { x: X(r.value) + 10, y: y + 4, class: 'pt-value' }, r.value_as_printed));
-      s.append(link(g, r));
+      s.append(link(g, r, protocol));
     });
     return s;
   }
@@ -75,17 +99,15 @@
   try {
     const data = await (await fetch('/assets/benchmark.json', { cache: 'no-cache' })).json();
     if (data.status !== 'reviewed' || !(data.methods || []).length) return pending();
-    document.querySelectorAll('.bench-label').forEach((n) => { n.textContent = data.chart_label; n.hidden = false; });
     const prep = (r) => Object.assign({}, r, { d: arxiv(r), paper: paper(r) });
     const all = [...data.methods, ...(data.datasets || []).flatMap((ds) => ds.results || [])].map(prep);
     const papers = [...new Set(all.map((r) => r.paper))]; const colorOf = (p) => PALETTE[papers.indexOf(p) % PALETTE.length];
     const rows = data.methods.map(prep), dated = rows.filter((r) => r.d), undated = rows.filter((r) => !r.d);
     const host1 = $('chart-methods'); host1.className = 'scatter-host';
-    host1.replaceChildren(el('p', 'bench-sub', 'VISUELLE · GTM protocol · WAPE by publication date · lower is better'), legend([...new Set(dated.map((r) => r.paper))].map((p) => [p, colorOf(p)])), timeScatter(dated, colorOf));
-    if (undated.length) host1.append(el('p', 'fine-print', 'Not plotted (no date in cited source): ' + undated.map((r) => clean(r.method)).join(', ')));
-    const card = host1.closest('.bench-card'); if (card) card.querySelectorAll('.chart-note, .bench-label').forEach((n) => n.remove());
-    host1.append(el('p', 'fine-print chart-note', 'Paper-reported WAPE, not XferAI results; retrospective backtests · lower is better · same-month points offset for legibility · dotted line: lowest reported to date, across papers; setups differ.'));
+    host1.replaceChildren(legend([...new Set(dated.map((r) => r.paper))].map((p) => [p, colorOf(p)])), timeScatter(dated, colorOf));
+    const card = host1.closest('.bench-card'); if (card) { card.querySelectorAll('.chart-note, .bench-label').forEach((n) => n.remove()); host1.append(el('p', 'fine-print bench-label', data.chart_label), el('p', 'fine-print chart-note', 'Paper-reported WAPE, not XferAI results; retrospective backtests · lower is better · same-month points offset for legibility · dotted line: lowest reported to date, across papers; setups differ.')); card.querySelector('h2')?.append(info(['VISUELLE · GTM protocol · WAPE by publication date · lower is better.', undated.length ? 'Not plotted (no date in cited source): ' + undated.map((r) => clean(r.method)).join(', ') : ''])); }
+    const card2 = $('chart-datasets').closest('.bench-card'); if (card2) { const t = [...card2.querySelectorAll('.chart-note, .bench-label')].map((n) => n.textContent); card2.querySelectorAll('.chart-note, .bench-label').forEach((n) => n.remove()); card2.querySelector('h2')?.append(info([...t, data.chart_label])); }
     const host = $('chart-datasets'); host.replaceChildren();
-    for (const ds of data.datasets || []) { const rs = (ds.results || []).map(prep); const b = el('div', 'bench-block'); b.append(el('h3', '', ds.dataset), el('p', 'bench-sub', ds.note + (ds.shown ? ' · ' + ds.shown : '')), legend([...new Set(rs.map((r) => r.paper))].map((p) => [p, colorOf(p)])), strip(rs, colorOf)); host.append(b); }
+    for (const ds of data.datasets || []) { const rs = (ds.results || []).map(prep); const b = el('div', 'bench-block'); const proto = ds.dataset + ' · ' + ds.note + (ds.shown ? ' · ' + ds.shown : ''); const h = el('h3', '', ds.dataset.split(' · ').slice(0, 2).join(' · ')); h.append(info([proto])); b.append(h, legend([...new Set(rs.map((r) => r.paper))].map((p) => [p, colorOf(p)])), strip(rs, colorOf, proto)); host.append(b); }
   } catch (e) { console.error(e); pending(); }
 })();
