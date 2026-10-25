@@ -27,6 +27,7 @@ app.add_typer(harness_app, name="harness")
 DOCTOR_PROFILES = {
     "core": ["numpy", "pandas", "pyarrow", "pydantic", "typer", "jinja2"],
     "dev": ["pytest", "ruff", "mypy", "build"],
+    "lightgbm": ["lightgbm"],
     "boosting": ["lightgbm", "xgboost", "catboost"],
     "neural": ["torch", "gluonts", "neuralforecast", "pytorch_forecasting"],
     "foundation": ["chronos"],
@@ -754,7 +755,8 @@ def experiment_cmd(
 
 def _after_experiment(res: dict[str, Any], out: Path, log_lesson: str | None, harness_dir: Path) -> None:
     for s in res["not_run"]:
-        typer.echo(f"  not run: {s['method_id']} ({s['status']}): {s['reason']}")
+        fix = f". Fix: {s['remedy']}" if s.get("remedy") else ""
+        typer.echo(f"  not run: {s['method_id']} ({s['status']}): {s['reason']}{fix}")
     if log_lesson:
         from xferbench.harness.core import HarnessError, append_lesson, lesson_from_experiment
 
@@ -765,7 +767,18 @@ def _after_experiment(res: dict[str, Any], out: Path, log_lesson: str | None, ha
             _fail(f"lesson not logged: {exc}", 2)
         typer.echo(f"lesson appended to {harness_dir / 'lessons.jsonl'}")
     typer.echo(f"data tier: {res.get('tier', 'synthetic')}")
-    typer.echo(f"done. Open {out / 'leaderboard.html'} and {out / 'report.html'}")
+    names = [n for n in ("SUMMARY.md", "leaderboard.html", "report.html") if (out / n).is_file()]
+    typer.echo(f"done. Open {'these files' if len(names) > 1 else 'this file'}:")
+    for n in names:
+        typer.echo(f"  {_display_path(out / n)}")
+
+
+def _display_path(p: Path) -> str:
+    """Path relative to the current folder when it is inside it (shorter, as printed by the setup script)."""
+    try:
+        return p.resolve().relative_to(Path.cwd().resolve()).as_posix()
+    except ValueError:
+        return str(p)
 
 
 @experiment_app.command("new")

@@ -36,7 +36,7 @@ def test_not_installed_is_reported_not_crashing(monkeypatch: pytest.MonkeyPatch)
     )
     rep = assess(get_entry("M4.lightgbm"))
     assert rep.execution_state == "not_installed"
-    assert "boosting" in rep.remedy
+    assert "--with-lightgbm" in rep.remedy and "--extra lightgbm" in rep.remedy and "boosting" not in rep.remedy
 
 
 def test_features_ignore_future_data() -> None:

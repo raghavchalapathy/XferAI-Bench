@@ -1,6 +1,6 @@
 # Setup, compatibility and troubleshooting
 
-To install, follow [GETTING_STARTED.md Step 0](GETTING_STARTED.md#step-0-install) (`bash xferAI_setup.sh`, or the pip
+To install, follow [GETTING_STARTED.md Step 0](../GETTING_STARTED.md#step-0-install) (`bash xferAI_setup.sh`, or the pip
 fallback there). This page is reference material: requirements, extras, the tested matrix and troubleshooting.
 
 ## Requirements
@@ -16,13 +16,13 @@ project-local `.venv`.
 ## Install options
 
 All install routes (setup script, uv, pip with `-c constraints/core.txt`, Windows) are in
-[GETTING_STARTED.md Step 0](GETTING_STARTED.md#step-0-install). `bootstrap.sh` / `bootstrap.ps1` are thin wrappers
+[GETTING_STARTED.md Step 0](../GETTING_STARTED.md#step-0-install). `bootstrap.sh` / `bootstrap.ps1` are thin wrappers
 around `xferAI_setup.sh` / `xferAI_setup.ps1`. To install a built wheel, see the README section "Installing from a
 built wheel". The package is not on PyPI.
 
 **Proxies and private indexes.** The setup script and uv honour `HTTPS_PROXY`, `HTTP_PROXY`, `NO_PROXY`, the `UV_*`
 variables (e.g. `UV_INDEX_URL`, `UV_CACHE_DIR`) and, for the pip route, `PIP_INDEX_URL`. With no network at all, use
-the wheelhouse in [DIY-GettingStarted.md](DIY-GettingStarted.md) (Offline / enterprise).
+the wheelhouse in [GETTING_STARTED.md](../GETTING_STARTED.md#offline--enterprise) (Step 0, Offline / enterprise).
 
 thon -m pip install dist/xfer_bench-0.1.0-py3-none-any.whl` |
 | Reproduce the tested pins | add `-c constraints/core.txt` to the pip command |
@@ -31,7 +31,7 @@ Windows uses `.venv\Scripts\python` and `bootstrap.ps1`. The package is not on P
 
 ## Optional extras
 
-Declared in `pyproject.toml` for later milestones: `boosting`, `neural`, `foundation`, `intermittent`,
+Declared in `pyproject.toml` for later milestones: `boosting` (lightgbm + xgboost + catboost; for M4.lightgbm alone use `lightgbm` / `--with-lightgbm`), `neural`, `foundation`, `intermittent`,
 `services`, `distributed`. **None is tested or used by Milestone A**, and installing one does not make any
 method run: the matching adapters are still unimplemented. `xferbench doctor --profile <extra>` reports
 which modules are present without installing anything. Foundation-model weights are never downloaded

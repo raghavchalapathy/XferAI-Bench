@@ -1,4 +1,4 @@
-"""M4.lightgbm: pooled gradient-boosted tree on origin-built cold-pair features (optional extra `boosting`).
+"""M4.lightgbm: pooled gradient-boosted tree on origin-built cold-pair features (optional extra `lightgbm`).
 
 LightGBM is imported lazily inside ``fit``/``predict_batch``; the package imports and every other method run
 without it. Features come only from the request's OriginContext (the same origin-scoped aggregates the
@@ -80,7 +80,7 @@ class M4LightGBM:
         supports_new_location=True,
         point_statistic="mean",
         compute="cpu-light",
-        optional_extra="boosting",
+        optional_extra="lightgbm",
         python_modules=["lightgbm"],
         rights=Rights(
             code_license="MIT",

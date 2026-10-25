@@ -183,7 +183,8 @@ def leaderboard_html(cfg: ExperimentConfig, rows: list[dict[str, Any]], skipped:
         for r in rows
     )
     skip = "".join(
-        f"<li><b>{e(s['method_id'])}</b>: {e(s['status'])} - {e(s['reason'])}. {e(s['remedy'])}</li>" for s in skipped
+        f"<li><b>{e(s['method_id'])}</b>: {e(s['status'])} - {e(s['reason'])}. Fix: {e(s['remedy'])}</li>"
+        for s in skipped
     )
     ndz = f'<p class="label"><b>{e(NOT_DAY_ZERO)}</b> {e(cfg.not_day_zero)}</p>' if cfg.not_day_zero else ""
     papers = "".join(
@@ -393,5 +394,8 @@ def run_experiment(config_path: Path, out: Path, progress: Any = print, tier: st
         for r in rows
     ]
     lines += ["", "Not run (config_required): " + (", ".join(s["method_id"] for s in skipped) or "none"), ""]
+    lines += [f"- {s['method_id']}: {s['reason']}. Fix: {s['remedy']}" for s in skipped if s.get("remedy")]
+    if any(s.get("remedy") for s in skipped):
+        lines.append("")
     atomic_write_text(out / "SUMMARY.md", "\n".join(lines))
     return results

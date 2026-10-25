@@ -522,6 +522,20 @@ def entries_for_profile(profile: str, allow_research_only: bool = False) -> list
     return out
 
 
+# How to install an optional extra, as printed in "not run" lines, leaderboards and reports. The setup scripts
+# install the lightgbm extra by default; --no-lightgbm opts out, and --with-lightgbm (or the default) puts it back.
+INSTALL_HINTS = {
+    "lightgbm": "re-run `bash xferAI_setup.sh --with-lightgbm` (Windows: `xferAI_setup.ps1 -WithLightgbm`), "
+    "or `uv sync --locked --extra dev --extra lightgbm`",
+}
+
+
+def install_hint(extra: str | None) -> str:
+    if extra and extra in INSTALL_HINTS:
+        return INSTALL_HINTS[extra]
+    return f"install the '{extra}' extra into this environment"
+
+
 def modules_installed(modules: list[str]) -> list[str]:
     return [m for m in modules if importlib.util.find_spec(m) is None]
 
@@ -551,7 +565,7 @@ def assess(entry: RegistryEntry, dataset: Dataset | None = None) -> RegistryEntr
             reason, remedy = "", ""
     if missing_modules and runnable:
         reason = f"optional modules not installed: {missing_modules}"
-        remedy = f"install the '{spec.optional_extra}' extra into this environment"
+        remedy = install_hint(spec.optional_extra)
     return RegistryEntryReport(
         method_id=spec.method_id,
         version=spec.version,

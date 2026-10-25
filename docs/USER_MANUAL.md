@@ -16,7 +16,7 @@ python3 -m venv .venv
 .venv/bin/xferbench doctor --help     # checks a dependency profile without installing anything
 ```
 
-Optional extras: LightGBM (needed for M4.lightgbm) and the foundation/neural extras (`foundation`, `timesfm`, `neural`; also `boosting`, `intermittent`; see `pyproject.toml`) are not part of the default install. When an extra is missing, the method is listed with the reason instead of running.
+Optional extras: `lightgbm` (needed for M4.lightgbm) is installed by default by the setup scripts (`--minimal` opts out, `--with-lightgbm` puts it back) but not by a plain `uv sync --extra dev`; the foundation/neural extras (`foundation`, `timesfm`, `neural`; also `boosting` (= lightgbm + xgboost + catboost, for the Milestone B adapters; M4.lightgbm needs only `lightgbm`), `intermittent`; see `pyproject.toml`) are never installed by default. When an extra is missing, the method is listed with the reason instead of running.
 
 ## 2. Quickest path
 
