@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import os
 import re
 import shutil
 import subprocess
@@ -12,6 +13,35 @@ import pytest
 ROOT = Path(__file__).resolve().parents[2]
 DIY = ROOT / "docs" / "DIY-GettingStarted.md"
 BASH = re.compile(r"```bash\n(.*?)```", re.S)
+
+
+def _is_wsl_stub(path: str) -> bool:
+    """C:\\Windows\\System32\\bash.exe (and WindowsApps\\bash.exe) is the WSL launcher, not a POSIX shell. On a runner
+    without a WSL distro it prints a UTF-16 "no installed distributions" message and exits 1 (CI run 40162698138)."""
+    p = path.replace("/", "\\").lower()
+    return "\\windows\\system32\\" in p or "\\windowsapps\\" in p
+
+
+def find_bash() -> str | None:
+    """A real bash: PATH first unless it is the WSL stub, then Git for Windows. Probed with `echo ok`."""
+    cands = [shutil.which("bash")]
+    if os.name == "nt":
+        for env in ("ProgramFiles", "ProgramW6432", "ProgramFiles(x86)"):
+            if os.environ.get(env):
+                cands += [str(Path(os.environ[env], "Git", "bin", "bash.exe"))]
+    for c in cands:
+        if not c or _is_wsl_stub(c) or not Path(c).is_file():
+            continue
+        try:
+            r = subprocess.run([c, "-c", "echo ok"], capture_output=True, text=True, timeout=30, check=False)
+        except OSError:
+            continue
+        if r.returncode == 0 and r.stdout.strip() == "ok":
+            return c
+    return None
+
+
+BASH_EXE = find_bash()
 
 
 def _section(text: str, start: str, end: str) -> str:
@@ -37,7 +67,7 @@ def test_u4_02_steps_9_to_11_use_one_run_counter() -> None:
         assert name in cmds, name
 
 
-@pytest.mark.skipif(shutil.which("bash") is None, reason="needs bash")
+@pytest.mark.skipif(BASH_EXE is None, reason="needs a real bash (not the WSL launcher stub)")
 def test_u4_02_rerun_with_same_run_fails_loudly(tmp_path: Path) -> None:
     t = DIY.read_text(encoding="utf-8")
     script = "".join(BASH.findall(_section(t, "#### Step 9.", "#### Step 11.")))
@@ -45,14 +75,15 @@ def test_u4_02_rerun_with_same_run_fails_loudly(tmp_path: Path) -> None:
         'xb() { out=""; while [ $# -gt 0 ]; do [ "$1" = --out ] && out=$2; shift; done; '
         'case $out in *.json) mkdir -p "$(dirname "$out")"; echo {} > "$out";; *) mkdir -p "$out";; esac; }\n'
     )
+    assert BASH_EXE is not None
     script = stub + "set -e\n" + script.replace(".venv/bin/xferbench", "xb")
     first = subprocess.run(
-        ["bash", "-c", script], cwd=tmp_path, capture_output=True, text=True, encoding="utf-8", check=False
+        [BASH_EXE, "-c", script], cwd=tmp_path, capture_output=True, text=True, encoding="utf-8", check=False
     )
     assert first.returncode == 0, first.stderr
     assert (tmp_path / "runs/local/test-1").is_dir()
     second = subprocess.run(
-        ["bash", "-c", script], cwd=tmp_path, capture_output=True, text=True, encoding="utf-8", check=False
+        [BASH_EXE, "-c", script], cwd=tmp_path, capture_output=True, text=True, encoding="utf-8", check=False
     )
     assert second.returncode != 0 and "already exists" in second.stdout
 
@@ -64,3 +95,33 @@ def test_u4_03_readme_outputs_inside_repo_are_gitignored() -> None:
     for o in outs:
         r = subprocess.run(["git", "check-ignore", "-q", o.rstrip("/") + "/x"], cwd=ROOT, check=False)
         assert r.returncode == 0, f"README writes untracked ./{o}"
+
+
+@pytest.mark.parametrize(
+    ("path", "stub"),
+    [
+        (r"C:\Windows\System32\bash.exe", True),
+        (r"C:\Users\a\AppData\Local\Microsoft\WindowsApps\bash.exe", True),
+        (r"C:\Program Files\Git\bin\bash.exe", False),
+        ("/usr/bin/bash", False),
+    ],
+)
+def test_wsl_launcher_stub_is_not_used_as_bash(path: str, stub: bool) -> None:
+    assert _is_wsl_stub(path) is stub
+
+
+def test_find_bash_skips_stub_on_path(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setattr(shutil, "which", lambda _n: r"C:\Windows\System32\bash.exe")
+    monkeypatch.setattr(os, "name", "posix")  # no Git fallback: the stub alone must give None (skip), not a run
+    assert find_bash() is None
+
+
+def test_doc_parsing_survives_crlf_checkout(tmp_path: Path) -> None:
+    """core.autocrlf=true checkouts give CRLF; read_text() normalises newlines so the ```bash blocks still parse."""
+    f = tmp_path / "doc.md"
+    f.write_bytes(DIY.read_bytes().replace(b"\r\n", b"\n").replace(b"\n", b"\r\n"))
+    t = f.read_text(encoding="utf-8")
+    assert "\r" not in t
+    assert BASH.findall(_section(t, "#### Step 9.", "#### Step 11.")) == BASH.findall(
+        _section(DIY.read_text(encoding="utf-8"), "#### Step 9.", "#### Step 11.")
+    )
