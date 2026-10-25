@@ -13,17 +13,17 @@ touches:
   - tests/unit/test_swap_rule.py
 results:
 - run_manifest: harness/evidence/polars-asof-parity-20261024/positive.json
-  run_manifest_sha256: 9ed7672eedb092b30e388419935d5fe17c626c616bb52b1c551a14468c9e7e43
+  run_manifest_sha256: d6445aa87669ef77a469a2a2ffa490346aa3d36ff25a77956f3e254e68e094e2
   evidence: harness/evidence/polars-asof-parity-20261024/positive.log
   data_class: synthetic
   label: synthetic interface test, not rankings
 - run_manifest: harness/evidence/polars-asof-parity-20261024/negative.json
-  run_manifest_sha256: 6111fccc521c172c0a7d6dcba62684acd90029e5ffe8f870b3cfed5fdb0a7c0d
+  run_manifest_sha256: 2584698e1a1adb85645e7d0455c895ab0e3810dfc53717c335be3923b954a2e6
   evidence: harness/evidence/polars-asof-parity-20261024/negative.log
   data_class: synthetic
   label: synthetic interface test, not rankings
 - run_manifest: harness/evidence/polars-asof-parity-20261024/regression.json
-  run_manifest_sha256: 21766609bda7cc58c11f726a278cfb574e48cfe0e835041f3d5a33d8dd3ea864
+  run_manifest_sha256: a89c77dac19f20bf42274f699a83fb9ca26648cc566974f95f239ffa2c6e20f8
   evidence: harness/evidence/polars-asof-parity-20261024/regression.log
   data_class: synthetic
   label: synthetic interface test, not rankings

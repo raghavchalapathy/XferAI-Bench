@@ -28,8 +28,8 @@ WARNING: Using incubator modules: jdk.incubator.vector
 Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
 Setting default log level to "WARN".
 To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
-26/10/24 19:34:13 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
-[Stage 0:>                                                          (0 + 2) / 2][Stage 0:>                  (0 + 2) / 2][Stage 1:>                  (0 + 0) / 2]                                                                                
+26/10/24 19:58:39 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+[Stage 0:>                                                          (0 + 2) / 2][Stage 0:>                  (0 + 2) / 2][Stage 1:>                  (0 + 0) / 2][Stage 0:=========>         (1 + 1) / 2][Stage 1:>                  (0 + 2) / 2]                                                                                
 =========================== short test summary info ============================
 PASSED tests/unit/test_polars_swaps.py::test_random_as_of_matches_reference_loop
 PASSED tests/unit/test_polars_swaps.py::test_requests_identical
@@ -40,4 +40,4 @@ PASSED tests/unit/test_scalable_eval.py::test_duplicates_cannot_mask_missing_wee
 PASSED tests/unit/test_scalable_eval.py::test_nan_actual_raises_like_reference
 PASSED tests/unit/test_scalable_eval.py::test_polars_parity
 PASSED tests/unit/test_scalable_eval.py::test_spark_local_parity
-9 passed, 33 warnings in 147.36s (0:02:27)
+9 passed, 33 warnings in 147.65s (0:02:27)

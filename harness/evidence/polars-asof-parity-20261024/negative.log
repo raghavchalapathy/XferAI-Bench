@@ -3,4 +3,4 @@
 =========================== short test summary info ============================
 PASSED tests/unit/test_swap_rule.py::test_negative_swap_without_reference_flagged
 PASSED tests/unit/test_swap_rule.py::test_negative_swap_without_parity_test_flagged
-2 passed in 0.02s
+2 passed in 0.03s

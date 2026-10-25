@@ -15,5 +15,6 @@
   ],
   "summary": "2 passed in 0.14s",
   "log_sha256": "6712b4e63b9f60ff2333c65c560e588bd1eac264c2c7914c71d878705f32cf33",
-  "note": "negative = checker must flag the bad swap (tests assert the flag); synthetic interface test, not rankings"
+  "note": "negative = checker must flag the bad swap (tests assert the flag); synthetic interface test, not rankings",
+  "tested_commit": "5ece1000ff191e48ed24bc5eda26ba3cf7060e65"
 }

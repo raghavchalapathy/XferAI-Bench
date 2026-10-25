@@ -13,7 +13,8 @@
       "node": "tests/unit/test_swap_rule.py::test_negative_swap_without_parity_test_flagged"
     }
   ],
-  "summary": "2 passed in 0.02s",
-  "log_sha256": "3d1ec685c72462322997140aeab8d8dc3e9e784568ac115bb141d398d39e8767",
-  "note": "negative = checker must flag the bad swap (tests assert the flag); synthetic interface test, not rankings"
+  "summary": "2 passed in 0.03s",
+  "log_sha256": "71cfaccf2e865840fb2aa819fba3e54f44a78ccc25068a244b8f196244d6e596",
+  "note": "negative = checker must flag the bad swap (tests assert the flag); synthetic interface test, not rankings",
+  "tested_commit": "5ece1000ff191e48ed24bc5eda26ba3cf7060e65"
 }
