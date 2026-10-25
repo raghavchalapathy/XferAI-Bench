@@ -1,0 +1,19 @@
+{
+  "kind": "positive",
+  "command": "python -m pytest -p no:cacheprovider -q -rA tests/unit/test_swap_rule.py::test_positive_repo_swaps_compliant tests/unit/test_swap_rule.py::test_compliant_swap_passes",
+  "exit_code": 0,
+  "python": "3.13.5",
+  "node_ids": [
+    {
+      "outcome": "PASSED",
+      "node": "tests/unit/test_swap_rule.py::test_positive_repo_swaps_compliant"
+    },
+    {
+      "outcome": "PASSED",
+      "node": "tests/unit/test_swap_rule.py::test_compliant_swap_passes"
+    }
+  ],
+  "summary": "2 passed in 0.14s",
+  "log_sha256": "6712b4e63b9f60ff2333c65c560e588bd1eac264c2c7914c71d878705f32cf33",
+  "note": "negative = checker must flag the bad swap (tests assert the flag); synthetic interface test, not rankings"
+}

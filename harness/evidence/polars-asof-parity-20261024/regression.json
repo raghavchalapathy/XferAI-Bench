@@ -1,0 +1,47 @@
+{
+  "kind": "regression",
+  "command": "python -m pytest -p no:cacheprovider -q -rA tests/unit/test_polars_swaps.py tests/unit/test_scalable_eval.py",
+  "exit_code": 0,
+  "python": "3.13.5",
+  "node_ids": [
+    {
+      "outcome": "PASSED",
+      "node": "tests/unit/test_polars_swaps.py::test_random_as_of_matches_reference_loop"
+    },
+    {
+      "outcome": "PASSED",
+      "node": "tests/unit/test_polars_swaps.py::test_requests_identical"
+    },
+    {
+      "outcome": "PASSED",
+      "node": "tests/unit/test_polars_swaps.py::test_evaluator_outputs_unchanged[validation-run]"
+    },
+    {
+      "outcome": "PASSED",
+      "node": "tests/unit/test_polars_swaps.py::test_evaluator_outputs_unchanged[test-run]"
+    },
+    {
+      "outcome": "PASSED",
+      "node": "tests/unit/test_polars_swaps.py::test_scalable_eval_unchanged"
+    },
+    {
+      "outcome": "PASSED",
+      "node": "tests/unit/test_scalable_eval.py::test_duplicates_cannot_mask_missing_weeks"
+    },
+    {
+      "outcome": "PASSED",
+      "node": "tests/unit/test_scalable_eval.py::test_nan_actual_raises_like_reference"
+    },
+    {
+      "outcome": "PASSED",
+      "node": "tests/unit/test_scalable_eval.py::test_polars_parity"
+    },
+    {
+      "outcome": "PASSED",
+      "node": "tests/unit/test_scalable_eval.py::test_spark_local_parity"
+    }
+  ],
+  "summary": "9 passed, 33 warnings in 147.36s (0:02:27)",
+  "log_sha256": "6ad7f2e42c42f712fe0dcc1d3b8adcaf24270e66a554a1eb417f32970ab5d865",
+  "note": "negative = checker must flag the bad swap (tests assert the flag); synthetic interface test, not rankings"
+}

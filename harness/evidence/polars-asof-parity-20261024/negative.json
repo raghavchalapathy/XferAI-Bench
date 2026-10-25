@@ -1,0 +1,19 @@
+{
+  "kind": "negative",
+  "command": "python -m pytest -p no:cacheprovider -q -rA tests/unit/test_swap_rule.py::test_negative_swap_without_reference_flagged tests/unit/test_swap_rule.py::test_negative_swap_without_parity_test_flagged",
+  "exit_code": 0,
+  "python": "3.13.5",
+  "node_ids": [
+    {
+      "outcome": "PASSED",
+      "node": "tests/unit/test_swap_rule.py::test_negative_swap_without_reference_flagged"
+    },
+    {
+      "outcome": "PASSED",
+      "node": "tests/unit/test_swap_rule.py::test_negative_swap_without_parity_test_flagged"
+    }
+  ],
+  "summary": "2 passed in 0.02s",
+  "log_sha256": "3d1ec685c72462322997140aeab8d8dc3e9e784568ac115bb141d398d39e8767",
+  "note": "negative = checker must flag the bad swap (tests assert the flag); synthetic interface test, not rankings"
+}

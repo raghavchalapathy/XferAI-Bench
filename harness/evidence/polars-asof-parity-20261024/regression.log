@@ -1,0 +1,43 @@
+.........                                                                [100%]
+=============================== warnings summary ===============================
+tests/unit/test_polars_swaps.py: 18 warnings
+tests/unit/test_scalable_eval.py: 6 warnings
+  /workspace/XferAI-Bench-v4/src/xferbench/domains/retail/validation.py:106: Pandas4Warning: Series.dt.weekday is deprecated and will be removed in a future version. Use Series.dt.day_of_week instead.
+    df[wcol].notna() & (df[wcol].dt.weekday != wd),
+
+tests/unit/test_polars_swaps.py::test_requests_identical
+tests/unit/test_polars_swaps.py::test_requests_identical
+tests/unit/test_polars_swaps.py::test_requests_identical
+tests/unit/test_polars_swaps.py::test_requests_identical
+tests/unit/test_polars_swaps.py::test_requests_identical
+tests/unit/test_polars_swaps.py::test_requests_identical
+tests/unit/test_scalable_eval.py::test_duplicates_cannot_mask_missing_weeks
+tests/unit/test_scalable_eval.py::test_duplicates_cannot_mask_missing_weeks
+  /workspace/XferAI-Bench-v4/src/xferbench/domains/retail/validation.py:349: Pandas4Warning: Series.dt.weekday is deprecated and will be removed in a future version. Use Series.dt.day_of_week instead.
+    floor = la["first_offer_at"] - pd.to_timedelta((la["first_offer_at"].dt.weekday - wd) % 7, unit="D")
+
+tests/unit/test_scalable_eval.py::test_spark_local_parity
+  /workspace/v4-venv313/lib/python3.13/site-packages/pyspark/testing/utils.py:127: FutureWarning: PySpark does not yet fully support pandas >= 3.0.0. Some features may not work correctly. It is recommended to use pandas < 3.0.0 for now.
+    require_minimum_pandas_version()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+==================================== PASSES ====================================
+___________________________ test_spark_local_parity ____________________________
+----------------------------- Captured stderr call -----------------------------
+WARNING: Using incubator modules: jdk.incubator.vector
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/10/24 19:34:13 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+[Stage 0:>                                                          (0 + 2) / 2][Stage 0:>                  (0 + 2) / 2][Stage 1:>                  (0 + 0) / 2]                                                                                
+=========================== short test summary info ============================
+PASSED tests/unit/test_polars_swaps.py::test_random_as_of_matches_reference_loop
+PASSED tests/unit/test_polars_swaps.py::test_requests_identical
+PASSED tests/unit/test_polars_swaps.py::test_evaluator_outputs_unchanged[validation-run]
+PASSED tests/unit/test_polars_swaps.py::test_evaluator_outputs_unchanged[test-run]
+PASSED tests/unit/test_polars_swaps.py::test_scalable_eval_unchanged
+PASSED tests/unit/test_scalable_eval.py::test_duplicates_cannot_mask_missing_weeks
+PASSED tests/unit/test_scalable_eval.py::test_nan_actual_raises_like_reference
+PASSED tests/unit/test_scalable_eval.py::test_polars_parity
+PASSED tests/unit/test_scalable_eval.py::test_spark_local_parity
+9 passed, 33 warnings in 147.36s (0:02:27)
