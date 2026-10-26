@@ -1,13 +1,40 @@
 {
   "schema_version": 1,
   "provenance": {
-    "source": "factory/inbox/scout/news_feed_v3.5.json",
-    "source_sha256": "3fcd63f900468b136d5f076313d1fa1d2040b535447563486ee8fc0702648a8e",
-    "review": "factory/inbox/reviewer/daily-refresh-20261023-review/review.json",
-    "review_sha256": "3788e71d5b0bccab72f1e7e81a3ed2a9078ae45e5038da61b326c0b72474ee2b",
+    "source": "factory/inbox/scout/news_feed_v3.6.json",
+    "source_sha256": "42d5fc15f027d6b8974b256aba5c3f17ba336abc9425d68d184b1d35e7ad3a60",
+    "review": "factory/inbox/reviewer/daily-refresh-20261026-review/review.json",
+    "review_sha256": "a26f85a2cab587c9a65fef292c1c6c46998a27ec659ff936f39ec989e9aa6189",
     "verdict": "APPROVE"
   },
   "items": [
+    {
+      "id": "arxiv-2610.32859",
+      "title": "Sustainability of TSFM Deployment and Pretraining: From Carbon Footprint Analysis to Mitigation via Pruning",
+      "date": "2026-10-23",
+      "tag": "research",
+      "summary": "From the abstract: We model the cumulative carbon cost of different approaches across a realistic industrial scenario: Chronos-2 amortizes its pretraining cost within months for large or frequently queried deployments, but a classical model remains cheaper indefinitely for small or rarely queried ones.",
+      "url": "https://arxiv.org/abs/2610.32859",
+      "date_display": "2026-10-23"
+    },
+    {
+      "id": "arxiv-2610.32329",
+      "title": "When to Trust Memory: Retrieval-Guided Probabilistic Spatiotemporal Forecasting under Distribution Shift",
+      "date": "2026-10-23",
+      "tag": "research",
+      "summary": "From the abstract: To address this issue, we propose REMIND, a retrieval-guided probabilistic framework for spatiotemporal forecasting under distribution shift.",
+      "url": "https://arxiv.org/abs/2610.32329",
+      "date_display": "2026-10-23"
+    },
+    {
+      "id": "arxiv-2610.32071",
+      "title": "DBCM: Dual-Branch Calibration Module for Test-Time Adaptation in Time Series Forecasting",
+      "date": "2026-10-23",
+      "tag": "research",
+      "summary": "From the abstract: Motivated by this observation, we propose the Dual-Branch Calibration Module (DBCM), which shares adaptation capacity across channels through a shared adapter while retaining limited channel-specific flexibility through a low-rank channel-wise adapter, further enhanced by channel mixing and nonlinear gated modulation.",
+      "url": "https://arxiv.org/abs/2610.32071",
+      "date_display": "2026-10-23"
+    },
     {
       "id": "arxiv-2610.31621",
       "title": "Volatility-Corrected Prediction Intervals: Locally Adaptive Uncertainty Quantification for Probabilistic Time-Series Forecasting",
@@ -61,6 +88,24 @@
       "summary": "From the model card: Time series foundation model by H2O.ai. Datasets overlapping with fev-bench, GIFT-Eval, and TIME were excluded from training.",
       "url": "https://huggingface.co/h2oai/timeh2o-v1",
       "date_display": "Repo created 2026-10-22 (UTC)"
+    },
+    {
+      "id": "arxiv-2610.31959",
+      "title": "A Model-Agnostic Correction Framework for Short-Term Building Load Forecasting",
+      "date": "2026-10-22",
+      "tag": "research",
+      "summary": "From the abstract: Motivated by this idea, we propose WeL-RAC, a model-agnostic Weather-Load Retrieval-Augmented Correction framework that explicitly retrieves such evidence at prediction time. The framework improves the corresponding base forecasters in 90 of 96 dataset-level comparisons.",
+      "url": "https://arxiv.org/abs/2610.31959",
+      "date_display": "2026-10-22"
+    },
+    {
+      "id": "arxiv-2610.31869",
+      "title": "Forecasting Associations, Not Interventions: A Preregistered Causal Audit of Covariate-Aware Time Series Foundation Models",
+      "date": "2026-10-22",
+      "tag": "research",
+      "summary": "From the abstract: Covariate-aware time series foundation models (TSFMs) accept a future path for a control variable and return a forecast, inviting what-if queries. The query is interventional; the models are trained on observational data.",
+      "url": "https://arxiv.org/abs/2610.31869",
+      "date_display": "2026-10-22"
     },
     {
       "id": "arxiv-2610.29604",
@@ -189,6 +234,15 @@
       "date_display": "2026-10-19"
     },
     {
+      "id": "arxiv-2610.27155",
+      "title": "A Hybrid TFT-NBEATS Framework for Robust Multi-Horizon Photovoltaic Power Forecasting",
+      "date": "2026-10-19",
+      "tag": "research",
+      "summary": "From the abstract: To address these limitations, this study proposes a novel hybrid deep learning framework that integrates a Temporal Fusion Transformer (TFT) and N-BEATS within an attention-based fusion architecture.",
+      "url": "https://arxiv.org/abs/2610.27155",
+      "date_display": "2026-10-19"
+    },
+    {
       "id": "arxiv-2610.25392",
       "title": "Paloma: Phase-Conditioned Residual Modulation for Time Series Forecasting",
       "date": "2026-10-18",
@@ -196,6 +250,87 @@
       "summary": "Abstract opening: Explicitly modeling periodicity has proven to be an efficient approach for time series forecasting, where the residual, obtained after removing the periodic component from the time series, is typically treated as unstructured noise.",
       "url": "https://arxiv.org/abs/2610.25392",
       "date_display": "2026-10-18"
+    },
+    {
+      "id": "arxiv-2610.25584",
+      "title": "CVTA: Cross-Variable Temporal Attention for Multivariate Irregular Time Series Prediction",
+      "date": "2026-10-18",
+      "tag": "research",
+      "summary": "From the abstract: In this work, we introduce Cross-Variable Temporal Attention (CVTA), a short-term, continuous-time forecasting framework that learns prediction functions from its compact, interpretable state summarizing recent temporal dynamics across variables.",
+      "url": "https://arxiv.org/abs/2610.25584",
+      "date_display": "2026-10-18"
+    },
+    {
+      "id": "arxiv-2610.25495",
+      "title": "Probabilistic Limit Order Book Forecasting with Conditional Diffusion Models",
+      "date": "2026-10-18",
+      "tag": "research",
+      "summary": "From the abstract: We introduce LOBGrad, a conditional DDPM framework for probabilistic LOB forecasting that combines an autoregressive RNN encoder with a diffusion-based generator.",
+      "url": "https://arxiv.org/abs/2610.25495",
+      "date_display": "2026-10-18"
+    },
+    {
+      "id": "arxiv-2610.25370",
+      "title": "Multi-site Learning for Forecasting Day-Ahead Wind-Power Production for Onshore Wind Farms in Great Britain with Deep Neural Networks",
+      "date": "2026-10-18",
+      "tag": "research",
+      "summary": "From the abstract: In this study, we train multi-site deep neural networks (DNNs) using pooled historical production and reanalysis weather data from 88 onshore wind Balancing Mechanism Units (BMUs).",
+      "url": "https://arxiv.org/abs/2610.25370",
+      "date_display": "2026-10-18"
+    },
+    {
+      "id": "arxiv-2610.25283",
+      "title": "Data-driven forecasting of tropical cloud forest phenology: A dynamical systems and machine learning hybrid approach",
+      "date": "2026-10-18",
+      "tag": "research",
+      "summary": "From the abstract: While traditional phenological models often rely on preconceived functional forms, this study introduces a data-driven hybrid approach that integrates dynamical systems theory with machine learning to forecast flowering and fruiting cycles.",
+      "url": "https://arxiv.org/abs/2610.25283",
+      "date_display": "2026-10-18"
+    },
+    {
+      "id": "arxiv-2610.25170",
+      "title": "World Models, Trees and Foundation Models for Retail Forecasting: Evidence from Four Public Data Sets",
+      "date": "2026-10-18",
+      "tag": "research",
+      "summary": "From the abstract: This paper compares models at each grain on four public data sets (M5, six Dominick's categories, Breakfast at the Frat, and Corporación Favorita, the last kept out of all development), over rolling forecast origins with paired tests and model confidence sets. The answer changed with the grain.",
+      "url": "https://arxiv.org/abs/2610.25170",
+      "date_display": "2026-10-18"
+    },
+    {
+      "id": "arxiv-2610.25140",
+      "title": "Spectral Adaptive Graph Transformer for Efficient and Scalable Traffic Forecasting",
+      "date": "2026-10-18",
+      "tag": "research",
+      "summary": "From the abstract: We introduce the spectral adaptive graph transformer, whose spatial operator is learned rather than derived from the Laplacian, directed rather than symmetric, and conditioned on the current traffic state rather than a static state, at a cost linear in the number of sensors.",
+      "url": "https://arxiv.org/abs/2610.25140",
+      "date_display": "2026-10-18"
+    },
+    {
+      "id": "arxiv-2610.24826",
+      "title": "Compose the Horizon: Parameter-Shared Blockwise Forecasting under a Sequential-Compute Trade-off",
+      "date": "2026-10-17",
+      "tag": "research",
+      "summary": "From the abstract: Recursive Functional Decomposition (RFD) factorizes the horizon mapping into three parameter-shared block predictions.",
+      "url": "https://arxiv.org/abs/2610.24826",
+      "date_display": "2026-10-17"
+    },
+    {
+      "id": "arxiv-2610.24386",
+      "title": "Learning volatility-adaptive forgetting via GARCH-modulated LSTM for stock price forecasting",
+      "date": "2026-10-17",
+      "tag": "research",
+      "summary": "From the abstract: This paper presents the Gsigmoid-LSTM model, which embeds Generalized Autoregressive Conditional Heteroscedasticity (GARCH(1,1))-derived volatility estimates into the LSTM forgetting gate through the Gsigmoid activation function, a volatility-adaptive variant of the sigmoid that combines a volatility adjustment factor with slope regulation via a learnable parameter.",
+      "url": "https://arxiv.org/abs/2610.24386",
+      "date_display": "2026-10-17"
+    },
+    {
+      "id": "arxiv-2610.24384",
+      "title": "A decomposition-integration framework coupling singular spectrum analysis with a volatility-adaptive LSTM for stock price forecasting",
+      "date": "2026-10-17",
+      "tag": "research",
+      "summary": "From the abstract: To address these gaps, this paper proposes CEEMDAN-SE-SSA-VMGL. On five US and Chinese financial series (CSI 300, CSI 500, AAPL, GOOGL, S&P 500), the proposed model is compared with eleven benchmark architectures, lowering the forecasting error by 9% to 24% relative to the best benchmark and by 60% to 70% relative to a standard LSTM.",
+      "url": "https://arxiv.org/abs/2610.24384",
+      "date_display": "2026-10-17"
     },
     {
       "id": "arxiv-2610.24321",
@@ -394,6 +529,15 @@
       "summary": "Abstract opening: Multiscale structure is central to time series forecasting: temporal signals contain slowly varying trends, intermediate seasonal patterns, and high-frequency residuals.",
       "url": "https://arxiv.org/abs/2610.15760",
       "date_display": "2026-10-11"
+    },
+    {
+      "id": "hf-h2oai-timeh2o-v1-tiny",
+      "title": "TimeH2O Tiny (Hugging Face model page)",
+      "date": "2026-10-11",
+      "tag": "industry",
+      "summary": "From the model card: Time series foundation model by H2O.ai. Datasets overlapping with fev-bench, GIFT-Eval, M4, and QuitoBench were excluded from training at the dataset or test-split level.",
+      "url": "https://huggingface.co/h2oai/timeh2o-v1-tiny",
+      "date_display": "Repo created 2026-10-11 (UTC)"
     },
     {
       "id": "arxiv-2610.14861",
