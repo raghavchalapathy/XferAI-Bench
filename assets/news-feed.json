@@ -1,13 +1,85 @@
 {
   "schema_version": 1,
   "provenance": {
-    "source": "factory/inbox/scout/news_feed_v3.6.json",
-    "source_sha256": "42d5fc15f027d6b8974b256aba5c3f17ba336abc9425d68d184b1d35e7ad3a60",
-    "review": "factory/inbox/reviewer/daily-refresh-20261026-review/review.json",
-    "review_sha256": "a26f85a2cab587c9a65fef292c1c6c46998a27ec659ff936f39ec989e9aa6189",
+    "source": "factory/inbox/scout/news_feed_v3.7.json",
+    "source_sha256": "19ac6f07049462c250108c98256ada3d3fffe7eb75119f0a4018c42c141fc939",
+    "review": "factory/inbox/reviewer/daily-refresh-20261027-review/review.json",
+    "review_sha256": "ca2c770bd9f72c9e3927af35b667b9243404ed1a8da56a3fa4cd6d7cd6523d3c",
     "verdict": "APPROVE"
   },
   "items": [
+    {
+      "id": "arxiv-2610.35128",
+      "title": "STeP-TS: Shared Temporal Filters with Pruning for Time Series",
+      "date": "2026-10-26",
+      "tag": "research",
+      "summary": "From the abstract: We propose a compact one-layer convolutional framework that learns a shared bank of multi-scale temporal filters of each variable.",
+      "url": "https://arxiv.org/abs/2610.35128",
+      "date_display": "2026-10-26"
+    },
+    {
+      "id": "arxiv-2610.34797",
+      "title": "TimeWorld: Towards Action-Conditioned Multimodal World Models for Time Series Forecasting",
+      "date": "2026-10-26",
+      "tag": "research",
+      "summary": "From the abstract: To investigate these gaps, we introduce TSWM-Bench, a cross-domain benchmark for multimodal TSWMs spanning seven real-world datasets, with textual interventions grounded in recorded action--outcome data. Our evaluation reveals that conventional multimodal forecasters underperform history-only time series foundation models (TSFMs) despite dataset-specific training, whereas simple text-prefix adaptations improve forecasting across all evaluated TSFM backbones.",
+      "url": "https://arxiv.org/abs/2610.34797",
+      "date_display": "2026-10-26"
+    },
+    {
+      "id": "researchsquare-rs-11111645-v1",
+      "title": "VRATF: Vision-based Retrieval-Augmented Time Series Forecasting",
+      "date": "2026-10-26",
+      "tag": "research",
+      "summary": "From the abstract: To address this limitation, this paper proposes VRATF, a vision-based retrieval-augmented time series forecasting framework. VRATF first extracts low-frequency trend components from historical sequences using frequency-domain filtering, renders the denoised trends as line-chart images, and encodes them with a frozen vision encoder to construct a visual retrieval database.",
+      "url": "https://www.researchsquare.com/article/rs-11111645/v1",
+      "date_display": "2026-10-26 (preprint, in review)"
+    },
+    {
+      "id": "arxiv-2610.34409",
+      "title": "Dynamic Multi-Step Decoding for Time-Series Foundation Models",
+      "date": "2026-10-25",
+      "tag": "research",
+      "summary": "From the abstract: We argue that the optimal decoding strategy is not fixed across inputs, but should be selected adaptively for each forecasting instance. We propose a dynamic strategy selector that treats the forecast rollout schedule as an inference-time decision problem for frozen pretrained time-series foundation models.",
+      "url": "https://arxiv.org/abs/2610.34409",
+      "date_display": "2026-10-25"
+    },
+    {
+      "id": "arxiv-2610.34171",
+      "title": "MetaARIMA: Configuration-Level Transfer Learning for ARIMA Models",
+      "date": "2026-10-25",
+      "tag": "research",
+      "summary": "From the abstract: We propose MetaARIMA, a pretrained configuration policy based on metalearning that brings transfer learning to classical statistical forecasting at the configuration level rather than the model level. The policy learns from historical experiments which ARIMA configurations achieve top-quantile performance, and recommends promising candidates for new series while preserving interpretability and local estimation.",
+      "url": "https://arxiv.org/abs/2610.34171",
+      "date_display": "2026-10-25"
+    },
+    {
+      "id": "arxiv-2610.34611",
+      "title": "How Much Graph Is Too Much? Graph Construction and Exposure in Spatio-Temporal Forecasting",
+      "date": "2026-10-25",
+      "tag": "research",
+      "summary": "From the abstract: We study these choices as graph construction and graph exposure on U.S. state unemployment, traffic speed, and electricity demand. … Late integration alone is insufficient, while adding a fusion gate yields lower mean error in all three tasks.",
+      "url": "https://arxiv.org/abs/2610.34611",
+      "date_display": "2026-10-25"
+    },
+    {
+      "id": "arxiv-2610.33387",
+      "title": "PMU Foundation Model Bridge: A Tool for Connecting Synchrophasor Streams to Time Series Foundation Models",
+      "date": "2026-10-24",
+      "tag": "research",
+      "summary": "From the abstract: This paper presents PMU Foundation Model Bridge, an open source tool that connects online phasor measurement unit (PMU) or phasor data concentrator (PDC) streams to publicly available time series foundation models (TSFM). … In the initial release, 4 publicly available TSFMs were supported, including Chronos-2, TimesFM 2.5, Timestral, and TimesFM-3.",
+      "url": "https://arxiv.org/abs/2610.33387",
+      "date_display": "2026-10-24"
+    },
+    {
+      "id": "arxiv-2610.33822",
+      "title": "Learning What to Share: Expert Specialization for Time-Series Forecasting",
+      "date": "2026-10-24",
+      "tag": "research",
+      "summary": "From the abstract: These insights motivate Persistent Closed-Form Routing (PCR), a plug-and-play method that alternates exact conditional estimation of channel-specific mixture weights with gradient-based training of low-rank residual experts around a frozen pretrained forecaster. Averaged over four forecasting horizons, PCR-K4 achieves dataset-balanced mean squared error reductions of 3.86-14.25% relative to the three frozen backbones.",
+      "url": "https://arxiv.org/abs/2610.33822",
+      "date_display": "2026-10-24"
+    },
     {
       "id": "arxiv-2610.32859",
       "title": "Sustainability of TSFM Deployment and Pretraining: From Carbon Footprint Analysis to Mitigation via Pruning",
@@ -33,6 +105,24 @@
       "tag": "research",
       "summary": "From the abstract: Motivated by this observation, we propose the Dual-Branch Calibration Module (DBCM), which shares adaptation capacity across channels through a shared adapter while retaining limited channel-specific flexibility through a low-rank channel-wise adapter, further enhanced by channel mixing and nonlinear gated modulation.",
       "url": "https://arxiv.org/abs/2610.32071",
+      "date_display": "2026-10-23"
+    },
+    {
+      "id": "arxiv-2610.33330",
+      "title": "TempShap: When and How Much a Feature Matters in Time-Series Forecasting",
+      "date": "2026-10-23",
+      "tag": "research",
+      "summary": "From the abstract: We propose TempShap, a retrospective, loss-based Shapley framework whose players are the individual input cells $(t,i)$. Its attribution tensor yields temporal-localization and horizon-impact profiles.",
+      "url": "https://arxiv.org/abs/2610.33330",
+      "date_display": "2026-10-23"
+    },
+    {
+      "id": "arxiv-2610.33209",
+      "title": "Model-agnostic predictability quantification of multivariable time series",
+      "date": "2026-10-23",
+      "tag": "research",
+      "summary": "From the abstract: In this work, we propose Multivariable Predictability Score (MAPS), a model-agnostic metric for measuring the intrinsic predictability of multivariable time series forecasting tasks.",
+      "url": "https://arxiv.org/abs/2610.33209",
       "date_display": "2026-10-23"
     },
     {
@@ -387,6 +477,69 @@
       "date_display": "2026-10-15"
     },
     {
+      "id": "arxiv-2610.22727",
+      "title": "OrderFlowDiT: Transport-Regularized Diffusion Transformer for Probabilistic Limit-Order Supply Forecasting",
+      "date": "2026-10-15",
+      "tag": "research",
+      "summary": "From the abstract: We introduce OrderFlowDiT, a conditional Diffusion Transformer for unnormalized bid and ask volume-at-price fields, trained with an unbalanced optimal-transport (UOT) auxiliary loss.",
+      "url": "https://arxiv.org/abs/2610.22727",
+      "date_display": "2026-10-15"
+    },
+    {
+      "id": "arxiv-2610.22630",
+      "title": "Choosing models for network-wide freeway speed estimation and forecasting from sparse fixed sensors",
+      "date": "2026-10-15",
+      "tag": "research",
+      "summary": "From the abstract: This paper compares methods for estimating current and next-hour speeds on every link from such sparse detectors, using historical probe data for training.",
+      "url": "https://arxiv.org/abs/2610.22630",
+      "date_display": "2026-10-15"
+    },
+    {
+      "id": "arxiv-2610.22430",
+      "title": "CGDT-CESN: Correlation-Guided and Dynamics-Trained Clustered Echo State Network for Multivariate Time-Series Prediction",
+      "date": "2026-10-15",
+      "tag": "research",
+      "summary": "From the abstract: In this work, a Correlation-Guided and Dynamics-Trained Clustered Echo State Network (CGDT-CESN) is proposed, which comprises a modular reservoir architecture with each cluster distinctly specializing in one of the variables in the multivariate time series.",
+      "url": "https://arxiv.org/abs/2610.22430",
+      "date_display": "2026-10-15"
+    },
+    {
+      "id": "arxiv-2610.21414",
+      "title": "Learning to Forecast on Multiple Spatiotemporal Hierarchies",
+      "date": "2026-10-15",
+      "tag": "research",
+      "summary": "From the abstract: In this work, we propose a graph deep learning framework that leverages variations across hierarchies as multi-task regularization. We show that jointly learning across these structures can reduce over-specialization to any single hierarchy and improve forecasting performance.",
+      "url": "https://arxiv.org/abs/2610.21414",
+      "date_display": "2026-10-15"
+    },
+    {
+      "id": "arxiv-2610.21223",
+      "title": "Learning and Forecasting Multiscale Spatiotemporal Epidemic Dynamics with Lagrangian-Eulerian Graph Neural ODEs",
+      "date": "2026-10-15",
+      "tag": "research",
+      "summary": "From the abstract: We introduce LE-EpiGNODE, which replaces generic message passing with process-specific, mechanism-guided neural operators: age-contact information drives Lagrangian infection generation, whereas mobility drives conservative Eulerian population transport within a structure-preserving universal differential equation.",
+      "url": "https://arxiv.org/abs/2610.21223",
+      "date_display": "2026-10-15"
+    },
+    {
+      "id": "arxiv-2610.21958",
+      "title": "ChronoSheaf: Joint Spatio-Temporal Spectral Filtering on Cellular Sheaves",
+      "date": "2026-10-15",
+      "tag": "research",
+      "summary": "From the abstract: Building on this operator, we introduce ChronoSheaf, a spatio-temporal sheaf network with two key components. … We validate ChronoSheaf on a diverse set of spatio-temporal forecasting benchmarks, where it outperforms state-of-the-art baselines.",
+      "url": "https://arxiv.org/abs/2610.21958",
+      "date_display": "2026-10-15"
+    },
+    {
+      "id": "arxiv-2610.21795",
+      "title": "Single-stage joint diffusion of sky images and clear-sky index for ultra-short-term irradiance forecasting: what the frame-to-irradiance stage discards",
+      "date": "2026-10-15",
+      "tag": "research",
+      "summary": "From the abstract: We propose a single-stage alternative that co-denoises the future sky-image and clear-sky-index sequences in one diffusion process, with an irradiance head that reads a denoised preview of the future sky rather than the noised diffusion state.",
+      "url": "https://arxiv.org/abs/2610.21795",
+      "date_display": "2026-10-15"
+    },
+    {
       "id": "hf-mistralai-timestral-209m",
       "title": "Timestral-209M (Hugging Face model page)",
       "date": "2026-10-14",
@@ -441,6 +594,33 @@
       "date_display": "2026-10-14"
     },
     {
+      "id": "arxiv-2610.20739",
+      "title": "Quantile-Guided Diffusion for Probabilistic Time-Series Forecasting",
+      "date": "2026-10-14",
+      "tag": "research",
+      "summary": "From the abstract: We instantiate this approach as Control-TS, which learns a quantile-control pathway while keeping the pretrained backbone frozen. Across eight benchmarks, Control-TS consistently improves the backbone's CRPS, achieves competitive performance against state-of-the-art forecasting models, and retains its gains in capacity-matched comparisons.",
+      "url": "https://arxiv.org/abs/2610.20739",
+      "date_display": "2026-10-14"
+    },
+    {
+      "id": "arxiv-2610.19813",
+      "title": "VaryST: Generalizable Spatio-Temporal Forecasting Beyond the Closed-World Setting",
+      "date": "2026-10-14",
+      "tag": "research",
+      "summary": "From the abstract: To this end, we propose VaryST, a compact spatio-temporal forecasting model trained from scratch that achieves strong generalization by dynamically constructing predictive context from available long-term observations. … Extensive experiments on six real-world datasets against seventeen baselines show that VaryST achieves strong in-domain forecasting accuracy, substantially improves zero- and few-shot generalization under spatial and temporal changes, and remains robust to varying observation availability.",
+      "url": "https://arxiv.org/abs/2610.19813",
+      "date_display": "2026-10-14"
+    },
+    {
+      "id": "arxiv-2610.20947",
+      "title": "Ranked Right, Sized Wrong: Ensemble Spread Fails Silently at Streamflow Extremes",
+      "date": "2026-10-14",
+      "tag": "research",
+      "summary": "From the abstract: Deep learning models, particularly Long Short-Term Memory networks, are increasingly used for operational streamflow forecasting, with ensemble spread providing a signal of predictive uncertainty. As climate change increases the frequency of hydroclimatic extremes, these models will increasingly operate under flow conditions that are rare in their historical records. We therefore evaluate whether ensemble spread remains informative under increasing flows, examining both its magnitude relative to error and its ability to rank errors.",
+      "url": "https://arxiv.org/abs/2610.20947",
+      "date_display": "2026-10-14"
+    },
+    {
       "id": "arxiv-2610.17794",
       "title": "GIFT-Eval-CTX: A Benchmark For Contextual Forecasting Model Evaluation",
       "date": "2026-10-13",
@@ -483,6 +663,24 @@
       "tag": "research",
       "summary": "Abstract opening: Accurate uncertainty quantification is critical for many time series forecasting applications, and recent studies have increasingly adopted generative models to capture predictive uncertainty.",
       "url": "https://arxiv.org/abs/2610.18621",
+      "date_display": "2026-10-13"
+    },
+    {
+      "id": "arxiv-2610.18280",
+      "title": "PING: physics informed graph neural network for advection-diffusion processes with applications to solar power forecasting",
+      "date": "2026-10-13",
+      "tag": "research",
+      "summary": "From the abstract: We introduce a Physics-Informed Graph Neural Network (PING) for forecasting future advection-diffusion particle concentrations on irregular grids.",
+      "url": "https://arxiv.org/abs/2610.18280",
+      "date_display": "2026-10-13"
+    },
+    {
+      "id": "arxiv-2610.17732",
+      "title": "Structured SDEs for Realized GARCH: Continuous-Time Volatility Modelling and Component-Level Analysis",
+      "date": "2026-10-13",
+      "tag": "research",
+      "summary": "From the abstract: We propose a structured continuous-time stochastic volatility model for one-day-ahead integrated-variance forecasting.",
+      "url": "https://arxiv.org/abs/2610.17732",
       "date_display": "2026-10-13"
     },
     {
