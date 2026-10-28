@@ -1,13 +1,94 @@
 {
   "schema_version": 1,
   "provenance": {
-    "source": "factory/inbox/scout/news_feed_v3.7.json",
-    "source_sha256": "19ac6f07049462c250108c98256ada3d3fffe7eb75119f0a4018c42c141fc939",
-    "review": "factory/inbox/reviewer/daily-refresh-20261027-review/review.json",
-    "review_sha256": "ca2c770bd9f72c9e3927af35b667b9243404ed1a8da56a3fa4cd6d7cd6523d3c",
+    "source": "factory/inbox/scout/news_feed_v3.8.json",
+    "source_sha256": "dc36c20627940a5f378fb1f6b163e5f7c4e5059ac42ee80955547fb3c2994f1e",
+    "review": "factory/inbox/reviewer/daily-refresh-20261028-review/review.json",
+    "review_sha256": "21cb18fd8a2a14853b46f7ae23de2da30a73558af5568ab1aae237dacfc0d6a3",
     "verdict": "APPROVE"
   },
   "items": [
+    {
+      "id": "arxiv-2610.37585",
+      "title": "Timestral",
+      "date": "2026-10-27",
+      "tag": "research",
+      "summary": "From the abstract: We introduce Timestral, a family of four time series foundation models for probabilistic forecasting, with 5M, 28M, 123M, and 209M parameters. Timestral sets a new state of the art on GIFT-Eval, TIME, and fev-bench, where Timestral-209M and Timestral-123M take the top two places on every metric.",
+      "url": "https://arxiv.org/abs/2610.37585",
+      "date_display": "2026-10-27"
+    },
+    {
+      "id": "arxiv-2610.36703",
+      "title": "RankFormer: Rethinking Time Series Transformers through Representation Capacity Analysis and Progressive Decoding",
+      "date": "2026-10-27",
+      "tag": "research",
+      "summary": "From the abstract: To address these challenges, we propose RankFormer, a novel encoder-decoder architecture for multivariate time series forecasting. We establish a rank-based analysis framework to investigate how tokenization, embedding, and attention designs affect the representation capacity of time series Transformers.",
+      "url": "https://arxiv.org/abs/2610.36703",
+      "date_display": "2026-10-27"
+    },
+    {
+      "id": "arxiv-2610.37598",
+      "title": "GAS-PFN: Graph-Aware Spatiotemporal Prior-Data Fitted Networks for Zero-Shot Traffic Forecasting",
+      "date": "2026-10-27",
+      "tag": "research",
+      "summary": "From the abstract: To combine graph-aware traffic modeling with zero-shot adaptation, we introduce the Graph-Aware Spatiotemporal Prior-Data Fitted Network (GAS-PFN). … Across six benchmarks at the 90-minute horizon, GAS-PFN reduces MSE by 34.0% on average relative to TimePFN, its closest PFN-based predecessor.",
+      "url": "https://arxiv.org/abs/2610.37598",
+      "date_display": "2026-10-27"
+    },
+    {
+      "id": "arxiv-2610.37563",
+      "title": "Pneuma: A Large-Scale Real-World Time Series Benchmark for Commercial Aircraft Predictive Maintenance",
+      "date": "2026-10-27",
+      "tag": "research",
+      "summary": "From the abstract: We introduce Pneuma, the first publicly available large-scale benchmark for predictive maintenance using onboard time series from in-service commercial aircraft. … We structure the benchmark around three tasks: multivariate forecasting, supervised fault classification, and unsupervised anomaly detection, with labels derived from actual maintenance records.",
+      "url": "https://arxiv.org/abs/2610.37563",
+      "date_display": "2026-10-27"
+    },
+    {
+      "id": "arxiv-2610.36572",
+      "title": "Learning from Points and Patches: A Pre-trained Hybrid Attention Transformer for Time Series Analysis",
+      "date": "2026-10-27",
+      "tag": "research",
+      "summary": "From the abstract: We propose TimeHAT (Hybrid Attention Transformer), a general-purpose pre-training framework for time-series analysis that addresses two complementary questions: what to learn and how to learn. … We evaluate TimeHAT across real-world datasets and four downstream tasks: classification, long-term forecasting, imputation, and anomaly detection.",
+      "url": "https://arxiv.org/abs/2610.36572",
+      "date_display": "2026-10-27"
+    },
+    {
+      "id": "arxiv-2610.36881",
+      "title": "RAG-CSI: Global Local Retrieval via Joint State and Dynamics Matching for CSI Prediction",
+      "date": "2026-10-27",
+      "tag": "research",
+      "summary": "From the abstract: Channel state information (CSI) prediction forecasts future channel states from historical observations, supporting transceiver design and resource allocation with reduced measurement overhead. … In this paper, we propose RAG-CSI, a retrieval-enhanced Transformer framework that augments prediction with relevant historical channel knowledge.",
+      "url": "https://arxiv.org/abs/2610.36881",
+      "date_display": "2026-10-27"
+    },
+    {
+      "id": "researchsquare-rs-9800256-v1",
+      "title": "Decomposition-Based Preprocessing Versus Architectural Complexity in Neural Forecasting of Economic and Financial Time Series: A Comparative Empirical Study",
+      "date": "2026-10-27",
+      "tag": "research",
+      "summary": "From the abstract: This paper examines under what conditions input preprocessing through mathematical signal decomposition can substitute for architectural complexity in neural models applied to nonstationary economic and financial series. … The results show that variational mode decomposition consistently provides the largest accuracy gains across all three architectures and reduces by up to one order of magnitude the number of neurons required by recurrent models to achieve competitive performance.",
+      "url": "https://www.researchsquare.com/article/rs-9800256/v1",
+      "date_display": "2026-10-27"
+    },
+    {
+      "id": "researchsquare-rs-11504281-v1",
+      "title": "ARIMA-Based Forecasting of Air Pollutant Concentrations in North Cyprus: A Multi-Station, Multi-Pollutant Time Series Study",
+      "date": "2026-10-27",
+      "tag": "research",
+      "summary": "From the abstract: Air pollution monitoring and forecasting in the Turkish Republic of Northern Cyprus (TRNC) remains critically understudied. … Three model types — Simple Seasonal, Winters’ Additive, and exponential smoothing with ARIMA extension — were tailored to station-and pollutant-specific characteristics.",
+      "url": "https://www.researchsquare.com/article/rs-11504281/v1",
+      "date_display": "2026-10-27"
+    },
+    {
+      "id": "arxiv-2610.36393",
+      "title": "SpecLST: Spectral-Enhanced Long-Short Term Spatio-Temporal Multimodal Modeling for Traffic Forecasting",
+      "date": "2026-10-26",
+      "tag": "research",
+      "summary": "From the abstract: To address these limitations, we propose SpecLST, a frequency-enhanced long-short-term spatio-temporal multimodal framework. SpecLST leverages a fast Fourier transform-based frequency-domain representation module to efficiently encode multi-week historical dependencies, bypassing the memory bottlenecks of standard attention mechanisms over raw long sequences.",
+      "url": "https://arxiv.org/abs/2610.36393",
+      "date_display": "2026-10-26"
+    },
     {
       "id": "arxiv-2610.35128",
       "title": "STeP-TS: Shared Temporal Filters with Pruning for Time Series",
@@ -963,6 +1044,15 @@
       "date_display": "Repo created 2026-08-24 (UTC)"
     },
     {
+      "id": "mdpi-mathematics-14162971",
+      "title": "Dynamic Heterogeneous Graph Learning and Task-Conditioned Meta-Learning for Cold-Start Demand Forecasting in Multi-Warehouse Supply Chains",
+      "date": "2026-08-17",
+      "tag": "research",
+      "summary": "From the abstract: New products have little sales history, which makes short-horizon demand forecasting difficult. … IGEML combines a dynamic heterogeneous graph encoder with a task-conditioned model-agnostic meta-learning adapter.",
+      "url": "https://doi.org/10.3390/math14162971",
+      "date_display": "2026-08-17"
+    },
+    {
       "id": "synthefy-nori-coldstart",
       "title": "Better Cold-Start Forecasting with Nori: New and Short-History SKUs",
       "date": "2026-07-26",
@@ -970,6 +1060,15 @@
       "summary": "Cold start: vendor blog where Synthefy compares its Nori model with XGBoost on new and short-history SKUs (vendor-reported).",
       "url": "https://www.synthefy.com/blog/nori-cold-start-demand-forecasting",
       "date_display": "2026-07-26"
+    },
+    {
+      "id": "plosone-pone-0350729",
+      "title": "A two stage statistical framework for cold start spare part demand forecasting",
+      "date": "2026-06-16",
+      "tag": "research",
+      "summary": "From the abstract: Accurate demand forecasting for spare parts under true cold-start conditions remains a fundamental challenge due to extreme demand sparsity, zero inflation, and the complete absence of historical demand information. … To address this gap, this study proposes a novel Zero-Inflated Gamma Monte Carlo (ZIG MC) framework that explicitly decomposes demand into occurrence and magnitude components and generates fully probabilistic forecasts suitable for risk-aware inventory decision-making.",
+      "url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0350729",
+      "date_display": "2026-06-16"
     },
     {
       "id": "hf-nx-ai-tirex-2",
