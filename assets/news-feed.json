@@ -1,13 +1,31 @@
 {
   "schema_version": 1,
   "provenance": {
-    "source": "factory/inbox/scout/news_feed_v3.8.json",
-    "source_sha256": "dc36c20627940a5f378fb1f6b163e5f7c4e5059ac42ee80955547fb3c2994f1e",
-    "review": "factory/inbox/reviewer/daily-refresh-20261028-review/review.json",
-    "review_sha256": "21cb18fd8a2a14853b46f7ae23de2da30a73558af5568ab1aae237dacfc0d6a3",
+    "source": "factory/inbox/scout/news_feed_v3.9.json",
+    "source_sha256": "c7f22a8cd281a1f69bc11a555753971e6582a15acf23bc46e75d02faf4e88805",
+    "review": "factory/inbox/reviewer/daily-refresh-20261029-review/review.json",
+    "review_sha256": "0eb95da036c42546bffcad5abd8a4449393b62f6d3e7cd3424a2d5123fcc6061",
     "verdict": "APPROVE"
   },
   "items": [
+    {
+      "id": "researchsquare-rs-11531449-v1",
+      "title": "Comparison of Machine Learning Methods for Monthly Rainfall Forecasting Using k-Nearest Neighbors, Random Forest, and Artificial Neural Networks",
+      "date": "2026-10-29",
+      "tag": "research",
+      "summary": "From the abstract: Rainfall is an important meteorological parameter across various sectors and exhibits complex nonlinear characteristics, requiring reliable forecasting methods. This study aims to compare the performance of three machine learning algorithms—k-Nearest Neighbors (kNN), Random Forest (RF), and Artificial Neural Networks (ANN)—for monthly rainfall forecasting at the Depati Amir Meteorological Station, Pangkalpinang, using data from 2015 to 2024.",
+      "url": "https://www.researchsquare.com/article/rs-11531449/v1",
+      "date_display": "2026-10-29"
+    },
+    {
+      "id": "mdpi-applsci-162110702",
+      "title": "STG-Mixer: A Multi-Region, Multi-Step Forecasting Network for Hand, Foot, and Mouth Disease with Multi-Timescale Feature Extraction and Spatial Association Learning",
+      "date": "2026-10-29",
+      "tag": "research",
+      "summary": "From the abstract: Accurate forecasting of hand, foot, and mouth disease (HFMD) incidence is crucial for effective prevention and control. … In this study, we propose Spatiotemporal Graph Mixer (STG-Mixer), a multi-region, multi-step forecasting network for HFMD based on multi-timescale feature extraction and spatial association learning.",
+      "url": "https://doi.org/10.3390/app162110702",
+      "date_display": "2026-10-29"
+    },
     {
       "id": "arxiv-2610.37585",
       "title": "Timestral",
