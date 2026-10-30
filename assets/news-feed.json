@@ -1,13 +1,31 @@
 {
   "schema_version": 1,
   "provenance": {
-    "source": "factory/inbox/scout/news_feed_v3.9.json",
-    "source_sha256": "c7f22a8cd281a1f69bc11a555753971e6582a15acf23bc46e75d02faf4e88805",
-    "review": "factory/inbox/reviewer/daily-refresh-20261029-review/review.json",
-    "review_sha256": "0eb95da036c42546bffcad5abd8a4449393b62f6d3e7cd3424a2d5123fcc6061",
+    "source": "factory/inbox/scout/news_feed_v3.10.json",
+    "source_sha256": "ea71beceb428f865a394f58dc835f519bae7aaf3439292750d44bc1460029301",
+    "review": "factory/inbox/reviewer/daily-refresh-20261030-review/review.json",
+    "review_sha256": "441f0ca277bde30f70f8bc9b53ae710c05454cf61a9b79657e0d2920441feb5d",
     "verdict": "APPROVE"
   },
   "items": [
+    {
+      "id": "researchsquare-rs-11217781-v1",
+      "title": "Knowledge-Guided Probabilistic Forecasting of Urban Land-Surface Temperature in Three Moroccan Cities",
+      "date": "2026-10-30",
+      "tag": "research",
+      "summary": "From the abstract: The contribution is therefore a reproducible accuracy–physical-consistency trade-off within a probabilistic forecasting pipeline rather than a claim of predictive or uncertainty superiority.",
+      "url": "https://www.researchsquare.com/article/rs-11217781/v1",
+      "date_display": "2026-10-30"
+    },
+    {
+      "id": "emerald-jcms-09-2025-0141",
+      "title": "Dynamic modelling and forecasting of interest rates: evidence from Scandinavian countries",
+      "date": "2026-10-30",
+      "tag": "research",
+      "summary": "From the abstract: Using unique data of three Scandinavian countries (Denmark, Norway and Sweden), the study examines the term structure of their interest rates and the performance of the Babbs and Nowman model in forecasting the rates covering their economic stability and financial crisis periods from 2000 to 2014. … The findings further exhibit that when considering the forecasting errors, the continuous-time models generate superior forecasts, a feature of great interest in pricing interest rate derivatives and hedging strategies.",
+      "url": "https://doi.org/10.1108/JCMS-09-2025-0141",
+      "date_display": "2026-10-30"
+    },
     {
       "id": "researchsquare-rs-11531449-v1",
       "title": "Comparison of Machine Learning Methods for Monthly Rainfall Forecasting Using k-Nearest Neighbors, Random Forest, and Artificial Neural Networks",
@@ -25,6 +43,123 @@
       "summary": "From the abstract: Accurate forecasting of hand, foot, and mouth disease (HFMD) incidence is crucial for effective prevention and control. … In this study, we propose Spatiotemporal Graph Mixer (STG-Mixer), a multi-region, multi-step forecasting network for HFMD based on multi-timescale feature extraction and spatial association learning.",
       "url": "https://doi.org/10.3390/app162110702",
       "date_display": "2026-10-29"
+    },
+    {
+      "id": "arxiv-2610.39246",
+      "title": "IMRouter: Imbalance-aware Temporal Pattern Routing for LLM-based Time Series Forecasting",
+      "date": "2026-10-29",
+      "tag": "research",
+      "summary": "From the abstract: To address this issue, we propose IMRouter (Imbalance-aware Temporal Pattern Routing), a novel framework that mitigates TPI-induced biases in both temporal representation learning and cross-modal alignment. … Extensive experiments on benchmark datasets demonstrate the effectiveness of IMRouter, particularly in improving forecasting performance on less frequent temporal patterns.",
+      "url": "https://arxiv.org/abs/2610.39246",
+      "date_display": "2026-10-29"
+    },
+    {
+      "id": "arxiv-2610.40418",
+      "title": "IMPACT: Inverter-Informed Multimodal Learning for Photovoltaic Generation Forecasting",
+      "date": "2026-10-29",
+      "tag": "research",
+      "summary": "From the abstract: This work develops a physics-informed multimodal deep learning framework for 10- to 110-minute-ahead probabilistic photovoltaic power forecasting. … The proposed model outperforms all 14 baselines, achieving a forecast skill score (FSS) of 0.2950, 0.099 above the next-best model.",
+      "url": "https://arxiv.org/abs/2610.40418",
+      "date_display": "2026-10-29"
+    },
+    {
+      "id": "arxiv-2610.40160",
+      "title": "FARE: Factor-Aware Retrieval with Error-Guided Fusion for Retail Forecasting",
+      "date": "2026-10-29",
+      "tag": "research",
+      "summary": "From the abstract: We propose FARE(Factor-Aware Retrieval with Error-Guided Fusion), which ranks historical weeks separately for each known target-week factor and merges the selected weeks into a factor reference under a fixed budget. … On Favorita, M5, Rossmann, and Rohlik, FARE reduces the weighted absolute percentage error (WAPE) of five backbones by 11.46%, 4.06%, 14.63%, and 10.16% on average.",
+      "url": "https://arxiv.org/abs/2610.40160",
+      "date_display": "2026-10-29"
+    },
+    {
+      "id": "arxiv-2610.40138",
+      "title": "A Deep Learning Framework for Quantile Demand Forecasting in E-commerce with Doubly Censored Data",
+      "date": "2026-10-29",
+      "tag": "research",
+      "summary": "From the abstract: In this paper, we introduce a straightforward framework for learning quantiles from doubly-censored observations and propose a tailored evaluation metric. … Finally, inventory simulations and real-world applications confirm the practical utility of our method in retail operations.",
+      "url": "https://arxiv.org/abs/2610.40138",
+      "date_display": "2026-10-29"
+    },
+    {
+      "id": "arxiv-2610.40188",
+      "title": "Understanding axial attention in TSFMs through single location regression",
+      "date": "2026-10-29",
+      "tag": "research",
+      "summary": "From the abstract: Recent advances in Time Series Foundation Models (TSFMs) increasingly rely on axial attention mechanisms, but despite their empirical success, the theoretical properties of axial attention remain largely unexplored. To bridge this gap, we extend the Single Location Regression framework introduced in Marion et al. [2025] to 2D structured data, in order to study sparse information settings where a target depends on a small number of tokens.",
+      "url": "https://arxiv.org/abs/2610.40188",
+      "date_display": "2026-10-29"
+    },
+    {
+      "id": "arxiv-2610.40330",
+      "title": "Multistep and Multivariate Time Series Explainability with GradientSHAP: A Wind Power Case Study",
+      "date": "2026-10-29",
+      "tag": "research",
+      "summary": "From the abstract: This paper introduces a carefully adapted GradientSHAP approach to provide interpretability for multivariate, multistep wind power forecasting -- a largely underexplored area.",
+      "url": "https://arxiv.org/abs/2610.40330",
+      "date_display": "2026-10-29"
+    },
+    {
+      "id": "researchsquare-rs-11157298-v1",
+      "title": "Big Data Applications and Intelligent Decision Support Framework for Study Tourism Market Demand Forecasting",
+      "date": "2026-10-29",
+      "tag": "research",
+      "summary": "From the abstract: This paper addresses three critical bottlenecks in study tourism market demand forecasting: data heterogeneity, time series non-stationarity, and decision-making lag, proposing a big data-driven intelligent decision support framework termed BDIDS (Big Data Intelligent Decision Support). … The predictive layer introduces a cross-modal attention fusion mechanism, coordinating BERT semantic embeddings with time series statistical features to drive an improved Transformer-LSTM hybrid model.",
+      "url": "https://www.researchsquare.com/article/rs-11157298/v1",
+      "date_display": "2026-10-29"
+    },
+    {
+      "id": "researchsquare-rs-11530753-v1",
+      "title": "Variance reduction and interval efficiency in forecast reconciliation",
+      "date": "2026-10-29",
+      "tag": "research",
+      "summary": "From the abstract: Forecast reconciliation is commonly motivated by variance reduction, whereas finite-sample interval widths depend on order statistics. … We also compare existing covariance estimators on two related Australian retail partitions and a tourism hierarchy.",
+      "url": "https://www.researchsquare.com/article/rs-11530753/v1",
+      "date_display": "2026-10-29"
+    },
+    {
+      "id": "aip-amlj-5.0358326",
+      "title": "Turning time series into algebraic equations: Symbolic machine learning for interpretable modeling of chaotic time series",
+      "date": "2026-10-29",
+      "tag": "research",
+      "summary": "From the abstract: To address this gap, we propose two complementary symbolic forecasters that learn explicit, interpretable algebraic equations from chaotic time series data. … Across datasets, symbolic forecasters achieve competitive one-step-ahead accuracy while providing transparent analytical equations that reveal salient aspects of the underlying dynamics.",
+      "url": "https://doi.org/10.1063/5.0358326",
+      "date_display": "2026-10-29"
+    },
+    {
+      "id": "arxiv-2610.38976",
+      "title": "The Utility of Physics-Informed Machine Learning in Solar Power Production Forecasting",
+      "date": "2026-10-28",
+      "tag": "research",
+      "summary": "From the abstract: We develop two hybrid forecasting architectures that integrate the ADR physical PV efficiency model with the TSMixer neural forecasting architecture through feature augmentation and residual learning. … These findings suggest that, for modern deep forecasting architectures trained on large datasets, explicitly incorporating the ADR physical model provides limited practical benefit for day-ahead PV forecasting.",
+      "url": "https://arxiv.org/abs/2610.38976",
+      "date_display": "2026-10-28"
+    },
+    {
+      "id": "arxiv-2610.39043",
+      "title": "Modular Bayesian Foundation Models: Bayesian time series encoders for OOD detection, routing and forecasting",
+      "date": "2026-10-28",
+      "tag": "research",
+      "summary": "From the abstract: We propose a modular foundation model framework that combines end-to-end Bayesian encoder training with uncertainty based routing. … We evaluate this framework on time-series data through distribution shift, encoder selection, and probabilistic forecasting.",
+      "url": "https://arxiv.org/abs/2610.39043",
+      "date_display": "2026-10-28"
+    },
+    {
+      "id": "arxiv-2610.38558",
+      "title": "REVBRAIN: Real-time Probabilistic EEG Forecasting Using Residual Vector Quantization",
+      "date": "2026-10-28",
+      "tag": "research",
+      "summary": "From the abstract: In this paper, we present REVBRAIN, a probabilistic deep learning method that produces forecasts in real time by generating the forecast over the whole prediction horizon at once. This is achieved by tokenizing the output space using residual vector quantization (RVQ) and generating forecasts over the items in the tokenized space.",
+      "url": "https://arxiv.org/abs/2610.38558",
+      "date_display": "2026-10-28"
+    },
+    {
+      "id": "arxiv-2610.38211",
+      "title": "RainCheck: Harnessing Historical Weather Data with Machine Learning for Rainfall Forecasting in Bangladesh",
+      "date": "2026-10-28",
+      "tag": "research",
+      "summary": "From the abstract: Machine-learning rainfall forecasts are often evaluated by shuffling station records into random training and test sets. … We release a leakage-aware protocol and code so that future station-based studies report skill against climatology on held-out years.",
+      "url": "https://arxiv.org/abs/2610.38211",
+      "date_display": "2026-10-28"
     },
     {
       "id": "arxiv-2610.37585",
@@ -96,6 +231,33 @@
       "tag": "research",
       "summary": "From the abstract: Air pollution monitoring and forecasting in the Turkish Republic of Northern Cyprus (TRNC) remains critically understudied. … Three model types — Simple Seasonal, Winters’ Additive, and exponential smoothing with ARIMA extension — were tailored to station-and pollutant-specific characteristics.",
       "url": "https://www.researchsquare.com/article/rs-11504281/v1",
+      "date_display": "2026-10-27"
+    },
+    {
+      "id": "arxiv-2610.38084",
+      "title": "CADENCE: Distributional Next-Transaction Forecasting for Business Cash-Flow Underwriting",
+      "date": "2026-10-27",
+      "tag": "research",
+      "summary": "From the abstract: We present CADENCE, Calendar-Aware Distributional Event Network for Cash-Flow Estimation, a compact causal Transformer that treats each transaction as a token and predicts the amount and a full, nonparametric timing distribution of every cash flow's next payment. … Against the production FFT baseline, CADENCE improves one-day timing accuracy by 93.3% and next-event F1 by 6.7%, while producing calibrated distributions that serve directly as a confidence gate for downstream decisions.",
+      "url": "https://arxiv.org/abs/2610.38084",
+      "date_display": "2026-10-27"
+    },
+    {
+      "id": "arxiv-2610.37963",
+      "title": "Self-Supervised Latent Action-Conditioned World Modeling for Time Series",
+      "date": "2026-10-27",
+      "tag": "research",
+      "summary": "From the abstract: Building on this hypothesis, we propose ACTS-WM, a self-supervised latent action-conditioned world model framework for time-series analysis. … We evaluate ACTS-WM across 4 representative tasks on 22 datasets from diverse domains, covering univariate and multivariate forecasting and classification.",
+      "url": "https://arxiv.org/abs/2610.37963",
+      "date_display": "2026-10-27"
+    },
+    {
+      "id": "arxiv-2610.37733",
+      "title": "Selective Transfer Learning for Groundwater Level Anomaly Forecasting: Accuracy-Risk Trade-offs",
+      "date": "2026-10-27",
+      "tag": "research",
+      "summary": "From the abstract: This work studies context-aware selective transfer learning for multi-well groundwater anomaly forecasting in the Netherlands. Source-domain pretraining can raise average accuracy but is not uniformly reliable: it degrades performance on a substantial fraction of heterogeneous wells.",
+      "url": "https://arxiv.org/abs/2610.37733",
       "date_display": "2026-10-27"
     },
     {
