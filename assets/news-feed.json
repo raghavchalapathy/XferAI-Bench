@@ -1,13 +1,67 @@
 {
   "schema_version": 1,
   "provenance": {
-    "source": "factory/inbox/scout/news_feed_v3.10.json",
-    "source_sha256": "ea71beceb428f865a394f58dc835f519bae7aaf3439292750d44bc1460029301",
-    "review": "factory/inbox/reviewer/daily-refresh-20261030-review/review.json",
-    "review_sha256": "441f0ca277bde30f70f8bc9b53ae710c05454cf61a9b79657e0d2920441feb5d",
+    "source": "factory/inbox/reviewer/daily-refresh-20261102-review/news_feed_v3.11.1.json",
+    "source_sha256": "a5f82296d258f7eac7a4f98cb1454a22c3838ed5488d263519bada2ad9652fbc",
+    "review": "factory/inbox/reviewer/daily-refresh-20261102-review/review.json",
+    "review_sha256": "c94d5c690e3e14506fa84d7659f03df18153bb52b33405b4153ac81242988640",
     "verdict": "APPROVE"
   },
   "items": [
+    {
+      "id": "researchsquare-rs-11529129-v1",
+      "title": "The leakage premium in decomposition-based cryptocurrency forecasting",
+      "date": "2026-11-02",
+      "tag": "research",
+      "summary": "From the abstract: Decomposition-ensemble models, which split a price series into components with methods such as CEEMDAN and VMD and forecast each component with a neural network, report remarkable accuracy for cryptocurrency returns. This paper shows that most of that accuracy is look-ahead.",
+      "url": "https://www.researchsquare.com/article/rs-11529129/v1",
+      "date_display": "2026-11-02"
+    },
+    {
+      "id": "researchsquare-rs-11065747-v1",
+      "title": "Utility-Gated Personalized Federated Forecasting for Peak-Constrained Building Energy Management",
+      "date": "2026-11-02",
+      "tag": "research",
+      "summary": "From the abstract: This study examines whether selective, communication-efficient collaboration improves both load prediction and battery operation. … At the 96-step horizon, the method reduces Solar-Energy mean squared error by 1.59% relative to local training and avoids the greater than 3% degradation caused by unconditional federation on Electricity, using half the communication of federated averaging.",
+      "url": "https://www.researchsquare.com/article/rs-11065747/v1",
+      "date_display": "2026-11-02"
+    },
+    {
+      "id": "spe-adipec-236246-ms",
+      "title": "Benchmarking Time Series Foundation Models for Oil and Gas Data Forecasting and Well Event Detection",
+      "date": "2026-11-02",
+      "tag": "research",
+      "summary": "From the abstract: This study evaluates the efficacy of a newly developed time series foundation model against existing state-of-the-art foundation models for forecasting operational sensor dynamics across diverse well event regimes. … However, the evaluation also highlights specific limitations; the proposed model is less effective under conditions where operational changes are sudden and abrupt, scenarios in which alternative models exhibit lower error rates.",
+      "url": "https://doi.org/10.2118/236246-ms",
+      "date_display": "2026-11-02"
+    },
+    {
+      "id": "spe-adipec-236135-ms",
+      "title": "Regime-Aware Data Cleaning for Production Forecasting in Unconventional Wells: A Change Point Segmentation, Data Cleaning, and Conformal Prediction Workflow",
+      "date": "2026-11-02",
+      "tag": "research",
+      "summary": "From the abstract: This paper introduces a regime aware workflow that changes the order in which production data are interpreted: the history is first partitioned into interpretable producing regimes, outlier detection is then applied locally within each regime, point forecast models are trained on the locally cleaned data, and conformal prediction intervals are calibrated on regime relevant residuals. … The workflow was evaluated on 521 daily reported Montney gas wells (northeastern British Columbia, Canada; July 2017–January 2025).",
+      "url": "https://doi.org/10.2118/236135-ms",
+      "date_display": "2026-11-02"
+    },
+    {
+      "id": "spe-adipec-236432-ms",
+      "title": "An Integrated Machine Learning and Time-Series Forecasting Framework for Predicting Hydrate Blockage Dynamics in Pipelines",
+      "date": "2026-11-02",
+      "tag": "research",
+      "summary": "From the abstract: This work presents a physics-guided hybrid machine learning and multivariate time-series forecasting framework for predicting pressure-drop evolution, hydrate progression, and blockage proximity using real field-trial data. … These outputs, together with operating-condition features and pressure history, are incorporated into a conditional Long Short-Term Memory (LSTM) network to forecast future pressure-drop evolution and blockage timing.",
+      "url": "https://doi.org/10.2118/236432-ms",
+      "date_display": "2026-11-02"
+    },
+    {
+      "id": "zenodo-23868903",
+      "title": "RateIN: Time Series Foundation Models Have a Sampling Problem",
+      "date": "2026-11-01",
+      "tag": "research",
+      "summary": "From the abstract: We present RateIN, an inference-time wrapper that resamples the context by a factor k, lets a frozen model forecast on the new grid, and brings the quantile forecast back to the native grid. … On GIFT-Eval, RateIN lowers the CRPS of all six models we tested, from 1.4M to 256M parameters, by 0.5 to 11 % against the same model with a sign-flip augmentation (the average of its forecasts for x and −x).",
+      "url": "https://doi.org/10.5281/zenodo.23868903",
+      "date_display": "2026-11-01"
+    },
     {
       "id": "researchsquare-rs-11217781-v1",
       "title": "Knowledge-Guided Probabilistic Forecasting of Urban Land-Surface Temperature in Three Moroccan Cities",
@@ -24,6 +78,33 @@
       "tag": "research",
       "summary": "From the abstract: Using unique data of three Scandinavian countries (Denmark, Norway and Sweden), the study examines the term structure of their interest rates and the performance of the Babbs and Nowman model in forecasting the rates covering their economic stability and financial crisis periods from 2000 to 2014. … The findings further exhibit that when considering the forecasting errors, the continuous-time models generate superior forecasts, a feature of great interest in pricing interest rate derivatives and hedging strategies.",
       "url": "https://doi.org/10.1108/JCMS-09-2025-0141",
+      "date_display": "2026-10-30"
+    },
+    {
+      "id": "arxiv-2610.41956",
+      "title": "Chronos-2: A foundation model for multivariate time series forecasting",
+      "date": "2026-10-30",
+      "tag": "research",
+      "summary": "From the abstract: Here, we introduce Chronos-2, a foundation model for zero-shot forecasting that models the interactions between multivariate time series and heterogeneous covariates, which commonly arise in scientific applications. … Across various benchmarks, Chronos-2 achieves state-of-the-art accuracy on average by improving skill scores by 5.2 percentage points relative to the strongest baselines and increasing win rates by 10 percentage points.",
+      "url": "https://arxiv.org/abs/2610.41956",
+      "date_display": "2026-10-30"
+    },
+    {
+      "id": "arxiv-2610.41100",
+      "title": "QUAL: Quantile Alignment Improves Zero-Shot Time-Series Foundation Models",
+      "date": "2026-10-30",
+      "tag": "research",
+      "summary": "From the abstract: Motivated by this finding, we propose QUAL (Quantile alignment), a simple label-free framework for improving and combining diverse TSFMs. … On GIFT-Eval, quantile alignment reduces average member MASE and CRPS by 7.4% and 9.8%.",
+      "url": "https://arxiv.org/abs/2610.41100",
+      "date_display": "2026-10-30"
+    },
+    {
+      "id": "arxiv-2610.41506",
+      "title": "PCD: Predictive Coding Dynamics for Irregularly Sampled Time Series",
+      "date": "2026-10-30",
+      "tag": "research",
+      "summary": "From the abstract: We propose Predictive Coding Dynamics (PCD), a residual feedback mechanism for irregular continuous dynamic models. … Experiments on forecasting and trajectory recovery tasks show that PCD improves continuous dynamic backbones under sparse and irregular sampling.",
+      "url": "https://arxiv.org/abs/2610.41506",
       "date_display": "2026-10-30"
     },
     {
@@ -123,6 +204,15 @@
       "tag": "research",
       "summary": "From the abstract: To address this gap, we propose two complementary symbolic forecasters that learn explicit, interpretable algebraic equations from chaotic time series data. … Across datasets, symbolic forecasters achieve competitive one-step-ahead accuracy while providing transparent analytical equations that reveal salient aspects of the underlying dynamics.",
       "url": "https://doi.org/10.1063/5.0358326",
+      "date_display": "2026-10-29"
+    },
+    {
+      "id": "arxiv-2610.40901",
+      "title": "TSFLab: A Self-Improving Agent-Agnostic Workbench for Time Series Forecasting Research",
+      "date": "2026-10-29",
+      "tag": "research",
+      "summary": "From the abstract: To address these challenges, we propose TSFLab, a self-improving agent-agnostic \"workbench\" that equips compatible coding agents with shared resources and tools for low-cost TSF research and continuous maintenance of research resources. … In reproduction and benchmarking, TSFLab improves task completion by 20-163% and cuts fresh tokens per completed task by 11-66% across baselines.",
+      "url": "https://arxiv.org/abs/2610.40901",
       "date_display": "2026-10-29"
     },
     {
@@ -979,6 +1069,15 @@
       "summary": "Abstract opening: Time Series Foundation Models (TSFMs) provide general-purpose forecasting capabilities, yet their forecasts can remain misaligned with the temporal characteristics of a target domain.",
       "url": "https://arxiv.org/abs/2610.16433",
       "date_display": "2026-10-12"
+    },
+    {
+      "id": "hf-autogluon-pathfm-300m",
+      "title": "PathFM-300M (Hugging Face model page)",
+      "date": "2026-10-12",
+      "tag": "industry",
+      "summary": "From the model card: PathFM makes trajectory forecasting fast and practical. It generates multivariate futures in one step with competitive marginal accuracy and leading trajectory quality.",
+      "url": "https://huggingface.co/autogluon/pathfm-300m",
+      "date_display": "Repo created 2026-10-12 (UTC)"
     },
     {
       "id": "arxiv-2610.15760",
