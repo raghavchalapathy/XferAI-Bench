@@ -1,13 +1,40 @@
 {
   "schema_version": 1,
   "provenance": {
-    "source": "factory/inbox/reviewer/daily-refresh-20261102-review/news_feed_v3.11.1.json",
-    "source_sha256": "a5f82296d258f7eac7a4f98cb1454a22c3838ed5488d263519bada2ad9652fbc",
-    "review": "factory/inbox/reviewer/daily-refresh-20261102-review/review.json",
-    "review_sha256": "c94d5c690e3e14506fa84d7659f03df18153bb52b33405b4153ac81242988640",
+    "source": "factory/inbox/reviewer/daily-refresh-20261103-review/news_feed_v3.12.1.json",
+    "source_sha256": "4cad3bdd179f4c2666bfbce172670f0ae005a91bad421235c94e95c21f1765b0",
+    "review": "factory/inbox/reviewer/daily-refresh-20261103-review/review.json",
+    "review_sha256": "79d23083d5cc1332bcc6095a6dfb60d51c4cb6b0fc1bbcff575dfbee01c1bf42",
     "verdict": "APPROVE"
   },
   "items": [
+    {
+      "id": "researchsquare-rs-11571815-v1",
+      "title": "Short-Term Load Forecasting for a Campus Building: Regression with Residual Correction and Gaussian Smoothing versus a Feedforward Neural Network",
+      "date": "2026-11-03",
+      "tag": "research",
+      "summary": "From the abstract: This paper compares two hourly forecasting approaches for Shepard Hall at The City College of New York using metered load data from 2022 to January 2026. … The results show that a simple, interpretable regression with targeted post-processing can outperform a deeper neural network for single-building forecasting with limited data.",
+      "url": "https://www.researchsquare.com/article/rs-11571815/v1",
+      "date_display": "2026-11-03"
+    },
+    {
+      "id": "researchsquare-rs-11563766-v1",
+      "title": "Evaluation of Deep Learning Models for Time Series Forecasting in Financial Markets",
+      "date": "2026-11-03",
+      "tag": "research",
+      "summary": "From the abstract: This research examines the application of long-term short-term memory (LSTM) and Convolutional Neural Network (CNN) in forecasting stock price by taking advantage of historical market data. … This study compares the effectiveness of these models in predicting stock price movements, using key matrix such as Mean Absolute Error (MAE), Root Mean Squared Error (RMSE), R-squared (R²) and accuracy.",
+      "url": "https://www.researchsquare.com/article/rs-11563766/v1",
+      "date_display": "2026-11-03"
+    },
+    {
+      "id": "mdpi-su-182111211",
+      "title": "Solar-Irradiance Forecasting in Arid Climates: Benchmarking Machine-Learning Models and Probabilistic-Uncertainty Quantification Using Four Years of Riyadh Data",
+      "date": "2026-11-03",
+      "tag": "research",
+      "summary": "From the abstract: Precise short-horizon solar-irradiance forecasting is essential for grid-tied inverter control and battery scheduling in arid climates, yet model performance in regions with frequent dust remains under-characterized. … This study benchmarks six machine-learning models—Linear Regression, Support Vector Regression (SVR), Random Forest, XGBoost, Gradient Boosting, and Long Short-Term Memory (LSTM)—for 1-, 3-, and 6-h-ahead Global Horizontal Irradiance forecasting using 34,871 hourly records from Riyadh, Saudi Arabia (2013–2016).",
+      "url": "https://doi.org/10.3390/su182111211",
+      "date_display": "2026-11-03"
+    },
     {
       "id": "researchsquare-rs-11529129-v1",
       "title": "The leakage premium in decomposition-based cryptocurrency forecasting",
@@ -54,6 +81,78 @@
       "date_display": "2026-11-02"
     },
     {
+      "id": "arxiv-2611.03592",
+      "title": "Evaluating Uncertainty Calibration in Probabilistic Time Series Foundation Models",
+      "date": "2026-11-02",
+      "tag": "research",
+      "summary": "From the abstract: Time series foundation models (TSFMs) are increasingly used for probabilistic forecasting across diverse domains, yet the reliability of their uncertainty estimates remains poorly understood. … Using this framework, we conduct a comprehensive empirical evaluation of popular TSFMs across diverse datasets and show that current models exhibit distinct and systematic patterns of miscalibration that standard metrics often obscure.",
+      "url": "https://arxiv.org/abs/2611.03592",
+      "date_display": "2026-11-02"
+    },
+    {
+      "id": "arxiv-2611.02895",
+      "title": "Zero-shot time-series foundation models against the Khepri v1.5 baselines for 96-hour carbon-intensity forecasts in nine Nordic bidding zones: a preregistered comparison",
+      "date": "2026-11-02",
+      "tag": "research",
+      "summary": "From the abstract: We compare three zero-shot time-series foundation models (Timestral-5M, Timestral-209M and Chronos-2, 8192-hour context, no covariates) with the Khepri v1.5 SARIMA and GBM baselines, with their code and hyperparameters unchanged, for 96-hour forecasts of hourly carbon intensity in the Nordic bidding zones NO1-NO5 and SE1-SE4. … On the 2025 test (361 daily origins, contamination not ruled out) all three models have a lower zone-averaged MAPE than both baselines, by 0.952 to 1.347 percentage points (Diebold-Mariano with the Harvey-Leybourne-Newbold correction, all p < 0.0001), and each beats SARIMA in 9 of 9 zones.",
+      "url": "https://arxiv.org/abs/2611.02895",
+      "date_display": "2026-11-02"
+    },
+    {
+      "id": "arxiv-2611.02802",
+      "title": "SynForecast: Controlled Synthetic Time Series for Forecasting Research",
+      "date": "2026-11-02",
+      "tag": "research",
+      "summary": "From the abstract: We present SynForecast, an open-source Python library with 32 generators, 19 of which implement named mechanisms with a published source in econometrics, quantitative finance, statistical physics and point-process theory. … A synthetic prior outperforms the same network trained from scratch at a fixed budget by up to 34% with a few dozen observations, but loses to it at full history at every frequency, and none of three pre-specified rescalings of history predicts where the sign changes.",
+      "url": "https://arxiv.org/abs/2611.02802",
+      "date_display": "2026-11-02"
+    },
+    {
+      "id": "arxiv-2611.02750",
+      "title": "Investigating the effects of the patch size in Time Series Foundation Models",
+      "date": "2026-11-02",
+      "tag": "research",
+      "summary": "From the abstract: We study how this choice interacts with transformer architecture through a controlled comparison of encoder-only and decoder-only forecasting models trained with the same data mixture and optimization budget. … Across 97 GIFT-Eval tasks, encoder-only models consistently benefit from smaller patches, whereas decoder-only performance follows a U-shaped trend, with an intermediate patch size performing best in aggregate.",
+      "url": "https://arxiv.org/abs/2611.02750",
+      "date_display": "2026-11-02"
+    },
+    {
+      "id": "arxiv-2611.03512",
+      "title": "ST-GFM: Spectral-Temporal Graph Forecasting with Measured Perturbation Bounds and Masked Spectral Reconstruction",
+      "date": "2026-11-02",
+      "tag": "research",
+      "summary": "From the abstract: Graph forecasters for sensor networks are trained in one regime and deployed in others, where sensor coupling and signal frequency content both change. … Under one shared evaluation pipeline, the 60-minute MAE of ST-GFM is 3.5% below a retrained STAEformer on METR-LA and 13.0% below it on PEMS-BAY.",
+      "url": "https://arxiv.org/abs/2611.03512",
+      "date_display": "2026-11-02"
+    },
+    {
+      "id": "zenodo-23884371",
+      "title": "Forecast Combination with Temporal Validation and Context Memory",
+      "date": "2026-11-02",
+      "tag": "research",
+      "summary": "From the abstract: We study a fixed context-weighted rule and two variants that select their parameters using completed historical target blocks. … ValidationMix has mean series MASE 0.2855 versus 0.3109 for RecencyMean on M4 Weekly, and 0.8993 versus 0.9085 on M3 Monthly.",
+      "url": "https://doi.org/10.5281/zenodo.23884371",
+      "date_display": "2026-11-02"
+    },
+    {
+      "id": "zenodo-23884367",
+      "title": "Prequential Evaluation of Adaptive Prediction Intervals: A Fifteen-Series Replay Study",
+      "date": "2026-11-02",
+      "tag": "research",
+      "summary": "From the abstract: Adaptive prediction intervals can have accurate average coverage while retaining substantial local coverage error. … At nominal 80% coverage, their mean rolling absolute coverage errors are 0.0656 and 0.0645, compared with 0.0830 for unadjusted intervals.",
+      "url": "https://doi.org/10.5281/zenodo.23884367",
+      "date_display": "2026-11-02"
+    },
+    {
+      "id": "zenodo-23872120",
+      "title": "Code and results: When Do Time Series Foundation Models Help Forecast Wind Energy Droughts? A Preregistered Evaluation",
+      "date": "2026-11-02",
+      "tag": "research",
+      "summary": "From the abstract: The study evaluates time series foundation models (Chronos-2, TimesFM 2.5, Moirai-2) against climatology, model output statistics, quantile regression and a recurrent network for probabilistic forecasts of the cumulative wind energy deficit in 16 regions in Europe, Australia and the US. … The protocol was registered on OSF (https://osf.io/ph7nr/) before the prespecified main analysis of the sealed test period (January 2024 to September 2026) was scored once.",
+      "url": "https://doi.org/10.5281/zenodo.23872120",
+      "date_display": "2026-11-02"
+    },
+    {
       "id": "zenodo-23868903",
       "title": "RateIN: Time Series Foundation Models Have a Sampling Problem",
       "date": "2026-11-01",
@@ -61,6 +160,42 @@
       "summary": "From the abstract: We present RateIN, an inference-time wrapper that resamples the context by a factor k, lets a frozen model forecast on the new grid, and brings the quantile forecast back to the native grid. … On GIFT-Eval, RateIN lowers the CRPS of all six models we tested, from 1.4M to 256M parameters, by 0.5 to 11 % against the same model with a sign-flip augmentation (the average of its forecasts for x and −x).",
       "url": "https://doi.org/10.5281/zenodo.23868903",
       "date_display": "2026-11-01"
+    },
+    {
+      "id": "arxiv-2611.02091",
+      "title": "HQNN-CL: Regime-Aware Hybrid Quantum Neural Network with Continual Learning for Financial Forecasting",
+      "date": "2026-11-01",
+      "tag": "research",
+      "summary": "From the abstract: To achieve uncertainty-aware robust financial forecasting in the face of changing market conditions, this study proposes a Hybrid Quantum-Classical Neural Network with Continual Learning (HQNN-CL). … The experimental results show that HQNN-CL has outperformed other methods on the Systems Limited (RMSE = 3.0149) and Teradata (RMSE = 0.8909) datasets and is within 0.32% and 0.40% of the best baseline method for Microsoft and Tata Consultancy Services, respectively.",
+      "url": "https://arxiv.org/abs/2611.02091",
+      "date_display": "2026-11-01"
+    },
+    {
+      "id": "arxiv-2611.01098",
+      "title": "Mitigating Catastrophic Forgetting in Task-Free Federated Continual Forecasting via Two-Tier Replay under Concept Drift",
+      "date": "2026-10-31",
+      "tag": "research",
+      "summary": "From the abstract: This paper addresses catastrophic forgetting in task-free federated forecasting under concept drift. … Experiments on the Beijing Multi-Site Air- Quality dataset with 12 clients, three forecasting targets, and three horizons show that TwoTierReplay achieves the best stability-plasticity score in all nine target-horizon configurations.",
+      "url": "https://arxiv.org/abs/2611.01098",
+      "date_display": "2026-10-31"
+    },
+    {
+      "id": "arxiv-2611.01033",
+      "title": "Forecasting Visitor Demand from Open AI-Camera Counts and Weather: Lessons from Japan for Saudi Heritage Sites",
+      "date": "2026-10-31",
+      "tag": "research",
+      "summary": "From the abstract: Using 22 months of open AI-camera counts from three contrasting sites in Fukui, Japan (a train station, a coastal cliff and a mountain summit park), we measure how weather changes visits, forecast daily counts up to a week ahead with only the weather forecast available at the time, test busy-day warnings tied to a staffing decision, and ask how much history a new counter needs. … With the forecasts actually issued, three-day-ahead weighted absolute percentage error (WAPE) at the summit park falls from 38.5% to 31.9% (Diebold-Mariano p<0.001), and the gain holds to five days; the sheltered station gains nothing.",
+      "url": "https://arxiv.org/abs/2611.01033",
+      "date_display": "2026-10-31"
+    },
+    {
+      "id": "zenodo-23828068",
+      "title": "ContextGuard: Reliability-gated repair for frozen time-series foundation models under sensor dropout",
+      "date": "2026-10-31",
+      "tag": "research",
+      "summary": "From the abstract: ContextGuard recovers failed sensor channels from their synchronized peers before an unchanged probabilistic forecaster is called. … It estimates regularized cross-channel structure on an early training segment, calibrates a bounded per-channel weight on a later segment, and activates recovery only when the calibrated improvement over the pooled-mean fallback exceeds a fixed threshold.",
+      "url": "https://doi.org/10.5281/zenodo.23828068",
+      "date_display": "2026-10-31"
     },
     {
       "id": "researchsquare-rs-11217781-v1",
@@ -105,6 +240,15 @@
       "tag": "research",
       "summary": "From the abstract: We propose Predictive Coding Dynamics (PCD), a residual feedback mechanism for irregular continuous dynamic models. … Experiments on forecasting and trajectory recovery tasks show that PCD improves continuous dynamic backbones under sparse and irregular sampling.",
       "url": "https://arxiv.org/abs/2610.41506",
+      "date_display": "2026-10-30"
+    },
+    {
+      "id": "zenodo-23816880",
+      "title": "SensorFault-Bench",
+      "date": "2026-10-30",
+      "tag": "research",
+      "summary": "From the abstract: SensorFault-Bench evaluates forecasting architectures and robustness-improvement methods for cyber-physical systems under controlled sensor faults on real input histories. … It reports worst-scenario degradation, clean mean squared error, and worst-scenario fault-time mean squared error.",
+      "url": "https://doi.org/10.5281/zenodo.23816880",
       "date_display": "2026-10-30"
     },
     {
@@ -252,6 +396,15 @@
       "date_display": "2026-10-28"
     },
     {
+      "id": "arxiv-2610.38225",
+      "title": "FACTS-MAS: A Multi-Agent Architecture for Adaptive Forecasting from Heterogeneous Evidence",
+      "date": "2026-10-28",
+      "tag": "research",
+      "summary": "From the abstract: We introduce FACTS-MAS, a domain-agnostic multi-agent forecasting framework that decomposes evidence into specialized channels for temporal dynamics, exogenous context, seasonality, structural information, and discrete events. … Our method outperforms both a naive last-value forecast method and the TimesFM foundation model.",
+      "url": "https://arxiv.org/abs/2610.38225",
+      "date_display": "2026-10-28"
+    },
+    {
       "id": "arxiv-2610.37585",
       "title": "Timestral",
       "date": "2026-10-27",
@@ -385,6 +538,15 @@
       "summary": "From the abstract: To address this limitation, this paper proposes VRATF, a vision-based retrieval-augmented time series forecasting framework. VRATF first extracts low-frequency trend components from historical sequences using frequency-domain filtering, renders the denoised trends as line-chart images, and encodes them with a frozen vision encoder to construct a visual retrieval database.",
       "url": "https://www.researchsquare.com/article/rs-11111645/v1",
       "date_display": "2026-10-26 (preprint, in review)"
+    },
+    {
+      "id": "arxiv-2610.35367",
+      "title": "Encoding Time Series Dynamics with Sliding-Window Signatures for Online Forecasting",
+      "date": "2026-10-26",
+      "tag": "research",
+      "summary": "From the abstract: In many applications, however, the time series of interest are non-stationary and the relationship between target and inputs evolves over time, requiring forecasters that adapt online. … For French national electricity load forecasting, our method outperforms various state-of-the-art approaches.",
+      "url": "https://arxiv.org/abs/2610.35367",
+      "date_display": "2026-10-26"
     },
     {
       "id": "arxiv-2610.34409",
