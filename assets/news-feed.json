@@ -1,13 +1,58 @@
 {
   "schema_version": 1,
   "provenance": {
-    "source": "factory/inbox/reviewer/daily-refresh-20261103-review/news_feed_v3.12.1.json",
-    "source_sha256": "4cad3bdd179f4c2666bfbce172670f0ae005a91bad421235c94e95c21f1765b0",
-    "review": "factory/inbox/reviewer/daily-refresh-20261103-review/review.json",
-    "review_sha256": "79d23083d5cc1332bcc6095a6dfb60d51c4cb6b0fc1bbcff575dfbee01c1bf42",
+    "source": "factory/inbox/reviewer/daily-refresh-20261104-review/news_feed_v3.13.json",
+    "source_sha256": "4c130c69ee521b3de8ed68e9888415d5e59c4571a36ffe42ce89453845281134",
+    "review": "factory/inbox/reviewer/daily-refresh-20261104-review/review.json",
+    "review_sha256": "9512fa506c3727e056a0bc2240e08ed91b0d90478ccf89af4dd1c7723b4d2f2c",
     "verdict": "APPROVE"
   },
   "items": [
+    {
+      "id": "researchsquare-rs-11254587-v1",
+      "title": "WiseLSTM: a depthwise CNN--LSTM framework with metaheuristic optimization for offshore wind power forecasting",
+      "date": "2026-11-04",
+      "tag": "research",
+      "summary": "From the abstract: Reliable one-hour-ahead wind-power forecasting can support scheduling andenergy-management decisions in renewable-to-hydrogen systems. … These results highlight the joint importance of efficient localfeature extraction, recurrent temporal modeling, and configuration stability foroffshore wind-power forecasting.",
+      "url": "https://www.researchsquare.com/article/rs-11254587/v1",
+      "date_display": "2026-11-04"
+    },
+    {
+      "id": "researchsquare-rs-11574304-v1",
+      "title": "PEAKSAFE-AI: Explainable Multi-Agent Peak-Demand Forecasting with Uncertainty-Aware Assurance and Human-in-the-Loop Decision Support",
+      "date": "2026-11-04",
+      "tag": "research",
+      "summary": "From the abstract: This study develops PEAKSAFE-AI, an explainable three-agent decision-support prototype integrating XGBoost forecasting, TreeSHAP evidence attribution, and validation-calibrated interval-based assurance. … PEAKSAFE-AI demonstrates a transparent forecast-to-escalation workflow, while remaining an offline prototype rather than a live grid-control system.",
+      "url": "https://www.researchsquare.com/article/rs-11574304/v1",
+      "date_display": "2026-11-04"
+    },
+    {
+      "id": "researchsquare-rs-11158856-v1",
+      "title": "A TCN-Transformer Hybrid Deep Learning Model for Multivariate Time Series Forecasting with Multi-source Feature Fusion",
+      "date": "2026-11-04",
+      "tag": "research",
+      "summary": "From the abstract: To address these issues, this paper proposes a dual-branch parallel TCN-Transformer hybrid deep learning model for daily multivariate time series forecasting. … Taking daily inbound passenger flow of the Hong Kong-Macau Ferry Terminal as an empirical case, experiments on a three-year dataset show that the proposed model achieves an R² of 0.953, an RMSE of 357.93 and an MAE of 274.27 on the test set, outperforming single TCN, Transformer, LSTM and CNN baselines.",
+      "url": "https://www.researchsquare.com/article/rs-11158856/v1",
+      "date_display": "2026-11-04"
+    },
+    {
+      "id": "bonview-jdsis-620211353",
+      "title": "Fair Walk-Forward Forecasting of ICE Robusta Futures: Comparing Statistical, Machine-Learning, Deep-Learning, and Hybrid Models",
+      "date": "2026-11-04",
+      "tag": "research",
+      "summary": "From the abstract: This study empirically compares 14 statistical, machine-learning, deep-learning, and Autoregressive Integrated Moving Average (ARIMA)–recurrent hybrid specifications for the daily ICE Futures Europe Robusta Coffee benchmark, rather than proposing a new forecasting algorithm. … Delta-Random Forest achieves the lowest mean absolute error (MAE) at 83.59 USD per metric ton, whereas Khashei–Bijari ARIMA–Long Short‐Term Memory (LSTM) yields the lowest root mean squared error at 111.99.",
+      "url": "https://doi.org/10.47852/bonviewjdsis620211353",
+      "date_display": "2026-11-04"
+    },
+    {
+      "id": "royalsoc-rsif-20260240",
+      "title": "From data-driven differential equations to mechanistic forecasting with machine learning",
+      "date": "2026-11-04",
+      "tag": "research",
+      "summary": "From the abstract: We then transform this framework into a forecasting model by predicting the time-varying parameters and substituting these predictions into the learned equations. … By dynamically adapting to temporal shifts, our proposed model achieved a mean absolute error below 3% for learning a time series and below 6% for forecasting up to a month ahead.",
+      "url": "https://doi.org/10.1098/rsif.2026.0240",
+      "date_display": "2026-11-04"
+    },
     {
       "id": "researchsquare-rs-11571815-v1",
       "title": "Short-Term Load Forecasting for a Campus Building: Regression with Residual Correction and Gaussian Smoothing versus a Feedforward Neural Network",
@@ -33,6 +78,51 @@
       "tag": "research",
       "summary": "From the abstract: Precise short-horizon solar-irradiance forecasting is essential for grid-tied inverter control and battery scheduling in arid climates, yet model performance in regions with frequent dust remains under-characterized. … This study benchmarks six machine-learning models—Linear Regression, Support Vector Regression (SVR), Random Forest, XGBoost, Gradient Boosting, and Long Short-Term Memory (LSTM)—for 1-, 3-, and 6-h-ahead Global Horizontal Irradiance forecasting using 34,871 hourly records from Riyadh, Saudi Arabia (2013–2016).",
       "url": "https://doi.org/10.3390/su182111211",
+      "date_display": "2026-11-03"
+    },
+    {
+      "id": "arxiv-2611.05325",
+      "title": "CATF: A Manager-Worker Framework for Context-Aware Time-Series Forecasting",
+      "date": "2026-11-03",
+      "tag": "research",
+      "summary": "From the abstract: We propose CATF, a Context-Aware Time-Series Forecasting framework built on a Manager-Worker architecture: a Transformer-based Manager routes each input to a single Worker based on the context, using hard routing during both training and inference. … On five context-rich datasets, four horizons, and two normalization schemes, CATF improves over its standalone counterpart in 162 of 200 comparisons, the best CATF-enhanced model outperforms the best standalone baseline in 19 of 20 settings, and it outperforms the zero-shot Time-MoE foundation model in 15 of 20 settings.",
+      "url": "https://arxiv.org/abs/2611.05325",
+      "date_display": "2026-11-03"
+    },
+    {
+      "id": "arxiv-2611.04760",
+      "title": "Koopman Generative Operators for Efficient Probabilistic Time-Series Forecasting",
+      "date": "2026-11-03",
+      "tag": "research",
+      "summary": "From the abstract: We introduce the Koopman Generative Operator (KGO), a probabilistic forecasting method that conceptualizes prediction as the evolution of structured uncertainty. … By unifying these components, KGO achieves state-of-the-art accuracy on 13/17 ProbTS benchmarks in CRPS and 16/17 in NMAE.",
+      "url": "https://arxiv.org/abs/2611.04760",
+      "date_display": "2026-11-03"
+    },
+    {
+      "id": "arxiv-2611.04256",
+      "title": "OmniST: Topology-Invariant Spatiotemporal Forecasting with Guaranteed-Coverage Uncertainty at Unseen Sensor Locations",
+      "date": "2026-11-03",
+      "tag": "research",
+      "summary": "From the abstract: We present OmniST, a topology-invariant forecaster whose computation has zero structural dependency on the number of nodes, and which, composed with inductive split-conformal calibration, gives distribution-free, coverage-guaranteed prediction intervals at arbitrary (including never-seen) sensor locations, preserving that guarantee as sensors are added or removed. … On real Delhi air-quality data (37 stations, 2019-2023), OmniST attains a 30-day PM2.5 MAE of 31.0 ug/m3 and degrades at most 1.1 percent when 40 percent of stations are removed.",
+      "url": "https://arxiv.org/abs/2611.04256",
+      "date_display": "2026-11-03"
+    },
+    {
+      "id": "arxiv-2611.04126",
+      "title": "GlucoAgent: Personalized Glucose Forecasting from Multimodal Personal Context",
+      "date": "2026-11-03",
+      "tag": "research",
+      "summary": "From the abstract: We present GlucoAgent, an LLM-based agentic system that addresses this challenge through dynamic, case-by-case analysis at inference time. … On CGMacros, a multimodal glucose dataset, GlucoAgent outperforms time series foundation models on every forecasting horizon, achieving an average RMSE of 22.5 mg/dL compared to 23.5 mg/dL of Chronos-2, the leading multimodal time series foundation model.",
+      "url": "https://arxiv.org/abs/2611.04126",
+      "date_display": "2026-11-03"
+    },
+    {
+      "id": "plos-pcbi-1014908",
+      "title": "The influence of ensemble size and composition on the performance of combined real-time COVID-19 forecasts",
+      "date": "2026-11-03",
+      "tag": "research",
+      "summary": "From the abstract: Using data from the European COVID-19 Forecast Hub we investigated these questions, with the aim of offering practical guidance to organisers of multi-model prediction platforms during infectious disease outbreaks. … We found that including more models both improved and stabilised aggregate ensemble performance, while selecting for better component models did not yield any particular advantage.",
+      "url": "https://doi.org/10.1371/journal.pcbi.1014908",
       "date_display": "2026-11-03"
     },
     {
@@ -153,6 +243,15 @@
       "date_display": "2026-11-02"
     },
     {
+      "id": "arxiv-2611.03891",
+      "title": "Hardware-Aware Design and Layout Selection in Quantum Reservoir Computing for Insurance Claims Forecasting",
+      "date": "2026-11-02",
+      "tag": "research",
+      "summary": "From the abstract: We address both questions for a six-qubit gate-based reservoir that forecasts next-day motor-insurance claim counts. … Small QRC models can thus reach competitive accuracy on this task, and hardware-aware layout selection makes their transfer to IBM Kingston more consistent.",
+      "url": "https://arxiv.org/abs/2611.03891",
+      "date_display": "2026-11-02"
+    },
+    {
       "id": "zenodo-23868903",
       "title": "RateIN: Time Series Foundation Models Have a Sampling Problem",
       "date": "2026-11-01",
@@ -168,6 +267,15 @@
       "tag": "research",
       "summary": "From the abstract: To achieve uncertainty-aware robust financial forecasting in the face of changing market conditions, this study proposes a Hybrid Quantum-Classical Neural Network with Continual Learning (HQNN-CL). … The experimental results show that HQNN-CL has outperformed other methods on the Systems Limited (RMSE = 3.0149) and Teradata (RMSE = 0.8909) datasets and is within 0.32% and 0.40% of the best baseline method for Microsoft and Tata Consultancy Services, respectively.",
       "url": "https://arxiv.org/abs/2611.02091",
+      "date_display": "2026-11-01"
+    },
+    {
+      "id": "arxiv-2611.03738",
+      "title": "RATSIFT: Resolution-Adaptive Transformer for Solar Irradiance Forecasting and Temporal Downscaling",
+      "date": "2026-11-01",
+      "tag": "research",
+      "summary": "From the abstract: In this work, we develop a Transformer-based architecture for simultaneous forecasting and temporal downscaling. … Our approach provides a scalable and efficient framework for multi-resolution solar irradiance forecasting and temporal downscaling, suitable for practical energy forecasting and grid management applications.",
+      "url": "https://arxiv.org/abs/2611.03738",
       "date_display": "2026-11-01"
     },
     {
