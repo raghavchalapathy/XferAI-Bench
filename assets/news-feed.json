@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
   "provenance": {
-    "source": "factory/inbox/reviewer/daily-refresh-20261104-review/news_feed_v3.13.json",
-    "source_sha256": "4c130c69ee521b3de8ed68e9888415d5e59c4571a36ffe42ce89453845281134",
-    "review": "factory/inbox/reviewer/daily-refresh-20261104-review/review.json",
-    "review_sha256": "9512fa506c3727e056a0bc2240e08ed91b0d90478ccf89af4dd1c7723b4d2f2c",
+    "source": "factory/inbox/reviewer/news-feed-v3.14-review-20261105/news_feed_v3.14.json",
+    "source_sha256": "e014073f56eeb065cfb210e2254383d7591147db95e41a64992f0c426dab2cc5",
+    "review": "factory/inbox/reviewer/news-feed-v3.14-review-20261105/review.json",
+    "review_sha256": "c9a3453db68a602ab27a4f1d5e962e6daad7117d9aa005c1461306b211758cff",
     "verdict": "APPROVE"
   },
   "items": [
@@ -51,6 +51,33 @@
       "tag": "research",
       "summary": "From the abstract: We then transform this framework into a forecasting model by predicting the time-varying parameters and substituting these predictions into the learned equations. … By dynamically adapting to temporal shifts, our proposed model achieved a mean absolute error below 3% for learning a time series and below 6% for forecasting up to a month ahead.",
       "url": "https://doi.org/10.1098/rsif.2026.0240",
+      "date_display": "2026-11-04"
+    },
+    {
+      "id": "arxiv-2611.06559",
+      "title": "From Fixed Defaults to Calibrated Activation Policies for Long-Term Time-Series Forecasting",
+      "date": "2026-11-04",
+      "tag": "research",
+      "summary": "From the abstract: We develop a calibrated selection policy that learns a reliable default from prior experiments, adapts the activation function and its location to each task, and retains the default when evidence for a change is insufficient. … In an evaluation supported by 1,225 Informer training runs across 17 dataset variants and 51 forecasting tasks, the policy reduces mean squared error by 7.86% on average relative to the conventional fixed-activation baseline and improves 72.55% of tasks.",
+      "url": "https://arxiv.org/abs/2611.06559",
+      "date_display": "2026-11-04"
+    },
+    {
+      "id": "arxiv-2611.06064",
+      "title": "Learning From Static Context in Federated Time Series Forecasting",
+      "date": "2026-11-04",
+      "tag": "research",
+      "summary": "From the abstract: We ask whether a federated TFT can learn from it. … Per-batch FedAdam, which aggregates gradients after every batch, uses the static input almost as well as central training, whereas communication-efficient schemes with local epochs (FedAvg, FedAdam+Prox) extract far less from it and gain nothing significant on either application dataset.",
+      "url": "https://arxiv.org/abs/2611.06064",
+      "date_display": "2026-11-04"
+    },
+    {
+      "id": "arxiv-2611.05993",
+      "title": "Decouple to Reuse: Fine-Grained Knowledge Augmentation for Time Series Foundation Models",
+      "date": "2026-11-04",
+      "tag": "research",
+      "summary": "From the abstract: Time series forecasting is critical for demand prediction and resource management in modern Web services, yet applying pretrained Time Series Foundation Models (TSFMs) to downstream tasks remains challenging due to domain shifts. … To address this problem, we argue that temporal patterns should be reused at a decomposition level, as effective trend and seasonal dynamics may originate from different contexts.",
+      "url": "https://arxiv.org/abs/2611.05993",
       "date_display": "2026-11-04"
     },
     {
@@ -123,6 +150,15 @@
       "tag": "research",
       "summary": "From the abstract: Using data from the European COVID-19 Forecast Hub we investigated these questions, with the aim of offering practical guidance to organisers of multi-model prediction platforms during infectious disease outbreaks. … We found that including more models both improved and stabilised aggregate ensemble performance, while selecting for better component models did not yield any particular advantage.",
       "url": "https://doi.org/10.1371/journal.pcbi.1014908",
+      "date_display": "2026-11-03"
+    },
+    {
+      "id": "arxiv-2611.05515",
+      "title": "TSFM Meets LLM: Context as Covariates",
+      "date": "2026-11-03",
+      "tag": "research",
+      "summary": "From the abstract: Building on this, we propose Context as Covariates (CoCo), a forecasting framework in which an LLM distills its textual reasoning into numerically grounded forecast and confidence covariates that guide a TSFM backbone, thereby exploiting the strengths of both LLMs and TSFMs. … Notably, CoCo with Qwen3-4B-Instruct-2507 as the LLM and Chronos2 as the TSFM achieves up to 12% MAE improvement over state-of-the-art TSFMs and LLM forecasters, such as GPT-4o.",
+      "url": "https://arxiv.org/abs/2611.05515",
       "date_display": "2026-11-03"
     },
     {
