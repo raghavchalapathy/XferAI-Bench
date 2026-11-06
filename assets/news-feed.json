@@ -1,13 +1,112 @@
 {
   "schema_version": 1,
   "provenance": {
-    "source": "factory/inbox/reviewer/news-feed-v3.14-review-20261105/news_feed_v3.14.json",
-    "source_sha256": "e014073f56eeb065cfb210e2254383d7591147db95e41a64992f0c426dab2cc5",
-    "review": "factory/inbox/reviewer/news-feed-v3.14-review-20261105/review.json",
-    "review_sha256": "c9a3453db68a602ab27a4f1d5e962e6daad7117d9aa005c1461306b211758cff",
+    "source": "factory/inbox/reviewer/news-feed-v3.15-review-20261106/news_feed_v3.15.json",
+    "source_sha256": "ec0eb9d82d17ce8ee174707aa3ca3f86547ef026d4a7e02ff9f5258850454298",
+    "review": "factory/inbox/reviewer/news-feed-v3.15-review-20261106/review.json",
+    "review_sha256": "3c48ccca30c3827440e8c874bb57a351d270e7b9199389af9b2916236fb68d4f",
     "verdict": "APPROVE"
   },
   "items": [
+    {
+      "id": "sae-2026-99-0616",
+      "title": "Multi-Step Time Series Forecasting for Intermittent Demand Based on Transformer",
+      "date": "2026-11-06",
+      "tag": "research",
+      "summary": "From the abstract: Constrained by long order replenishment cycles, traditional single-step demand forecasting struggles to effectively support inventory decisions. … To address this issue, this study introduces a multi-step forecasting approach based on the Transformer architecture, employing a MIMO strategy to achieve long time series forecasting for intermittent demand.",
+      "url": "https://doi.org/10.4271/2026-99-0616",
+      "date_display": "2026-11-06"
+    },
+    {
+      "id": "sae-2026-99-0640",
+      "title": "An Enhanced Mamba Integrating Dynamic Compression Ratio Channel Attention and Progressive Projection for Multivariate Time Series Forecasting",
+      "date": "2026-11-06",
+      "tag": "research",
+      "summary": "From the abstract: Time series forecasting is a practical cornerstone for decision-making in diverse fields including finance, energy management and meteorology, yet conventional Transformer-based models are plagued by high computational complexity inherent in their attention mechanism, as well as poor efficiency in capturing long-range dependencies when processing long-sequence time series data. … To address these issues, this paper proposes An Enhanced Mamba Integrating Dynamic Compression Ratio Channel Attention and Progressive Projection for Multivariate Time Series Forecasting, which incorporates three core improvement strategies: a lightweight dynamic compression ratio channel attention, a residual-optimized encoder, and a progressive prediction head.",
+      "url": "https://doi.org/10.4271/2026-99-0640",
+      "date_display": "2026-11-06"
+    },
+    {
+      "id": "zenodo-24003995",
+      "title": "Elbe Oxygen Prediction - Early Information System",
+      "date": "2026-11-06",
+      "tag": "research",
+      "summary": "From the abstract: An open-source Early Information System (EIS) that predicts dissolved oxygen and hypoxia risk in the tidal Elbe River using auto-regressive statistical time-series models based on lagged environmental variables (air temperature, water temperature, historic oxygen measurements, and, for short lead times, upstream chlorophyll-a from the Schmilka gauging station at Elbe km 0). … Models are trained on historic data from the highest-quality period (2000-2010), evaluated against the full 1996-2024 record to assess skill, and then used operationally to forecast oxygen levels and hypoxia likelihood at monitoring stations along the tidal Elbe, including Bunthaus, Seemannshöft, and Blankenese.",
+      "url": "https://doi.org/10.5281/zenodo.24003995",
+      "date_display": "2026-11-06"
+    },
+    {
+      "id": "arxiv-2611.08252",
+      "title": "Series-wise Cross-validation for Global Time Series Forecasting",
+      "date": "2026-11-05",
+      "tag": "research",
+      "summary": "From the abstract: We consider the problem of cross-validation (CV) in time series forecasting, with a focus on global forecasting models based on deep learning. … We formalize series-wise CV for global forecasting models and benchmark several instantiations, including K-fold CV, bootstrapping, and Monte Carlo CV, on 11 datasets with 10 neural network architectures.",
+      "url": "https://arxiv.org/abs/2611.08252",
+      "date_display": "2026-11-05"
+    },
+    {
+      "id": "arxiv-2611.08160",
+      "title": "Patch Attention Wisely: Understanding Patch Length in Attention-Based Forecasting",
+      "date": "2026-11-05",
+      "tag": "research",
+      "summary": "From the abstract: Attention-based time series forecasters commonly group consecutive observations into patches. … We develop a theoretical framework that explains why patch length matters for forecasting accuracy and provides a principled basis for its selection.",
+      "url": "https://arxiv.org/abs/2611.08160",
+      "date_display": "2026-11-05"
+    },
+    {
+      "id": "arxiv-2611.07784",
+      "title": "EnergyBench: a live, gate-aligned benchmark of day-ahead forecasts for European power markets",
+      "date": "2026-11-05",
+      "tag": "research",
+      "summary": "From the abstract: Energy forecasting models are usually compared on backtests and fixed public datasets. … Each day at 11:30 CET/CEST, thirty minutes before the day-ahead (SDAC) gate closes, every model forecasts the next day's price, wind and solar generation and load on the 15-minute grid for six bidding zones (BE, NL, FR, DE-LU, DK1, DK2).",
+      "url": "https://arxiv.org/abs/2611.07784",
+      "date_display": "2026-11-05"
+    },
+    {
+      "id": "arxiv-2611.07473",
+      "title": "Echoes of Error: Residual-Directional Local Rollout Consistency for Timeseries Forecasting",
+      "date": "2026-11-05",
+      "tag": "research",
+      "summary": "From the abstract: In time-series forecasting, rollout errors are not merely one-step fitting discrepancies: once fed back into the evolving state, they can perturb future predictions. … We formalize this effect through local rollout consistency, which compares the next prediction produced under teacher forcing with that produced under free running.",
+      "url": "https://arxiv.org/abs/2611.07473",
+      "date_display": "2026-11-05"
+    },
+    {
+      "id": "geoscilett-s40562-026-00521-x",
+      "title": "Mitigating systematic underestimation in short-term wind speed forecasting via time-dependent weighted quantile loss (TDWQLoss)",
+      "date": "2026-11-05",
+      "tag": "research",
+      "summary": "From the abstract: Accurate short-term wind speed forecasting is critical for wind power integration. … To address this problem, we propose a lightweight Time-Dependent Weighted Quantile Loss (TDWQLoss), which introduces a time-dependent quantile weighting mechanism that adjusts penalty strength according to forecast horizon, enabling a more appropriate representation of increasing uncertainty with lead time.",
+      "url": "https://doi.org/10.1186/s40562-026-00521-x",
+      "date_display": "2026-11-05"
+    },
+    {
+      "id": "mdpi-agriculture-16212421",
+      "title": "Short-Term Probabilistic Forecasting of Irrigation Need Based on Relative Soil-Moisture-Deficit Persistence Using Copula Models",
+      "date": "2026-11-05",
+      "tag": "research",
+      "summary": "From the abstract: Soil-moisture deficits affect irrigation management in arid irrigated systems, yet their short-term persistence and uncertainty are difficult to quantify at the field scale. … This study developed a spatially explicit probabilistic framework combining high-resolution root-zone soil-moisture estimation with Copula-based dependence modeling to quantify relative soil-moisture-deficit persistence in the Daheyanzi Irrigation District, Xinjiang, China.",
+      "url": "https://doi.org/10.3390/agriculture16212421",
+      "date_display": "2026-11-05"
+    },
+    {
+      "id": "zenodo-23991006",
+      "title": "pyReCo: A Python Reservoir Computing Library for Time Series Forecasting and Research",
+      "date": "2026-11-05",
+      "tag": "research",
+      "summary": "From the abstract: pyReCo is built by TU Berlin researchers for researchers all across the world with the aim to develop new RC methods that allow for fast and efficient learning for sequential data. … The main focus is time series prediction, mostly performed in an auto-regressive fashion based on learning discrete flow maps.",
+      "url": "https://doi.org/10.5281/zenodo.23991006",
+      "date_display": "2026-11-05"
+    },
+    {
+      "id": "zenodo-23990693",
+      "title": "SEPFLOW: A High-Resolution Multivariate Time-Series Dataset for Solar Energetic Particle Forecasting",
+      "date": "2026-11-05",
+      "tag": "research",
+      "summary": "From the abstract: Solar energetic particle (SEP) events pose significant risks to space-based infrastructure and human space exploration, highlighting the need for reliable forecasting methods. … We introduce SEPFLOW , a high-resolution multivariate time-series dataset spanning 28 years (1998–2025) to support data-driven SEP forecasting.",
+      "url": "https://doi.org/10.5281/zenodo.23990693",
+      "date_display": "2026-11-05"
+    },
     {
       "id": "researchsquare-rs-11254587-v1",
       "title": "WiseLSTM: a depthwise CNN--LSTM framework with metaheuristic optimization for offshore wind power forecasting",
@@ -78,6 +177,42 @@
       "tag": "research",
       "summary": "From the abstract: Time series forecasting is critical for demand prediction and resource management in modern Web services, yet applying pretrained Time Series Foundation Models (TSFMs) to downstream tasks remains challenging due to domain shifts. … To address this problem, we argue that temporal patterns should be reused at a decomposition level, as effective trend and seasonal dynamics may originate from different contexts.",
       "url": "https://arxiv.org/abs/2611.05993",
+      "date_display": "2026-11-04"
+    },
+    {
+      "id": "arxiv-2611.06508",
+      "title": "ElecLoad: Adaptive Electricity Load Forecasting Guided by Multiple Events",
+      "date": "2026-11-04",
+      "tag": "research",
+      "summary": "From the abstract: Accurate electricity load forecasting provides critical decision support for energy procurement, generation scheduling, and supply-demand balancing, contributing to the economic efficiency and operational reliability of power systems. … To address this gap, we propose ElecLoad, a context-aware agent for multi-event electricity load forecasting that adaptively organizes the forecasting process.",
+      "url": "https://arxiv.org/abs/2611.06508",
+      "date_display": "2026-11-04"
+    },
+    {
+      "id": "arxiv-2611.06307",
+      "title": "When Does Risk-Controlled Throughput Forecasting Actually Control Risk? A Reproduction Study on LEO Satellite Link",
+      "date": "2026-11-04",
+      "tag": "research",
+      "summary": "From the abstract: Risk-budgeted throughput forecasting converts a point forecast of LEO satellite capacity into a conservative bound whose overestimation rate is held at a user-specified budget, so that admission control can act on it safely. … We reproduce the state of the art, BG-CFQS, on the three Starlink traces its authors used and on an independent fourth dataset, and report four findings.",
+      "url": "https://arxiv.org/abs/2611.06307",
+      "date_display": "2026-11-04"
+    },
+    {
+      "id": "arxiv-2611.06166",
+      "title": "FaCoDiff: Factor-Correlated Diffusion for Multivariate Probabilistic Forecasting",
+      "date": "2026-11-04",
+      "tag": "research",
+      "summary": "From the abstract: Multivariate probabilistic forecasting requires modeling cross-variable dependence alongside marginal uncertainty. … We propose Factor-Correlated Diffusion (FaCoDiff), which couples a compact conditional statistical estimator with structured denoising.",
+      "url": "https://arxiv.org/abs/2611.06166",
+      "date_display": "2026-11-04"
+    },
+    {
+      "id": "arxiv-2611.06130",
+      "title": "Short-Term Forecasting of Heterogeneous Wind Power Fleets: Global Temporal Fusion Transformer Leveraging Static Covariates",
+      "date": "2026-11-04",
+      "tag": "research",
+      "summary": "From the abstract: Accurate short-term wind power forecasting is critical for grid stability and electricity trading. … This study investigates whether a global temporal fusion transformer (TFT), trained jointly on a heterogeneous portfolio of wind farms across Germany, outperforms site-specific local models in 48-hour-ahead forecasting.",
+      "url": "https://arxiv.org/abs/2611.06130",
       "date_display": "2026-11-04"
     },
     {
@@ -159,6 +294,15 @@
       "tag": "research",
       "summary": "From the abstract: Building on this, we propose Context as Covariates (CoCo), a forecasting framework in which an LLM distills its textual reasoning into numerically grounded forecast and confidence covariates that guide a TSFM backbone, thereby exploiting the strengths of both LLMs and TSFMs. … Notably, CoCo with Qwen3-4B-Instruct-2507 as the LLM and Chronos2 as the TSFM achieves up to 12% MAE improvement over state-of-the-art TSFMs and LLM forecasters, such as GPT-4o.",
       "url": "https://arxiv.org/abs/2611.05515",
+      "date_display": "2026-11-03"
+    },
+    {
+      "id": "arxiv-2611.05715",
+      "title": "CoReFlow: Consistency-Relaxed Flow Maps for Probabilistic Traffic Forecasting",
+      "date": "2026-11-03",
+      "tag": "research",
+      "summary": "From the abstract: Probabilistic traffic forecasting is essential for reliable Intelligent Transportation Systems (ITS), as it captures uncertainties in complex road networks. … Besides, we improve accuracy using a concise training objective that supervises the model via interpolation endpoints over finite time intervals.",
+      "url": "https://arxiv.org/abs/2611.05715",
       "date_display": "2026-11-03"
     },
     {
