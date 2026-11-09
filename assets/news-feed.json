@@ -1,13 +1,31 @@
 {
   "schema_version": 1,
   "provenance": {
-    "source": "factory/inbox/reviewer/news-feed-v3.15-review-20261106/news_feed_v3.15.json",
-    "source_sha256": "ec0eb9d82d17ce8ee174707aa3ca3f86547ef026d4a7e02ff9f5258850454298",
-    "review": "factory/inbox/reviewer/news-feed-v3.15-review-20261106/review.json",
-    "review_sha256": "3c48ccca30c3827440e8c874bb57a351d270e7b9199389af9b2916236fb68d4f",
+    "source": "factory/inbox/reviewer/news-feed-v3.16-review-20261109/news_feed_v3.16.1.json",
+    "source_sha256": "1f3d1a3781ebc74bc3f005157fab76028e8ba5984249b55276f9c442e346c855",
+    "review": "factory/inbox/reviewer/news-feed-v3.16-review-20261109/review.json",
+    "review_sha256": "097c5e74df9bc98d3ba0ae81c082a21109690010aa6f89d713db1553644c5c00",
     "verdict": "APPROVE"
   },
   "items": [
+    {
+      "id": "zenodo-24065741",
+      "title": "STLF-MCP: A Model Context Protocol server for short-term electrical load forecasting",
+      "date": "2026-11-09",
+      "tag": "research",
+      "summary": "From the abstract: STLF-MCP is an open-source Model Context Protocol (MCP) server that exposes a short-term electrical load forecasting workflow to AI assistants. … Its tools inspect interval-meter data, merge weather covariates, train and tune 12 forecasting algorithms, evaluate point and probabilistic forecasts with peak-day metrics, run rolling-window backtests, generate forecasts, and produce self-contained HTML reports.",
+      "url": "https://doi.org/10.5281/zenodo.24065741",
+      "date_display": "2026-11-09"
+    },
+    {
+      "id": "zenodo-24045818",
+      "title": "forelint: lint your forecast backtests before you trust a score",
+      "date": "2026-11-07",
+      "tag": "research",
+      "summary": "From the abstract: forelint is an open-source Python library that checks what a forecasting backtest score hides, before anyone acts on it. … On one store of the public M5 data, backtested at ten non-overlapping forecast origins, a gradient-boosting model was 3.9% worse than a 28-day moving average on absolute error and worse on 58% of items.",
+      "url": "https://doi.org/10.5281/zenodo.24045818",
+      "date_display": "2026-11-07"
+    },
     {
       "id": "sae-2026-99-0616",
       "title": "Multi-Step Time Series Forecasting for Intermittent Demand Based on Transformer",
@@ -33,6 +51,51 @@
       "tag": "research",
       "summary": "From the abstract: An open-source Early Information System (EIS) that predicts dissolved oxygen and hypoxia risk in the tidal Elbe River using auto-regressive statistical time-series models based on lagged environmental variables (air temperature, water temperature, historic oxygen measurements, and, for short lead times, upstream chlorophyll-a from the Schmilka gauging station at Elbe km 0). … Models are trained on historic data from the highest-quality period (2000-2010), evaluated against the full 1996-2024 record to assess skill, and then used operationally to forecast oxygen levels and hypoxia likelihood at monitoring stations along the tidal Elbe, including Bunthaus, Seemannshöft, and Blankenese.",
       "url": "https://doi.org/10.5281/zenodo.24003995",
+      "date_display": "2026-11-06"
+    },
+    {
+      "id": "arxiv-2611.09815",
+      "title": "The Cost of Coverage: Conformalising Native Forecast Uncertainty for GB Wind Power",
+      "date": "2026-11-06",
+      "tag": "research",
+      "summary": "From the abstract: Uncertainty bands on wind forecasts help inform reserve sizing and commitments, but often fail to deliver their stated coverage. … Calibrating by forecast wind regime turns marginal coverage into regime-level coverage, cutting day-ahead out-of-band volume in high winds by over 40% relative to pooled calibration while narrowing bands overall.",
+      "url": "https://arxiv.org/abs/2611.09815",
+      "date_display": "2026-11-06"
+    },
+    {
+      "id": "arxiv-2611.08929",
+      "title": "Grid-Oriented Probabilistic Load Forecasting for AI Data Centers",
+      "date": "2026-11-06",
+      "tag": "research",
+      "summary": "From the abstract: Probabilistic load forecasts for AI data centers need to represent both uncertainty under changing workloads and temporal dependence to support grid operations. … This paper develops an open, grid-oriented benchmark using measured GPU power from a 448-GPU AI cluster.",
+      "url": "https://arxiv.org/abs/2611.08929",
+      "date_display": "2026-11-06"
+    },
+    {
+      "id": "arxiv-2611.08993",
+      "title": "When2What: A Timing-Conditioned Framework for Long-Horizon Forecasting of Continuous Cardiovascular Waveforms",
+      "date": "2026-11-06",
+      "tag": "research",
+      "summary": "From the abstract: Long-horizon forecasting of quasi-periodic cardiovascular waveforms, such as the electrocardiogram (ECG), arterial blood pressure (ABP), and photoplethysmogram (PPG), requires predicting both when future cardiac events will occur (beat timing) and what the local structural pattern looks like around each event (beat morphology). … Guided by this insight, we introduce When2What, a timing-conditioned framework comprising three stages: Predict, Commit, and Generate.",
+      "url": "https://arxiv.org/abs/2611.08993",
+      "date_display": "2026-11-06"
+    },
+    {
+      "id": "arxiv-2611.09176",
+      "title": "TailDART: Compute-Efficient Foundation Models for Financial Time-Series Forecasting",
+      "date": "2026-11-06",
+      "tag": "research",
+      "summary": "From the abstract: To reconcile representation learning with institutional operational constraints, this study presents TailDART, a dense 2.68 million-parameter foundation model engineered for financial time-series forecasting. … Furthermore, multi-asset benchmarks across varying temporal resolutions show that a compact model can remain competitive for market forecasting: TailDART matches the predictive fidelity of substantially larger baselines while demonstrating superior error resilience in high-volatility regimes.",
+      "url": "https://arxiv.org/abs/2611.09176",
+      "date_display": "2026-11-06"
+    },
+    {
+      "id": "researchsquare-rs-11453123-v1",
+      "title": "Cycle-Scale Forecasting of Galactic Cosmic Ray Intensity: A Skill Assessment and The Role of Recurrent Solar Wind Structure",
+      "date": "2026-11-06",
+      "tag": "research",
+      "summary": "From the abstract: Long-term forecasting of Galactic Cosmic Ray (GCR) intensity is conventionally assessed by how closely a model reproduces the observed record rather than by whether it outperforms a naive alternative. … A conventional regression on CRI level, evaluated at matched forecast horizons, attains out-of-sample correlations as high as 0.91 yet fails to beat persistence at every horizon.",
+      "url": "https://www.researchsquare.com/article/rs-11453123/v1",
       "date_display": "2026-11-06"
     },
     {
