@@ -1,13 +1,49 @@
 {
   "schema_version": 1,
   "provenance": {
-    "source": "factory/inbox/reviewer/news-feed-v3.16-review-20261109/news_feed_v3.16.1.json",
-    "source_sha256": "1f3d1a3781ebc74bc3f005157fab76028e8ba5984249b55276f9c442e346c855",
-    "review": "factory/inbox/reviewer/news-feed-v3.16-review-20261109/review.json",
-    "review_sha256": "097c5e74df9bc98d3ba0ae81c082a21109690010aa6f89d713db1553644c5c00",
+    "source": "factory/inbox/reviewer/news-feed-v3.17-review-20261110/news_feed_v3.17.json",
+    "source_sha256": "417997d14692f0994321b5da33c41b379e015ef0142d1b2716ab304b5409522b",
+    "review": "factory/inbox/reviewer/news-feed-v3.17-review-20261110/review.json",
+    "review_sha256": "1d0f518698306173c146d7923b7e553ea31d2905e2143c0e93f5342b7a1d6ea3",
     "verdict": "APPROVE"
   },
   "items": [
+    {
+      "id": "researchsquare-rs-11325566-v1",
+      "title": "ST-MRC: A Service-Oriented Probabilistic Forecasting Method for Virtual Power Plant Aggregated Coupled Loads Based on Set Attention Encoding and Multi-Scale Residual Correction",
+      "date": "2026-11-10",
+      "tag": "research",
+      "summary": "From the abstract: However, accurate forecasting of coupled loads remains challenging due to the stochastic nature of individual loads, coupling effects among multiple entities, and dynamic membership changes within aggregations. … To address these issues, this paper proposes a Set Transformer-based Multi-scale Residual Correction method ST-MRC for probabilistic load forecasting.",
+      "url": "https://www.researchsquare.com/article/rs-11325566/v1",
+      "date_display": "2026-11-10"
+    },
+    {
+      "id": "researchsquare-rs-11096562-v1",
+      "title": "VDSA: Calibrated Financial Forecasting via Few-Step Parameter-Space Diffusion in Selective State Space Models",
+      "date": "2026-11-10",
+      "tag": "research",
+      "summary": "From the abstract: Financial and macroeconomic time series exhibit non-stationary dynamics, regime switches, and heavy-tailed shocks, making calibrated uncertainty as important as point accuracy. … We therefore developed the Variational Diffusion Spectral Adapter (VDSA), a parameter-space generative reparameterization that models the posterior over state transition eigenvalues as a context- conditioned diffusion process.",
+      "url": "https://www.researchsquare.com/article/rs-11096562/v1",
+      "date_display": "2026-11-10"
+    },
+    {
+      "id": "researchsquare-rs-11671797-v1",
+      "title": "Forecasting the ionospheric propagation environment over lightning-active regions: a non-circular machine-learning  formulation using NASA ISS-LIS, GNSS TEC and OMNI data",
+      "date": "2026-11-10",
+      "tag": "research",
+      "summary": "From the abstract: We forecast that propagation environment over lightning-active regions and convert the forecast into the quantities a radio link actually needs: the F2-layer critical frequency (foF2), the maximum usable frequency (MUF), and the one-hop ground range. … We therefore pose the problem as a forecast of TEC at t + ∆t, which is genuinely unobservable at t, and apply the physics to the forecast output rather than to the label.",
+      "url": "https://www.researchsquare.com/article/rs-11671797/v1",
+      "date_display": "2026-11-10"
+    },
+    {
+      "id": "emerald-gs-06-2026-0181",
+      "title": "A cost-aware intermittent demand forecasting method combining temporally attenuated discrete gray model with reward-guided adjustment",
+      "date": "2026-11-10",
+      "tag": "research",
+      "summary": "From the abstract: Intermittent demand in distribution-center operations is difficult to forecast because long zero-demand periods are often interrupted by irregular demand bursts. … The framework is evaluated on 701 intermittent and lumpy DC-SKU series using 4,206 rolling-origin windows.",
+      "url": "https://doi.org/10.1108/gs-06-2026-0181",
+      "date_display": "2026-11-10"
+    },
     {
       "id": "zenodo-24065741",
       "title": "STLF-MCP: A Model Context Protocol server for short-term electrical load forecasting",
@@ -18,12 +54,84 @@
       "date_display": "2026-11-09"
     },
     {
+      "id": "arxiv-2611.12285",
+      "title": "Learning Evidence-Grounded Reasoning for Context-Aware Time Series Forecasting",
+      "date": "2026-11-09",
+      "tag": "research",
+      "summary": "From the abstract: LLM-driven time series forecasting has become increasingly promising by leveraging contextual features to generate future values directly or refine forecast priors. … In this paper, we propose CastReasoner, an evidence-grounded reasoning model for context-aware time series forecasting.",
+      "url": "https://arxiv.org/abs/2611.12285",
+      "date_display": "2026-11-09"
+    },
+    {
+      "id": "arxiv-2611.12141",
+      "title": "Do Time-Series Foundation Models Forecast Index-Futures Returns? A Preregistered Evaluation of Models, Metrics, and Input Representations",
+      "date": "2026-11-09",
+      "tag": "research",
+      "summary": "From the abstract: We ask whether the apparent forecasting skill of frozen time-series foundation models (TSFMs) on intraday index-futures returns is incremental skill. … On a blind set opened once, 0 of 160 model-representation-horizon-market cells beat no-change, and a Hansen SPA test gives p = 1.000 on both markets; a later retrospective hold-out, scored as a descriptive check, gives 0 of 120.",
+      "url": "https://arxiv.org/abs/2611.12141",
+      "date_display": "2026-11-09"
+    },
+    {
+      "id": "arxiv-2611.12116",
+      "title": "Forecast Value Add: Reward-Based Action Selection over Probabilistic Demand Forecasts",
+      "date": "2026-11-09",
+      "tag": "research",
+      "summary": "From the abstract: We address this gap by framing forecast refinement as a reward-driven decision problem. … Our refined forecasts reduce mean WMAPE by 6.3% compared with the stacked machine-learning forecast for every customer, with gains reaching 16.7%, and achieve the lowest error in 35 of 45 customer-months.",
+      "url": "https://arxiv.org/abs/2611.12116",
+      "date_display": "2026-11-09"
+    },
+    {
+      "id": "arxiv-2611.12004",
+      "title": "Conformal Prediction for Multi-Step Forecasting: Conditional Coverage and Sharp Score Calibration Rates",
+      "date": "2026-11-09",
+      "tag": "research",
+      "summary": "From the abstract: In this paper, we investigate conformal prediction for both one-step and multi-step forecasting from a single stationary time series, addressing temporal dependence and the additional challenges of joint prediction across multiple horizons. … We propose a kernel-based framework, called Time series Residual Analysis for Calibration with Kernels (TRACK), for estimating conditional quantiles of residual scores and constructing prediction sets from rolling-window forecasters.",
+      "url": "https://arxiv.org/abs/2611.12004",
+      "date_display": "2026-11-09"
+    },
+    {
+      "id": "arxiv-2611.11170",
+      "title": "ClusLoad: Cluster-Guided Model Sharing for Scalable Distribution Transformer Load Forecasting",
+      "date": "2026-11-08",
+      "tag": "research",
+      "summary": "From the abstract: To address this trade-off, this study develops a trend-clustered forecasting framework that enables model sharing among transformers with similar temporal behaviors. … The proposed framework reduces mean absolute error (MAE) by approximately 20% relative to the direct PatchTST baseline, achieves a high-load warning accuracy of 95.66%, while requiring only seven cluster-specific forecasting models.",
+      "url": "https://arxiv.org/abs/2611.11170",
+      "date_display": "2026-11-08"
+    },
+    {
+      "id": "arxiv-2611.11613",
+      "title": "Daily Emergency Call Volume Forecasting using Univariate and Multivariate TimeGPT",
+      "date": "2026-11-08",
+      "tag": "research",
+      "summary": "From the abstract: This study investigates the potential of TimeGPT, a pretrained foundation model for timeseries, for forecasting daily emergency call volumes. … These findings indicate that the large-scale pretraining of TimeGPT do not necessarily translate into superior forecasting accuracy for emergency call volumes.",
+      "url": "https://arxiv.org/abs/2611.11613",
+      "date_display": "2026-11-08"
+    },
+    {
       "id": "zenodo-24045818",
       "title": "forelint: lint your forecast backtests before you trust a score",
       "date": "2026-11-07",
       "tag": "research",
       "summary": "From the abstract: forelint is an open-source Python library that checks what a forecasting backtest score hides, before anyone acts on it. … On one store of the public M5 data, backtested at ten non-overlapping forecast origins, a gradient-boosting model was 3.9% worse than a 28-day moving average on absolute error and worse on 58% of items.",
       "url": "https://doi.org/10.5281/zenodo.24045818",
+      "date_display": "2026-11-07"
+    },
+    {
+      "id": "arxiv-2611.10521",
+      "title": "TimeHF 2.0: Multimodal, Multivariate, and Multi-Region Collaborative Forecasting for Large-Scale Retail Supply Chains",
+      "date": "2026-11-07",
+      "tag": "research",
+      "summary": "From the abstract: Large-scale retail supply chains need sales forecasts for specified products, future dates or planning windows, and regions under the conditions available at the forecast origin. … We introduce TimeHF 2.0, a multimodal, multivariate, and multi-region collaborative forecasting framework that makes flexibly expressed business knowledge usable in numerical prediction.",
+      "url": "https://arxiv.org/abs/2611.10521",
+      "date_display": "2026-11-07"
+    },
+    {
+      "id": "arxiv-2611.10617",
+      "title": "NeuroHorizon: Long-Horizon Forecasting of Neural Population Activity with Hierarchical Memory",
+      "date": "2026-11-07",
+      "tag": "research",
+      "summary": "From the abstract: Long-horizon forecasting of neural population activity tests whether a model has captured dynamics that remain predictive well beyond the observed history. … We compare direct multi-step prediction and autoregressive rollout on spiking recordings across horizons and introduce NeuroHorizon, which pairs event-based spike encoding with a causal decoder for population firing rates.",
+      "url": "https://arxiv.org/abs/2611.10617",
       "date_display": "2026-11-07"
     },
     {
@@ -96,6 +204,15 @@
       "tag": "research",
       "summary": "From the abstract: Long-term forecasting of Galactic Cosmic Ray (GCR) intensity is conventionally assessed by how closely a model reproduces the observed record rather than by whether it outperforms a naive alternative. … A conventional regression on CRI level, evaluated at matched forecast horizons, attains out-of-sample correlations as high as 0.91 yet fails to beat persistence at every horizon.",
       "url": "https://www.researchsquare.com/article/rs-11453123/v1",
+      "date_display": "2026-11-06"
+    },
+    {
+      "id": "arxiv-2611.10247",
+      "title": "Can Time Series Foundation Models Serve as Surrogates for Power Systems Dynamic Simulation?",
+      "date": "2026-11-06",
+      "tag": "research",
+      "summary": "From the abstract: We investigate the use of pretrained time-series foundation models (TSFMs) as computationally efficient surrogates to address this limitation. … Retrieval augmentation improves in-context learning performance, and fine-tuning leads to superior results compared to the traditional AI model, especially when including physics-informed regularization.",
+      "url": "https://arxiv.org/abs/2611.10247",
       "date_display": "2026-11-06"
     },
     {
