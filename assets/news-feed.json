@@ -1,13 +1,49 @@
 {
   "schema_version": 1,
   "provenance": {
-    "source": "factory/inbox/reviewer/news-feed-v3.17-review-20261110/news_feed_v3.17.json",
-    "source_sha256": "417997d14692f0994321b5da33c41b379e015ef0142d1b2716ab304b5409522b",
-    "review": "factory/inbox/reviewer/news-feed-v3.17-review-20261110/review.json",
-    "review_sha256": "1d0f518698306173c146d7923b7e553ea31d2905e2143c0e93f5342b7a1d6ea3",
+    "source": "factory/inbox/reviewer/news-feed-v3.18-review-20261111/news_feed_v3.18.json",
+    "source_sha256": "38cd17f268e036053cfc0996da6981735255c3685d0a7142ebc46b3f78e70aa1",
+    "review": "factory/inbox/reviewer/news-feed-v3.18-review-20261111/review.json",
+    "review_sha256": "f29746a1e258252261d59d4af81c1c8a43780e16ea0c13bd6a35986f19dd8fd2",
     "verdict": "APPROVE"
   },
   "items": [
+    {
+      "id": "researchsquare-rs-11417289-v1",
+      "title": "Weather–power mapping inference for wind power forecasting across heterogeneous sites",
+      "date": "2026-11-11",
+      "tag": "research",
+      "summary": "From the abstract: Here we develop UniWind, which infers target-specific mappings from a shared cross-farm prior rather than relearning each farm’s complete mapping. … It further achieves 84.05% accuracy on 142 farms excluded from training.",
+      "url": "https://www.researchsquare.com/article/rs-11417289/v1",
+      "date_display": "2026-11-11"
+    },
+    {
+      "id": "mdpi-applsci-162211172",
+      "title": "A Multi-Graph Diffusion Mamba Framework for Ultra-Short-Term Wind Power Forecasting",
+      "date": "2026-11-11",
+      "tag": "research",
+      "summary": "From the abstract: To address these gaps, this paper proposes a novel Multi-Graph Diffusion Mamba (MGDM) framework. … The results demonstrate that the MGDM outperforms all baseline models for 15 min, 1 h, 2 h, 3 h and 4 h ahead forecasts, and achieves improvements in accuracy of 3.59–4.81% across the forecasting horizons over the best benchmark model.",
+      "url": "https://doi.org/10.3390/app162211172",
+      "date_display": "2026-11-11"
+    },
+    {
+      "id": "mdpi-mathematics-14224135",
+      "title": "Residual Diffusion-Enhanced Spatio-Temporal Network for Human Mobility Forecasting in Disaster Scenarios",
+      "date": "2026-11-11",
+      "tag": "research",
+      "summary": "From the abstract: To overcome these limitations, we propose ResDiffNet, a residual diffusion-enhanced spatio-temporal network that decomposes mobility dynamics into a regular trend and a residual deviation. … Experiments on two real-world disaster-related mobility datasets show that ResDiffNet reduces RMSE and MAE by 4.5–7.0% and 5.2–9.0%, respectively, relative to the strongest competing baseline for each task while achieving the lowest mean CRPS among the evaluated probabilistic methods.",
+      "url": "https://doi.org/10.3390/math14224135",
+      "date_display": "2026-11-11"
+    },
+    {
+      "id": "zenodo-24133693",
+      "title": "MechFit.jl: mechanistic epidemic model fitting, forecasting and ensembles in Julia",
+      "date": "2026-11-11",
+      "tag": "research",
+      "summary": "From the abstract: MechFit.jl is a Julia toolbox for fitting compartmental (SIR/SEIR-family) and phenomenological growth models to epidemic time series, with parametric-bootstrap uncertainty, short-term forecasting, forecast scoring (MAE, MSE, coverage, weighted interval score) and weighted forecast ensembles. … Its QuantDiffForecast-compatible layer reproduces the error models, AICc and scoring conventions of the MATLAB QuantDiffForecast toolbox and is validated against an archived version of it.",
+      "url": "https://doi.org/10.5281/zenodo.24133693",
+      "date_display": "2026-11-11"
+    },
     {
       "id": "researchsquare-rs-11325566-v1",
       "title": "ST-MRC: A Service-Oriented Probabilistic Forecasting Method for Virtual Power Plant Aggregated Coupled Loads Based on Set Attention Encoding and Multi-Scale Residual Correction",
@@ -42,6 +78,69 @@
       "tag": "research",
       "summary": "From the abstract: Intermittent demand in distribution-center operations is difficult to forecast because long zero-demand periods are often interrupted by irregular demand bursts. … The framework is evaluated on 701 intermittent and lumpy DC-SKU series using 4,206 rolling-origin windows.",
       "url": "https://doi.org/10.1108/gs-06-2026-0181",
+      "date_display": "2026-11-10"
+    },
+    {
+      "id": "arxiv-2611.13794",
+      "title": "AnchorMTS: Multi-View Signal Representation and Forecast-Anchored Fusion for Long-Term Time-Series Forecasting",
+      "date": "2026-11-10",
+      "tag": "research",
+      "summary": "From the abstract: We propose AnchorMTS, which derives self-aligned visual and textual views from each observed window and uses them only to refine a complete numerical forecast. … Across six benchmarks and four horizons, AnchorMTS achieves the best macro MSE/MAE (0.336/0.367) among seven supervised baselines and wins 18 of 24 MSE settings against the cellwise baseline envelope; removing the auxiliary path raises macro MSE to 0.340.",
+      "url": "https://arxiv.org/abs/2611.13794",
+      "date_display": "2026-11-10"
+    },
+    {
+      "id": "arxiv-2611.14491",
+      "title": "TimeSeek: Multi-Task and Multi-Domain Pretraining for Generalized Time Series Analytics",
+      "date": "2026-11-10",
+      "tag": "research",
+      "summary": "From the abstract: To address these challenges, we propose TimeSeek, a novel generalized time series analytics model that adaptively models time series patterns from multi-domain data and unifies multiple tasks in pre-training. … After pre-training on large-scale time series data, TimeSeek achieves state-of-the-art performance in forecasting, anomaly detection, and classification tasks across both few-shot learning and zero-shot situations, together with favorable inference efficiency.",
+      "url": "https://arxiv.org/abs/2611.14491",
+      "date_display": "2026-11-10"
+    },
+    {
+      "id": "arxiv-2611.14425",
+      "title": "Quantifying the Sampling Frequency Invariance of Time-Series Foundation Models for Sensor Data Applications",
+      "date": "2026-11-10",
+      "tag": "research",
+      "summary": "From the abstract: In this paper, we stress-test 4 prominent TSFMs: MOMENT, Chronos-2, Moirai-MoE, and TimesFM, to quantify their SF-invariance and investigate whether their behavior tracks the resulting loss of information bandwidth rather than the SF value itself. … To our knowledge, this is the first study to place SF-invariance at the core of TSFM evaluations.",
+      "url": "https://arxiv.org/abs/2611.14425",
+      "date_display": "2026-11-10"
+    },
+    {
+      "id": "arxiv-2611.14357",
+      "title": "The Unused Input: The Initial State as a Conditioning Interface for Recurrent TSFMs",
+      "date": "2026-11-10",
+      "tag": "research",
+      "summary": "From the abstract: Using the xLSTM-based zero-shot forecaster TiRex as a case study, we freeze the backbone and train only a small head that writes a context vector into the initial state, so that any change in accuracy is attributable to the injected state rather than to adapted weights. … A spectral summary of the input window, learned once and applied unchanged to every series, lowers mean GiftEval MASE by 0.175%, with every seed improving, which neither a parameter-matched LoRA adapter nor a learnable static state reproduces.",
+      "url": "https://arxiv.org/abs/2611.14357",
+      "date_display": "2026-11-10"
+    },
+    {
+      "id": "arxiv-2611.13572",
+      "title": "Market-Conditioned JEPA: Learning from Unpredictable Market Shocks",
+      "date": "2026-11-10",
+      "tag": "research",
+      "summary": "From the abstract: Building on this insight, we introduce Market-Conditioned JEPA (MC-JEPA), a joint-embedding predictive architecture for financial time series. … It achieves the best RankIC on all liquidity targets and on return horizons from two hours to five days, outperforming time-series foundation models and self-supervised baselines, and delivers the best portfolio performance in a historical backtest.",
+      "url": "https://arxiv.org/abs/2611.13572",
+      "date_display": "2026-11-10"
+    },
+    {
+      "id": "arxiv-2611.14272",
+      "title": "Federated Learning for Cross-Regional Epidemic Forecasting with Asynchronous Outbreaks",
+      "date": "2026-11-10",
+      "tag": "research",
+      "summary": "From the abstract: We developed and evaluated, as a proof of concept, a federated learning (FL) framework for cross-regional COVID-19 forecasting under asynchronous outbreaks among Guangdong, Macau, and Portugal, while maintaining data sovereignty. … Conclusion: FL achieved short-term forecasting accuracy close to centralized training while maintaining data residency, with acceptable overhead.",
+      "url": "https://arxiv.org/abs/2611.14272",
+      "date_display": "2026-11-10"
+    },
+    {
+      "id": "zenodo-24108589",
+      "title": "Code and results for: Forecasting newly commissioned public EV chargers with machine learning and time-series foundation models",
+      "date": "2026-11-10",
+      "tag": "research",
+      "summary": "From the record's README.md: The study identifies 58 genuine commissioning events in three open public charging datasets. … Peer profiles, own-history baselines, global LightGBM models and zero-shot Chronos-Bolt / Chronos-2 are evaluated under a strictly time-ordered protocol.",
+      "url": "https://doi.org/10.5281/zenodo.24108589",
       "date_display": "2026-11-10"
     },
     {
@@ -90,6 +189,24 @@
       "date_display": "2026-11-09"
     },
     {
+      "id": "arxiv-2611.13228",
+      "title": "Continuous Horizon Forecasting",
+      "date": "2026-11-09",
+      "tag": "research",
+      "summary": "From the abstract: In this paper, we introduce the Continuous Horizon (CH) strategy that generalizes upon recursive, direct, and multi-step strategies by redefining forecasts as a continuous operator and the forecast horizon as a query variable rather than an index. … We validate the CH strategy empirically through a simulation study, and on 16 large-scale datasets from the M-series benchmark, showing how CH achieves competitive RMSE accuracy, while uniquely enabling parallel inference, targeted horizon querying, and interpolation and extrapolation across unseen horizons.",
+      "url": "https://arxiv.org/abs/2611.13228",
+      "date_display": "2026-11-09"
+    },
+    {
+      "id": "arxiv-2611.13212",
+      "title": "Prediction Inference for Hybrid Models on Realized Volatility Forecasting",
+      "date": "2026-11-09",
+      "tag": "research",
+      "summary": "From the abstract: First, we extend the existing GARCH-LSTM model by modeling the conditional mean with an ARMA structure. … Second, we develop a forward bootstrap algorithm to build multi-step-ahead prediction intervals for future realized volatility.",
+      "url": "https://arxiv.org/abs/2611.13212",
+      "date_display": "2026-11-09"
+    },
+    {
       "id": "arxiv-2611.11170",
       "title": "ClusLoad: Cluster-Guided Model Sharing for Scalable Distribution Transformer Load Forecasting",
       "date": "2026-11-08",
@@ -105,6 +222,15 @@
       "tag": "research",
       "summary": "From the abstract: This study investigates the potential of TimeGPT, a pretrained foundation model for timeseries, for forecasting daily emergency call volumes. … These findings indicate that the large-scale pretraining of TimeGPT do not necessarily translate into superior forecasting accuracy for emergency call volumes.",
       "url": "https://arxiv.org/abs/2611.11613",
+      "date_display": "2026-11-08"
+    },
+    {
+      "id": "arxiv-2611.12974",
+      "title": "StatPrompt-LLM: A Lightweight Statistical Refinement for Foundation-Style Time-Series Forecasting",
+      "date": "2026-11-08",
+      "tag": "research",
+      "summary": "From the abstract: In this paper, we conduct an exploratory empirical study across different generations of forecasting architectures and propose StatPrompt-LLM, a lightweight statistical refinement of Time-LLM. … StatPrompt-LLM augments the existing Time-LLM prompting mechanism with dataset-level statistical information and introduces a zero-initialised autoregressive bypass as a complementary linear forecasting pathway.",
+      "url": "https://arxiv.org/abs/2611.12974",
       "date_display": "2026-11-08"
     },
     {
