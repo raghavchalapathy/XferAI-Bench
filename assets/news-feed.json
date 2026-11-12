@@ -1,13 +1,40 @@
 {
   "schema_version": 1,
   "provenance": {
-    "source": "factory/inbox/reviewer/news-feed-v3.18-review-20261111/news_feed_v3.18.json",
-    "source_sha256": "38cd17f268e036053cfc0996da6981735255c3685d0a7142ebc46b3f78e70aa1",
-    "review": "factory/inbox/reviewer/news-feed-v3.18-review-20261111/review.json",
-    "review_sha256": "f29746a1e258252261d59d4af81c1c8a43780e16ea0c13bd6a35986f19dd8fd2",
+    "source": "factory/inbox/reviewer/news-feed-v3.19-review-20261112/news_feed_v3.19.json",
+    "source_sha256": "531b6b0d14297e0062084b81ef9d350ebc1c32b58ead3aa25d7278cb8cbae94e",
+    "review": "factory/inbox/reviewer/news-feed-v3.19-review-20261112/review.json",
+    "review_sha256": "c08619e47c5b8bff90d11d1b8884b60e5ec0d114cb86dbfc0abdfc134a543944",
     "verdict": "APPROVE"
   },
   "items": [
+    {
+      "id": "researchsquare-rs-11525261-v1",
+      "title": "Physics-Informed Time‑Series Large Language Model for Extreme Typhoon Wave Height Forecasting",
+      "date": "2026-11-12",
+      "tag": "research",
+      "summary": "From the abstract: Here, we develop the Typhoon Wave Large Language Model (TW-LLM), a physics-informed, domain-adapted framework for forecasting typhoon-induced coastal wave height. … Trained and evaluated using nine years (2017–2025) of hourly observations from eleven coastal buoys in China, TW-LLM achieves root-mean-square errors (RMSEs) of ~ 0.15 m for short-term (6-h) forecasts, 0.3 m for long-term (96-h) forecasts, and 0.23 m under extreme typhoon conditions.",
+      "url": "https://www.researchsquare.com/article/rs-11525261/v1",
+      "date_display": "2026-11-12"
+    },
+    {
+      "id": "researchsquare-rs-10119188-v1",
+      "title": "Real-Time Continuous Neural Correction of Reduced- Dynamic LEO Orbit Predictions for LEO-PNT",
+      "date": "2026-11-12",
+      "tag": "research",
+      "summary": "From the abstract: We present continuous neural correction of reduced-dynamic orbit prediction (CNC-RDOP), a deep neural network added on top of a geodetic-standard reduced-dynamic prediction, leaving the orbit determination unchanged. … A gated recurrent unit network reads the last 30 minutes of prediction error, the predicted orbit minus a real-time kinematic position solution in the along-track, cross-track, and radial frame, plus the predicted position and velocity, and forecasts the error over the next 60 minutes.",
+      "url": "https://www.researchsquare.com/article/rs-10119188/v1",
+      "date_display": "2026-11-12"
+    },
+    {
+      "id": "mdpi-symmetry-18111888",
+      "title": "LaCoCast: Traffic Flow Forecasting with Lag-Aware Cross-Sensor Corroboration",
+      "date": "2026-11-12",
+      "tag": "research",
+      "summary": "From the abstract: We propose LaCoCast, which combines a periodic reference with lag-aware cross-sensor corroboration to regulate local forecast corrections. … Experiments on PEMS03, PEMS04, PEMS07, and PEMS08 yielded mean absolute errors 0.38–6.13% below the lowest published baseline values included in the comparison for each dataset.",
+      "url": "https://doi.org/10.3390/sym18111888",
+      "date_display": "2026-11-12"
+    },
     {
       "id": "researchsquare-rs-11417289-v1",
       "title": "Weather–power mapping inference for wind power forecasting across heterogeneous sites",
@@ -42,6 +69,33 @@
       "tag": "research",
       "summary": "From the abstract: MechFit.jl is a Julia toolbox for fitting compartmental (SIR/SEIR-family) and phenomenological growth models to epidemic time series, with parametric-bootstrap uncertainty, short-term forecasting, forecast scoring (MAE, MSE, coverage, weighted interval score) and weighted forecast ensembles. … Its QuantDiffForecast-compatible layer reproduces the error models, AICc and scoring conventions of the MATLAB QuantDiffForecast toolbox and is validated against an archived version of it.",
       "url": "https://doi.org/10.5281/zenodo.24133693",
+      "date_display": "2026-11-11"
+    },
+    {
+      "id": "researchsquare-rs-11387551-v1",
+      "title": "Retrieval-Augmented Non-Parametric Probabilistic Wind Power Forecasting under Regime-Dependent Uncertainty",
+      "date": "2026-11-11",
+      "tag": "research",
+      "summary": "From the abstract: This paper proposes a retrieval-augmented non-parametric framework that reconstructs the conditional distribution of wind power from physically relevant historical analogs. … Experiments on two heterogeneous wind farms in Zhejiang and Inner Mongolia show that, on Dataset A at the 60-min horizon, the method lowers MAE and RMSE by 21.2% and 22.7% relative to a Transformer baseline and reduces the 80% Winkler score by 24.4% relative to CKDE.",
+      "url": "https://www.researchsquare.com/article/rs-11387551/v1",
+      "date_display": "2026-11-11"
+    },
+    {
+      "id": "researchsquare-rs-11149500-v1",
+      "title": "A hybrid patch--variate attention network with reversible instance normalization, a learned market embedding, and a linearautoregressive residual for multi-horizon panel forecasting of paddy prices",
+      "date": "2026-11-11",
+      "tag": "research",
+      "summary": "From the abstract: Third, we couple the endogenous price history with real meteorological covariates (NASA POWER) and pass both through a hybrid model that combines reversible instance normalization, patch- and variate-level attention, a centralised channel-interaction module, and an explicit linear autoregressive path. … Against a field of strong baselines---DLinear, PatchTST, iTransformer, LightGBM, LSTM and Bi-LSTM, all trained identically and evaluated in rupee space---the proposed model attains the lowest error at every horizon.",
+      "url": "https://www.researchsquare.com/article/rs-11149500/v1",
+      "date_display": "2026-11-11"
+    },
+    {
+      "id": "wiley-for-70239",
+      "title": "Improving Energy Price Forecasts: Autometrics With Indicator Saturation",
+      "date": "2026-11-11",
+      "tag": "research",
+      "summary": "From the abstract: In this study, we evaluate Autometrics, an automated model selection method with controls for outliers and location shifts, against artificial neural networks (ANN) and random forests for six monthly energy price series (WTI, Brent, Dubai, US and Russian gas, Australian coal) from IMF data. … Autometrics generally delivers lower RMSE/MAPE and higher directional accuracy than the ANN and random forest specifications considered here, particularly in the more volatile oil and coal markets.",
+      "url": "https://doi.org/10.1002/for.70239",
       "date_display": "2026-11-11"
     },
     {
@@ -952,6 +1006,24 @@
       "summary": "From the abstract: To address these challenges, we propose TSFLab, a self-improving agent-agnostic \"workbench\" that equips compatible coding agents with shared resources and tools for low-cost TSF research and continuous maintenance of research resources. … In reproduction and benchmarking, TSFLab improves task completion by 20-163% and cuts fresh tokens per completed task by 11-66% across baselines.",
       "url": "https://arxiv.org/abs/2610.40901",
       "date_display": "2026-10-29"
+    },
+    {
+      "id": "emerald-gs-04-2026-0113",
+      "title": "A novel seasonal time-varying discrete grey power model and its application in solar power generation forecasting",
+      "date": "2026-10-29",
+      "tag": "research",
+      "summary": "From the abstract: Therefore, this paper proposes a novel grey forecasting framework that integrates seasonal decomposition, nonlinear modeling, and time-varying adaptation, namely the seasonal time-varying discrete grey power model. … Results show that the new model exhibits superior predictive accuracy.",
+      "url": "https://doi.org/10.1108/gs-04-2026-0113",
+      "date_display": "2026-10-29"
+    },
+    {
+      "id": "hf-abel-lab-simons-297m",
+      "title": "Simons-297M (Hugging Face model page)",
+      "date": "2026-10-29",
+      "tag": "industry",
+      "summary": "From the model card: Simons-297M is an open time series foundation model from Abel AI Lab for probabilistic forecasting. It supports univariate and multivariate series with known-future covariates.",
+      "url": "https://huggingface.co/abel-lab/Simons-297M",
+      "date_display": "Repo created 2026-10-29 (UTC)"
     },
     {
       "id": "arxiv-2610.38976",
@@ -1968,6 +2040,15 @@
       "tag": "research",
       "summary": "Abstract opening: Time-series foundation models (TSFMs) have achieved strong forecasting performance across domains.",
       "url": "https://arxiv.org/abs/2610.12240",
+      "date_display": "2026-10-08"
+    },
+    {
+      "id": "emerald-gs-03-2026-0060",
+      "title": "A novel spatiotemporal multivariate partial grey model for multi-segment traffic flow and its application",
+      "date": "2026-10-08",
+      "tag": "research",
+      "summary": "From the abstract: Therefore, to deeply explore the spatiotemporal characteristics of traffic flow data, a novel spatiotemporal multivariate partial grey prediction model for multi-segment traffic flow is proposed, which is suitable for short-term traffic flow prediction. … The proposed model achieves mean absolute percentage error (MAPE) values below 7% across all evaluated scenarios.",
+      "url": "https://doi.org/10.1108/gs-03-2026-0060",
       "date_display": "2026-10-08"
     },
     {
