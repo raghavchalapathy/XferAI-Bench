@@ -1,13 +1,94 @@
 {
   "schema_version": 1,
   "provenance": {
-    "source": "factory/inbox/reviewer/news-feed-v3.19-review-20261112/news_feed_v3.19.json",
-    "source_sha256": "531b6b0d14297e0062084b81ef9d350ebc1c32b58ead3aa25d7278cb8cbae94e",
-    "review": "factory/inbox/reviewer/news-feed-v3.19-review-20261112/review.json",
-    "review_sha256": "c08619e47c5b8bff90d11d1b8884b60e5ec0d114cb86dbfc0abdfc134a543944",
+    "source": "factory/inbox/reviewer/news-feed-v3.20-review-20261113/news_feed_v3.20.json",
+    "source_sha256": "654dc4953fc9c38bca94e826002d676fd11ddcfeede2565f1d36813285afccac",
+    "review": "factory/inbox/reviewer/news-feed-v3.20-review-20261113/review.json",
+    "review_sha256": "0c091b9fd9624ff7e933c920a80b45a8fedb2e0b065d6071ac64f4b1d3d371b2",
     "verdict": "APPROVE"
   },
   "items": [
+    {
+      "id": "researchsquare-rs-11553556-v1",
+      "title": "Real-time Fire Evolution Forecasting",
+      "date": "2026-11-13",
+      "tag": "research",
+      "summary": "From the abstract: We present Sparky-Evolve, a probabilistic machine-learning model that forecasts the persistence and intensity of active fires within ~ 1 km grid cells at 15-minute resolution up to 6 h ahead. … On held-out events, the ensemble reduced conditional FRP error by 30% relative to persistence, with well-calibrated uncertainty up to 2 h, and estimated when detectable activity would end with a mean absolute error of 39 min.",
+      "url": "https://www.researchsquare.com/article/rs-11553556/v1",
+      "date_display": "2026-11-13"
+    },
+    {
+      "id": "researchsquare-rs-11493248-v1",
+      "title": "From sensor rankings to restoration decisions in traffic forecasting",
+      "date": "2026-11-13",
+      "tag": "research",
+      "summary": "From the abstract: Sensor rankings can guide the restoration of disrupted traffic networks, but their value depends on the forecasts produced after selected readings are returned. … These results support evaluating source sets under the intended predictor and distinguishing the overall restoration benefit from the incremental benefit of their ranking.",
+      "url": "https://www.researchsquare.com/article/rs-11493248/v1",
+      "date_display": "2026-11-13"
+    },
+    {
+      "id": "mdpi-applsci-162211252",
+      "title": "CWIA: A Model-Free, Low-Cost Adversarial Perturbation Method for Wind Power Forecasting",
+      "date": "2026-11-13",
+      "tag": "research",
+      "summary": "From the abstract: We propose the continuous wind injection attack (CWIA), a deterministic method that directly perturbs wind speed using an available regional input scale. … Evaluations on PSML use four forecasting architectures, six surrogate-based attack baselines, constant-offset ablations, and nine anomaly detectors to examine effectiveness, preparation requirements, and temporal boundary behavior.",
+      "url": "https://doi.org/10.3390/app162211252",
+      "date_display": "2026-11-13"
+    },
+    {
+      "id": "mdpi-hydrology-13110302",
+      "title": "Configuration over Architecture: Deep Learning Models for Daily Streamflow Forecasting in Snowmelt-Dominated Watersheds of Southwestern Alberta",
+      "date": "2026-11-13",
+      "tag": "research",
+      "summary": "From the abstract: This study evaluates Long Short-Term Memory (LSTM) models for daily streamflow prediction in three mountainous watersheds of southwestern Alberta and systematically examines the sensitivity of model performance to key configuration decisions, including timestep selection, feature engineering, seasonal period, adjacent gauge inclusion, weather forecasting, and attention mechanisms. … However, all models substantially underpredicted a 1995 extreme flood event by 44–78%, reflecting the inherent challenge of predicting rare events with imbalanced training data.",
+      "url": "https://doi.org/10.3390/hydrology13110302",
+      "date_display": "2026-11-13"
+    },
+    {
+      "id": "cest-953",
+      "title": "Uncertainty-aware possibilistic load forecasting for smart grid energy conservation",
+      "date": "2026-11-13",
+      "tag": "research",
+      "summary": "From the abstract: We present a fuzzy interval regression framework that represents load observations as triangular fuzzy numbers and estimates α-cut interval forecasts without requiring a full probability distribution. … To provide out-of-sample evidence, the method was additionally evaluated on the public Taylor half-hourly electricity-demand series for England and Wales (4,032 observations), using the first 3,360 points for estimation and the final 672 points for testing.",
+      "url": "https://doi.org/10.18686/cest953",
+      "date_display": "2026-11-13"
+    },
+    {
+      "id": "sae-2026-99-2140",
+      "title": "Intra-Day Mode Decomposition for Metro Flow Prediction: Applicability Boundaries under Station Heterogeneity",
+      "date": "2026-11-13",
+      "tag": "research",
+      "summary": "From the abstract: To solve this model selection problem, we develop an adaptive forecasting framework to define the applicability boundaries of intra-day mode decomposition (L3: mode-specific LightGBM with mode-feature interactions) in heterogeneous station environments. … L3 distinguishes weekday commute and weekend leisure patterns via clustering of daily flow curves and constructs mode-feature interaction terms in a three-tier feature framework.",
+      "url": "https://doi.org/10.4271/2026-99-2140",
+      "date_display": "2026-11-13"
+    },
+    {
+      "id": "bajece-2060791",
+      "title": "Forecasting High Electricity Demand Using Explainable Machine Learning",
+      "date": "2026-11-13",
+      "tag": "research",
+      "summary": "From the abstract: The objective of this study was to predict the onset of high demand, the highest half-hourly average power, and the total duration of high demand over the next two hours using historical electricity consumption data from residential households. … The models were developed using data from 160 households; transfer performance was evaluated on the 40 households not included in model training.",
+      "url": "https://doi.org/10.17694/bajece.2060791",
+      "date_display": "2026-11-13"
+    },
+    {
+      "id": "emerald-ecam-04-2026-0777",
+      "title": "The application of Fourier series in forecasting construction project completion: a case study",
+      "date": "2026-11-13",
+      "tag": "research",
+      "summary": "From the abstract: This study develops and validates Optimum Fourier Series–Polynomial Regression (Optimum.FSPR), a hybrid prediction model designed to provide reliable completion forecasts under conditions of data scarcity or high volatility. … Model performance is evaluated using weekly project progress data, with Autoregressive Integrated Moving Average (ARIMA), eXtreme Gradient Boosting (XGBoost) and Long Short-Term Memory (LSTM) serving as benchmark models and Mean Absolute Error, Mean Absolute Percentage Error and Root Mean Squared Error as evaluation metrics.",
+      "url": "https://doi.org/10.1108/ecam-04-2026-0777",
+      "date_display": "2026-11-13"
+    },
+    {
+      "id": "zenodo-24182148",
+      "title": "Reproduction package for \"Beyond Uniform Delays: Structured Memory for Nonlinear Vector Autoregressive Forecasting\" (SM-NVAR, SYSID 2027)",
+      "date": "2026-11-13",
+      "tag": "research",
+      "summary": "From the abstract: Code and saved results for the paper \"Beyond Uniform Delays: Structured Memory for Nonlinear Vector Autoregressive Forecasting\" by Gonzalo Uribarri (MIDAS, Department of Computer and Systems Sciences, Stockholm University), submitted to the 21st IFAC Symposium on System Identification (SYSID 2027, Lyon, 7-9 July 2027). … SM-NVAR (structured-memory nonlinear vector autoregression) replaces the uniform delay grid and joint polynomial library of next-generation reservoir computing (NGRC) with logarithmically spaced delay blocks and block-local polynomial features, fitted by ridge regression.",
+      "url": "https://doi.org/10.5281/zenodo.24182148",
+      "date_display": "2026-11-13"
+    },
     {
       "id": "researchsquare-rs-11525261-v1",
       "title": "Physics-Informed Time‑Series Large Language Model for Extreme Typhoon Wave Height Forecasting",
@@ -33,6 +114,42 @@
       "tag": "research",
       "summary": "From the abstract: We propose LaCoCast, which combines a periodic reference with lag-aware cross-sensor corroboration to regulate local forecast corrections. … Experiments on PEMS03, PEMS04, PEMS07, and PEMS08 yielded mean absolute errors 0.38–6.13% below the lowest published baseline values included in the comparison for each dataset.",
       "url": "https://doi.org/10.3390/sym18111888",
+      "date_display": "2026-11-12"
+    },
+    {
+      "id": "arxiv-2611.16934",
+      "title": "Time Flies When You Parallelise: Pareto-efficient Time Series Foundation Models with Linear Recurrences",
+      "date": "2026-11-12",
+      "tag": "research",
+      "summary": "From the abstract: We introduce ci-proto, a family of time series foundation models based on Mamba-3, whose linear state recurrences support chunk-wise parallel-in-time computation during training, and inference costs that scale linearly with sequence length. … Across fev-bench's 100 forecasting tasks, ci-proto XL sets a new state of the art among time series foundation models.",
+      "url": "https://arxiv.org/abs/2611.16934",
+      "date_display": "2026-11-12"
+    },
+    {
+      "id": "arxiv-2611.16514",
+      "title": "Learning Temporal Dynamics with Derivative Representations for Time Series Forecasting",
+      "date": "2026-11-12",
+      "tag": "research",
+      "summary": "From the abstract: In this work, we introduce DeltaTSF, a dynamics-aware forecasting framework based on discrete derivative representations of time series. … Extensive experiments across diverse benchmarks and backbone architectures demonstrate that DeltaTSF consistently improves forecasting performance and yields more dynamically coherent predictions than strong SOTA methods.",
+      "url": "https://arxiv.org/abs/2611.16514",
+      "date_display": "2026-11-12"
+    },
+    {
+      "id": "arxiv-2611.16322",
+      "title": "Climate Temporal Temperature Prediction via an Adaptive Stacked Bidirectional Residual Mamba Network",
+      "date": "2026-11-12",
+      "tag": "research",
+      "summary": "From the abstract: This study presents Deep DualMamba, a novel deep learning framework for temporal temperature prediction, built upon an enhanced variant of the recently proposed Mamba network. … To demonstrate its applicability in climate informatics, we implement a full forecasting pipeline using historical meteorological data from UK monitoring stations.",
+      "url": "https://arxiv.org/abs/2611.16322",
+      "date_display": "2026-11-12"
+    },
+    {
+      "id": "scirep-s41598-026-77825-7",
+      "title": "Wavelet guided frequency-domain augmentation for robust time series forecasting",
+      "date": "2026-11-12",
+      "tag": "research",
+      "summary": "From the abstract: To address these limitations, this study proposes Wavelet-guided Frequency-based (WaveFreqAug), a novel hybrid augmentation method that integrates wavelet decomposition with adaptive frequency domain enhancement. … Comprehensive experiments conducted on four benchmark datasets (ETTh1, ETTh2, ILI, and Weather) using six forecasting models demonstrate that WaveFreqAug outperforms both the unaugmented baseline, in which the same forecasting model is trained on the original data without any augmentation, and six State-of-the-Art (SOTA) augmentation methods applied to the same data, in the large majority of short- and long-term forecasting settings.",
+      "url": "https://doi.org/10.1038/s41598-026-77825-7",
       "date_display": "2026-11-12"
     },
     {
@@ -97,6 +214,60 @@
       "summary": "From the abstract: In this study, we evaluate Autometrics, an automated model selection method with controls for outliers and location shifts, against artificial neural networks (ANN) and random forests for six monthly energy price series (WTI, Brent, Dubai, US and Russian gas, Australian coal) from IMF data. … Autometrics generally delivers lower RMSE/MAPE and higher directional accuracy than the ANN and random forest specifications considered here, particularly in the more volatile oil and coal markets.",
       "url": "https://doi.org/10.1002/for.70239",
       "date_display": "2026-11-11"
+    },
+    {
+      "id": "arxiv-2611.15413",
+      "title": "MORA: Correcting Time Series Forecasts with Coarse Future Signals",
+      "date": "2026-11-11",
+      "tag": "research",
+      "summary": "From the abstract: Building on these findings, we propose Model-Output Residual Adaptation (MORA), a model-agnostic residual adapter that refines the outputs of frozen forecasters without requiring additional inputs. … Extensive experiments on twelve benchmarks with six forecasting backbones show average MSE reductions of 7.2% for long-term forecasting and 28.1% for short-term forecasting, with lower MSE in 96.2% of the 288 evaluated cases.",
+      "url": "https://arxiv.org/abs/2611.15413",
+      "date_display": "2026-11-11"
+    },
+    {
+      "id": "arxiv-2611.15262",
+      "title": "CastWorld: Benchmarking Context-Aware Agentic Time Series Forecasting Beyond Predictive Accuracy",
+      "date": "2026-11-11",
+      "tag": "research",
+      "summary": "From the abstract: In this paper, we introduce CastWorld, an agentic benchmark for context-aware time series forecasting. … First, its context-rich dataset suite spans 8 domains and 25 real-world datasets, covering external variables, events, and historical cases under a unified context specification.",
+      "url": "https://arxiv.org/abs/2611.15262",
+      "date_display": "2026-11-11"
+    },
+    {
+      "id": "arxiv-2611.15155",
+      "title": "PRELUDE: Separating Common Components from Target-Specific Dependencies for Multivariate Time Series Forecasting",
+      "date": "2026-11-11",
+      "tag": "research",
+      "summary": "From the abstract: Accordingly, we propose PRELUDE, a separated-reading framework that estimates the common component holistically through cross-sectional pooling and multiple common factors, and reads dependencies for each target via lead-lag relations in the innovation space obtained by prewhitening. … Extensive experiments on 16 real-world datasets from four domains show that PRELUDE effectively mitigates spurious dependency and achieves the best overall performance: it attains the best MSE on 23 of the 24 short-horizon and air-quality settings and reduces the average MSE by 6.1% relative to the strongest baseline.",
+      "url": "https://arxiv.org/abs/2611.15155",
+      "date_display": "2026-11-11"
+    },
+    {
+      "id": "arxiv-2611.15009",
+      "title": "From Forecasting to World Modeling: Can Temporal Foundation Models Recover Causal Response?",
+      "date": "2026-11-11",
+      "tag": "research",
+      "summary": "From the abstract: A model that forecasts sales accurately can still mislead a retailer about how sales respond to a price change. … First, forecast accuracy does not indicate the accuracy of the predicted effect of price, both on simulated data in which the true effect is known and on real retail sales records.",
+      "url": "https://arxiv.org/abs/2611.15009",
+      "date_display": "2026-11-11"
+    },
+    {
+      "id": "arxiv-2611.15023",
+      "title": "SkinAdvisor: An AI-Driven Decision Framework for Skin Production Planning via Multi-Modal Transformer Sales Forecasting",
+      "date": "2026-11-11",
+      "tag": "research",
+      "summary": "From the abstract: We present SkinAdvisor, an AI-driven decision framework for skin production planning, powered by SkinCast, a deployed multi-modal Transformer forecasting 180-day per-day sales trajectories for unreleased skins. … Offline experiments show SkinCast reduces RMSE by ~20% over the strongest baseline (Informer) and ~60% over classical methods; stress tests on a 16-core CPU server confirm p99 latency under 8ms and peak throughput above 1100 rps.",
+      "url": "https://arxiv.org/abs/2611.15023",
+      "date_display": "2026-11-11"
+    },
+    {
+      "id": "hf-continuousintelligence-ci-proto",
+      "title": "ci-proto (Hugging Face model page)",
+      "date": "2026-11-11",
+      "tag": "industry",
+      "summary": "From the model card: Developed by: Continuous Intelligence Limited … Model type: pretrained time-series foundation model for zero-shot probabilistic forecasting … Parameters: 167M",
+      "url": "https://huggingface.co/ContinuousIntelligence/ci-proto",
+      "date_display": "Repo created 2026-11-11 (UTC)"
     },
     {
       "id": "researchsquare-rs-11325566-v1",
@@ -195,6 +366,15 @@
       "tag": "research",
       "summary": "From the record's README.md: The study identifies 58 genuine commissioning events in three open public charging datasets. … Peer profiles, own-history baselines, global LightGBM models and zero-shot Chronos-Bolt / Chronos-2 are evaluated under a strictly time-ordered protocol.",
       "url": "https://doi.org/10.5281/zenodo.24108589",
+      "date_display": "2026-11-10"
+    },
+    {
+      "id": "arxiv-2611.14849",
+      "title": "Generalize Then Personalize: Wearable-Based Heart Rate Forecasting Under Scarce Ruck-March Data",
+      "date": "2026-11-10",
+      "tag": "research",
+      "summary": "From the abstract: However, robust model development is constrained by the difficulty of collecting large-scale ruck-march datasets, creating a scarce-data problem in which models must generalize across participants while adapting to individuals from limited personal data. … These results suggest that population pretraining followed by participant-specific fine-tuning may provide a practical strategy for scarce-data wearable HR forecasting.",
+      "url": "https://arxiv.org/abs/2611.14849",
       "date_display": "2026-11-10"
     },
     {
