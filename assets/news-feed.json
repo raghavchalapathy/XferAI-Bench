@@ -1,13 +1,121 @@
 {
   "schema_version": 1,
   "provenance": {
-    "source": "factory/inbox/reviewer/news-feed-v3.20-review-20261113/news_feed_v3.20.json",
-    "source_sha256": "654dc4953fc9c38bca94e826002d676fd11ddcfeede2565f1d36813285afccac",
-    "review": "factory/inbox/reviewer/news-feed-v3.20-review-20261113/review.json",
-    "review_sha256": "0c091b9fd9624ff7e933c920a80b45a8fedb2e0b065d6071ac64f4b1d3d371b2",
+    "source": "factory/inbox/reviewer/news-feed-v3.21-review-20261116/news_feed_v3.21.1.json",
+    "source_sha256": "1a94196ac0359262e4a8114af2b5606f52183482d72bf1a01030ff8d5247292d",
+    "review": "factory/inbox/reviewer/news-feed-v3.21-review-20261116/review.json",
+    "review_sha256": "ddeac41b9b38b8d80c7c734b9ba7cfcc5a557520f016bdcfb9942174830c7c1e",
     "verdict": "APPROVE"
   },
   "items": [
+    {
+      "id": "ijqi-s0219749926500267",
+      "title": "Architectural sensitivity of variational quantum circuits for nonlinear time-series forecasting under NISQ noise",
+      "date": "2026-11-16",
+      "tag": "research",
+      "summary": "From the abstract: This study presents a hybrid classical–quantum framework for nonlinear time-series forecasting that integrates causally-filtered hidden Markov regime detection with multiple VQC architectures. … Under this confound-controlled design, we find no evidence of a forecasting advantage for the tested VQC architectures over classical linear or nonlinear baselines, which we report as a cautionary result for claims of near-term quantum advantage in forecasting.",
+      "url": "https://doi.org/10.1142/s0219749926500267",
+      "date_display": "2026-11-16"
+    },
+    {
+      "id": "emerald-gs-05-2026-0152",
+      "title": "Fractional-order grey forecasting framework for cross-regional air quality early warning",
+      "date": "2026-11-16",
+      "tag": "research",
+      "summary": "From the abstract: This study proposes S-HFGM(1,N), a Hausdorff fractional multivariable grey model with a single indicator buffer. … The model achieves an average validation mean absolute percentage error of 3.6861%, outperforming selected grey forecasting benchmarks.",
+      "url": "https://doi.org/10.1108/gs-05-2026-0152",
+      "date_display": "2026-11-16"
+    },
+    {
+      "id": "emerald-gs-02-2026-0045",
+      "title": "Forecasting primary healthcare resources in China using a grey convolutional multivariate self-memory combination model GMC-SM(1,n)",
+      "date": "2026-11-16",
+      "tag": "research",
+      "summary": "From the abstract: This study proposes a novel grey forecasting approach to improve prediction accuracy and stability for primary healthcare resource demand under incomplete information. … The proposed GMC-SM(1,n) model exhibits superior accuracy, with fitting and prediction MAPEs of 1.02% and 0.28% for institutions, and 1.93% and 0.82% for beds.",
+      "url": "https://doi.org/10.1108/gs-02-2026-0045",
+      "date_display": "2026-11-16"
+    },
+    {
+      "id": "ebr-2026-4-2871",
+      "title": "Forecasting inflationwith public high-frequency data during periods of elevated uncertainty",
+      "date": "2026-11-16",
+      "tag": "research",
+      "summary": "From the abstract: This paper examines whether weekly wholesale and retail prices can improve nowcasts of selected HICP components in EU economies. … MIDAS provides clear gains for moderately volatile, well-measured categories, most notably fuels, where R² reaches up to 0.95, and, in some cases, meat (R² around 0.30–0.40 for Poland).",
+      "url": "https://doi.org/10.18559/ebr.2026.4.2871",
+      "date_display": "2026-11-16"
+    },
+    {
+      "id": "emerald-fs-03-2026-0079",
+      "title": "Explainable AI for tail-risk forecasting in cryptocurrencies: evidence from green and energy-intensive assets for risk-aware investment decisions",
+      "date": "2026-11-16",
+      "tag": "research",
+      "summary": "From the abstract: The proposed framework uses a quantile long short-term memory model to estimate predictive quantiles and Conditional Value at Risk (CVaR), enabling the modeling of asymmetric, fat-tailed and regime-dependent risks. … This study contributes to the literature by integrating quantile-based deep learning, explainable artificial intelligence, regime-specific diagnostics and sustainability considerations into a unified risk-forecasting framework.",
+      "url": "https://doi.org/10.1108/fs-03-2026-0079",
+      "date_display": "2026-11-16"
+    },
+    {
+      "id": "mdpi-applsci-162211313",
+      "title": "LGTFormer: A Local–Global Transformer with Continuous State Transition for Short-Term Oilfield Electrical Load Forecasting",
+      "date": "2026-11-15",
+      "tag": "research",
+      "summary": "From the abstract: This study uses 18 months of actual operational data sampled at 5-min intervals from three distribution lines in an oilfield in China to investigate short-term load forecasting and proposes the Local–Global Transformer with Continuous State Transition (LGTFormer). … Experimental results show that LGTFormer achieves the best forecasting performance across all three lines, outperforming the comparison models in terms of mean absolute error (MAE), root mean square error (RMSE) and coefficient of determination (R2).",
+      "url": "https://doi.org/10.3390/app162211313",
+      "date_display": "2026-11-15"
+    },
+    {
+      "id": "mdpi-forecast-8060110",
+      "title": "From Microdata to Macro Forecasts: A Comparative Study of Aggregation Strategies and Benchmark Models in Social Protection Spending",
+      "date": "2026-11-15",
+      "tag": "research",
+      "summary": "From the abstract: To answer this question, we compare four aggregation strategies and a structural one applied to a short, highly seasonal time series of child-benefit payments: direct-aggregate, bottom-up, data-enrichment, and minimum-trace reconciliation. … Overall, on short, strongly seasonal public-finance series, well-established benchmarks remain hard to beat, and additional data changes which object is measured rather than improving the cash forecast itself, unless it carries genuinely forward-looking information.",
+      "url": "https://doi.org/10.3390/forecast8060110",
+      "date_display": "2026-11-15"
+    },
+    {
+      "id": "wiley-jfr3-70284",
+      "title": "A Physically Interpretable Dual‐Encoder Cross‐Attention LSTM for Water Level Forecasting in Dam–Tide Interaction Systems",
+      "date": "2026-11-15",
+      "tag": "research",
+      "summary": "From the abstract: This study proposes a dual‐encoder cross‐attention long short‐term memory (LSTM) framework that separates the forcings at the encoder level rather than the attention level. … Predictions from 1 to 12 h ahead were benchmarked against those from a single‐encoder LSTM.",
+      "url": "https://doi.org/10.1111/jfr3.70284",
+      "date_display": "2026-11-15"
+    },
+    {
+      "id": "ijwer-x784yr82",
+      "title": "Regime-Gated Feedback Adaptive Conformal Prediction for Financial Forecasting",
+      "date": "2026-11-15",
+      "tag": "research",
+      "summary": "From the abstract: We propose regime-gated feedback adaptive conformal inference (RG-ACI), which combines volatility-normalized nonconformity scores, rolling calibration, a single online miscoverage-rate state and a causal short-to-long volatility-ratio gate. … On 20 simulated heavy-tailed, autoregressive stochastic-volatility paths with multiple regime transitions, RG-ACI attains 0.895 mean coverage and 0.894 crisis-period coverage at a nominal 90% target with low between-path dispersion, while volatility-normalized rolling calibration remains the most efficient interval in width and interval score.",
+      "url": "https://doi.org/10.54097/x784yr82",
+      "date_display": "2026-11-15"
+    },
+    {
+      "id": "scirep-s41598-026-79480-4",
+      "title": "Context-aware forecasting of inter-firm competitive dynamics with graph learning and multi-agent reasoning",
+      "date": "2026-11-15",
+      "tag": "research",
+      "summary": "From the abstract: Here, we introduce an integrated framework that captures the relational nature of market competition by extending our prior Bayesian Multivariate Time-series Graph Neural Network with a newly designed, post hoc, lookahead-free multi-agent reasoning layer. … Evaluated under a rigorous date-based temporal protocol with strictly withheld test horizons, the framework consistently outperforms competitive structural baselines and yields well-calibrated prediction intervals.",
+      "url": "https://doi.org/10.1038/s41598-026-79480-4",
+      "date_display": "2026-11-15"
+    },
+    {
+      "id": "mdpi-forecast-8060109",
+      "title": "Monthly Peak-Demand Forecasting and Conditional Long-Horizon Scenarios with a Tri-Model Ensemble",
+      "date": "2026-11-14",
+      "tag": "research",
+      "summary": "From the abstract: A statistical baseline combines long short-term memory, LightGBM and temporal fusion transformer models trained directly on monthly peak levels. … Weights are estimated from complete recursive 24-month forecast paths, and a dependence-aware bootstrap of log-level errors generates 5000 statistical trajectories.",
+      "url": "https://doi.org/10.3390/forecast8060109",
+      "date_display": "2026-11-14"
+    },
+    {
+      "id": "zenodo-24218238",
+      "title": "Conformal Expert Pools: Training-Free Probabilistic Time-Series Forecasting Beyond Seasonality",
+      "date": "2026-11-14",
+      "tag": "research",
+      "summary": "From the abstract: We propose Conformal Expert Pools (CEP), a training-free successor. … We evaluate CEP on the CSP benchmark of 232 datasets and 24,502 forecast windows, using 95% prediction intervals.",
+      "url": "https://doi.org/10.5281/zenodo.24218238",
+      "date_display": "2026-11-14"
+    },
     {
       "id": "researchsquare-rs-11553556-v1",
       "title": "Real-time Fire Evolution Forecasting",
@@ -90,6 +198,69 @@
       "date_display": "2026-11-13"
     },
     {
+      "id": "arxiv-2611.18199",
+      "title": "T2ST: Data-Efficient Spatio-Temporal Foundation Models via Temporal Data and Knowledge Transfer",
+      "date": "2026-11-13",
+      "tag": "research",
+      "summary": "From the abstract: To bridge this gap, we propose T2ST, a data-efficient training framework that augments limited spatio-temporal observations with selected auxiliary time series and transfers knowledge from a frozen time-series foundation model. … Guided by this insight, T2ST retrieves matched sequences to reinforce sparsely observed temporal patterns and selects reliable complementary sequences to broaden temporal coverage.",
+      "url": "https://arxiv.org/abs/2611.18199",
+      "date_display": "2026-11-13"
+    },
+    {
+      "id": "arxiv-2611.17915",
+      "title": "SWIFT: Sample-Wise Instance Fine-Tuning of Time-Series Foundation Models for Forecasting",
+      "date": "2026-11-13",
+      "tag": "research",
+      "summary": "From the abstract: To address this constraint, we propose Sample-Wise Instance Fine-Tuning (SWIFT), a novel forecasting adaptation framework that achieves fine-grained specialization by leveraging structural priors from the target instance's own history. … Extensive experiments across four TSFM backbones and three long-history benchmark subsets validate SWIFT, yielding average MASE and WQL reductions of 6.41% and 4.83% across 24 combinations of four backbones and six Chronos Benchmark II datasets.",
+      "url": "https://arxiv.org/abs/2611.17915",
+      "date_display": "2026-11-13"
+    },
+    {
+      "id": "arxiv-2611.17862",
+      "title": "FlexCast: Flexible Context Learning for Time Series Foundation Models",
+      "date": "2026-11-13",
+      "tag": "research",
+      "summary": "From the abstract: We propose FlexCast, a flexible context-target learning framework that disentangles these factors. … Evaluated on BLAST and multiple zero-shot benchmarks, FlexCast achieves accuracy competitive with or better than strong TSFM baselines while substantially reducing inference latency.",
+      "url": "https://arxiv.org/abs/2611.17862",
+      "date_display": "2026-11-13"
+    },
+    {
+      "id": "arxiv-2611.18235",
+      "title": "NeoResearch: Literature- and Experience-Guided Autonomous Time Series Model Discovery",
+      "date": "2026-11-13",
+      "tag": "research",
+      "summary": "From the abstract: In this paper, we propose NeoResearch, a literature- and experience-guided autonomous research framework that leverages large language models (LLMs) as researchers to discover lightweight, domain-specific forecasting models. … Experiments on ten datasets show competitive performance and support dual loops, literature extraction, and memory reuse.",
+      "url": "https://arxiv.org/abs/2611.18235",
+      "date_display": "2026-11-13"
+    },
+    {
+      "id": "arxiv-2611.18149",
+      "title": "Which Model, For Which Variable? Per-Variable Forecast Combination in Sparse ICU Time Series",
+      "date": "2026-11-13",
+      "tag": "research",
+      "summary": "From the abstract: Across five ICU databases (MIMIC-III, MIMIC-IV, eICU, HiRID, and UMM (University Medicine Mannheim), a German single-center ICU) we forecast 94 channels over a 24-hour horizon with a pool of 14 models, and combine them with weights fitted per variable. … On test, the combination beats the best single model on all five databases by 6.1-11.0% mean squared error (mean 8.7%).",
+      "url": "https://arxiv.org/abs/2611.18149",
+      "date_display": "2026-11-13"
+    },
+    {
+      "id": "arxiv-2611.18005",
+      "title": "RiverScan: Learning to Accumulate on River Networks",
+      "date": "2026-11-13",
+      "tag": "research",
+      "summary": "From the abstract: We frame this challenge as learning to accumulate and introduce RiverScan, a spatial operator based on area-weighted selective state-space recurrence. … Experiments on 608 stations in the Danube basin show that RiverScan outperforms the evaluated temporal and graph baselines in overall predictive performance.",
+      "url": "https://arxiv.org/abs/2611.18005",
+      "date_display": "2026-11-13"
+    },
+    {
+      "id": "arxiv-2611.18389",
+      "title": "A systematic comparison of physics-informed neural networks and mechanistic models for epidemic modeling and forecasting",
+      "date": "2026-11-13",
+      "tag": "research",
+      "summary": "From the abstract: Here, we conduct a systematic comparison of a PINN-based framework and a stochastic mechanistic model. … Interestingly, while PINNs underperform in synthetic scenarios, they achieve better performance on real data.",
+      "url": "https://arxiv.org/abs/2611.18389",
+      "date_display": "2026-11-13"
+    },
+    {
       "id": "researchsquare-rs-11525261-v1",
       "title": "Physics-Informed Time‑Series Large Language Model for Extreme Typhoon Wave Height Forecasting",
       "date": "2026-11-12",
@@ -151,6 +322,15 @@
       "summary": "From the abstract: To address these limitations, this study proposes Wavelet-guided Frequency-based (WaveFreqAug), a novel hybrid augmentation method that integrates wavelet decomposition with adaptive frequency domain enhancement. … Comprehensive experiments conducted on four benchmark datasets (ETTh1, ETTh2, ILI, and Weather) using six forecasting models demonstrate that WaveFreqAug outperforms both the unaugmented baseline, in which the same forecasting model is trained on the original data without any augmentation, and six State-of-the-Art (SOTA) augmentation methods applied to the same data, in the large majority of short- and long-term forecasting settings.",
       "url": "https://doi.org/10.1038/s41598-026-77825-7",
       "date_display": "2026-11-12"
+    },
+    {
+      "id": "hf-magilabsco-telos-small",
+      "title": "Telos-Small (Hugging Face model page)",
+      "date": "2026-11-12",
+      "tag": "industry",
+      "summary": "From the model card: Telos-Small (50,100,747 parameters) is a standalone zero-shot Joint-Embedding Predictive Architecture (JEPA) for probabilistic time-series forecasting developed by MAGI Labs. … Context Length: 4,096 steps default (8,192 max)",
+      "url": "https://huggingface.co/magilabsco/Telos-Small",
+      "date_display": "Repo created 2026-11-12 (UTC)"
     },
     {
       "id": "researchsquare-rs-11417289-v1",
