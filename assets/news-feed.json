@@ -1,13 +1,130 @@
 {
   "schema_version": 1,
   "provenance": {
-    "source": "factory/inbox/reviewer/news-feed-v3.21-review-20261116/news_feed_v3.21.1.json",
-    "source_sha256": "1a94196ac0359262e4a8114af2b5606f52183482d72bf1a01030ff8d5247292d",
-    "review": "factory/inbox/reviewer/news-feed-v3.21-review-20261116/review.json",
-    "review_sha256": "ddeac41b9b38b8d80c7c734b9ba7cfcc5a557520f016bdcfb9942174830c7c1e",
+    "source": "factory/inbox/reviewer/news-feed-v3.22-review-20261117/news_feed_v3.22.json",
+    "source_sha256": "7ef6c3b2b8ba67d730964d36b1b2e98e315113974b7c4582aee93a259cf7a233",
+    "review": "factory/inbox/reviewer/news-feed-v3.22-review-20261117/review.json",
+    "review_sha256": "0cf95d9177d008eee492682fc985dd7ff3cd8b2a56842e4a7cba31fb1ad98a89",
     "verdict": "APPROVE"
   },
   "items": [
+    {
+      "id": "mdpi-asi-9110242",
+      "title": "Hybrid Architecture of Kolmogorov–Arnold Networks and XGBoost with a Residual Damping Mechanism for Wind Power Forecasting",
+      "date": "2026-11-17",
+      "tag": "research",
+      "summary": "From the abstract: We propose a hybrid architecture: a physics-informed Kolmogorov–Arnold network (KAN) paired with an XGBoost-based residual corrector and a residual damping mechanism. … The proposed model offers greater transparency and interpretability, allows for the inclusion of components based on physical principles, while remaining comparable in accuracy to XGBoost or LightGBM models in both problem formulations.",
+      "url": "https://doi.org/10.3390/asi9110242",
+      "date_display": "2026-11-17"
+    },
+    {
+      "id": "mdpi-electronics-15225343",
+      "title": "A Method for Ultra-Short-Term Regional Load Forecasting Based on Contrastive Learning-Based Feature Extraction and Hierarchical Modeling of Spatiotemporal Correlations",
+      "date": "2026-11-17",
+      "tag": "research",
+      "summary": "From the abstract: To address this, this paper proposes a method for ultra-short-term regional load forecasting based on contrastive learning for feature extraction and hierarchical modeling of spatio-temporal correlations. … Simulation results based on the Ausgrid dataset demonstrate that the proposed method achieves the lowest RMSE and MAE among the evaluated methods for ultra-short-term forecasts ranging from 1 to 16 steps, effectively adapting to the highly random and volatile characteristics of regional load.",
+      "url": "https://doi.org/10.3390/electronics15225343",
+      "date_display": "2026-11-17"
+    },
+    {
+      "id": "mdpi-electronics-15225358",
+      "title": "Day-Ahead Power Forecasting for Photovoltaic Plant Clusters Based on Sub-Regional Extended Weather Patterns and Dynamic Graph Modeling",
+      "date": "2026-11-17",
+      "tag": "research",
+      "summary": "From the abstract: Therefore, this paper proposes a method for day-ahead power forecasting of PV power plant clusters based on sub-region extended weather patterns and dynamic graph attention networks. … Case-study experiments using data from a PV plant cluster in northern China are used to assess the forecasting performance of the proposed method.",
+      "url": "https://doi.org/10.3390/electronics15225358",
+      "date_display": "2026-11-17"
+    },
+    {
+      "id": "mdpi-electronics-15225345",
+      "title": "Joint Multi-Horizon Forecasting of Residential Electricity Demand and Price Using an LSTM–Transformer for Smart-Grid Energy Management",
+      "date": "2026-11-17",
+      "tag": "research",
+      "summary": "From the abstract: This study develops and benchmarks an LSTM–Transformer hybrid for simultaneous 24-hour-ahead residential load and electricity-price forecasting. … Compared with the best-performing CNN–LSTM model, the proposed approach reduced RMSE by 15.8% for load and 27.7% for price.",
+      "url": "https://doi.org/10.3390/electronics15225345",
+      "date_display": "2026-11-17"
+    },
+    {
+      "id": "mdpi-systems-14111475",
+      "title": "Forecasting Regional NEET Rates in Europe: A Spatio-Temporal Systems Analysis of Persistence, Socioeconomic Context, and Transferability",
+      "date": "2026-11-17",
+      "tag": "research",
+      "summary": "From the abstract: This study develops a leakage-aware spatio-temporal forecasting framework for regional NEET rates across 251 NUTS-2 regions in 30 European countries over 2005–2025. … Under strict cold-start conditions without focal-region NEET history, CatBoost again achieved the strongest performance.",
+      "url": "https://doi.org/10.3390/systems14111475",
+      "date_display": "2026-11-17"
+    },
+    {
+      "id": "emerald-jm2-12-2025-0738",
+      "title": "Practice in modeling holiday effect on retail demand forecasting: a systematic review",
+      "date": "2026-11-17",
+      "tag": "research",
+      "summary": "From the abstract: The purpose of this study is to systematically review and synthesize the academic literature on modeling holiday effects in retail demand forecasting. … Historical uplift features improve predictability for established products but are ineffective for new items.",
+      "url": "https://doi.org/10.1108/jm2-12-2025-0738",
+      "date_display": "2026-11-17"
+    },
+    {
+      "id": "gsp-nmtma-oa-2026-0094",
+      "title": "A Koopman-PINN Framework for Epidemic Models: Parameter Inference and Forecasting",
+      "date": "2026-11-17",
+      "tag": "research",
+      "summary": "From the abstract: We propose a Koopman-enhanced physics-informed neural network (K-PINN) framework for parameter inference and forecasting in nonlinear epidemic models. … Numerical results demonstrate that K-PINN achieves more accurate parameter estimation, trajectory reconstruction, and long-term forecasting than classical PINNs and Koopman-EDMD approaches.",
+      "url": "https://doi.org/10.4208/nmtma.oa-2026-0094",
+      "date_display": "2026-11-17"
+    },
+    {
+      "id": "spie-12-3137173",
+      "title": "An uncertainty-weighted optimization method for IoT time-series forecasting",
+      "date": "2026-11-17",
+      "tag": "research",
+      "summary": "From the abstract: To address this issue, this paper proposes an uncertainty-weighted optimization method for IoT time-series forecasting. … Experiments on four public datasets, including Electricity, Traffic, Weather, and ETTm1, show that the proposed method achieves consistently better forecasting accuracy and stronger robustness than representative baseline models under both standard and perturbed settings.",
+      "url": "https://doi.org/10.1117/12.3137173",
+      "date_display": "2026-11-17"
+    },
+    {
+      "id": "ace-2755-2721-2026-39040",
+      "title": "Multi-Source Data Fusion Based Market Demand Forecasting and Intelligent Business Decision Optimization",
+      "date": "2026-11-17",
+      "tag": "research",
+      "summary": "From the abstract: First, stockout-affected demand was restored, followed by encoding and dynamic fusion of historical demand, inventory, promotion, weather, calendar, and product data via gated attention network to obtain seven days point and quantile forecasting. … Consequently, one may state that incorporation of heterogeneous market data into probabilistic forecasting may lead to better demand estimation and operational efficiency.",
+      "url": "https://doi.org/10.54254/2755-2721/2026.39040",
+      "date_display": "2026-11-17"
+    },
+    {
+      "id": "preprints-202611.1681-v1",
+      "title": "Physics-Informed Spatiotemporal Graph Forecasting Framework with Drift-Triggered Continual Learning for NOx Prediction in Municipal Solid Waste Incineration Power Generation",
+      "date": "2026-11-17",
+      "tag": "research",
+      "summary": "From the abstract: This study proposes a physics-informed spatiotemporal graph forecasting framework equipped with drift-triggered continual learning for NOx prediction in MSWI plants. … Comparative experiments against state-of-the-art time-series forecasting models verify the effectiveness of the proposed method.",
+      "url": "https://doi.org/10.20944/preprints202611.1681.v1",
+      "date_display": "2026-11-17"
+    },
+    {
+      "id": "researchsquare-rs-11420039-v1",
+      "title": "Better Imputation Does Not Guarantee Better Forecasting: Transmission Efficiency in Two-Step Time Series Pipelines",
+      "date": "2026-11-17",
+      "tag": "research",
+      "summary": "From the abstract: Reconstruction accuracy often guides imputer selection for time series forecasting. … Reconstruction accuracy alone is therefore insufficient to assess downstream forecasting performance under these settings.",
+      "url": "https://www.researchsquare.com/article/rs-11420039/v1",
+      "date_display": "2026-11-17"
+    },
+    {
+      "id": "researchsquare-rs-11531941-v1",
+      "title": "Expert Complementarity and Residual Correction for Coastal Sea-Level Forecasting",
+      "date": "2026-11-17",
+      "tag": "research",
+      "summary": "From the abstract: We study forecasts of the non-tidal residual over the next 24 h. … These results support expert combination and bounded correction, while showing that their benefits depend on the evaluation setting.",
+      "url": "https://www.researchsquare.com/article/rs-11531941/v1",
+      "date_display": "2026-11-17"
+    },
+    {
+      "id": "zenodo-24311255",
+      "title": "Data and forecast outputs for \"Do large language models and agents out-forecast time-series foundation models? Evidence from post-cutoff real-world data\"",
+      "date": "2026-11-17",
+      "tag": "research",
+      "summary": "From the record description: The study compares these model families on data released after every model's training cutoff. … Data were fetched up to 2026-11-10; live endpoints now return later data.",
+      "url": "https://doi.org/10.5281/zenodo.24311255",
+      "date_display": "2026-11-17"
+    },
     {
       "id": "ijqi-s0219749926500267",
       "title": "Architectural sensitivity of variational quantum circuits for nonlinear time-series forecasting under NISQ noise",
@@ -51,6 +168,105 @@
       "tag": "research",
       "summary": "From the abstract: The proposed framework uses a quantile long short-term memory model to estimate predictive quantiles and Conditional Value at Risk (CVaR), enabling the modeling of asymmetric, fat-tailed and regime-dependent risks. … This study contributes to the literature by integrating quantile-based deep learning, explainable artificial intelligence, regime-specific diagnostics and sustainability considerations into a unified risk-forecasting framework.",
       "url": "https://doi.org/10.1108/fs-03-2026-0079",
+      "date_display": "2026-11-16"
+    },
+    {
+      "id": "arxiv-2611.21562",
+      "title": "Severe but Harmless: Stress-Testing Shift Severity for Frozen Time-Series Forecasters",
+      "date": "2026-11-16",
+      "tag": "research",
+      "summary": "From the abstract: In systematic experiments using three established severity measures on nine regime shifts from three standard traffic datasets, we show that these measures do not reliably predict degradation for instance-normalized TSFMs. … The regimes rated most severe are not the regimes that degrade the models most, and degradation reaches 29% in the lowest-scoring regime.",
+      "url": "https://arxiv.org/abs/2611.21562",
+      "date_display": "2026-11-16"
+    },
+    {
+      "id": "arxiv-2611.21319",
+      "title": "Wavelet-Energy-Driven Dynamic Patching for Time Series Forecasting",
+      "date": "2026-11-16",
+      "tag": "research",
+      "summary": "From the abstract: We introduce a forecaster that turns a learnable-DWT per-scale energy map into variable-length patches by merging adjacent windows that share a dominant scale. … The improvement in wavelet-based forecasting comes from the multi-resolution structure and the variable-length patches it induces, not from making the wavelet learnable.",
+      "url": "https://arxiv.org/abs/2611.21319",
+      "date_display": "2026-11-16"
+    },
+    {
+      "id": "arxiv-2611.20714",
+      "title": "MSAR: Next-Scale Autoregressive Forecasting for Time Series via Modular Multi-Scale Decoupling",
+      "date": "2026-11-16",
+      "tag": "research",
+      "summary": "From the abstract: We introduce the Modular Scale-wise Autoregressive Framework (MSAR), a model-agnostic design that forecasts progressively across multiple temporal resolutions. … Extensive experiments across a broad set of datasets and forecasting models demonstrate that MSAR achieves consistent improvements in both accuracy and inference efficiency, validating the effectiveness of scale-aligned autoregression for multiscale time series forecasting.",
+      "url": "https://arxiv.org/abs/2611.20714",
+      "date_display": "2026-11-16"
+    },
+    {
+      "id": "arxiv-2611.20811",
+      "title": "Auditing World-Model Explanations in Retail Forecasting: Faithfulness, Accuracy and Price Response",
+      "date": "2026-11-16",
+      "tag": "research",
+      "summary": "From the abstract: We test such explanations with eight checks, six with a pass rule fixed before any result, and find that passing them does not make an explanation right. … In generated store data with known effects, a world model passes the checks of construction, stability, price direction and agreement with sales and with LightGBM, yet its lifts are 1.33 to 1.40 times the truth when merchants plan into high-demand weeks, and 1.23 to 1.42 times in eight variants of that world.",
+      "url": "https://arxiv.org/abs/2611.20811",
+      "date_display": "2026-11-16"
+    },
+    {
+      "id": "arxiv-2611.20352",
+      "title": "EPI-SST: Renewal-Structured State-Space Transformers for Epidemic Forecasting",
+      "date": "2026-11-16",
+      "tag": "research",
+      "summary": "From the abstract: We propose EPI-SST (Epidemic State Space Transformer), a probabilistic forecaster centered on an evidence-driven renewal transition. … Across four epidemic surveillance benchmarks, EPI-SST achieves the lowest pooled RMSE on every dataset, reducing RMSE by up to 14.2 percent relative to the strongest baseline.",
+      "url": "https://arxiv.org/abs/2611.20352",
+      "date_display": "2026-11-16"
+    },
+    {
+      "id": "arxiv-2611.21149",
+      "title": "Cap-Aware Boosting for Green Day-Ahead Electricity Price Forecasting",
+      "date": "2026-11-16",
+      "tag": "research",
+      "summary": "From the abstract: The proposed system explicitly models price-cap behavior by separating capped-price events from normal market conditions. … Final forecasts are obtained through probabilistic blending of these components and are accompanied by nine quantile forecasts for uncertainty estimation.",
+      "url": "https://arxiv.org/abs/2611.21149",
+      "date_display": "2026-11-16"
+    },
+    {
+      "id": "arxiv-2611.20835",
+      "title": "Hierarchical Regime-Conditioned Dynamics for Spatiotemporal Graphs",
+      "date": "2026-11-16",
+      "tag": "research",
+      "summary": "From the abstract: We introduce HERON, a self-supervised regime-aware generative framework that unifies graph-structured trajectory generation with regime identification. … Without regime annotations, HERON jointly learns forecasts and regime dynamics in a self-supervised manner, recovering meaningful modes across controlled synthetic and real-world datasets while maintaining competitive forecasting performance.",
+      "url": "https://arxiv.org/abs/2611.20835",
+      "date_display": "2026-11-16"
+    },
+    {
+      "id": "arxiv-2611.20972",
+      "title": "FARCH: A Functional ARCH Model for Calibrated Prediction Bands",
+      "date": "2026-11-16",
+      "tag": "research",
+      "summary": "From the abstract: We propose FARCH, a functional nonlinear autoregressive model with conditional heteroscedasticity, in which the conditional mean and the conditional volatility of the next curve are forecasted jointly and nonparametrically, by reusing a single kernel weighting scheme --- built on a wavelet semi-metric between curves --- first on the curves themselves and then on their squared residuals. … From this pair of estimators we derive two constructions of prediction bands: a pointwise band, obtained from marginal scenario quantiles, and a uniform, sup-norm band, calibrated for decisions that concern the entire forecasted path rather than any single instant.",
+      "url": "https://arxiv.org/abs/2611.20972",
+      "date_display": "2026-11-16"
+    },
+    {
+      "id": "arxiv-2611.21552",
+      "title": "Benchmarking memory and nonlinear processing capacity of quantum recurrent neural networks for time series prediction",
+      "date": "2026-11-16",
+      "tag": "research",
+      "summary": "From the abstract: In this work, we present a rigorous benchmark of variational quantum recurrent neural networks (QRNNs) on time series prediction tasks, focusing on two key capabilities: memory and nonlinear processing. … Overall, the quantum models achieve performance comparable to their classical counterparts, but classical models scale better with the memory size within the range studied.",
+      "url": "https://arxiv.org/abs/2611.21552",
+      "date_display": "2026-11-16"
+    },
+    {
+      "id": "mdpi-smartgrids-1010002",
+      "title": "Lightweight Reservoir Fusion Architecture for Multi-Horizon Load Forecasting in Power Systems",
+      "date": "2026-11-16",
+      "tag": "research",
+      "summary": "From the abstract: This paper introduces a computationally efficient framework for real-time forecasting using a Stacked Reservoir Computing Architecture (SRCA) with dynamic horizon fusion and ridge-regularized readout. … The results demonstrate that the suggested architecture is a suitable and computationally efficient multi-horizon load forecasting method for current power systems.",
+      "url": "https://doi.org/10.3390/smartgrids1010002",
+      "date_display": "2026-11-16"
+    },
+    {
+      "id": "eai-ew-14761",
+      "title": "A wind power prediction method based on CEEMDAN- LightGBM-Transformer",
+      "date": "2026-11-16",
+      "tag": "research",
+      "summary": "From the abstract: This study proposes the CEEMDAN-LightGBM-Transformer model. … Finally, the multi-dimensional features are fused using a Transformer with an Encoder-Decoder architecture to generate a low-error power prediction sequence.",
+      "url": "https://doi.org/10.4108/ew.14761",
       "date_display": "2026-11-16"
     },
     {
@@ -99,6 +315,42 @@
       "date_display": "2026-11-15"
     },
     {
+      "id": "arxiv-2611.20114",
+      "title": "A plug-in energy-balance freezing module for transformer frost nowcasting without leaf-sensor inputs",
+      "date": "2026-11-15",
+      "tag": "research",
+      "summary": "From the abstract: We develop a transformer-compatible module that embeds leaf energy-balance physics in freezing-probability forecasts: an energy-balance temperature reference and a learned residual predict leaf temperature, which drives a multiplicative gate imposing a temperature-dependent probability cap. … At held-out stations without static or leaf-sensor inputs, both module-equipped backbones exceeded LightGBM at all 12 leads (CSI 0.468 and 0.467 versus 0.437).",
+      "url": "https://arxiv.org/abs/2611.20114",
+      "date_display": "2026-11-15"
+    },
+    {
+      "id": "arxiv-2611.20180",
+      "title": "UrbanROI: Causal Modeling for Regional ROI Forecasting under POI Entry",
+      "date": "2026-11-15",
+      "tag": "research",
+      "summary": "From the abstract: To address these challenges, we propose UrbanROI, an intervention-aware causal forecasting framework for region-level economic outcome prediction. … Extensive experiments on large-scale real-world POI and advertising datasets demonstrate that UrbanROI consistently outperforms strong baselines in post-entry regional ROI forecasting.",
+      "url": "https://arxiv.org/abs/2611.20180",
+      "date_display": "2026-11-15"
+    },
+    {
+      "id": "mdpi-electronics-15225307",
+      "title": "HTRNet: Hierarchical Temporal-Relation Refinement Network for Multivariate Time Series Forecasting",
+      "date": "2026-11-15",
+      "tag": "research",
+      "summary": "From the abstract: In this paper, we propose a Hierarchical Temporal-Relation Refinement Network (HTRNet) for multivariate time series forecasting. … Averaging the relative reductions against the best baseline for each dataset and metric yields improvements of 2.01% in MSE and 4.83% in MAE.",
+      "url": "https://doi.org/10.3390/electronics15225307",
+      "date_display": "2026-11-15"
+    },
+    {
+      "id": "jeht-v2i2-2370",
+      "title": "Uncalibrated AI models limit the transferability of probabilistic photovoltaic forecasts",
+      "date": "2026-11-15",
+      "tag": "research",
+      "summary": "From the abstract: Probabilistic forecasts of Photovoltaic (PV) power are useful only if their intervals remain calibrated at new sites, in new seasons, and with the information available when forecasts are issued. … The evidence supports AI for more accurate PV forecast distributions in-distribution, not yet for calibrated and transferable forecasts under shift.",
+      "url": "https://doi.org/10.55942/jeht.v2i2.2370",
+      "date_display": "2026-11-15"
+    },
+    {
       "id": "mdpi-forecast-8060109",
       "title": "Monthly Peak-Demand Forecasting and Conditional Long-Horizon Scenarios with a Tri-Model Ensemble",
       "date": "2026-11-14",
@@ -114,6 +366,33 @@
       "tag": "research",
       "summary": "From the abstract: We propose Conformal Expert Pools (CEP), a training-free successor. … We evaluate CEP on the CSP benchmark of 232 datasets and 24,502 forecast windows, using 95% prediction intervals.",
       "url": "https://doi.org/10.5281/zenodo.24218238",
+      "date_display": "2026-11-14"
+    },
+    {
+      "id": "arxiv-2611.19586",
+      "title": "SLiDE: Structured Linear Dynamics for Forecasting with Exogenous Inputs",
+      "date": "2026-11-14",
+      "tag": "research",
+      "summary": "From the abstract: We propose SLiDE, a Koopman-inspired architecture for forecasting with exogenous inputs that imposes structure on latent temporal dynamics. … SLiDE is especially effective at generalizing to shifted exogenous inputs, reducing MSE by 20% on electricity price samples with out-of-range exogenous values and MAE by 30% in a synthetic transfer setting where the same dynamical system is driven by an unseen exogenous process.",
+      "url": "https://arxiv.org/abs/2611.19586",
+      "date_display": "2026-11-14"
+    },
+    {
+      "id": "arxiv-2611.19330",
+      "title": "Benchmarking the State of AI for Crop Yield Forecasting: A Global Assessment Across Modeling Paradigms",
+      "date": "2026-11-14",
+      "tag": "research",
+      "summary": "From the abstract: We address this gap through a comprehensive benchmark of five modeling paradigms -- statistical baselines, process-based models, conventional feature-engineered machine learning, deep sequence models, and tabular foundation models -- using the CY-Bench benchmark spanning 63 country-crop datasets (>12,000 administrative regions) across six continents. … Across all modeling paradigms, spatial prediction is substantially easier than temporal and anomaly prediction.",
+      "url": "https://arxiv.org/abs/2611.19330",
+      "date_display": "2026-11-14"
+    },
+    {
+      "id": "wiley-sam-70119",
+      "title": "REGAIN : REconciliation GAIN ‐Driven Auxiliary Direction Learning",
+      "date": "2026-11-14",
+      "tag": "research",
+      "summary": "From the abstract: We propose REGAIN, a reconciliation‐gain framework that learns normalized auxiliary directions, forecasts the induced series with a frozen forecasting oracle, and selects auxiliary directions according to their reduction in weighted forecasting loss on the target variables after reconciliation. … Experiments on Beijing PM2.5 and Australian Tourism data show that gain‐selected measurements can improve both ordinary multivariate and hierarchical forecasts, especially when they reveal residual uncertainty not captured by the original measurement system.",
+      "url": "https://doi.org/10.1002/sam.70119",
       "date_display": "2026-11-14"
     },
     {
@@ -258,6 +537,24 @@
       "tag": "research",
       "summary": "From the abstract: Here, we conduct a systematic comparison of a PINN-based framework and a stochastic mechanistic model. … Interestingly, while PINNs underperform in synthetic scenarios, they achieve better performance on real data.",
       "url": "https://arxiv.org/abs/2611.18389",
+      "date_display": "2026-11-13"
+    },
+    {
+      "id": "arxiv-2611.18802",
+      "title": "Actuarial-Informed Neural Networks: Constrained Deep Learning for Sex-Specific Multi-Population Longevity Forecasting",
+      "date": "2026-11-13",
+      "tag": "research",
+      "summary": "From the abstract: We introduce Actuarial-Informed Neural Networks (AINN), a constrained deep learning framework for sex-specific multi-population longevity forecasting that embeds actuarial knowledge into LSTM training through differentiable penalty terms. … A 10-year out-of-sample backtest (trained on 1956-2010, validated against observed HMD life expectancy for 2011-2020) yields a mean absolute error of 0.38 years, with 11 of 12 country x sex combinations within the 90% confidence interval.",
+      "url": "https://arxiv.org/abs/2611.18802",
+      "date_display": "2026-11-13"
+    },
+    {
+      "id": "wiley-for-70242",
+      "title": "Hybrid Forecasting Model for Carbon Price: Integrating Chronological and Weekday‐Structured Temporal Representations",
+      "date": "2026-11-13",
+      "tag": "research",
+      "summary": "From the abstract: This study examines whether two temporal representations of the same carbon price series—the original chronological sequence (horizontal dimension) and five weekday‐structured subsequences (vertical dimension) obtained by regrouping Monday‐to‐Friday observations—contain complementary predictive information. … Additional experiments on the Shenzhen and Chongqing carbon markets show that the incremental gain is modest, and its statistical significance is market‐dependent: It is significant in Chongqing but not in Shenzhen.",
+      "url": "https://doi.org/10.1002/for.70242",
       "date_display": "2026-11-13"
     },
     {
