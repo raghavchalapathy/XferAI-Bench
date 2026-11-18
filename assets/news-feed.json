@@ -1,13 +1,85 @@
 {
   "schema_version": 1,
   "provenance": {
-    "source": "factory/inbox/reviewer/news-feed-v3.22-review-20261117/news_feed_v3.22.json",
-    "source_sha256": "7ef6c3b2b8ba67d730964d36b1b2e98e315113974b7c4582aee93a259cf7a233",
-    "review": "factory/inbox/reviewer/news-feed-v3.22-review-20261117/review.json",
-    "review_sha256": "0cf95d9177d008eee492682fc985dd7ff3cd8b2a56842e4a7cba31fb1ad98a89",
+    "source": "factory/inbox/reviewer/news-feed-v3.23-review-20261118/news_feed_v3.23.1.json",
+    "source_sha256": "1c642cb99504909f97a8008aaf07d32413315c6cde3acec602e41c2e1cdd3894",
+    "review": "factory/inbox/reviewer/news-feed-v3.23-review-20261118/review.json",
+    "review_sha256": "73a62e88fe0af34abc25747443f7320717e7cc0d8afd2c663793034a60645ca1",
     "verdict": "APPROVE"
   },
   "items": [
+    {
+      "id": "springer-afe-s40100-026-00534-2",
+      "title": "Market conditions, temporal dynamics, and short-run forecasting of Thailand’s fattening hog prices: a dynamic regression approach",
+      "date": "2026-11-18",
+      "tag": "research",
+      "summary": "From the abstract: This study develops an interpretable dynamic-regression framework for analyzing and forecasting Thailand’s fattening hog prices using monthly data from January 2001 to February 2026. … Under a feasible forecast-origin information set using a transparent no-change assumption for future explanatory variables, however, the dynamic regression is competitive with naïve and ARIMA benchmarks but does not uniformly outperform them across horizons and accuracy measures.",
+      "url": "https://doi.org/10.1186/s40100-026-00534-2",
+      "date_display": "2026-11-18"
+    },
+    {
+      "id": "mdpi-machines-14111375",
+      "title": "Leakage-Controlled Evaluation of CNN-LSTM Models for Process Temperature Forecasting and Soft Sensing in Machining: Evidence from the AI4I 2020 Benchmark",
+      "date": "2026-11-18",
+      "tag": "research",
+      "summary": "From the abstract: We re-examine process temperature forecasting and soft sensing on the AI4I 2020 benchmark under a leakage-controlled protocol: a chronological split with a purge gap, training-only scaling, five seeds, block-bootstrap confidence intervals and Diebold–Mariano tests with an autocorrelation-robust variance. … On this benchmark, the evaluation protocol changed the conclusions more than did the choice of architecture.",
+      "url": "https://doi.org/10.3390/machines14111375",
+      "date_display": "2026-11-18"
+    },
+    {
+      "id": "frontiers-fenvs-2026-1971486",
+      "title": "Physics-guided multi-scale temporal transformer with dynamic key variable selection for building energy consumption forecasting",
+      "date": "2026-11-18",
+      "tag": "research",
+      "summary": "From the abstract: This paper proposes a novel physics-guided multi-scale temporal Transformer (PMSTFormer) for building energy consumption forecasting. … Comparative studies demonstrate that the proposed PMSTFormer consistently outperforms state-of-the-art forecasting models.",
+      "url": "https://doi.org/10.3389/fenvs.2026.1971486",
+      "date_display": "2026-11-18"
+    },
+    {
+      "id": "iop-physscr-aec0da",
+      "title": "A multi-strategy crested porcupine optimizer for air quality forecasting",
+      "date": "2026-11-18",
+      "tag": "research",
+      "summary": "From the abstract: To address these limitations, an improved crested porcupine optimizer (ICPO) is proposed, which incorporates three targeted strategies to optimize search directions, step-size evolution, and population guidance. … In the reported air quality forecasting comparison, ICPO-optimized long short-term memory (ICPO-LSTM) achieves the lowest mean normalized root mean square error (RMSE) and mean absolute error, reducing these metrics by 3.40% and 6.33%, respectively, relative to default LSTM, and achieves the highest mean pollutant-specific R 2 .",
+      "url": "https://doi.org/10.1088/1402-4896/aec0da",
+      "date_display": "2026-11-18"
+    },
+    {
+      "id": "researchsquare-rs-11515411-v1",
+      "title": "Forecasting agricultural value added under drought risk in Morocco: a hybrid Fourier ARDL–neural network approach",
+      "date": "2026-11-18",
+      "tag": "research",
+      "summary": "From the abstract: We propose a hybrid model in which a Fourier ARDL captures the linear relation and gradual structural change, and a small neural network, selected on a separate validation period, models the nonlinear structure left in its residuals. … Over 2020–2025, the Fourier terms improve four-quarter-ahead forecasts by about 30 percent relative to a standard ARDL, and the hybrid model is the most accurate of six models, with a mean absolute percentage error of 5.4 percent against 11.1 percent for ARIMA, although the network’s own contribution is modest.",
+      "url": "https://www.researchsquare.com/article/rs-11515411/v1",
+      "date_display": "2026-11-18"
+    },
+    {
+      "id": "researchsquare-rs-11769962-v1",
+      "title": "Anchoring Machine Learning to Persistence: A Regime-Aware Residual-Learning Framework for Forecasting Ghanaian Headline Inflation",
+      "date": "2026-11-18",
+      "tag": "research",
+      "summary": "From the abstract: We propose persistence-anchored residual learning (PARL). … Using 280 months of Bank of Ghana data (January 2000 to April 2023), strictly one-step-ahead forecasts and a 42-month test window that contains the surge, we find that predicting the monthly change instead of the level cuts the test RMSE of the nonlinear learners by 64 to 80 percent, to values near that of the ARIMA anchor (2.15 percentage points).",
+      "url": "https://www.researchsquare.com/article/rs-11769962/v1",
+      "date_display": "2026-11-18"
+    },
+    {
+      "id": "zenodo-24330607",
+      "title": "cmf-chronos-fusion: code and results for pre-tokenization multivariate fusion with a frozen Chronos-T5",
+      "date": "2026-11-18",
+      "tag": "research",
+      "summary": "From the record description: Reproducibility package for the SINERGI manuscript on Chronos Multivariate Fusion (CMF). … The archive contains the experiment runners and analysis scripts, pinned software requirements, frozen protocols, per-origin losses, and reconstruction instructions for eight energy forecasting datasets.",
+      "url": "https://doi.org/10.5281/zenodo.24330607",
+      "date_display": "2026-11-18"
+    },
+    {
+      "id": "zenodo-24341408",
+      "title": "SeasCalving",
+      "date": "2026-11-18",
+      "tag": "research",
+      "summary": "From the record description: Training, validation, and test data for Seasonal Forecasting of Marine-Terminating Glacier Calving Fronts in 2D with Deep Learning. … Calving front time series for 123 marine-terminating glaciers in Svalbard (2013–2023), with geophysical fields and climate scalars, packaged as one Zarr store per glacier. 90-day forecasting task: given five front positions from the past year, predict the front 90 days after the most recent input.",
+      "url": "https://doi.org/10.5281/zenodo.24341408",
+      "date_display": "2026-11-18"
+    },
     {
       "id": "mdpi-asi-9110242",
       "title": "Hybrid Architecture of Kolmogorov–Arnold Networks and XGBoost with a Residual Damping Mechanism for Wind Power Forecasting",
@@ -123,6 +195,78 @@
       "tag": "research",
       "summary": "From the record description: The study compares these model families on data released after every model's training cutoff. … Data were fetched up to 2026-11-10; live endpoints now return later data.",
       "url": "https://doi.org/10.5281/zenodo.24311255",
+      "date_display": "2026-11-17"
+    },
+    {
+      "id": "arxiv-2611.22133",
+      "title": "ReMoE: An Interpretable Mixture-of-Experts Framework for Human Mobility Recovery Forecasting Across Disasters",
+      "date": "2026-11-17",
+      "tag": "research",
+      "summary": "From the abstract: Motivated by this, we propose ReMoE, an interpretable mixture-of-experts framework for cross-disaster mobility recovery forecasting. … ReMoE is competitive in-distribution and achieves the strongest performance on unseen events and hazard types, with larger gains under greater distribution shifts.",
+      "url": "https://arxiv.org/abs/2611.22133",
+      "date_display": "2026-11-17"
+    },
+    {
+      "id": "arxiv-2611.22537",
+      "title": "Testing World Models on Actions They Have Never Seen: Held-Out Plans, Forecast Accuracy and Price Rules in Retail",
+      "date": "2026-11-17",
+      "tag": "research",
+      "summary": "From the abstract: We run it in retail, where the action is a price and promotion plan, across 2,853 fitted models. … First, forecast accuracy is a fair guide between kinds of model (rank correlation with error on new plans 0.32 to 0.66) and a poor guide between versions of one world model: where merchants plan into high-demand weeks the link reverses, down to -0.69.",
+      "url": "https://arxiv.org/abs/2611.22537",
+      "date_display": "2026-11-17"
+    },
+    {
+      "id": "arxiv-2611.23129",
+      "title": "Where Should Physics Enter? Information, Identifiability and Calibration in Probabilistic Sea Surface Temperature Forecasting",
+      "date": "2026-11-17",
+      "tag": "research",
+      "summary": "From the abstract: We test where such a prior must enter a heteroscedastic ConvLSTM to help, using daily NOAA OISST v2.1 for the Bay of Bengal (1982-2024) and a synthetic benchmark on the same grid with known currents of controlled strength. … (v) The defect that matters is lead-dependent miscalibration shared by every model.",
+      "url": "https://arxiv.org/abs/2611.23129",
+      "date_display": "2026-11-17"
+    },
+    {
+      "id": "arxiv-2611.23126",
+      "title": "Which Past Matters? Training History and Multi-Forecast Horizon in Equity Transformers",
+      "date": "2026-11-17",
+      "tag": "research",
+      "summary": "From the abstract: We therefore examine how training quantity and historical selection interact with forecast horizon in intraday equity prediction. … Six-month recency sampling leads individual models at 5-15 minutes, while multi recency configurations lead at 20-30 minutes and uniform configurations at 60-120 minutes.",
+      "url": "https://arxiv.org/abs/2611.23126",
+      "date_display": "2026-11-17"
+    },
+    {
+      "id": "arxiv-2611.22024",
+      "title": "An AI-Based OSSE Framework to Evaluate Learned Physical Consistency: A Multi-Model Study Using FourCastNet, Aurora, Prithvi WxC, and GraphCast",
+      "date": "2026-11-17",
+      "tag": "research",
+      "summary": "From the abstract: We present the first AI-based OSSE framework to test whether different AI weather models can reproduce comparable physical impact from new observations that traditional physics based models generate. … Distinct architectural AI weather models respond differently to the same OSSE observations.",
+      "url": "https://arxiv.org/abs/2611.22024",
+      "date_display": "2026-11-17"
+    },
+    {
+      "id": "wiley-for-70233",
+      "title": "How Do Standard Time Series Forecasting Benchmarks Translate to Finance? A Broad Study of Risk Adjusted Performance",
+      "date": "2026-11-17",
+      "tag": "research",
+      "summary": "From the abstract: We benchmark 16 deep learning architectures for time series forecasting, including Transformers, State Space Models (SSMs), xLSTMs, and recurrent hybrids, on a 15‐year daily futures dataset using an end‐to‐end volatility‐targeted Sharpe ratio optimization task. … These findings suggest that success on standard time‐series benchmarks does not reliably transfer to finance, and that architectures tailored to the unique properties of asset returns may remain more effective than generic attention‐based approaches for financial forecasting.",
+      "url": "https://doi.org/10.1002/for.70233",
+      "date_display": "2026-11-17"
+    },
+    {
+      "id": "wiley-jawra-70159",
+      "title": "Benchmarking Analog and Ensemble‐Based Seasonal Forecasting Strategies for Water Management in the Upper Rio Grande Basin",
+      "date": "2026-11-17",
+      "tag": "research",
+      "summary": "From the abstract: We evaluate whether ensemble forecasts can provide an improved source of sequences (versus analogs) via a hindcast‐based benchmarking assessment, applying process‐based hydrologic modeling for US Bureau of Reclamation inflow points in the Upper Rio Grande (URG) basin. … Across thirteen URG forecast points, the post‐processed ESP mean sequences improved hydrograph shape relative to analog‐based sequences, with a median Kling‐Gupta Efficiency (KGE) increase of +0.09.",
+      "url": "https://doi.org/10.1111/1752-1688.70159",
+      "date_display": "2026-11-17"
+    },
+    {
+      "id": "mdpi-forecast-8060111",
+      "title": "Evidence-Weighted Monte Carlo Forecasting with Qualitative Scorecards: A Simulation Study and Corporate Illustration",
+      "date": "2026-11-17",
+      "tag": "research",
+      "summary": "From the abstract: Evidence-Weighted Monte Carlo (EWMC) links a five-point scorecard to bounded changes in downside and upside scenario probabilities. … Under informative evidence, EWMC reduces the continuous ranked probability score (CRPS) from 6.119 to 5.836.",
+      "url": "https://doi.org/10.3390/forecast8060111",
       "date_display": "2026-11-17"
     },
     {
@@ -348,6 +492,15 @@
       "tag": "research",
       "summary": "From the abstract: Probabilistic forecasts of Photovoltaic (PV) power are useful only if their intervals remain calibrated at new sites, in new seasons, and with the information available when forecasts are issued. … The evidence supports AI for more accurate PV forecast distributions in-distribution, not yet for calibrated and transferable forecasts under shift.",
       "url": "https://doi.org/10.55942/jeht.v2i2.2370",
+      "date_display": "2026-11-15"
+    },
+    {
+      "id": "arxiv-2611.21680",
+      "title": "Edge-Adaptive Hiera-Seg Model for Building-Integrated Photovoltaic Power Forecasting",
+      "date": "2026-11-15",
+      "tag": "research",
+      "summary": "From the abstract: This paper proposes an edge-adaptive HieraSeg model for short term BIPV power forecasting with multi-orientation visual-irradiance fusion. … Experiments are designed on a simulated multibuilding BIPV dataset with unseen building and unseen orientation tests.",
+      "url": "https://arxiv.org/abs/2611.21680",
       "date_display": "2026-11-15"
     },
     {
