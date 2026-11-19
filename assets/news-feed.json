@@ -1,13 +1,112 @@
 {
   "schema_version": 1,
   "provenance": {
-    "source": "factory/inbox/reviewer/news-feed-v3.23-review-20261118/news_feed_v3.23.1.json",
-    "source_sha256": "1c642cb99504909f97a8008aaf07d32413315c6cde3acec602e41c2e1cdd3894",
-    "review": "factory/inbox/reviewer/news-feed-v3.23-review-20261118/review.json",
-    "review_sha256": "73a62e88fe0af34abc25747443f7320717e7cc0d8afd2c663793034a60645ca1",
+    "source": "factory/inbox/reviewer/news-feed-v3.24-review-20261119/news_feed_v3.24.1.json",
+    "source_sha256": "4b910224dcf3a971932a938f8cc3cea21c6e79134243844718a367d17fc6ab8a",
+    "review": "factory/inbox/reviewer/news-feed-v3.24-review-20261119/review.json",
+    "review_sha256": "84b9e57ec3760b4d95e0d5871f7b86d5ed497f2a065527918de8f45729af2b04",
     "verdict": "APPROVE"
   },
   "items": [
+    {
+      "id": "mdpi-water-18222891",
+      "title": "Multi-Lead-Time Daily Streamflow Forecasting via Out-of-Fold Residual Correction and Flood-Peak-Aware Soft-Gated Dual-Expert Fusion: A Case Study at Yichang Station in the Upper Yangtze River",
+      "date": "2026-11-19",
+      "tag": "research",
+      "summary": "From the abstract: This study develops a hydrologically informed dual-expert framework for 1-, 3-, 5-, and 7-day-ahead streamflow forecasting at Yichang Station in the upper Yangtze River. … Relative to the baseline LSTM, the framework reduced mean RMSE by 0.93%, 10.26%, 9.93%, and 4.87% and mean P95-MAPE by 5.63%, 12.78%, 17.20%, and 22.55% at the four lead times, respectively.",
+      "url": "https://doi.org/10.3390/w18222891",
+      "date_display": "2026-11-19"
+    },
+    {
+      "id": "mdpi-mathematics-14224262",
+      "title": "CoRAF: State-Conditioned Source Coupling for Retrieval-Augmented Traffic Forecasting",
+      "date": "2026-11-19",
+      "tag": "research",
+      "summary": "From the abstract: We propose CoRAF, a retrieval-augmented forecasting framework that adapts the degree of source sharing to the current traffic state. … Experiments on PEMS03, PEMS04, PEMS07, and PEMS08 with a one-hour forecasting horizon show that CoRAF achieves the lowest reported mean absolute error (MAE) and mean absolute percentage error (MAPE) among the compared methods, reducing MAE by 0.45%–6.29% relative to the best published baseline results on the respective datasets.",
+      "url": "https://doi.org/10.3390/math14224262",
+      "date_display": "2026-11-19"
+    },
+    {
+      "id": "mdpi-jmse-14222198",
+      "title": "Variable-Wise Attention for One-Hour-Ahead Forecasting of Moored-Vessel Motions with Vessel-Holdout Evaluation",
+      "date": "2026-11-19",
+      "tag": "research",
+      "summary": "From the abstract: We evaluate a variable-wise inverted transformer for one-hour-ahead prediction of significant motion amplitudes in all six degrees of freedom, using motion history, ocean-meteorological forcing, vessel geometry, and berthing information. … Variable-wise attention offers a lightweight option on par with the strongest baselines, underscoring the strength of simple baselines and the importance of vessel-level holdout evaluation.",
+      "url": "https://doi.org/10.3390/jmse14222198",
+      "date_display": "2026-11-19"
+    },
+    {
+      "id": "mdpi-electronics-15225393",
+      "title": "RFIN: A Recurrent Flow Interaction Network for Traffic Matrix Forecasting",
+      "date": "2026-11-19",
+      "tag": "research",
+      "summary": "From the abstract: To address this question, we propose the recurrent flow interaction network (RFIN), which builds on flow-by-flow (FBF) temporal modeling and uses a small number of shared cores to exchange information among OD flows. … The results show that RFIN generally outperforms these methods in short-term traffic matrix forecasting, providing a practical approach to organizing and using cross-flow information.",
+      "url": "https://doi.org/10.3390/electronics15225393",
+      "date_display": "2026-11-19"
+    },
+    {
+      "id": "mdpi-atmos-17111146",
+      "title": "Physically Motivated Dual-Branch Network for Multi-Scale CO2 Concentration Forecasting in Coal-Fired Units",
+      "date": "2026-11-19",
+      "tag": "research",
+      "summary": "From the abstract: This paper couples data analysis with model design in an end-to-end framework for multi-scale CO2 concentration forecasting. … On operational data from four units at three sampling resolutions, the model attains the best or second-best value in all 36 metric comparisons, the best value in 23 of them, and an inference latency of 5.28 ms, compatible with power-plant control system deployment.",
+      "url": "https://doi.org/10.3390/atmos17111146",
+      "date_display": "2026-11-19"
+    },
+    {
+      "id": "iospress-atde261530",
+      "title": "S4DG-Net: Frequency-Gated State-Space Diffusion Graph Network for Multi-Horizon Traffic Forecasting",
+      "date": "2026-11-19",
+      "tag": "research",
+      "summary": "From the abstract: We present S4DG-Net, a compact spatiotemporal model that combines a frequency-gated temporal mixer, multi-support graph diffusion with input-adaptive hop weighting, and a residual horizon decoder. … On METR-LA, PEMS-BAY, PEMS04, and PEMS08 with 12-step input and output windows, S4DG-Net attains average MAE/RMSE/MAPE of 2.976/5.978/8.266, 1.588/3.533/3.565, 18.871/31.334/10.981, and 14.965/24.500/8.511 respectively, under pooled masked evaluation.",
+      "url": "https://doi.org/10.3233/atde261530",
+      "date_display": "2026-11-19"
+    },
+    {
+      "id": "spie-12-3134460",
+      "title": "Research on regional load forecasting integrating GIS and UAV remote sensing",
+      "date": "2026-11-19",
+      "tag": "research",
+      "summary": "From the abstract: The main contents of this paper are a regional load forecasting method that combines Geographic Information System (GIS) and UAV remote sensing features to address problems in regional load forecasting, such as large spatial distribution differences of distribution transformers, changing load boundaries due to urban construction, lack of timely updates, and the inability to explain local peak loads with only historical load sequences. … It is a Spatio-temporal Graph Convolutional Network with Modal Attention for short-term load forecasting.",
+      "url": "https://doi.org/10.1117/12.3134460",
+      "date_display": "2026-11-19"
+    },
+    {
+      "id": "researchsquare-rs-11587794-v1",
+      "title": "Bounded affine barycentric-coordinate prediction for improving local extreme value forecasting",
+      "date": "2026-11-19",
+      "tag": "research",
+      "summary": "From the abstract: We propose an extrapolative method of time-series prediction based on barycentric coordinates. … These results indicate that the benefit of bounded affine extrapolation is restricted to selected clean-data and short- to moderate-horizon conditions.",
+      "url": "https://www.researchsquare.com/article/rs-11587794/v1",
+      "date_display": "2026-11-19"
+    },
+    {
+      "id": "researchsquare-rs-11447734-v1",
+      "title": "Neural Forecasting of Daily Commodity Futures Returns Against a Zero-Return Benchmark",
+      "date": "2026-11-19",
+      "tag": "research",
+      "summary": "From the abstract: We propose an evaluation protocol for neural return forecasts that combines four elements: a zero-return benchmark with loss-based block-bootstrap tests and confidence bounds on the panel mean out-of-sample R²; an exact decomposition of R² into squared forecast–return alignment and an amplitude penalty; calibration that uses only past data; and the certainty-equivalent return of a mean–variance investor after transaction costs. … No neural model improves significantly on zero, and the upper 95% bound on the mean daily R² is 0.16%.",
+      "url": "https://www.researchsquare.com/article/rs-11447734/v1",
+      "date_display": "2026-11-19"
+    },
+    {
+      "id": "researchsquare-rs-11322350-v1",
+      "title": "Forecasting precipitable water vapor at unmonitored coastal sites using a sparse GNSS network and NWP forecasts",
+      "date": "2026-11-19",
+      "tag": "research",
+      "summary": "From the abstract: Here, we establish a sparse-GNSS-backbone regional forecasting framework that projects observation-informed calibration beyond sensor footprints by coupling GNSS anchors with continuous NWP tendencies through geographically biased graph attention. … An independent 138-station benchmark along the US coast confirms cross-continental portability: a 30-station backbone reliably projects calibration across 108 verification targets (reducing error by 6.1% over calibrated NWP), with skill sustained across 200–300 km.",
+      "url": "https://www.researchsquare.com/article/rs-11322350/v1",
+      "date_display": "2026-11-19"
+    },
+    {
+      "id": "researchsquare-rs-11032768-v1",
+      "title": "A Multi-Branch Deep Feature Fusion Framework Utilizing TCN and ANN for Short-Term Building Load Forecasting Under Pre-Scheduled Constraints",
+      "date": "2026-11-19",
+      "tag": "research",
+      "summary": "From the abstract: This paper proposes a multi-branch deep feature fusion TCN-ANN hybrid framework for hourly building energy forecasting using a single year of historical operational data (8,760 samples). … The model achieved an RMSE of 20.03 kW and a coefficient of determination (R²) of 0.9721, demonstrating excellent forecasting performance.",
+      "url": "https://www.researchsquare.com/article/rs-11032768/v1",
+      "date_display": "2026-11-19"
+    },
     {
       "id": "springer-afe-s40100-026-00534-2",
       "title": "Market conditions, temporal dynamics, and short-run forecasting of Thailand’s fattening hog prices: a dynamic regression approach",
@@ -78,6 +177,51 @@
       "tag": "research",
       "summary": "From the record description: Training, validation, and test data for Seasonal Forecasting of Marine-Terminating Glacier Calving Fronts in 2D with Deep Learning. … Calving front time series for 123 marine-terminating glaciers in Svalbard (2013–2023), with geophysical fields and climate scalars, packaged as one Zarr store per glacier. 90-day forecasting task: given five front positions from the past year, predict the front 90 days after the most recent input.",
       "url": "https://doi.org/10.5281/zenodo.24341408",
+      "date_display": "2026-11-18"
+    },
+    {
+      "id": "arxiv-2611.23815",
+      "title": "CAFE-AQI: Coverage-Aware Day-Ahead AQI Forecasting with Early Warning and Conformal Uncertainty in Bangladesh",
+      "date": "2026-11-18",
+      "tag": "research",
+      "summary": "From the abstract: To address these issues, this paper presents CAFE-AQI, a coverage-aware framework for forecasting next-day maximum AQI. … When an entire spatial block was excluded from training, the MAE remained 10.66, showing that the lightweight model transferred reasonably well to unseen locations.",
+      "url": "https://arxiv.org/abs/2611.23815",
+      "date_display": "2026-11-18"
+    },
+    {
+      "id": "arxiv-2611.24257",
+      "title": "TRESS: A Fixed-Size History Representation for Irregular Time Series Forecasting",
+      "date": "2026-11-18",
+      "tag": "research",
+      "summary": "From the abstract: We propose TRESS (Timestamped Recent Events and Statistical Summaries), a forecasting model that retains the latest observations at their original times and summarises the full history of each variable. … Retaining 8 to 16 observations per variable, TRESS records the lowest mean test MSE and MAE among the methods compared on all four benchmarks.",
+      "url": "https://arxiv.org/abs/2611.24257",
+      "date_display": "2026-11-18"
+    },
+    {
+      "id": "arxiv-2611.24329",
+      "title": "Distribution-Free Uncertainty Quantification for Weather Forecasting: Conformal Prediction Under Spatiotemporal Dependence",
+      "date": "2026-11-18",
+      "tag": "research",
+      "summary": "From the abstract: I benchmark eight interval-construction procedures (Gaussian, pooled and per-cell split conformal, per-season, adaptive conformal inference and rolling windows) for gridded 2 m temperature forecasts at eight lead times from 6 hours to 10 days, using ERA5 at 5.625 degree resolution, a deliberately modest convolutional forecaster and ECMWF's operational HRES, with calibration in 2017-2018 and testing in 2019-2021. … Per-cell methods reach near-nominal marginal coverage, yet the day-to-day variance of the fraction of cells covered is roughly 3 to 10 times what independent cells would give, and misses cluster in time; both effects grow with lead time for the CNN, also appear for HRES, and are shared by all methods.",
+      "url": "https://arxiv.org/abs/2611.24329",
+      "date_display": "2026-11-18"
+    },
+    {
+      "id": "arxiv-2611.24425",
+      "title": "Predicting Process-Level Behavior: A Benchmarking Study",
+      "date": "2026-11-18",
+      "tag": "research",
+      "summary": "From the abstract: We answer this question through a comprehensive benchmarking study of two process-level prediction tasks: concurrent trace prediction and average throughput time prediction. … Notably, aggregated trace-level predictions cause errors to compound on process-level, reducing accuracy and highlighting process-level prediction as a distinct predictive task that warrants dedicated research.",
+      "url": "https://arxiv.org/abs/2611.24425",
+      "date_display": "2026-11-18"
+    },
+    {
+      "id": "plosone-pone-0362741",
+      "title": "DTCN-RevIN: A Densely Temporal Causal Network with reversible instance normalization for enhanced weather forecasting via multi-scale feature integration",
+      "date": "2026-11-18",
+      "tag": "research",
+      "summary": "From the abstract: To address these challenges, this study proposes the Densely Temporal Causal Network with Reversible Instance Normalization (DTCN), a deep learning architecture that combines: (1) causal dilated convolutions for efficient temporal modeling, (2) dense inter-layer connections for enhanced feature propagation, (3) multi-scale feature integration, and critically, (4) RevIN standardization to address distribution shift in meteorological time series. … These findings establish DTCN as a competitive data-driven alternative for short-range weather forecasting rather than an unambiguous winner across every metric and variable.",
+      "url": "https://doi.org/10.1371/journal.pone.0362741",
       "date_display": "2026-11-18"
     },
     {
