@@ -1,13 +1,67 @@
 {
   "schema_version": 1,
   "provenance": {
-    "source": "factory/inbox/reviewer/news-feed-v3.24-review-20261119/news_feed_v3.24.1.json",
-    "source_sha256": "4b910224dcf3a971932a938f8cc3cea21c6e79134243844718a367d17fc6ab8a",
-    "review": "factory/inbox/reviewer/news-feed-v3.24-review-20261119/review.json",
-    "review_sha256": "84b9e57ec3760b4d95e0d5871f7b86d5ed497f2a065527918de8f45729af2b04",
+    "source": "factory/inbox/reviewer/news-feed-v3.25-review-20261120/news_feed_v3.25.1.json",
+    "source_sha256": "9987fce8405cc481c71e99d11f061f9044390234d3d9dc77f429cfab38d4264c",
+    "review": "factory/inbox/reviewer/news-feed-v3.25-review-20261120/review.json",
+    "review_sha256": "1e10cbbc830666bc5f2601e4b44eee63590f555ed65c81c248d8b33f030f4018",
     "verdict": "APPROVE"
   },
   "items": [
+    {
+      "id": "mdpi-electronics-15225416",
+      "title": "CVGKAN: A Hybrid Short-Term Load Forecasting Framework Based on Cascaded Signal Decomposition and GRU-KAN",
+      "date": "2026-11-20",
+      "tag": "research",
+      "summary": "From the abstract: This study proposes CVGKAN, a hierarchical decomposition and gated recurrent unit–Kolmogorov–Arnold network (GRU–KAN) framework. … In 30 runs per horizon on the Panama electricity load dataset, CVGKAN achieved the lowest mean root mean square error (RMSE) for one-hour-ahead and direct 12- and 24-step forecasts.",
+      "url": "https://doi.org/10.3390/electronics15225416",
+      "date_display": "2026-11-20"
+    },
+    {
+      "id": "mdpi-water-18222899",
+      "title": "Daily Discharge Forecasting for the Lijiang River Using Heterogeneous Ensemble Learning and Karst Hydrology-Inspired Features",
+      "date": "2026-11-20",
+      "tag": "research",
+      "summary": "From the abstract: To this end, a weighted heterogeneous ensemble model integrating karst hydrology-inspired features with Light Gradient Boosting Machine (LightGBM), Categorical Boosting (CatBoost), and Extremely Randomized Trees (ExtraTrees) was established. … The results showed that the proposed ensemble model reliably reproduced daily discharge variability, achieving test-period RMSE, NSE, and KGE values of 93.8 m3 s−1, 0.880, and 0.907, respectively.",
+      "url": "https://doi.org/10.3390/w18222899",
+      "date_display": "2026-11-20"
+    },
+    {
+      "id": "sae-2026-99-2608",
+      "title": "Short-Term Passenger Flow Forecasting for Urban Rail Transit Based on Multi-View Spatial Graph Fusion",
+      "date": "2026-11-20",
+      "tag": "research",
+      "summary": "From the abstract: To address this limitation, this study proposes a Multi-View Spatio-Temporal Graph Neural Network, termed MV-STGNN. … Experimental results show that MV-STGNN achieves lower MAE, RMSE, and MAPE values than the selected baseline models.",
+      "url": "https://doi.org/10.4271/2026-99-2608",
+      "date_display": "2026-11-20"
+    },
+    {
+      "id": "sae-2026-99-2415",
+      "title": "Time-Aware Spatio-Temporal Graph Neural Networks for Traffic Forecasting",
+      "date": "2026-11-20",
+      "tag": "research",
+      "summary": "From the abstract: This study suggests a Time-Aware Spatio-Temporal Graph Neural Network (TASTGNN) for traffic forecasting in order to overcome these drawbacks. … The efficacy of the suggested TASTGNN is shown by extensive tests carried out on two sample real-world traffic benchmark datasets.",
+      "url": "https://doi.org/10.4271/2026-99-2415",
+      "date_display": "2026-11-20"
+    },
+    {
+      "id": "researchsquare-rs-11488464-v1",
+      "title": "Dynamic Association Temporal Graph Neural Networks for Multidimensional Management Time Series Forecasting",
+      "date": "2026-11-20",
+      "tag": "research",
+      "summary": "From the abstract: We introduce TGN-DAM, a temporal graph neural network with dynamic association modeling, which estimates a time-varying, leakage-safe graph over managerial entities and performs forecasting within this framework. … TGN-DAM achieves the lowest error across all datasets and the best average rank, with significant improvements observed during promotions, holidays, and sparse-demand conditions.",
+      "url": "https://www.researchsquare.com/article/rs-11488464/v1",
+      "date_display": "2026-11-20"
+    },
+    {
+      "id": "researchsquare-rs-11594914-v1",
+      "title": "Temporal convolutional network-based parameter inversion, deformation forecasting and dual-track early warning for a super- large excavation in water-rich sandy strata",
+      "date": "2026-11-20",
+      "tag": "research",
+      "summary": "From the abstract: A second TCN forecast wall displacement 14 days ahead with a MAPE of 4.60%, against 13.09% for persistence. … A dual-track rule issues a warning when the two forecasts differ by more than 10% and the forecast exceeds 70% of the 30 mm control value.",
+      "url": "https://www.researchsquare.com/article/rs-11594914/v1",
+      "date_display": "2026-11-20"
+    },
     {
       "id": "mdpi-water-18222891",
       "title": "Multi-Lead-Time Daily Streamflow Forecasting via Out-of-Fold Residual Correction and Flood-Peak-Aware Soft-Gated Dual-Expert Fusion: A Case Study at Yichang Station in the Upper Yangtze River",
@@ -105,6 +159,51 @@
       "tag": "research",
       "summary": "From the abstract: This paper proposes a multi-branch deep feature fusion TCN-ANN hybrid framework for hourly building energy forecasting using a single year of historical operational data (8,760 samples). … The model achieved an RMSE of 20.03 kW and a coefficient of determination (R²) of 0.9721, demonstrating excellent forecasting performance.",
       "url": "https://www.researchsquare.com/article/rs-11032768/v1",
+      "date_display": "2026-11-19"
+    },
+    {
+      "id": "arxiv-2611.26351",
+      "title": "TRCF: Temporal-Reference Complementary Forecasting for Irregular Multivariate Time Series",
+      "date": "2026-11-19",
+      "tag": "research",
+      "summary": "From the abstract: We propose Temporal-Reference Complementary Forecasting (TRCF), a framework that augments a compact CI forecaster with a complementary CD branch. … Experiments on four real-world datasets show that TRCF achieves the lowest mean squared error and mean absolute error in the main benchmark comparison, while reducing measured peak inference memory by 17.28% to 87.98% relative to APN.",
+      "url": "https://arxiv.org/abs/2611.26351",
+      "date_display": "2026-11-19"
+    },
+    {
+      "id": "arxiv-2611.26521",
+      "title": "The Window Lever: Longer Observation Windows Outweigh the Observed Effects of Data, Capacity, and Architecture in Customer Behavior Forecasting",
+      "date": "2026-11-19",
+      "tag": "research",
+      "summary": "From the abstract: In our experiments on long-horizon customer-behavior forecasting, a longer observation window outweighed the observed effects of more data, more capacity and newer architectures. … The direction holds on five public datasets, four spanning over a year (ridge and our transformer on all five).",
+      "url": "https://arxiv.org/abs/2611.26521",
+      "date_display": "2026-11-19"
+    },
+    {
+      "id": "arxiv-2611.25592",
+      "title": "From Data Alignment to Parameter Generation: Few-Shot Cross-City Traffic Prediction with Conditional Diffusion",
+      "date": "2026-11-19",
+      "tag": "research",
+      "summary": "From the abstract: To address these limitations, we propose a Conditional Diffusion-based Parameter Generation (CDPG) framework. … Extensive experiments on three large-scale datasets show that CDPG consistently outperforms state-of-the-art cross-city few-shot baselines by up to 9.72% on standard forecasting metrics and remains robust for few-shot multi-step prediction.",
+      "url": "https://arxiv.org/abs/2611.25592",
+      "date_display": "2026-11-19"
+    },
+    {
+      "id": "arxiv-2611.25388",
+      "title": "Falsifiable Compositional Reasoning in Time Series Forecasting",
+      "date": "2026-11-19",
+      "tag": "research",
+      "summary": "From the abstract: However, models that rank highest on historical validation splits often degrade across non-stationary regime transitions. … Hence, we propose formulating time series forecasting and reasoning around falsifiable compositional hypotheses that combine neural primitive encoders, explicit coupling constraints, and training-calibrated falsification tests.",
+      "url": "https://arxiv.org/abs/2611.25388",
+      "date_display": "2026-11-19"
+    },
+    {
+      "id": "mdpi-jmse-14222204",
+      "title": "An Autonomous, Observation-Based Short-Term Wind Forecasting Model Designed for Mobile Oceanography",
+      "date": "2026-11-19",
+      "tag": "research",
+      "summary": "From the abstract: This study developed an offline short-term sea surface wind forecasting model that produced 6 h forecasts at locations withheld from training, both inside and beyond the target domain, using only local real-time wind observations. … At the two test stations in the Yellow Sea and Bohai Sea, the wind speed RMSE over the September verification period was 1.72 m/s and 1.02 m/s, respectively, averaged over the six forecast lead times.",
+      "url": "https://doi.org/10.3390/jmse14222204",
       "date_display": "2026-11-19"
     },
     {
@@ -222,6 +321,24 @@
       "tag": "research",
       "summary": "From the abstract: To address these challenges, this study proposes the Densely Temporal Causal Network with Reversible Instance Normalization (DTCN), a deep learning architecture that combines: (1) causal dilated convolutions for efficient temporal modeling, (2) dense inter-layer connections for enhanced feature propagation, (3) multi-scale feature integration, and critically, (4) RevIN standardization to address distribution shift in meteorological time series. … These findings establish DTCN as a competitive data-driven alternative for short-range weather forecasting rather than an unambiguous winner across every metric and variable.",
       "url": "https://doi.org/10.1371/journal.pone.0362741",
+      "date_display": "2026-11-18"
+    },
+    {
+      "id": "mdpi-su-182211720",
+      "title": "Learning Day-Ahead Electricity Price Dynamics in Renewable Power Systems: A Time-Adaptive Segmented Multi-Model Ensemble Forecasting Approach",
+      "date": "2026-11-18",
+      "tag": "research",
+      "summary": "From the abstract: This paper proposes an adaptive ensemble electricity price forecasting framework that integrates Random Forest, XGBoost and CNN-LSTM through a validation-based mixture selection strategy. … The proposed ensemble achieves an overall mean absolute percentage error (MAPE) of 27.16%, against 30.14% for Random Forest, 32.80% for XGBoost and 32.02% for CNN-LSTM, and also better than six additional baseline methods.",
+      "url": "https://doi.org/10.3390/su182211720",
+      "date_display": "2026-11-18"
+    },
+    {
+      "id": "mdpi-symmetry-18111931",
+      "title": "A High–Mid–Low Triangular Echo State Network with Attention and Improved Beaver Behavior Optimizer for Photovoltaic Power Forecasting",
+      "date": "2026-11-18",
+      "tag": "research",
+      "summary": "From the abstract: Rather than using a fixed leakage rate, we introduce an attention-driven diagonal matrix that adjusts each timescale blockwise according to its instantaneous activation energy. … The HMLT-ESN reduces Mean Absolute Error (MAE) by 41.57% and Normalized Mean Square Error (NMSE) by 51.73% compared to ESN, acting as a robust dispatch tool for renewable-heavy power systems.",
+      "url": "https://doi.org/10.3390/sym18111931",
       "date_display": "2026-11-18"
     },
     {
